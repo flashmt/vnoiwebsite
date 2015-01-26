@@ -12,7 +12,7 @@
 	2. Mối quan hệ (hay liên kết) giữa các thực thể 
 	   - Tên của mối quan hệ
        - Cardinality và Ordinality, lần lượt biểu thị số lượng lớn nhất và nhỏ nhất liên kết giữa 2 entity có thể có, được biểu diễn dưới dạng line với nhiều notation khác nhau. 
-       [see Cardinality and ordinality Notation](https://github.com/VNOI-Admin/vnoiwebsite/blob/master/documents/database/ERnotation.jpg")
+       [see Cardinality and ordinality Notation](https://github.com/VNOI-Admin/vnoiwebsite/blob/master/documents/database/ERnotation.jpg)
 	     	- Many (0..n), Mandatory (bắt buộc)
 
 - Lưu í: hình dạng của các thành phần đều phải tuân theo quy tắc vẽ của ER diagram (ví dụ tên của relation phải đặt trong hình thoi, entity đặt trong hình chữ nhật,...)
@@ -20,7 +20,7 @@
 
 ### Ví dụ
 	
-![alt text](http://0.tqn.com/d/databases/1/0/L/A/PersonLivesInCity.jpg"Logo Title Text 1")
+![alt text](http://0.tqn.com/d/databases/1/0/L/A/PersonLivesInCity.jpg)
 	
 - Entity: Person, City
 - Mỗi entity sẽ có các thuộc tính của nó. Ví dụ Person có FirstName, LastName,.. PersonID (cũng là một thuộc tính) đóng vai trò làm Primary key.
