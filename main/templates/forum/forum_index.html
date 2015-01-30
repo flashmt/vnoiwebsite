@@ -1,0 +1,13 @@
+{% extends 'main/base.html' %}
+
+{% block container %}
+
+{% for topic in topics %}
+    <ul>
+        <li> {{topic.name}} </li>
+        <li> Lastest thread: {{topic.lastest_thread.title}}</li>
+    </ul>
+
+{% endfor %}
+
+{% endblock container %}
