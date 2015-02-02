@@ -2,11 +2,13 @@
 from __future__ import unicode_literals
 
 from django.db import models, migrations
+from django.conf import settings
 
 
 class Migration(migrations.Migration):
 
     dependencies = [
+        migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 
     operations = [
@@ -19,6 +21,7 @@ class Migration(migrations.Migration):
                 ('num_topics', models.IntegerField(default=0)),
                 ('num_posts', models.IntegerField(default=0)),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
+                ('created_by', models.ForeignKey(related_name='created_forums', to=settings.AUTH_USER_MODEL)),
             ],
             options={
             },
@@ -33,7 +36,8 @@ class Migration(migrations.Migration):
                 ('created_at', models.DateTimeField(auto_now_add=True)),
                 ('updated_at', models.DateTimeField(auto_now_add=True, null=True)),
                 ('num_votes', models.IntegerField(default=0)),
-                ('reply_on', models.ForeignKey(related_name='reply_posts', default=b'0', to='forum.Post')),
+                ('created_by', models.ForeignKey(related_name='created_posts', to=settings.AUTH_USER_MODEL)),
+                ('reply_on', models.ForeignKey(related_name='reply_posts', blank=True, to='forum.Post', null=True)),
             ],
             options={
             },
@@ -47,8 +51,9 @@ class Migration(migrations.Migration):
                 ('title', models.CharField(max_length=500)),
                 ('content', models.TextField()),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
+                ('created_by', models.ForeignKey(related_name='created_topics', to=settings.AUTH_USER_MODEL)),
                 ('forum', models.ForeignKey(related_name='topics', to='forum.Forum')),
-                ('post', models.ForeignKey(related_name='topics', to='forum.Post')),
+                ('post', models.ForeignKey(related_name='topics', blank=True, to='forum.Post', null=True)),
             ],
             options={
             },
