@@ -1,11 +1,16 @@
 {% extends 'main/base.html' %}
 
+{% block navbar %}
+    <li><a href="{% url 'main:index' %}">Home</a></li>
+    <li><a href="#about">Problems</a></li>
+    <li class="active"><a href="{% url 'forum:index' %}">Forum</a></li>
+{% endblock navbar %}
+
 {% block container %}
 
 {% for topic in topics %}
     <ul>
-        <li> {{topic.name}} </li>
-        <li> Lastest thread: {{topic.lastest_thread.title}}</li>
+        <li> {{topic.title}} </li>
     </ul>
 
 {% endfor %}
