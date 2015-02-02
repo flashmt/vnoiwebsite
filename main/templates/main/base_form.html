@@ -1,0 +1,19 @@
+{% extends 'main/base.html' %}
+{% load bootstrap3 %}
+
+{% block container %}
+
+{% block form-title %}
+    <h2>Post Create Form</h2>
+{% endblock form-title %}
+
+{% block formbody %}
+<form role="form" class="form-horizontal" method="post">
+    {% bootstrap_form form layout="horizontal" %}
+    {% csrf_token %}
+    {% buttons submit="OK" reset="Reset" layout="horizontal"%}{% endbuttons %}
+</form>
+
+{% endblock formbody %}
+
+{% endblock container %}
