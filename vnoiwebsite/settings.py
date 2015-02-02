@@ -39,6 +39,7 @@ INSTALLED_APPS = (
     'forum',
     'main',
     'vnoiusers',
+    'bootstrap3',
 )
 
 MIDDLEWARE_CLASSES = (
