@@ -46,7 +46,7 @@ class PostCreateForm(PostForm):
             topic = self.topic
 
         post = Post(topic=topic,
-                    created_by = self.user,
+                    created_by=self.user,
                     topic_post=True,
                     content=self.cleaned_data['content'])
         post.topic = topic

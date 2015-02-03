@@ -8,8 +8,8 @@ from forum.models import Topic, Forum, Post
 
 
 def index(request):
-    topics = Topic.objects.all()
-    return render(request, 'forum/forum_index.html', {'topics': topics})
+    forums = Forum.objects.all()
+    return render(request, 'forum/forum_index.html', {'forums': forums})
 
 
 def list(request):

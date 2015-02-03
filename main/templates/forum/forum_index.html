@@ -7,12 +7,22 @@
 {% endblock navbar %}
 
 {% block container %}
+<table border="1" cellpadding="4" width="100%">
+    <tr>
+        <td>Forum</td>
+        <td>Posts</td>
+        <td>Last Post</td>
+        <td></td>
+    </tr>
 
-{% for topic in topics %}
-    <ul>
-        <li> {{topic.title}} </li>
-    </ul>
+    {% for forum in forums %}
+    <tr>
+        <td><a href="#">{{ forum.name }}</a></td>
+        <td><a href="#">{{ forum.num_posts }}</a></td>
+        </td>
+    </tr>
 
-{% endfor %}
+    {% endfor %}
+</table>
 
 {% endblock container %}

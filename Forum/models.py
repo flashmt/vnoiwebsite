@@ -23,6 +23,13 @@ class Forum(models.Model):
         num_posts = self.topics.all().aggregate(Sum('num_posts'))
         return num_posts['num_posts__sum'] or 0
 
+    #TODO: convert last_post to an attribute
+    def last_post(self):
+        if self.posts.all().count:
+            return self.posts.order_by("created")[0]
+        else:
+            return None
+
 
 class Topic(models.Model):
     forum = models.ForeignKey(Forum, related_name="topics")
