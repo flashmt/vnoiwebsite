@@ -62,13 +62,20 @@ WSGI_APPLICATION = 'vnoiwebsite.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'vnoiwebsite',
-        'USER': 'vnoi_admin',
-        'PASSWORD': 'vnoi_password',
-        'HOST': '127.0.0.1', # Using direct IP instead of localhost, to ensure MySQLdb doesn't fail
-    },
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
 }
+
+#DATABASES = {
+#    'default': {
+#        'ENGINE': 'django.db.backends.mysql',
+#        'NAME': 'vnoiwebsite',
+#        'USER': 'vnoi_admin',
+#        'PASSWORD': 'vnoi_password',
+#        'HOST': '127.0.0.1', # Using direct IP instead of localhost, to ensure MySQLdb doesn't fail
+#    },
+#}
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.7/topics/i18n/
