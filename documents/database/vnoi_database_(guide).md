@@ -8,12 +8,11 @@
 
 ### Thành phần
 - Bao gồm 2 thành phần chính
-	1. Thực thể (Entity) và thuộc tính (attribute) của nó
-	2. Mối quan hệ (hay liên kết) giữa các thực thể 
+    1. Thực thể (Entity) và thuộc tính (attribute) của nó
+    2. Mối quan hệ (hay liên kết) giữa các thực thể 
 	   - Tên của mối quan hệ
        - Cardinality và Ordinality, lần lượt biểu thị số lượng lớn nhất và nhỏ nhất liên kết giữa 2 entity có thể có, được biểu diễn dưới dạng line với nhiều notation khác nhau. 
        [see Cardinality and ordinality Notation](https://github.com/VNOI-Admin/vnoiwebsite/blob/master/documents/database/ERnotation.jpg)
-	     	- Many (0..n), Mandatory (bắt buộc)
 
 - Lưu í: hình dạng của các thành phần đều phải tuân theo quy tắc vẽ của ER diagram (ví dụ tên của relation phải đặt trong hình thoi, entity đặt trong hình chữ nhật,...)
 - Ngoài ra, một số notation để thể hiện những mối quan hệ và entity phức tạp hơn, các bạn có thể đọc thêm trên mạng.
@@ -43,34 +42,43 @@
 
 ### Ví dụ map giữa database và Django Model
 
-- Xét entity Thread và VnoiUser:
+- Xét 2 entity Topic và Post:
 
 ```
-class Thread(models.Model):
-      title = models.CharField(max_length=100)
-      content = models.TextField(max_length=200)
-      created_at = models.DateTimeField(auto_now_add=True)
-      created_by = models.ForeignKey(VnoiUser, default=0)
+class Topic(models.Model):
+    post = models.ForeignKey('Post', related_name="topic", null=True, blank=True)
+    title = models.CharField(max_length=500, null=False, blank=False)
+    content = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
 ```
 
 ```
-class VnoiUser(models.Model):
-	  user = models.ForeignKey(settings.AUTH_USER_MODEL)
-      dob = models.DateTimeField(auto_now_add=True)
+class Post(models.Model):
+    topic = models.ForeignKey(Topic, verbose_name='Topic', related_name='posts')
+    content = models.TextField(null=False, blank=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    reply_on = models.ForeignKey("self", related_name="reply_posts", null=True, blank=True)
 ```
-- Giải thích
-  - Các Entity đều có attribute riêng, ví dụ Thread có title, content, created_at
-  - Các Entity đều assume có pk = tên entity + ""_id", ví dụ Thread sẽ có pk = thread_id, không cần vẽ vào (thực chất sau này Django lúc tạo bảng database từ Model sẽ tự động generate ra)
-  - Mối quan hệ giữa Thread và VnoiUser là "many optional to one mandatory", có nghĩa là "1 Thread is created by exactly 1 VnoiUser", "1 VnoiUser can create 0 or many Thread", vì thế bảng VnoiUser không cần lưu thông tin của các Thread mà VnoiUser đó tạo ra, mối liên kêt chỉ cần lưu trong Thread với attribute "created_at" (sử dụng tên của relation vẽ trên diagram)
+
+
+####Giải thích
+  - Định nghĩa Topic: Giống như Thread trong các forum bình thường, user tạo ra để những user khác có thể comment.
+  - Định nghĩa Post: 1 Post có thể là 1 Thread, comment của một post hoặc comment của một comment
+  - Có 2 mối quan hệ giữa Topic và Post:
+  
+       1. Quan hệ 1 - 1 giữa Topic và Post: Ứng với một topic là một post. Khi một post được tạo ra, mà post đó không phải là comment của một post khác, thì nó sẽ là một topic, ta cần thêm topic đó vào topic table trong db. Để tạo ra một topic, ta cần biết topic đó ứng với post nào, do đó trong bảng Topic cần lưu post tương ứng. (see Topic.post)
+     
+    2. Quan hệ 1 mandatory - many optional giữa Topic và Post: ""Một post chỉ thuộc một topic, một topic có thể có nhiều post". Như vậy bảng Topic không cần chứa id tất cả các posts mà nó có, mối quan hệ chỉ cần lưu trong bảng Post vs attribute "topic" (see Post.topic)
+     
  - Django cho phép biểu thị những mối quan hệ giữa các model [django model relationship API](https://docs.djangoproject.com/en/1.7/topics/db/examples/) 
   
   
 ### Notes (một số notes trong phần design hiện tại)
-- HighlightedThread:
-	- Highlighted Threads luôn được hiển thị trên homepage, vì thế số lần phải query những threads này để hiện thị rất cao. Có 2 cách để query những threads đc highlight:
-	1. Thread có 1 attribute *flag_highlighted* = true/false 
-	2. Tạo một bảng database khác chứa những Thread đc highlight (ở đây là bảng HighlightedThread)
+- HighlightedTopic:
+	- Highlighted Topic luôn được hiển thị trên homepage, vì thế số lần phải query những topics này để hiện thị rất cao. Có 2 cách để query những topics đc highlight:
+	1. Topic có 1 attribute *flag_highlighted* = true/false 
+	2. Tạo một bảng database khác chứa những Topic đc highlight (ở đây là bảng HighlightedThread)
 	3. Chưa nghĩ ra =))
- 	- ở cách 1., do số lượng Thread trong bảng sẽ rất lớn, query sẽ lâu nên ta chọn cách 2. Mỗi lần một Thread đc highlight, nó sẽ đc add vào bảng HighlightedThread, tương tự khi xoá highlight thì nó sẽ bị xoá đi khỏi bảng.
+ 	- ở cách 1., do số lượng Topic trong bảng sẽ rất lớn, query sẽ lâu nên ta chọn cách 2. Mỗi lần một Topic đc highlight, nó sẽ đc add vào bảng HighlightedTopic, tương tự khi xoá highlight thì nó sẽ bị xoá đi khỏi bảng.
 
 
