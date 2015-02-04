@@ -15,7 +15,7 @@
 
     {% for topic in topics %}
     <tr>
-        <td><a href="#">{{ topic.title }}</a></td>
+        <td><a href="{% url 'forum:topic_retrieve' topic.forum_id topic.id %}">{{ topic.title }}</a></td>
         <td>{{ topic.num_posts }}</a></td>
         <td>{{ topic.last_posts }}</a></td>
         </td>

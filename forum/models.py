@@ -67,4 +67,4 @@ class Post(models.Model):
         if self.topic_post:
             return self.topic.title
         else:
-            return "No need title"
+            return "Re: " + self.reply_on.content[:10]
