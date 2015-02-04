@@ -1,0 +1,16 @@
+{% extends 'forum/forum_index.html' %}
+
+{% block forum-nav %}
+    <a href="{% url 'forum:index' %}">Forum</a> > <a href="{% url 'forum:topic_list' forum.id %}">{{forum.name}}</a> > {{topic.title}}
+{% endblock forum-nav %}
+
+{% block forum-body %}
+
+{% for post in posts %}
+    <div style="background-color: wheat; ">
+        <p>Title: {{post.title}}</p>
+        <p>Content: {{post.content}}</p>
+    </div>
+
+{% endfor %}
+{% endblock forum-body %}
