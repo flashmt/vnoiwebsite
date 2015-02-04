@@ -1,7 +1,8 @@
 from django.conf.urls import patterns, url
 from forum import views
 
-urlpatterns = patterns('',
+urlpatterns = patterns(
+    '',
     url(r'^$', views.index, name='index'),
     url(r'^list/$', views.list, name='list'),
     url(r'^(?P<forum_id>\d+)/post_create/$', views.post_create, name='post_create'),
