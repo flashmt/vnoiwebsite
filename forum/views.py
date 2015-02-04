@@ -19,6 +19,15 @@ def topic_list(request, forum_id):
                                                      'topics': topics})
 
 
+def topic_retrieve(request, forum_id, topic_id):
+    forum = get_object_or_404(Forum, pk=forum_id)
+    topic = get_object_or_404(Topic, pk=topic_id)
+    posts = topic.posts.all()
+    return render(request, "forum/topic_retrieve.html", {'forum': forum,
+                                                         'topic': topic,
+                                                         'posts': posts})
+
+
 def list(request):
     return HttpResponse("this is list!")
 
