@@ -43,4 +43,4 @@ Giải thích:
 - Topic: 1 chủ đề. Post: những cái post trong topic. Cái content của topic 1 là cache của post 1 --> hiệu quả hơn khi truy vấn database.
 - Đọc lại design document để hiểu rõ
 
-Sau khi add xong, vào [trang web trên local](localhost:8000/forum/) để kiểm tra dữ liệu vừa add
+Sau khi add xong, vào [trang web trên local](http://localhost:8000/forum/) để kiểm tra dữ liệu vừa add
