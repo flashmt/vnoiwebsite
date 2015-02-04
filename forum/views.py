@@ -12,6 +12,13 @@ def index(request):
     return render(request, 'forum/forum_index.html', {'forums': forums})
 
 
+def topic_list(request, forum_id):
+    forum = get_object_or_404(Forum, pk=forum_id)
+    topics = Topic.objects.filter(forum_id=forum_id)
+    return render(request, "forum/topic_list.html", {'forum': forum,
+                                                     'topics': topics})
+
+
 def list(request):
     return HttpResponse("this is list!")
 

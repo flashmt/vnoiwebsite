@@ -1,0 +1,26 @@
+{% extends 'forum/forum_index.html' %}
+
+{% block forum-nav %}
+    <a href="{% url 'forum:index' %}">Forum</a> > {{forum.name}}
+{% endblock forum-nav %}
+
+{% block forum-body %}
+<table border="1" cellpadding="4" width="100%">
+    <tr>
+        <td>Topics</td>
+        <td>Replies</td>
+        <td>Last post</td>
+        <td></td>
+    </tr>
+
+    {% for topic in topics %}
+    <tr>
+        <td><a href="#">{{ topic.title }}</a></td>
+        <td>{{ topic.num_posts }}</a></td>
+        <td>{{ topic.last_posts }}</a></td>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+
+{% endblock forum-body %}
