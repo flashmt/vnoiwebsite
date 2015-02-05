@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required
+from django.core.urlresolvers import reverse
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 
@@ -33,38 +34,39 @@ def list(request):
 
 
 @login_required
-def post_create(request, forum_id=None, topic_id=None):
+def post_create(request, forum_id=None, topic_id=None, template="forum/post_create.html"):
 
     topic = forum = None
 
     if forum_id:
         forum = get_object_or_404(Forum, pk=forum_id)
     if topic_id:
-        topic_post = False
         topic = get_object_or_404(Topic, pk=topic_id)
         forum = topic.forum
 
-    #TODO check permission
+    # TODO check permission
 
-    if request.POST or request.GET:
+    if request.POST:
         # if a request is submitted, handle this request
         form = PostCreateForm(request.POST, user=request.user, forum=forum, topic=topic)
         if form.is_valid():
             post = form.save()
-        # return HttpResponseRedirect(reversed("forum:post_retrieve", args=[post.id]))
-        return HttpResponse("Successfully!")
+            if post.topic_post:
+                return HttpResponseRedirect(reverse("forum:topic_retrieve", args=(forum.id, post.topic_id,)))
+            else:
+                return "sucessfully!"
     else:
         form = PostCreateForm()
-        return render(request, "forum/post_create.html", {'form': form})
+        return render(request, template, {'form': form, 'forum': forum, 'topic': topic})
 
 
 @login_required
 def post_update(request, post_id):
     post = get_object_or_404(Post, pk=post_id)
 
-    #TODO: check permission
+    # TODO: check permission
 
-    if request.POST or request.GET:
+    if request.POST:
         form = PostUpdateForm(instance=post, user=request.user, data=request.POST)
         if form.is_valid():
             form.save()
@@ -74,3 +76,6 @@ def post_update(request, post_id):
         return render(request, "forum/post_update.html", {'form': form})
 
 
+@login_required
+def topic_create(request, forum_id=None, template="forum/topic_create.html"):
+    return post_create(request, forum_id, template=template)
