@@ -73,3 +73,4 @@ def post_update(request, post_id):
         form = PostUpdateForm(instance=post)
         return render(request, "forum/post_update.html", {'form': form})
 
+

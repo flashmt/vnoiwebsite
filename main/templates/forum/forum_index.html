@@ -20,14 +20,13 @@
         <td>Forum</td>
         <td>Posts</td>
         <td>Last Post</td>
-        <td></td>
     </tr>
 
     {% for forum in forums %}
     <tr>
         <td><a href="{% url 'forum:topic_list' forum.id %}">{{ forum.name }}</a></td>
         <td>{{ forum.num_posts }}</a></td>
-        </td>
+        <td>{{ forum.last_post }}</a></td>
     </tr>
 
     {% endfor %}
