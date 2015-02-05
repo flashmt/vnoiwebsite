@@ -21,5 +21,3 @@ class PostViewTest(TestCase):
 
     def test_post_update(self):
         pass
-
-

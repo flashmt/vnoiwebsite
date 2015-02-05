@@ -30,7 +30,7 @@ class UserCreateForm(forms.ModelForm):
         fields = ('username', 'email')
 
     def clean_password2(self):
-        #Check if 2 passwords match
+        # Check if 2 passwords match
         password1 = self.cleaned_data.get('password1')
         password2 = self.cleaned_data.get('password2')
         if password1 and password2 and password1 != password2:
@@ -43,5 +43,3 @@ class UserCreateForm(forms.ModelForm):
         if commit:
             user.save()
         return user
-
-

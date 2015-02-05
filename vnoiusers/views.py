@@ -39,5 +39,3 @@ def user_create(request, template=None):
 
 def user_update(request, user_id):
     pass
-
-
