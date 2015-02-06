@@ -12,6 +12,7 @@ class VnoiUserInline(admin.StackedInline):
     verbose_name_plural = 'VnoiUser Profile'
     max_num = 1
 
+
 class UserAdmin(UserAdmin):
     inlines = (VnoiUserInline, )
 
