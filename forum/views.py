@@ -26,6 +26,7 @@ def topic_retrieve(request, forum_id, topic_id):
     posts = topic.posts.all()
     return render(request, "forum/topic_retrieve.html", {'forum': forum,
                                                          'topic': topic,
+                                                         'post': topic.post,
                                                          'posts': posts})
 
 
@@ -34,35 +35,43 @@ def list(request):
 
 
 @login_required
-def post_create(request, forum_id=None, topic_id=None, template="forum/post_create.html"):
+def post_create(request, forum_id=None, topic_id=None, post_id=None, template="forum/post_create.html"):
 
-    topic = forum = None
+    topic = forum = post = None
 
     if forum_id:
         forum = get_object_or_404(Forum, pk=forum_id)
     if topic_id:
         topic = get_object_or_404(Topic, pk=topic_id)
         forum = topic.forum
+    if post_id:
+        post = get_object_or_404(Post, pk=post_id)
 
     # TODO check permission
 
     if request.POST:
         # if a request is submitted, handle this request
-        form = PostCreateForm(request.POST, user=request.user, forum=forum, topic=topic)
+        form = PostCreateForm(request.POST, user=request.user, forum=forum, topic=topic, parent=post)
         if form.is_valid():
             post = form.save()
             if post.topic_post:
-                return HttpResponseRedirect(reverse("forum:topic_retrieve", args=(forum.id, post.topic_id,)))
+                return HttpResponseRedirect(reverse("forum:topic_retrieve", args=(forum.id, post.topic.id,)))
             else:
-                return "sucessfully!"
+                return HttpResponseRedirect('../..')
     else:
-        form = PostCreateForm()
+        form = PostCreateForm(user=request.user, forum=forum, topic=topic, parent=post)
         return render(request, template, {'form': form, 'forum': forum, 'topic': topic})
 
 
 @login_required
-def post_update(request, post_id):
-    post = get_object_or_404(Post, pk=post_id)
+def post_update(request, forum_id=None, topic_id=None, post_id=None, template="forum/post_update.html"):
+    forum = topic = post = None
+    if forum_id:
+        forum = get_object_or_404(Forum, pk=forum_id)
+    if topic_id:
+        topic = get_object_or_404(Topic, pk=topic_id)
+    if post_id:
+        post = get_object_or_404(Post, pk=post_id)
 
     # TODO: check permission
 
@@ -70,12 +79,14 @@ def post_update(request, post_id):
         form = PostUpdateForm(instance=post, user=request.user, data=request.POST)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect('../')
+            return HttpResponseRedirect('../..')
     else:
         form = PostUpdateForm(instance=post)
-        return render(request, "forum/post_update.html", {'form': form})
+        return render(request, template, {'form': form, 'forum': forum, 'topic': topic})
 
 
 @login_required
 def topic_create(request, forum_id=None, template="forum/topic_create.html"):
-    return post_create(request, forum_id, template=template)
+    return post_create(request, forum_id=forum_id, template=template)
+
+

@@ -74,3 +74,6 @@ class Post(models.Model):
             return self.topic.title
         else:
             return "Re: " + self.reply_on.content[:10]
+
+    def get_reply_posts(self):
+        return self.reply_posts.all()

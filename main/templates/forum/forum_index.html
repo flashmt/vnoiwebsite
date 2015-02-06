@@ -25,8 +25,8 @@
     {% for forum in forums %}
     <tr>
         <td><a href="{% url 'forum:topic_list' forum.id %}">{{ forum.name }}</a></td>
-        <td>{{ forum.num_posts }}</a></td>
-        <td>{{ forum.last_post }}</a></td>
+        <td>{{ forum.num_posts }}</td>
+        <td><a href="">{{ forum.last_post}}</a> by <a>{{forum.last_post.created_by}}</a></td>
     </tr>
 
     {% endfor %}

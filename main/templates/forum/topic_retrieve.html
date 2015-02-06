@@ -6,13 +6,6 @@
 
 {% block forum-body %}
 
-{% for post in posts %}
-    <div style="background-color: wheat; ">
-        <p>Title: {{post.title}}</p>
-        <p>Created by {{post.created_by}} </p>
-        <p>Created at {{post.created_at}} </p>
-        <p>Content: {{post.content}}</p>
-    </div>
+{% include 'forum/post_retrieve.html' %}
 
-{% endfor %}
 {% endblock forum-body %}
