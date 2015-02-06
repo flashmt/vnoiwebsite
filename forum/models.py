@@ -23,10 +23,10 @@ class Forum(models.Model):
         num_posts = self.topics.all().aggregate(Sum('num_posts'))
         return num_posts['num_posts__sum'] or 0
 
-    # TODO: convert last_post to an attribute
     def last_post(self):
-        if self.posts.all().count:
-            return self.posts.order_by("created")[0]
+        if self.topics.all().count:
+            last_post = Post.objects.all().filter(topic__forum=self).order_by("-created_at")[0]
+            return last_post
         else:
             return None
 
@@ -46,7 +46,13 @@ class Topic(models.Model):
         return self.title
 
     def count_num_posts(self):
-        return self.posts.all().count()
+        return self.posts.all().count
+
+    def last_post(self):
+        if self.posts.all().count:
+            return self.posts.order_by("-created_at")[0]
+        else:
+            return None
 
 
 class Post(models.Model):

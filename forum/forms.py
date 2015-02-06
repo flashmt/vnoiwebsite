@@ -19,8 +19,7 @@ class PostForm(forms.ModelForm):
         if self.instance.id:
             self.forum = self.instance.topic.forum
         self.fields.keyOrder = [
-            'title',
-            'content',
+            'title', 'content',
         ]
 
 

@@ -5,6 +5,7 @@
 {% endblock forum-nav %}
 
 {% block forum-body %}
+<a href="{% url 'forum:topic_create' forum.id %}">Create new topic</a>
 <table border="1" cellpadding="4" width="100%">
     <tr>
         <td>Topics</td>
@@ -15,9 +16,10 @@
 
     {% for topic in topics %}
     <tr>
-        <td><a href="{% url 'forum:topic_retrieve' topic.forum_id topic.id %}">{{ topic.title }}</a></td>
+        <td><a href="{% url 'forum:topic_retrieve' topic.forum_id topic.id %}">{{ topic.title }}</a>
+         by <a href="">{{topic.created_by}}</a> </td>
         <td>{{ topic.num_posts }}</a></td>
-        <td>{{ topic.last_posts }}</a></td>
+        <td>{{ topic.last_post }} by <a href="">{{topic.created_by}}</a> </td></a></td>
         </td>
     </tr>
     {% endfor %}

@@ -12,7 +12,7 @@ def user_login(request, template_name='vnoiusers/user_login.html'):
         # user already logged in
         return render(request, template_name, {'form': form, 'message': 'You already login!'})
 
-    if request.POST or request.GET:
+    if request.POST:
         try:
             username = request.POST['username']
             password = request.POST['password']
@@ -25,7 +25,7 @@ def user_login(request, template_name='vnoiusers/user_login.html'):
         except KeyError:
             return render(request, template_name, {'form': form, 'message': 'login fail!'})
     else:
-        return render(request, template_name, {'form': form})
+        return render(request, template_name, {'form': form, 'message': ''})
 
 
 def user_logout(request):
