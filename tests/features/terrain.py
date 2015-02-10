@@ -10,4 +10,3 @@ def initial_setup(server):
 @after.each_scenario
 def cleanup(server):
     world.browser.quit()
-
