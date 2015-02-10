@@ -1,0 +1,18 @@
+{% block postview %}
+<div style="background-color:wheat; margin-left: 30px; margin-bottom: 30px">
+    <p>Title: {{post.title}}</p>
+    <p>Created by {{post.created_by}} </p>
+    <p>Created at {{post.created_at}} </p>
+    <p>Content: {{post.content}}</p>
+    <p><a href="{% url 'forum:post_update' forum.id topic.id post.id %}">Edit this post</a></p>
+    <p><a href="{% url 'forum:post_create' forum.id topic.id post.id %}">Comment this post</a></p>
+</div>
+<div style="margin-left: 30px; margin-bottom: 30px">
+{% for p in post.get_reply_posts %}
+    {% with post=p template_name="forum/post_retrieve" %}
+        {% include 'forum/post_retrieve.html' %}
+    {% endwith %}
+{% endfor %}
+</div>
+
+{% endblock postview %}

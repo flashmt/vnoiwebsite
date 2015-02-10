@@ -1,5 +1,7 @@
-{% extends 'main/base_form.html' %}
+{% extends 'forum/topic_retrieve.html' %}
 
-{% block form-title %}
-    <h2>Post Update Form</h2>
-{% endblock form-title %}
+{% block forum-body %}
+Update this post
+{% include 'main/base_form.html' %}
+
+{% endblock forum-body %}
