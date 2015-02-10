@@ -21,7 +21,7 @@ lettuce
 
 You should see something like following: (green means test passed, red means failed)
 
-![](./images/test_results.png)
+<img src="./images/test_results.png" width="500"/>
 
 ## How to write new test:
 
@@ -46,5 +46,5 @@ Methods that can be shared between different tests should be placed in tests/fea
 
 - When writing tests, if you find that some elements do not have ID, please add IDs to those elements.
 
-Useful resources:
+# Useful resources:
 - [Splinter documentation](https://splinter.readthedocs.org/en/latest/#features) contains how to find elements on page, how to interact with elements & forms, how to verify presence of text...
