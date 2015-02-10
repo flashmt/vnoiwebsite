@@ -7,6 +7,8 @@ Feature: Login
     I click on "Login"
     I login
     I see text "Welcome"
+    I click on "Logout"
+    I see text "Login"
 
   Scenario: Login from Forum page
     I go to url "/forum"
@@ -14,3 +16,5 @@ Feature: Login
     I click on "Login"
     I login
     I see text "Welcome"
+    I click on "Logout"
+    I see text "Login"
