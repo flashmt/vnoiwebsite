@@ -17,11 +17,10 @@ class Forum(models.Model):
         return self.name
 
     def count_num_topics(self):
-        return self.topics.all().count
+        return self.num_topics
 
     def count_num_posts(self):
-        num_posts = self.topics.all().aggregate(Sum('num_posts'))
-        return num_posts['num_posts__sum'] or 0
+        return self.num_posts
 
     def last_post(self):
         if self.topics.all().count:
@@ -39,20 +38,25 @@ class Topic(models.Model):
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     created_by = models.ForeignKey(User, related_name="created_topics")
-
     # TODO created_by, updated_at, level
 
     def __unicode__(self):
         return self.title
 
     def count_num_posts(self):
-        return self.posts.all().count
+        return self.num_posts
 
     def last_post(self):
         if self.posts.all().count:
             return self.posts.order_by("-created_at")[0]
         else:
             return None
+
+    def save(self, *args, **kwargs):
+    	if not self.pk:
+    		self.forum.num_topics += 1
+    		self.forum.save()
+    	super(Topic, self).save(*args, **kwargs)
 
 
 class Post(models.Model):
@@ -77,3 +81,11 @@ class Post(models.Model):
 
     def get_reply_posts(self):
         return self.reply_posts.all()
+
+    def save(self, *args, **kwargs):
+    	if not self.pk:
+    		self.topic.num_posts += 1
+    		self.topic.save()
+    		self.topic.forum.num_posts += 1
+    		self.topic.forum.save()
+    	super(Post, self).save(*args, **kwargs)

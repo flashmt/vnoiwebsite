@@ -18,8 +18,8 @@
     <tr>
         <td><a href="{% url 'forum:topic_retrieve' topic.forum_id topic.id %}">{{ topic.title }}</a>
          by <a href="">{{topic.created_by}}</a> </td>
-        <td>{{ topic.num_posts }}</a></td>
-        <td><a>{{ topic.last_post }}</a> by <a href="">{{topic.created_by}}</a> </td></a></td>
+        <td>{{ topic.count_num_posts }}</a></td>
+        <td>{{ topic.last_post }} by <a href="">{{topic.created_by}}</a> </td></a></td>
         </td>
     </tr>
     {% endfor %}
