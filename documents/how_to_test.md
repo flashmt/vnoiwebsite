@@ -38,5 +38,13 @@ Test codes are located at: tests/features/. To write new test, you need to creat
 
 Methods that can be shared between different tests should be placed in tests/features/general_steps.py.
 
+# How to write code that is testable:
+
+- When writing test, most of the time, you will need to find an element on page (button, text...). The most reliable way to do this is to find the elements using ID.
+
+--> When writing frontend code, it is recommended that everything should have an ID.
+
+- When writing tests, if you find that some elements do not have ID, please add IDs to those elements.
+
 Useful resources:
 - [Splinter documentation](https://splinter.readthedocs.org/en/latest/#features) contains how to find elements on page, how to interact with elements & forms, how to verify presence of text...
