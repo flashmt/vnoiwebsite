@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator, InvalidPage, EmptyPage
 from django.core.urlresolvers import reverse
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
@@ -13,9 +14,21 @@ def index(request):
     return render(request, 'forum/forum_index.html', {'forums': forums})
 
 
+def pagination_items(request, items, num_per_page):
+    paginator = Paginator(items, num_per_page)
+    try: page = int(request.GET.get('page', '1'))
+    except ValueError: page = 1
+    try:
+        items = paginator.page(page)
+    except (InvalidPage, EmptyPage):
+        items = paginator.page(paginator.num_pages)
+    return items
+
+
 def topic_list(request, forum_id):
     forum = get_object_or_404(Forum, pk=forum_id)
     topics = Topic.objects.filter(forum_id=forum_id)
+    topics = pagination_items(request, topics, 2)
     return render(request, "forum/topic_list.html", {'forum': forum,
                                                      'topics': topics})
 
