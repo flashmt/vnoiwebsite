@@ -1,4 +1,5 @@
 # Working agreement
+1. Documentation, commit messages, code... must be written in English.
 1. Coding session every Tuesday night, from 8pm onwards (everyone gathers, code & discuss).
 1. Frequently update what you're doing on Trello (more about this in "Working with Trello" session)
 1. In case assigned task is not clear, ask Trung / Yen for clarification immediately.
