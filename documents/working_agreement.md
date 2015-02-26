@@ -1,17 +1,19 @@
-# Thống nhất cách làm việc
-1. Tối thứ 3 hàng tuần, mọi người tập trung ngồi code với nhau.
-2. Hàng ngày thường xuyên update công việc mình đang làm / đã hoàn thành trên Trello.
-3. Khi được giao việc, nếu không hiểu rõ mình cần làm gì, cần phải hỏi rõ ngay Trung / Yến để hiểu chi tiết về việc mình đang làm. Tránh tình trạng được giao việc, không hiểu rồi cứ lờ đi :))
-4. Thường xuyên update Trung về những việc mình bắt đầu làm / khó khăn gặp phải và nói rõ nếu cần trợ giúp.
+# Working agreement
+1. Coding session every Tuesday night, from 8pm onwards (everyone gathers, code & discuss).
+1. Frequently update what you're doing on Trello (more about this in "Working with Trello" session)
+1. In case assigned task is not clear, ask Trung / Yen for clarification immediately.
+1. Frequently update Trung with what you're doing & if you have any difficulties completing tasks.
+1. Be confident! Ask lots of questions! Participate actively in dicussions.
 
-# Sử dụng Trello
-1. Mỗi khi bắt tay vào làm task --> chuyển task từ Todo sang Doing.
-2. Mỗi khi hoàn thành task --> chuyển task từ Doing sang Done
+# Working with Trello
+1. New tasks will be created on "Todo" columns
+1. When you start doing tasks --> move task from "Todo" column --> "Doing" column
+1. When you finish a task --> move task from "Doing" column --> "Done" column. Comment commit link & pull request link on the task, so that the task can be checked.
 
-# Sử dụng git
-1. Đọc hướng dẫn dùng git ở: https://github.com/VNOI-Admin/organization/tree/master/tutorials/version_control/git
-2. Làm việc theo mô hình fork + send pull request, đọc chi tiết ở: https://www.facebook.com/groups/345513782301731/permalink/348283455358097/
+# Working with git
+1. Read git tutorial: https://github.com/VNOI-Admin/organization/tree/master/tutorials/version_control/git
+2. Fork project & send pull request: https://www.facebook.com/groups/345513782301731/permalink/348283455358097/
 
-# Code Python
-1. Code mọi người cần phải theo PEP8. Mọi người cần setup IDE của mình để check PEP8, tránh commit code không thỏa mãn PEP8
-2. Đọc hướng dẫn code Python ở: https://github.com/VNOI-Admin/organization/tree/master/tutorials/web_programming
+# Python coding style
+1. Follow PEP8 strictly. Must setup your own IDE to verify PEP8 requirements.
+2. Read Python coding tutorial: https://github.com/VNOI-Admin/organization/tree/master/tutorials/web_programming
