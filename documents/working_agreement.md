@@ -15,6 +15,7 @@
 # Working with git
 1. Read git tutorial: https://github.com/VNOI-Admin/organization/tree/master/tutorials/version_control/git
 2. Fork project & send pull request: https://www.facebook.com/groups/345513782301731/permalink/348283455358097/
+3. Commit message must be meaningful: https://www.facebook.com/groups/345513782301731/permalink/348293415357101/
 
 # Python coding style
 1. Follow PEP8 strictly. Must setup your own IDE to verify PEP8 requirements.
