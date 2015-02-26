@@ -5,6 +5,7 @@
 1. In case assigned task is not clear, ask Trung / Yen for clarification immediately.
 1. Frequently update Trung with what you're doing & if you have any difficulties completing tasks.
 1. Be confident! Ask lots of questions! Participate actively in dicussions.
+1. Important points will be written down in documentation (like this one!), so you do not have to read all the Facebook chat messages to get important updates.
 
 # Working with Trello
 1. New tasks will be created on "Todo" columns
