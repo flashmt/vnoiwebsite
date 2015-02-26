@@ -25,4 +25,25 @@
     {% endfor %}
 </table>
 
+{% block forum-pagination %}
+    <!-- Next/Prev page links  -->
+    {% if topics and topics.paginator.num_pages > 1 %}
+    <div class="pagination">
+        <span class="step-links">
+            {% if topics.has_previous %}
+                <a href= "?page={{ topics.previous_page_number }}">previous &lt;&lt; </a>
+            {% endif %}
+
+            <span class="current">
+                &nbsp;Page {{ topics.number }} of {{ topics.paginator.num_pages }}
+            </span>
+
+            {% if topics.has_next %}
+                <a href="?page={{ topics.next_page_number }}"> &gt;&gt; next</a>
+            {% endif %}
+        </span>
+    </div>
+    {% endif %}
+{% endblock forum-pagination %}
+
 {% endblock forum-body %}
