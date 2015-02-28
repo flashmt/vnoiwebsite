@@ -14,8 +14,9 @@
 
     <!-- Bootstrap core CSS -->
     <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
-
     <link href="{% static 'css/base.css' %}" rel="stylesheet">
+    {% block extra-css %}
+    {% endblock %}
 
     <!--&lt;!&ndash; Custom styles for this template &ndash;&gt;-->
     <!--<link href="offcanvas.css" rel="stylesheet">-->
