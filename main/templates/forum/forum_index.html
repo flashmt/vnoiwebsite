@@ -30,7 +30,7 @@
                 <div class="row forum" id="forum-{{ forum.id }}">
                     <span class="forum-icon col-md-1"></span>
                     <div class="forum-name-div col-md-8">
-                        <a href="{% url 'forum:topic_list' forum.id %}"><h3 class="forum-name">{{ forum.name }}</h3></a>
+                        <h3 class="forum-name"><a href="{% url 'forum:topic_list' forum.id %}">{{ forum.name }}</a></h3>
                         <p>{{ forum.desc }}</p>
                     </div>
                     <div class="forum-statistics col-md-3 row">
