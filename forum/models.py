@@ -2,7 +2,6 @@ from django.contrib.auth.models import User
 from django.db import models
 
 # Create your models here.
-from django.db.models import Sum
 
 
 class Forum(models.Model):
@@ -53,10 +52,10 @@ class Topic(models.Model):
             return None
 
     def save(self, *args, **kwargs):
-    	if not self.pk:
-    		self.forum.num_topics += 1
-    		self.forum.save()
-    	super(Topic, self).save(*args, **kwargs)
+        if not self.pk:
+            self.forum.num_topics += 1
+            self.forum.save()
+        super(Topic, self).save(*args, **kwargs)
 
 
 class Post(models.Model):
@@ -83,9 +82,9 @@ class Post(models.Model):
         return self.reply_posts.all()
 
     def save(self, *args, **kwargs):
-    	if not self.pk:
-    		self.topic.num_posts += 1
-    		self.topic.save()
-    		self.topic.forum.num_posts += 1
-    		self.topic.forum.save()
-    	super(Post, self).save(*args, **kwargs)
+        if not self.pk:
+            self.topic.num_posts += 1
+            self.topic.save()
+            self.topic.forum.num_posts += 1
+            self.topic.forum.save()
+        super(Post, self).save(*args, **kwargs)
