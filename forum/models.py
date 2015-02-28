@@ -5,6 +5,14 @@ from django.db import models
 from django.db.models import Sum
 
 
+class ForumGroup(models.Model):
+    name = models.CharField(max_length=200)
+    created_by = models.ForeignKey(User, related_name='forum_groups')
+
+    def __unicode__(self):
+        return self.name
+
+
 class Forum(models.Model):
     name = models.CharField(max_length=200)
     desc = models.TextField(default='')
@@ -12,6 +20,7 @@ class Forum(models.Model):
     num_posts = models.IntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
     created_by = models.ForeignKey(User, related_name="created_forums")
+    forum_group = models.ForeignKey(ForumGroup, related_name="forums")
 
     def __unicode__(self):
         return self.name
@@ -23,7 +32,7 @@ class Forum(models.Model):
         return self.num_posts
 
     def last_post(self):
-        if self.topics.all().count:
+        if len(self.topics.all()) > 0:
             last_post = Post.objects.all().filter(topic__forum=self).order_by("-created_at")[0]
             return last_post
         else:
