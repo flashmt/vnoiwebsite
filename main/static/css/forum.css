@@ -20,7 +20,6 @@
     line-height: 1em;
     overflow: hidden;
     position: relative;
-    border-color: #DDE4EB;
 }
 .forum-icon {
     float: left;
@@ -29,6 +28,7 @@
     margin-top: -1em;
     border-right: 1px solid #DDE4EB;
     border-left: 1px solid #DDE4EB;
+    border-bottom: 1px solid #DDE4EB;
 }
 .forum-name {
     font-size: 1em;
@@ -43,7 +43,10 @@
     margin-top: -0.5em;
     padding-top: 1em;
     border-left: 1px solid #DDE4EB;
+    overflow: hidden;
+    white-space: nowrap;
 }
 .forum-statistics {
     height: 100%;
+    border-bottom: 1px solid #DDE4EB;
 }
