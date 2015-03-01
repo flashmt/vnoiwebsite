@@ -1,7 +1,7 @@
 from lettuce import world, step
 from features.const import ROOT_URL
 from features.helpers import random_string
-import sys
+
 
 @step(u'I create new topic')
 def create_new_post(step):
@@ -17,7 +17,4 @@ def create_new_post(step):
     assert world.browser.is_text_present('Content: ' + topic_content)
     assert world.browser.is_text_present('Edit this post')
     assert world.browser.is_text_present('Comment this post')
-
-    world.browser.visit(ROOT_URL + '/forum/1/?page=1000111000')
-    assert world.browser.is_text_present(topic_content[:6])
-    assert world.browser.is_text_present(topic_title + '\nby admin')
+    # TODO: verify topic exist
