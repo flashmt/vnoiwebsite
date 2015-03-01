@@ -40,18 +40,21 @@
 </div>
 
 {% block forum-pagination %}
-    <!-- Next/Prev page links  -->
     {% if topics and topics.paginator.num_pages > 1 %}
-    <ul class="pagination">
+     <ul class="pagination nav navbar-nav">
         {% if topics.has_previous %}
-            <li><a href= "?page={{ topics.previous_page_number }}" aria-label="Previous">&laquo;</a></li>
+                <li><a href="?page={{ objects.previous_page_number }}">&laquo;</a></li>
         {% endif %}
-        <li class="active"><a href="#">{{ topics.number }}</a></li>
+        {% for page in topics.paginator.page_range %}
+            <li class="{% if topics.number == page  %}active{% endif %}"><a href="?page={{page }}">{{ page }}</a></li>
+        {% endfor %}
+
         {% if topics.has_next %}
-            <li><a href="?page={{ topics.next_page_number }}" aria-label="Next">»</a></li>
+            <li> <a href="?page={{ topics.next_page_number }}">»</a></li>
         {% endif %}
-    </ul>
+     </ul>
     {% endif %}
+
 {% endblock forum-pagination %}
 
 {% endblock forum-body %}
