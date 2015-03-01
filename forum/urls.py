@@ -4,7 +4,6 @@ from forum import views
 urlpatterns = patterns(
     '',
     url(r'^$', views.index, name='index'),
-    url(r'^list/$', views.list, name='list'),
     url(r'^(?P<forum_id>\d+)/topic_create/$', views.topic_create, name='topic_create'),
     url(r'^(?P<forum_id>\d+)/(?P<topic_id>\d+)/$', views.topic_retrieve, name="topic_retrieve"),
     url(r'^(?P<forum_id>\d+)/(?P<topic_id>\d+)/(?P<post_id>\d+)/post_create/$', views.post_create, name="post_create"),

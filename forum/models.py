@@ -2,7 +2,14 @@ from django.contrib.auth.models import User
 from django.db import models
 
 # Create your models here.
-from django.db.models import Sum
+
+
+class ForumGroup(models.Model):
+    name = models.CharField(max_length=200)
+    created_by = models.ForeignKey(User, related_name='forum_groups')
+
+    def __unicode__(self):
+        return self.name
 
 
 class Forum(models.Model):
@@ -16,7 +23,8 @@ class Forum(models.Model):
     created_by = models.ForeignKey(User, related_name="created_forums")
     
     last_post = models.OneToOneField('Post', related_name="+", default=None, null=True, blank=True)
-    # last_post = models.CharField(max_length=500, null=True, blank=True)
+
+    forum_group = models.ForeignKey(ForumGroup, related_name="forums")
 
     def __unicode__(self):
         return self.name
@@ -26,6 +34,9 @@ class Forum(models.Model):
 
     def count_num_posts(self):
         return self.num_posts
+
+    def get_last_post(self):
+        return self.last_post
 
 class Topic(models.Model):
     forum = models.ForeignKey(Forum, related_name="topics")
@@ -41,7 +52,6 @@ class Topic(models.Model):
     updated_by = models.ForeignKey(User, related_name="updated_topics", default=None)
 
     last_post = models.OneToOneField('Post', related_name="+", default=None, null=True, blank=True)
-    # last_post = models.CharField(max_length=500, null=True, blank=True)
 
     # TODO created_by, updated_at, level
 

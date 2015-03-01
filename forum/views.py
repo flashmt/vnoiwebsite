@@ -6,18 +6,20 @@ from django.shortcuts import render, get_object_or_404
 
 # Create your views here.
 from forum.forms import PostCreateForm, PostUpdateForm
-from forum.models import Topic, Forum, Post
+from forum.models import Topic, Forum, ForumGroup, Post
 
 
 def index(request):
-    forums = Forum.objects.all()
-    return render(request, 'forum/forum_index.html', {'forums': forums})
+    forum_groups = ForumGroup.objects.all()
+    return render(request, 'forum/forum_index.html', {'forum_groups': forum_groups})
 
 
 def pagination_items(request, items, num_per_page):
     paginator = Paginator(items, num_per_page)
-    try: page = int(request.GET.get('page', '1'))
-    except ValueError: page = 1
+    try:
+        page = int(request.GET.get('page', '1'))
+    except ValueError:
+        page = 1
     try:
         items = paginator.page(page)
     except (InvalidPage, EmptyPage):
@@ -41,10 +43,6 @@ def topic_retrieve(request, forum_id, topic_id):
                                                          'topic': topic,
                                                          'post': topic.post,
                                                          'posts': posts})
-
-
-def list(request):
-    return HttpResponse("this is list!")
 
 
 @login_required
@@ -101,5 +99,3 @@ def post_update(request, forum_id=None, topic_id=None, post_id=None, template="f
 @login_required
 def topic_create(request, forum_id=None, template="forum/topic_create.html"):
     return post_create(request, forum_id=forum_id, template=template)
-
-

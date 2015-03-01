@@ -1,49 +1,60 @@
 {% extends 'forum/forum_index.html' %}
+{% load staticfiles %}
+
+{% block extra-css %}
+    <link href="{% static 'css/forum.css' %}" rel="stylesheet">
+{% endblock %}
 
 {% block forum-nav %}
     <a href="{% url 'forum:index' %}">Forum</a> > {{forum.name}}
 {% endblock forum-nav %}
 
 {% block forum-body %}
-<a href="{% url 'forum:topic_create' forum.id %}">Create new topic</a>
-<table border="1" cellpadding="4" width="100%">
-    <tr>
-        <td>Topics</td>
-        <td>Replies</td>
-        <td>Last post</td>
-        <td></td>
-    </tr>
-
-    {% for topic in topics %}
-    <tr>
-        <td><a href="{% url 'forum:topic_retrieve' topic.forum_id topic.id %}">{{ topic.title }}</a>
-         by <a href="">{{topic.created_by}}</a> </td>
-        <td>{{ topic.count_num_posts }}</a></td>
-        <td>{{ topic.last_post }} by <a href="">{{topic.created_by}}</a> </td></a></td>
-        </td>
-    </tr>
-    {% endfor %}
-</table>
+<div class="btn-toolbar button-container" role="toolbar">
+    <a href="{% url 'forum:topic_create' forum.id %}" class="btn btn-default">Create new topic</a>
+</div>
+<div id="forum-main-container">
+    <div class="forum-group-head">
+        Topics
+    </div>
+    <div class="forum-group-container">
+        {% for topic in topics %}
+            <div class="row forum" id="forum-{{ topic.id }}">
+                <span class="forum-icon col-md-1"></span>
+                <div class="forum-name-div col-md-8">
+                    <a href="{% url 'forum:topic_retrieve' topic.forum_id topic.id %}">
+                        <h3 class="forum-name">{{ topic.title }}</h3>
+                    </a>
+                    <p>by {{ topic.created_by }}</p>
+                </div>
+                <div class="forum-statistics col-md-3 row">
+                    <div class="forum-post-counts col-md-4">{{ topic.count_num_posts }}</div>
+                    <div class="forum-last-post col-md-8">
+                        <p>{{ topic.last_post }}</p>
+                        <p>by {{ topic.last_post.created_by }}</p>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
 
 {% block forum-pagination %}
-    <!-- Next/Prev page links  -->
     {% if topics and topics.paginator.num_pages > 1 %}
-    <div class="pagination">
-        <span class="step-links">
-            {% if topics.has_previous %}
-                <a href= "?page={{ topics.previous_page_number }}">previous &lt;&lt; </a>
-            {% endif %}
+     <ul class="pagination nav navbar-nav">
+        {% if topics.has_previous %}
+                <li><a href="?page={{ objects.previous_page_number }}">&laquo;</a></li>
+        {% endif %}
+        {% for page in topics.paginator.page_range %}
+            <li class="{% if topics.number == page  %}active{% endif %}"><a href="?page={{page }}">{{ page }}</a></li>
+        {% endfor %}
 
-            <span class="current">
-                &nbsp;Page {{ topics.number }} of {{ topics.paginator.num_pages }}
-            </span>
-
-            {% if topics.has_next %}
-                <a href="?page={{ topics.next_page_number }}"> &gt;&gt; next</a>
-            {% endif %}
-        </span>
-    </div>
+        {% if topics.has_next %}
+            <li> <a href="?page={{ topics.next_page_number }}">»</a></li>
+        {% endif %}
+     </ul>
     {% endif %}
+
 {% endblock forum-pagination %}
 
 {% endblock forum-body %}

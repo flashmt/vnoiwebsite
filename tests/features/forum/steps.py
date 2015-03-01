@@ -17,7 +17,4 @@ def create_new_post(step):
     assert world.browser.is_text_present('Content: ' + topic_content)
     assert world.browser.is_text_present('Edit this post')
     assert world.browser.is_text_present('Comment this post')
-
-    world.browser.visit(ROOT_URL + '/forum/1/')
-    assert world.browser.is_text_present(topic_content + ' by admin')
-    assert world.browser.is_text_present(topic_title + ' by admin')
+    # TODO: verify topic exist

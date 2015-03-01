@@ -1,4 +1,9 @@
 {% extends 'main/base.html' %}
+{% load staticfiles %}
+
+{% block extra-css %}
+    <link href="{% static 'css/forum.css' %}" rel="stylesheet">
+{% endblock %}
 
 {% block navbar %}
     <li><a href="{% url 'main:index' %}">Home</a></li>
@@ -15,23 +20,31 @@
 </div>
 
 {% block forum-body %}
-<table border="1" cellpadding="4" width="100%">
-    <tr>
-        <td>Forum</td>
-        <td>Posts</td>
-        <td>Last Post</td>
-    </tr>
-
-    {% for forum in forums %}
-    <tr>
-        <td><a href="{% url 'forum:topic_list' forum.id %}">{{ forum.name }}</a></td>
-        <td>{{ forum.count_num_posts }}</a></td>
-        <td>{{ forum.last_post }}</a></td>
-    </tr>
-
+    <div id="forum-main-container">
+    {% for group in forum_groups %}
+        <div class="forum-group-head">
+            {{ group.name }}
+        </div>
+        <div class="forum-group-container">
+            {% for forum in group.forums.all %}
+                <div class="row forum" id="forum-{{ forum.id }}">
+                    <span class="forum-icon col-md-1"></span>
+                    <div class="forum-name-div col-md-8">
+                        <h3 class="forum-name"><a href="{% url 'forum:topic_list' forum.id %}">{{ forum.name }}</a></h3>
+                        <p>{{ forum.desc }}</p>
+                    </div>
+                    <div class="forum-statistics col-md-3 row">
+                        <div class="forum-post-counts col-md-4">{{ forum.count_num_posts }}</div>
+                        <div class="forum-last-post col-md-8">
+                            <p>{{ forum.last_post }}</p>
+                            <p>by {{ forum.last_post.created_by }}</p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
     {% endfor %}
-</table>
-
+    </div>
 {% endblock forum-body %}
 
 {% endblock container %}
