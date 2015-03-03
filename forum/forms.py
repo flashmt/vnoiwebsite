@@ -9,7 +9,7 @@ class PostForm(forms.ModelForm):
 
     class Meta:
         model = Post
-        fields = ('content',)
+        fields = ('title', 'content')
 
     def __init__(self, *args, **kwargs):
         self.user = kwargs.pop('user', None)
@@ -82,4 +82,5 @@ class PostUpdateForm(PostForm):
             topic.content = post.content
             topic.title = self.cleaned_data['title']
             topic.save()
+
         return post

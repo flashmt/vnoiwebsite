@@ -60,9 +60,11 @@ class Topic(models.Model):
         return self.title
 
     def save(self, *args, **kwargs):
-        if not self.pk:  # New topic
+        if not self.pk:
+            # New topic
             self.forum.num_topics += 1
-        else:  # Edited topic
+        else:
+            # Edited topic
             self.forum.last_post = self.last_post
         self.forum.save()
 
@@ -91,7 +93,8 @@ class Post(models.Model):
         return self.content[:30]
 
     def save(self, *args, **kwargs):
-        if not self.pk:  # New post
+        if not self.pk:
+            # New post
             self.topic.num_posts += 1
             self.topic.created_by = self.created_by
             self.topic.created_at = self.created_at
@@ -99,10 +102,12 @@ class Post(models.Model):
             self.topic.updated_by = self.updated_by
             self.topic.save()
 
-            self.topic.forum.num_posts += 1
+            self.topic.forum.num_posts += 1            
             self.topic.forum.save()
-        else:  # Edited post
-            if self.topic_post:  # Edited content
+        else:
+            # Edited post
+            if self.topic_post:
+                # Edited content
                 self.topic.content = self.content
 
             self.topic.updated_at = self.updated_at
