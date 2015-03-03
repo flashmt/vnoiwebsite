@@ -57,3 +57,25 @@ footer {
     width: 50%; /* 6 columns */
   }
 }
+
+.base-popular-topic-title {
+  color: black;
+}
+
+.base-popular-topic-row {
+  margin-top: 0.5em;
+  border-bottom: 1px solid #ddd;
+}
+
+.base-popular-topic-name {
+  text-align: left;
+  font-weight: bold;
+}
+
+.base-popular-topic-user {
+  text-align: right;
+}
+
+.base-popular-topic-link {
+  color : black;
+};
