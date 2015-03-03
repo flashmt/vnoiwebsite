@@ -21,7 +21,7 @@ class Forum(models.Model):
 
     created_at = models.DateTimeField(auto_now_add=True, null=True)
     created_by = models.ForeignKey(User, related_name="created_forums")
-    
+
     last_post = models.OneToOneField('Post', related_name="+", default=None, null=True, blank=True)
 
     forum_group = models.ForeignKey(ForumGroup, related_name="forums")
@@ -60,9 +60,11 @@ class Topic(models.Model):
         return self.title
 
     def save(self, *args, **kwargs):
-        if not self.pk:  # New topic
-            self.forum.num_topics += 1            
-        else:  # Edited topic
+        if not self.pk:
+            # New topic
+            self.forum.num_topics += 1
+        else:
+            # Edited topic
             self.forum.last_post = self.last_post
         self.forum.save()
 
@@ -85,14 +87,15 @@ class Post(models.Model):
 
     updated_at = models.DateTimeField(auto_now_add=True, null=True)
     updated_by = models.ForeignKey(User, related_name="updated_posts", default=None)
-  
+
     # TODO: created_by, updated_by
 
     def __unicode__(self):
         return self.content[:30]
 
     def save(self, *args, **kwargs):
-        if not self.pk:  # New post
+        if not self.pk:
+            # New post
             self.topic.num_posts += 1
             self.topic.created_by = self.created_by
             self.topic.created_at = self.created_at
@@ -102,8 +105,10 @@ class Post(models.Model):
 
             self.topic.forum.num_posts += 1            
             self.topic.forum.save()
-        else:  # Edited post
-            if self.topic_post:  # Edited content
+        else:
+            # Edited post
+            if self.topic_post:
+                # Edited content
                 self.topic.content = self.content
 
             self.topic.updated_at = self.updated_at
@@ -151,4 +156,3 @@ class Vote(models.Model):
             pass
         self.post.save()
         super(Vote, self).save(*args, **kwargs)
-

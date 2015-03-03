@@ -6,6 +6,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 
 # Create your views here.
+
 from forum.forms import PostCreateForm, PostUpdateForm
 from forum.models import Topic, Forum, ForumGroup, Post, Vote
 
@@ -33,7 +34,7 @@ def topic_list(request, forum_id, template="forum/topic_list.html"):
     topics = Topic.objects.filter(forum_id=forum_id)
     topics = pagination_items(request, topics, 2)
     return render(request, template, {'forum': forum,
-                                                     'topics': topics})
+                                      'topics': topics})
 
 
 def topic_retrieve(request, forum_id, topic_id, template="forum/topic_retrieve.html"):
@@ -41,9 +42,9 @@ def topic_retrieve(request, forum_id, topic_id, template="forum/topic_retrieve.h
     topic = get_object_or_404(Topic, pk=topic_id)
     posts = topic.posts.all()
     return render(request, template, {'forum': forum,
-                                                         'topic': topic,
-                                                         'post': topic.post,
-                                                         'posts': posts})
+                                      'topic': topic,
+                                      'post': topic.post,
+                                      'posts': posts})
 
 
 @login_required
