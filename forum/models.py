@@ -38,6 +38,7 @@ class Forum(models.Model):
     def get_last_post(self):
         return self.last_post
 
+
 class Topic(models.Model):
     forum = models.ForeignKey(Forum, related_name="topics")
     post = models.ForeignKey('Post', related_name="topics", null=True, blank=True)
@@ -59,10 +60,10 @@ class Topic(models.Model):
         return self.title
 
     def save(self, *args, **kwargs):
-        if not self.pk: # New topic
+        if not self.pk:  # New topic
             self.forum.num_topics += 1            
-        else: # Edited topic
-            self.forum.last_post = self.last_post;          
+        else:  # Edited topic
+            self.forum.last_post = self.last_post
         self.forum.save()
 
         super(Topic, self).save(*args, **kwargs)
@@ -76,7 +77,8 @@ class Post(models.Model):
     topic = models.ForeignKey(Topic, verbose_name='Topic', related_name='posts')
     reply_on = models.ForeignKey("self", related_name="reply_posts", null=True, blank=True)
     content = models.TextField(null=False, blank=False)
-    num_votes = models.IntegerField(default=0)
+    num_upvotes = models.IntegerField(default=0)
+    num_downvotes = models.IntegerField(default=0)
 
     created_at = models.DateTimeField(auto_now_add=True, null=True)
     created_by = models.ForeignKey(User, related_name="created_posts")
@@ -90,7 +92,7 @@ class Post(models.Model):
         return self.content[:30]
 
     def save(self, *args, **kwargs):
-        if not self.pk: # New post
+        if not self.pk:  # New post
             self.topic.num_posts += 1
             self.topic.created_by = self.created_by
             self.topic.created_at = self.created_at
@@ -100,8 +102,8 @@ class Post(models.Model):
 
             self.topic.forum.num_posts += 1            
             self.topic.forum.save()
-        else: # Edited post
-            if self.topic_post: # Edited content
+        else:  # Edited post
+            if self.topic_post:  # Edited content
                 self.topic.content = self.content
 
             self.topic.updated_at = self.updated_at
@@ -110,7 +112,7 @@ class Post(models.Model):
 
         super(Post, self).save(*args, **kwargs)
         # Assign last_post
-        self.topic.last_post = self;
+        self.topic.last_post = self
         self.topic.save()
 
     def title(self):
@@ -121,3 +123,32 @@ class Post(models.Model):
 
     def get_reply_posts(self):
         return self.reply_posts.all()
+
+
+class Vote(models.Model):
+    UPVOTE = 'u'
+    DOWNVOTE = 'd'
+
+    VoteChoices = (
+        (UPVOTE, 'UpVote'),
+        (DOWNVOTE, 'DownVote')
+    )
+    type = models.CharField(max_length=5, choices=VoteChoices, default=UPVOTE)
+    post = models.ForeignKey(Post, related_name="votes")
+    created_by = models.ForeignKey(User, related_name="votes")
+    created_at = models.DateTimeField(auto_now_add=True, null=True)
+
+    def __unicode__(self):
+        return "{0} - {1} - {2}".format(self.type, self.post.id, self.created_by.id)
+
+    def save(self, *args, **kwargs):
+        if not self.pk:
+            if self.type == self.UPVOTE:
+                self.post.num_upvotes += 1
+            elif self.type == self.DOWNVOTE:
+                self.post.num_downvotes += 1
+        else:
+            pass
+        self.post.save()
+        super(Vote, self).save(*args, **kwargs)
+
