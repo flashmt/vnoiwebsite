@@ -4,8 +4,12 @@
     <p>Created by {{post.created_by}} </p>
     <p>Created at {{post.created_at}} </p>
     <p>Content: {{post.content}}</p>
+    <p>Upvote: {{post.num_upvotes}}</p>
+    <p>Downvote: {{post.num_downvotes}}</p>
     <p><a href="{% url 'forum:post_update' forum.id topic.id post.id %}">Edit this post</a></p>
     <p><a href="{% url 'forum:post_create' forum.id topic.id post.id %}">Comment this post</a></p>
+    <p><a href="{% url 'forum:vote_create' post.id %}?type=u">Upvote</a>|
+       <a href="{% url 'forum:vote_create' post.id %}?type=d">Downvote</a></p>
 </div>
 <div style="margin-left: 30px; margin-bottom: 30px">
 {% for p in post.get_reply_posts %}
