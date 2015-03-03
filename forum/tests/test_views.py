@@ -3,7 +3,7 @@
 from django.core.urlresolvers import reverse
 from django.test import TestCase
 from django.test.client import Client, RequestFactory
-from forum.models import Post, Topic
+from forum.models import Post, Topic, Vote
 
 
 class TopicViewTest(TestCase):
@@ -60,3 +60,47 @@ class PostViewTest(TestCase):
     def test_post_update(self):
         self.client.login(username="admin", password="admin")
         pass
+
+
+class VoteViewTest(TestCase):
+
+    fixtures = ['auth.json', 'forum.json']
+
+    def setUp(self):
+        self.client = Client()
+        self.factory = RequestFactory()
+
+    def test_vote_create_successfully(self):
+        self.client.login(username="admin", password="admin")
+
+        # Test successfully create upvote
+        response = self.client.get(reverse('forum:vote_create', kwargs={'post_id': 1}), {'type': Vote.UPVOTE})
+        self.assertEquals(response.status_code, 200)
+        self.assertEquals(Post.objects.get(pk=1).num_upvotes, 1)
+        self.assertEquals(Post.objects.get(pk=1).num_downvotes, 0)
+
+        # Test successfully create downvote
+        response = self.client.get(reverse('forum:vote_create', kwargs={'post_id': 2}), {'type': Vote.DOWNVOTE})
+        self.assertEquals(response.status_code, 200)
+        self.assertEquals(Post.objects.get(pk=2).num_upvotes, 0)
+        self.assertEquals(Post.objects.get(pk=2).num_downvotes, 1)
+
+    def test_vote_create_unsuccessfully(self):
+        # if user already vote this post
+        self.client.login(username="admin", password="admin")
+        self.client.get(reverse('forum:vote_create', kwargs={'post_id': 1}), {'type': Vote.UPVOTE})
+
+        response = self.client.get(reverse('forum:vote_create', kwargs={'post_id': 1}), {'type': Vote.UPVOTE})
+        self.assertEquals(response.status_code, 200)
+        self.assertEquals(response.content, 'User already voted this post')
+        self.assertEquals(response.context, None)
+
+        response = self.client.get(reverse('forum:vote_create', kwargs={'post_id': 1}), {'type': Vote.DOWNVOTE})
+        self.assertEquals(response.status_code, 200)
+        self.assertEquals(response.content, 'User already voted this post')
+        self.assertEquals(response.context, None)
+
+        # If user doesn't have permission
+        pass
+
+
