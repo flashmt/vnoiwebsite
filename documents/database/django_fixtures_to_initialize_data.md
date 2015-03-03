@@ -1,5 +1,14 @@
 # Django fixtures to initialize data
 
+
+## Initialize data using fixtures (vnoi_website)
+Run command:
+
+```bash
+	./init_database.sh
+```
+
+
 ## How to create fixtures
 
 1. Use Django Admin to create a database
@@ -32,7 +41,3 @@
 	```
 	- <!> Fixtures can be load only if all records satisfy database fields' requirements.	
 	
-	  
- 
-   
-   
