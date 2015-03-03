@@ -20,16 +20,16 @@
     <div class="forum-group-container">
         {% for topic in topics %}
             <div class="row forum" id="forum-{{ topic.id }}">
-                <span class="forum-icon col-md-1"></span>
-                <div class="forum-name-div col-md-8">
+                <span class="forum-icon col-xs-1"></span>
+                <div class="forum-name-div col-xs-8">
                     <a href="{% url 'forum:topic_retrieve' topic.forum_id topic.id %}">
                         <h3 class="forum-name">{{ topic.title }}</h3>
                     </a>
                     <p>by {{ topic.created_by }}</p>
                 </div>
-                <div class="forum-statistics col-md-3 row">
-                    <div class="forum-post-counts col-md-4">{{ topic.count_num_posts }}</div>
-                    <div class="forum-last-post col-md-8">
+                <div class="forum-statistics col-xs-3 row">
+                    <div class="forum-post-counts col-xs-4">{{ topic.count_num_posts }}</div>
+                    <div class="forum-last-post col-xs-8">
                         <p>{{ topic.last_post }}</p>
                         <p>by {{ topic.last_post.created_by }}</p>
                     </div>
