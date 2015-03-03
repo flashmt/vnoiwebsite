@@ -17,9 +17,11 @@ For vnoi_website django project, we need to test our custom methods in:
 
 1. Write tests covering areas (including models, views, forms) - which maybe affected by your new codes (can write test before implementing or right after the first draft of implementation). Write tests as many as possible.
 2. Run test suites (read django document see how). For example, to run all test cases in app forum:
-```bash
-python manage.py test forum
-```
+
+    ```bash
+    python manage.py test forum
+    ```
+
 3. Fix bugs or change code
 4. Repeat step 2, 3 until all testcases are passed
 
@@ -28,7 +30,7 @@ python manage.py test forum
 1. We use [django fixtures](http://django-testing-docs.readthedocs.org/en/latest/fixtures.html) to initialize database for testing. Everyone shares the same fixtures which can be found in **main/fixtures**. If you create your custom fixtures, put into the folder.
 2. Testing structure
 
-	![alt text](https://github.com/VNOI-Admin/vnoiwebsite/tree/master/documents/testing/test_structure.png	)
+	![alt text](https://github.com/VNOI-Admin/vnoiwebsite/tree/master/documents/testing/test_structure.png)
 
 3. Run tests whenever code is pullled or pushed 
 
