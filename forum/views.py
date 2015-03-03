@@ -1,3 +1,4 @@
+import datetime
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
 from django.core.urlresolvers import reverse
@@ -6,7 +7,7 @@ from django.shortcuts import render, get_object_or_404
 
 # Create your views here.
 from forum.forms import PostCreateForm, PostUpdateForm
-from forum.models import Topic, Forum, ForumGroup, Post
+from forum.models import Topic, Forum, ForumGroup, Post, Vote
 
 
 def index(request):
@@ -103,3 +104,27 @@ def post_update(request, forum_id=None, topic_id=None, post_id=None, template="f
 @login_required
 def topic_create(request, forum_id=None, template="forum/topic_create.html"):
     return post_create(request, forum_id=forum_id, template=template)
+
+@login_required
+def vote_create(request, post_id=None):
+    if post_id:
+        post = get_object_or_404(Post, pk=post_id)
+
+    # TODO: Check user permission
+
+    # Check if user already vote this post
+    user = request.user
+    if already_voted(user, post):
+        return HttpResponse("User already voted this post")
+
+    if request.GET:
+        vote_type = request.GET['type']
+        vote = Vote(type=vote_type, post=post, created_by=request.user)
+        vote.save()
+        return HttpResponse("Create Vote successfully!")
+    else:
+        return HttpResponse("Invalid Request: No GET")
+
+
+def already_voted(user, post):
+    return user.votes.filter(post=post).count() > 0
