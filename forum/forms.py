@@ -36,8 +36,9 @@ class PostCreateForm(PostForm):
         if not self.topic:
             # if this post create new topic, create this corresponding topic
             topic = Topic(forum=self.forum,
+                          title=self.cleaned_data['title'],
                           created_by=self.user,
-                          title=self.cleaned_data['title'],)
+                          updated_by=self.user)
             topic.save()
             self.topic = topic
             topic_post = True
@@ -47,6 +48,7 @@ class PostCreateForm(PostForm):
 
         post = Post(topic=topic,
                     created_by=self.user,
+                    updated_by=self.user,
                     topic_post=topic_post,
                     content=self.cleaned_data['content'],
                     reply_on=self.parent)
