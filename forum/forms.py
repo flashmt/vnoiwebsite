@@ -55,6 +55,7 @@ class PostCreateForm(PostForm):
             post.save()
             if topic_post:
                 topic.post = post
+                topic.content = post.content
                 topic.save()
 
         return post
