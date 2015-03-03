@@ -21,7 +21,7 @@ class Forum(models.Model):
 
     created_at = models.DateTimeField(auto_now_add=True, null=True)
     created_by = models.ForeignKey(User, related_name="created_forums")
-    
+
     last_post = models.OneToOneField('Post', related_name="+", default=None, null=True, blank=True)
 
     forum_group = models.ForeignKey(ForumGroup, related_name="forums")
@@ -37,6 +37,7 @@ class Forum(models.Model):
 
     def get_last_post(self):
         return self.last_post
+
 
 class Topic(models.Model):
     forum = models.ForeignKey(Forum, related_name="topics")
@@ -59,10 +60,12 @@ class Topic(models.Model):
         return self.title
 
     def save(self, *args, **kwargs):
-        if not self.pk: # New topic
-            self.forum.num_topics += 1            
-        else: # Edited topic
-            self.forum.last_post = self.last_post;          
+        if not self.pk:
+            # New topic
+            self.forum.num_topics += 1
+        else:
+            # Edited topic
+            self.forum.last_post = self.last_post
         self.forum.save()
 
         super(Topic, self).save(*args, **kwargs)
@@ -83,14 +86,15 @@ class Post(models.Model):
 
     updated_at = models.DateTimeField(auto_now_add=True, null=True)
     updated_by = models.ForeignKey(User, related_name="updated_posts", default=None)
-  
+
     # TODO: created_by, updated_by
 
     def __unicode__(self):
         return self.content[:30]
 
     def save(self, *args, **kwargs):
-        if not self.pk: # New post
+        if not self.pk:
+            # New post
             self.topic.num_posts += 1
             self.topic.created_by = self.created_by
             self.topic.created_at = self.created_at
@@ -98,10 +102,12 @@ class Post(models.Model):
             self.topic.updated_by = self.updated_by
             self.topic.save()
 
-            self.topic.forum.num_posts += 1            
+            self.topic.forum.num_posts += 1
             self.topic.forum.save()
-        else: # Edited post
-            if self.topic_post: # Edited content
+        else:
+            # Edited post
+            if self.topic_post:
+                # Edited content
                 self.topic.content = self.content
 
             self.topic.updated_at = self.updated_at
@@ -110,7 +116,7 @@ class Post(models.Model):
 
         super(Post, self).save(*args, **kwargs)
         # Assign last_post
-        self.topic.last_post = self;
+        self.topic.last_post = self
         self.topic.save()
 
     def title(self):
