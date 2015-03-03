@@ -8,6 +8,7 @@ Run command:
 	./init_database.sh
 ```
 
+# Read more...
 
 ## How to create fixtures
 
@@ -24,8 +25,8 @@ Run command:
 
 1. Delete database: 
 
-	```*
-		 delete file db.sqlite3
+	```bash
+		 rm db.sqlite3
 	```	 
 2. Use django migrate to create data tables
 
