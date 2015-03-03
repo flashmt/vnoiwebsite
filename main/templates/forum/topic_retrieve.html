@@ -1,7 +1,7 @@
 {% extends 'forum/forum_index.html' %}
 
 {% block forum-nav %}
-    <a href="{% url 'forum:index' %}">Forum</a> > <a href="{% url 'forum:topic_list' forum.id %}">{{forum.name}}</a> > {{topic.title}}
+    <a href="{% url 'forum:index' %}">Forum</a> > <a href="{% url 'forum:topic_list' forum.id %}">{{ forum.name }}</a> > {{topic.title}}
 {% endblock forum-nav %}
 
 {% block forum-body %}

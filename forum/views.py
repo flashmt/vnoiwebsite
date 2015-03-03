@@ -27,19 +27,19 @@ def pagination_items(request, items, num_per_page):
     return items
 
 
-def topic_list(request, forum_id):
+def topic_list(request, forum_id, template="forum/topic_list.html"):
     forum = get_object_or_404(Forum, pk=forum_id)
     topics = Topic.objects.filter(forum_id=forum_id)
     topics = pagination_items(request, topics, 2)
-    return render(request, "forum/topic_list.html", {'forum': forum,
+    return render(request, template, {'forum': forum,
                                                      'topics': topics})
 
 
-def topic_retrieve(request, forum_id, topic_id):
+def topic_retrieve(request, forum_id, topic_id, template="forum/topic_retrieve.html"):
     forum = get_object_or_404(Forum, pk=forum_id)
     topic = get_object_or_404(Topic, pk=topic_id)
     posts = topic.posts.all()
-    return render(request, "forum/topic_retrieve.html", {'forum': forum,
+    return render(request, template, {'forum': forum,
                                                          'topic': topic,
                                                          'post': topic.post,
                                                          'posts': posts})
