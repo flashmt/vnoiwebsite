@@ -78,4 +78,38 @@ footer {
 
 .base-popular-topic-link {
   color : black;
-};
+}
+
+.pinned-post-author {
+  font-style: italic;
+}
+
+.pinned-post-content-container {
+  border-left: 4px solid #ddd;
+  margin-bottom: 0.5em;
+}
+
+.pinned-post-content {
+  margin-left: 1em;
+}
+
+.pinned-post-upvote {
+  font-weight: bold;
+  font-size: 15px;
+  color: green;
+}
+
+.pinned-post-downvote {
+  font-weight: bold;
+  font-size: 15px;
+  color: red;
+}
+
+.pinned-post-count-upvote {
+  margin-top: 0.5em;
+  text-align: center;
+}
+
+.pinned-post-pagination {
+  float: right;
+}
