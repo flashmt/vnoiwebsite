@@ -147,3 +147,8 @@ LOGGING = {
 # To use logger, instantiate logger:
 # import logging
 # logger = logging.getLogger(__name__)
+
+
+BOOTSTRAP3 = {
+    'horizontal_field_class': 'col-md-6',
+}

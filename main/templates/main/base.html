@@ -397,5 +397,7 @@
     <script src="{% static 'js/ie10-viewport-bug-workaround.js' %}"></script>
 
     <script src="{% static 'js/base.js' %}"></script>
+    {% block extra-js %}
+    {% endblock %}
   </body>
 </html>

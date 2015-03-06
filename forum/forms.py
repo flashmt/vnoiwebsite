@@ -5,7 +5,8 @@ from forum.models import Post, Topic
 
 class PostForm(forms.ModelForm):
 
-    title = forms.CharField(label="Title", widget=forms.TextInput(attrs={'size': '80'}))
+    title = forms.CharField(label='Title', widget=forms.TextInput(attrs={'size': '80'}))
+    content = forms.CharField(label='Content', widget=forms.Textarea(attrs={'rows': 20}))
 
     class Meta:
         model = Post

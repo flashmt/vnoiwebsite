@@ -1,4 +1,10 @@
 {% extends 'forum/topic_list.html' %}
+{% load staticfiles %}
+
+{% block extra-css %}
+    <script src="{% static 'js/ckeditor/ckeditor.js' %}"></script>
+    <script src="{% static 'js/ckeditor/config.js' %}"></script>
+{% endblock %}
 
 {% block forum-body %}
 Create new topic
@@ -6,3 +12,11 @@ Create new topic
 {% include 'main/base_form.html' %}
 
 {% endblock forum-body %}
+
+{% block extra-js %}
+<script>
+$(document).ready(function () {
+    CKEDITOR.replace('id_content');
+});
+</script>
+{% endblock %}
