@@ -1,4 +1,7 @@
 from django.contrib.auth import authenticate, logout, login
+from django.contrib.auth.models import User
+
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
 
 # Create your views here.
@@ -39,3 +42,12 @@ def user_create(request, template=None):
 
 def user_update(request, user_id):
     pass
+
+def user_profile(request, user_id):
+    try:
+        user = User.objects.get(pk = user_id)
+        fullname = user.last_name+' '+user.first_name
+        context = {'name':fullname, 'email':user.email}
+        return render(request, 'vnoiusers/profile.html', context)
+    except User.DoesNotExist:
+        return HttpResponse("The user does not exist !!!")
