@@ -30,15 +30,15 @@ For vnoi_website django project, we need to test our custom methods in:
 1. We use [django fixtures](http://django-testing-docs.readthedocs.org/en/latest/fixtures.html) to initialize database for testing. Everyone shares the same fixtures which can be found in **main/fixtures**. If you create your custom fixtures, put into the folder.
 2. Testing structure
 
-	![alt text](https://github.com/VNOI-Admin/vnoiwebsite/tree/master/documents/testing/test_structure.png)
+	![Testing Structure](https://github.com/VNOI-Admin/vnoiwebsite/tree/master/documents/testing/test_structure.png)
 
 3. Run tests whenever code is pullled or pushed 
 
 ## Useful links
 1. See example source code in **forum/tests/**
-2. [http://toastdriven.com/blog/2011/apr/10/guide-to-testing-in-django/](http://toastdriven.com/blog/2011/apr/10/guide-to-testing-in-django/)
-3. [Test-driven Django Tutorial](http://www.tdd-django-tutorial.com/)
-
+2. [vnoi_website Django Fixture](https://github.com/VNOI-Admin/vnoiwebsite/blob/master/documents/database/django_fixtures_to_initialize_data.md)
+3. [http://toastdriven.com/blog/2011/apr/10/guide-to-testing-in-django/](http://toastdriven.com/blog/2011/apr/10/guide-to-testing-in-django/)
+4. [Test-driven Django Tutorial](http://www.tdd-django-tutorial.com/)
 
 
 
