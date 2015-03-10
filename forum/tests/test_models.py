@@ -1,7 +1,7 @@
 from django.test import TestCase
 
 # Create your tests here.
-from forum.models import Forum
+from forum.models import Forum, Topic, Post
 
 
 class ForumModelTest(TestCase):
@@ -18,6 +18,28 @@ class ForumModelTest(TestCase):
 
 
 class TopicModelTests(TestCase):
-    pass
+    fixtures = ['forum.json', 'auth.json']
+
+    def test_delete(self):
+        cf_294_topic = Topic.objects.get(pk=1)
+        cf_forum = Forum.objects.get(pk=1)
+        self.assertEquals(cf_forum.last_post.pk, 2)
+        cf_294_topic.delete()
+        cf_forum = Forum.objects.get(pk=1)
+        self.assertEquals(cf_forum.last_post.pk, 7)
 
 
+class PostModelTests(TestCase):
+    fixtures = ['forum.json', 'auth.json']
+
+    def test_delete(self):
+        cf_294_topic_post = Post.objects.get(pk=5)
+        self.assertEquals(cf_294_topic_post.topic.last_post.pk, 7)
+        cm_1 = Post.objects.get(pk=7)
+        cm_1.delete()
+        cf_294_topic_post = Post.objects.get(pk=5)
+        self.assertEquals(cf_294_topic_post.topic.last_post.pk, 6)
+        cm_1 = Post.objects.get(pk=6)
+        cm_1.delete()
+        cf_294_topic_post = Post.objects.get(pk=5)
+        self.assertEquals(cf_294_topic_post.topic.last_post.pk, 5)
