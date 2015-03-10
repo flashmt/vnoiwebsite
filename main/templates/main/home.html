@@ -85,7 +85,7 @@
       <div class="row" id="pinned_post">
         {% for post in pinned_posts %}
           <div class="col-xs-10">
-            <a href="#">
+            <a href="{% url 'forum:topic_retrieve' post.topic.forum.id post.topic.id %}">
               <h2>{{ post.topic.title }}</h2>
             </a>
             <p class = "pinned-post-author">
@@ -99,7 +99,7 @@
             <div>
               <div class = "row">
                 <div class = "col-xs-9">
-                  <a class="btn btn-default" href="#" role="button">
+                  <a class="btn btn-default" href="{% url 'forum:topic_retrieve' post.topic.forum.id post.topic.id %}" role="button">
                     See more &raquo;
                   </a>
                 </div>
