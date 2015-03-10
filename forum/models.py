@@ -74,6 +74,14 @@ class Topic(models.Model):
         return self.num_posts
 
 
+class PinnedTopic(models.Model):
+    # TODO: In future, this model will cache fields which are displayed in homepage
+    topic = models.ForeignKey(Topic, related_name="topics")
+
+    def __unicode__(self):
+        return self.topic.title
+
+
 class Post(models.Model):
     topic_post = models.BooleanField(default=False)
     topic = models.ForeignKey(Topic, verbose_name='Topic', related_name='posts')
