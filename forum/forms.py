@@ -1,6 +1,7 @@
 from datetime import datetime
 from django import forms
 from forum.models import Post, Topic
+from django.utils.html import escape
 
 
 class PostForm(forms.ModelForm):
@@ -37,7 +38,7 @@ class PostCreateForm(PostForm):
         if not self.topic:
             # if this post create new topic, create this corresponding topic
             topic = Topic(forum=self.forum,
-                          title=self.cleaned_data['title'],
+                          title=escape(self.cleaned_data['title']),
                           created_by=self.user,
                           updated_by=self.user)
             topic.save()
@@ -51,7 +52,7 @@ class PostCreateForm(PostForm):
                     created_by=self.user,
                     updated_by=self.user,
                     topic_post=topic_post,
-                    content=self.cleaned_data['content'],
+                    content=escape(self.cleaned_data['content']),
                     reply_on=self.parent)
         post.topic = topic
         if commit:
@@ -81,7 +82,7 @@ class PostUpdateForm(PostForm):
             # Update corresponding topic
             topic = post.topic
             topic.content = post.content
-            topic.title = self.cleaned_data['title']
+            topic.title = escape(self.cleaned_data['title'])
             topic.save()
 
         return post
