@@ -74,14 +74,6 @@ class Topic(models.Model):
         return self.num_posts
 
 
-class PinnedTopic(models.Model):
-    # TODO: In future, this model will cache fields which are displayed in homepage
-    topic = models.ForeignKey(Topic, related_name="topics")
-
-    def __unicode__(self):
-        return self.topic.title
-
-
 class Post(models.Model):
     topic_post = models.BooleanField(default=False)
     topic = models.ForeignKey(Topic, verbose_name='Topic', related_name='posts')
@@ -96,10 +88,11 @@ class Post(models.Model):
     updated_at = models.DateTimeField(auto_now_add=True, null=True)
     updated_by = models.ForeignKey(User, related_name="updated_posts", default=None)
 
-    # TODO: created_by, updated_by
-
     def __unicode__(self):
         return self.content[:30]
+
+    def total_votes(self):
+        return self.num_upvotes - self.num_downvotes
 
     def save(self, *args, **kwargs):
         if not self.pk:
@@ -136,6 +129,14 @@ class Post(models.Model):
 
     def get_reply_posts(self):
         return self.reply_posts.all()
+
+
+class PinnedTopic(models.Model):
+    # TODO: In future, this model will cache fields which are displayed in homepage
+    post = models.ForeignKey(Post, related_name='+')
+
+    def __unicode__(self):
+        return self.post.topic.title
 
 
 class Vote(models.Model):

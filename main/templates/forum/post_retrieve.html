@@ -71,7 +71,7 @@
                     </a>
                 </div>
                 <div class="col-xs-1 post-count-upvote" id = "count_upvote">
-                    1508
+                    {{ post.total_votes }}
                 </div>
                 <div class="col-xs-1">
                     <a class="btn btn-default post-downvote" href="{% url 'forum:vote_create' post.id %}?type=d" role="button">
