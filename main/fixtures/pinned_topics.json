@@ -1,0 +1,1 @@
+[{"fields": {"topic": 1}, "model": "forum.pinnedtopic", "pk": 1}, {"fields": {"topic": 2}, "model": "forum.pinnedtopic", "pk": 2}]
