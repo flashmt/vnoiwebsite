@@ -2,7 +2,7 @@ from django.contrib.auth import authenticate, logout, login
 from django.contrib.auth.models import User
 
 from django.http import HttpResponse
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 
 # Create your views here.
 from vnoiusers.forms import UserLoginForm
@@ -44,10 +44,9 @@ def user_update(request, user_id):
     pass
 
 def user_profile(request, user_id):
-    try:
-        user = User.objects.get(pk = user_id)
-        fullname = user.last_name+' '+user.first_name
-        context = {'name':fullname, 'email':user.email}
-        return render(request, 'vnoiusers/profile.html', context)
-    except User.DoesNotExist:
-        return HttpResponse("The user does not exist !!!")
+    user = get_object_or_404(User, pk = user_id)
+    is_authenticated = False
+    if request.user.is_authenticated():
+        is_authenticated = request.user.username == user.username
+    context = {'user':user, 'is_authenticated':is_authenticated}
+    return render(request, 'vnoiusers/user_profile.html', context)
