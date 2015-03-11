@@ -61,7 +61,7 @@
         <div class="post-tools">
             <div class="row">
                 <div class="col-xs-9">
-                    <a class="btn btn-default post-reply" href="#" role="button">
+                    <a class="btn btn-default post-reply" href="{% url 'forum:post_create' forum.id topic.id post.id %}" role="button">
                       Reply
                     </a>
                 </div>
