@@ -52,7 +52,7 @@
           </ul>
           <ul class="nav navbar-nav navbar-right" style="padding-top: 12px">
             {% if user.is_authenticated %}
-              <span style="color: wheat">Welcome</span>, <a href="#">{{user.username}}</a>
+              <span style="color: wheat">Welcome</span>, <a href="{% url 'user:profile' user.id %}">{{user.username}}</a>
                 | <a href="{% url 'user:logout' %}">Logout</a>
             {% else %}
               <a href="{% url 'user:login' %}">Login</a>

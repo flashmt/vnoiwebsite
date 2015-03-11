@@ -56,7 +56,7 @@
 
 
 .post-heading {
-	background: #333333;
+	background: #337ab7;
 	color: white;
 }
 .post-heading-title {
@@ -74,7 +74,7 @@
 	font-size: 0.8em;
 }
 .post-user-detail {
-	background: #BDBDBD;
+	background: #87b1d5;
 }
 .post-user-avatar {
 	margin-left: 0.5em;
@@ -101,18 +101,28 @@
 	font-size: 0.9em;
 }
 .post-tools{
-	background: #BDBDBD;
+	background: #87b1d5;
+	font-size: 12px;
 }
 .post-reply {
-  font-size: 15px;
+  font-size: 12px;
   color: black;
   margin-left: 0.5em;
   margin-top: 0.2em;
   margin-bottom: 0.2em;
 }
+
+.post-edit {
+  font-size: 12px;
+  color: black;
+  margin-left: 0.5em;
+  margin-top: 0.2em;
+  margin-bottom: 0.2em;
+}
+
 .post-upvote {
   font-weight: bold;
-  font-size: 15px;
+  font-size: 12px;
   color: green;
   margin-top: 0.2em;
   margin-bottom: 0.2em;
@@ -120,7 +130,7 @@
 }
 .post-downvote {
   font-weight: bold;
-  font-size: 15px;
+  font-size: 12px;
   color: red;
   margin-top: 0.2em;
   margin-bottom: 0.2em;
