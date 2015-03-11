@@ -82,7 +82,7 @@
         </div>
     </div>
 </div>
-<div style="margin-left: 30px; margin-top: 5px;">
+<div style="margin-left: 30px; margin-top: -1em;">
 {% for p in post.get_reply_posts %}
     {% with post=p template_name="forum/post_retrieve" %}
         {% include 'forum/post_retrieve.html' %}
