@@ -114,3 +114,8 @@ footer {
 .pinned-post-pagination {
   float: right;
 }
+
+/* Square conner panel */
+.panel, .panel-heading {
+  border-radius: 0px;
+}

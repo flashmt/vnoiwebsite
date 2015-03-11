@@ -61,9 +61,12 @@
         <div class="post-tools">
             <div class="row">
                 <div class="col-xs-9">
-                    <a class="btn btn-default post-reply" href="#" role="button">
+                    <a class="btn btn-default post-reply" href="{% url 'forum:post_create' forum.id topic.id post.id %}" role="button">
                       Reply
                     </a>
+		    <a class="btn btn-default post-edit" href="{% url 'forum:post_update' forum.id topic.id post.id %}" role="button">
+		      Edit
+		    </a>
                 </div>
                 <div class="col-xs-1">
                     <a class="btn btn-default post-upvote" href="{% url 'forum:vote_create' post.id %}?type=u" role="button">
@@ -82,7 +85,7 @@
         </div>
     </div>
 </div>
-<div style="margin-left: 30px; margin-top: 5px;">
+<div style="margin-left: 30px; margin-top: -1em;">
 {% for p in post.get_reply_posts %}
     {% with post=p template_name="forum/post_retrieve" %}
         {% include 'forum/post_retrieve.html' %}
