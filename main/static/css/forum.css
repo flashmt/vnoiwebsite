@@ -111,6 +111,15 @@
   margin-top: 0.2em;
   margin-bottom: 0.2em;
 }
+
+.post-edit {
+  font-size: 12px;
+  color: black;
+  margin-left: 0.5em;
+  margin-top: 0.2em;
+  margin-bottom: 0.2em;
+}
+
 .post-upvote {
   font-weight: bold;
   font-size: 12px;

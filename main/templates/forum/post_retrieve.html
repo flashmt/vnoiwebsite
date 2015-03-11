@@ -64,6 +64,9 @@
                     <a class="btn btn-default post-reply" href="{% url 'forum:post_create' forum.id topic.id post.id %}" role="button">
                       Reply
                     </a>
+		    <a class="btn btn-default post-edit" href="{% url 'forum:post_update' forum.id topic.id post.id %}" role="button">
+		      Edit
+		    </a>
                 </div>
                 <div class="col-xs-1">
                     <a class="btn btn-default post-upvote" href="{% url 'forum:vote_create' post.id %}?type=u" role="button">
