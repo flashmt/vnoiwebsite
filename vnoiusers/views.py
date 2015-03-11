@@ -43,10 +43,14 @@ def user_create(request, template=None):
 def user_update(request, user_id):
     pass
 
+
 def user_profile(request, user_id):
-    user = get_object_or_404(User, pk = user_id)
+    user = get_object_or_404(User, pk=user_id)
     is_authenticated = False
     if request.user.is_authenticated():
         is_authenticated = request.user.username == user.username
-    context = {'user':user, 'is_authenticated':is_authenticated}
+    context = {
+        'user': user,
+        'is_authenticated': is_authenticated
+    }
     return render(request, 'vnoiusers/user_profile.html', context)
