@@ -43,6 +43,7 @@ INSTALLED_APPS = (
     # 'vnoimessage',
     'mailer',
     'postman',
+    'precise_bbcode',
 )
 
 

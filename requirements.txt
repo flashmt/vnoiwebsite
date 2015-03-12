@@ -6,3 +6,4 @@ unittest2==0.8.0
 splinter==0.7.0
 django-postman
 django-mailer
+
