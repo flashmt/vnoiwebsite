@@ -29,64 +29,51 @@
             </div>
         {% endif %}
         <div class="row post-wrapper">
-            <div class="post-user-detail col-md-2">
-                <div>
-                    <div class = "post-user-name">
-                        <a href="{% url 'user:profile' post.created_by.id %}" class="post-username">
-                            {{post.created_by}}
-                        </a>
-{#                        <p class="post-user-role">#}
-{#                            user_role (admin)#}
-{#                        </p>#}
-                    </div>
+            <div class="post-row-same-height">
+                <div class="col-md-height post-user-detail ">
                     <div>
-                        <img class="post-user-avatar" src="{% static 'img/blank_ava.gif' %}" alt="user-avatar" data-holder-rendered="true" align="middle">
-                    </div>
-{#                    <div class="col-md-2 post-user-rank">#}
-{#                        <table>#}
-{#                            <tr>#}
-{#                                <td class="post-user-p"> VOJ: voj</td>#}
-{#                            </tr>#}
-{#                            <tr>#}
-{#                                <td class="post-user-p"> Post: 1508</td>#}
-{#                            </tr>#}
-{#                            <tr>#}
-{#                                <td class="post-user-p"> Contribution: 15</td>#}
-{#                            </tr>#}
-{#                        </table>#}
-{#                    </div>#}
-                </div>
-            </div>
-            <div class="col-md-10 post-content">
-                <div class="post-body">
-                    <div class="post-content">
-                        <div style="margin-left:1em; margin-top: 1em; margin-bottom:1em;">
-                            {{post.content|bbcode|safe}}
+                        <div class = "post-user-name">
+                            <a href="{% url 'user:profile' post.created_by.id %}" class="post-username">
+                                {{post.created_by}}
+                            </a>
+                        </div>
+                        <div>
+                            <img class="post-user-avatar" src="{% static 'img/blank_ava.gif' %}" alt="user-avatar" data-holder-rendered="true" align="middle">
                         </div>
                     </div>
                 </div>
-                <div class="post-tools">
-                    <div class="row">
-                        <div class="col-xs-9">
-                            <a class="btn btn-default post-reply" href="{% url 'forum:post_create' forum.id topic.id post.id %}" role="button">
-                              Reply
-                            </a>
-		                    <a class="btn btn-default post-edit" href="{% url 'forum:post_update' forum.id topic.id post.id %}" role="button">
-		                      Edit
-		                    </a>
+                <div class="post-content col-md-height">
+                    <div class="post-body">
+                        <div class="post-content">
+                            <div style="margin-left:1em; margin-top: 1em; margin-bottom:1em;">
+                                {% bbcode entry.bbcode_content %}
+                                {{post.content|bbcode|safe}}
+                            </div>
                         </div>
-                        <div class="col-xs-1">
-                            <a class="btn btn-default post-upvote" href="{% url 'forum:vote_create' post.id %}?type=u" role="button">
-                              +
-                            </a>
-                        </div>
-                        <div class="col-xs-1 post-count-upvote" id = "count_upvote">
-                            {{ post.total_votes }}
-                        </div>
-                        <div class="col-xs-1">
-                            <a class="btn btn-default post-downvote" href="{% url 'forum:vote_create' post.id %}?type=d" role="button">
-                              -
-                            </a>
+                    </div>
+                    <div class="post-tools">
+                        <div class="row">
+                            <div class="col-md-9">
+                                <a class="btn btn-default post-reply" href="{% url 'forum:post_create' forum.id topic.id post.id %}" role="button">
+                                  Reply
+                                </a>
+    		                    <a class="btn btn-default post-edit" href="{% url 'forum:post_update' forum.id topic.id post.id %}" role="button">
+    		                      Edit
+    		                    </a>
+                            </div>
+                            <div class="col-md-1">
+                                <a class="btn btn-default post-upvote" href="{% url 'forum:vote_create' post.id %}?type=u" role="button">
+                                  +
+                                </a>
+                            </div>
+                            <div class="col-md-1 post-count-upvote" id = "count_upvote">
+                                {{ post.total_votes }}
+                            </div>
+                            <div class="col-md-1">
+                                <a class="btn btn-default post-downvote" href="{% url 'forum:vote_create' post.id %}?type=d" role="button">
+                                  -
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -94,7 +81,7 @@
         </div>
     </div>
 </div>
-<div style="margin-left:70px; margin-top: -1.5em">
+<div style="margin-left:50px; margin-top: -1.5em">
 {% for p in post.get_reply_posts %}
     {% with post=p template_name="forum/post_retrieve" %}
         {% include 'forum/post_retrieve.html' with is_child=True %}
@@ -103,3 +90,7 @@
 </div>
 
 {% endblock postview %}
+{% block extra-js %}
+    <script src="{% static 'js/highlight/highlight.pack.js' %}"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+{% endblock %}

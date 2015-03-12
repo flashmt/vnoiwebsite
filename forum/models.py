@@ -1,5 +1,7 @@
 from django.contrib.auth.models import User
 from django.db import models
+from precise_bbcode.fields import BBCodeTextField
+
 
 # Create your models here.
 
@@ -51,7 +53,7 @@ class Topic(models.Model):
     post = models.ForeignKey('Post', related_name="topics", null=True, blank=True)
     num_posts = models.PositiveSmallIntegerField(verbose_name="num_replies", default=0)
     title = models.CharField(max_length=500, null=False, blank=False)
-    content = models.TextField()
+    content = BBCodeTextField()
 
     created_at = models.DateTimeField(auto_now_add=True, null=True)
     created_by = models.ForeignKey(User, related_name="created_topics")
