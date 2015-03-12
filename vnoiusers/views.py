@@ -9,16 +9,18 @@ from vnoiusers.forms import UserLoginForm
 
 
 def user_login(request, template_name='vnoiusers/user_login.html'):
-
+    print 'login request received'
     form = UserLoginForm()
     if request.user.is_authenticated():
         # user already logged in
         return render(request, template_name, {'form': form, 'message': 'You already login!'})
 
     if request.POST:
+        print 'Yes, it is post request'
         try:
             username = request.POST['username']
             password = request.POST['password']
+            print 'username = %s, password = %s' % (username, password)
             user = authenticate(username=username, password=password)
             if (user is not None) and user.is_active:
                 login(request, user)

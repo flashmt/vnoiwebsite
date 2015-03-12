@@ -119,3 +119,15 @@ footer {
 .panel, .panel-heading {
   border-radius: 0px;
 }
+
+.input-xs {
+    height: 30px;
+    padding: 4px 8px;
+    font-size: 12px;
+    line-height: 1.5;
+    border-radius: 3px;
+}
+
+#login-form {
+    margin-top: -0.1em;
+}
