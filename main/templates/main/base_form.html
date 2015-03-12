@@ -1,4 +1,5 @@
 {% load bootstrap3 %}
+{% load staticfiles %}
 
 {% block formbody %}
 <form role="form" class="form-horizontal" method="post">
@@ -9,3 +10,10 @@
 
 {% endblock formbody %}
 
+{% block extra-js %}
+<script src="{% static 'js/ckeditor/ckeditor.js' %}"></script>
+<script src="{% static 'js/ckeditor/config.js' %}"></script>
+<script>
+CKEDITOR.replace('id_content');
+</script>
+{% endblock extra-js %}

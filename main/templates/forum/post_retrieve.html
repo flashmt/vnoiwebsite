@@ -1,5 +1,6 @@
 {% block postview %}
 <div style="background-color:wheat; margin-left: 30px; margin-bottom: 30px">
+    <!--
     <p>Title: {{post.title}}</p>
     <p>Created by {{post.created_by}} </p>
     <p>Created at {{post.created_at}} </p>
@@ -10,8 +11,81 @@
     <p><a href="{% url 'forum:post_create' forum.id topic.id post.id %}">Comment this post</a></p>
     <p><a href="{% url 'forum:vote_create' post.id %}?type=u">Upvote</a>|
        <a href="{% url 'forum:vote_create' post.id %}?type=d">Downvote</a></p>
+    -->
+    <div class="panel panel-default">
+        <div class="post-heading">
+            <div class = "row">
+                <div class="col-md-8 post-heading-title">
+                    {{post.title}}
+                </div>
+                <div class="col-md-3 post-heading-created-time">
+                    {{post.created_at}}
+                </div>
+            </div>
+        </div>
+        <div class="post-user-detail">
+            <div class="row">
+                <div class = "col-md-1">
+                    <img class = "post-user-avatar" src="#" alt="user-avatar" style="width: 80px; height=80px" data-holder-rendered="true">
+                </div>
+                <div class = "col-md-9 post-user-name">
+                    <a href="#" class="post-username"> 
+                        {{post.created_by}}
+                    </a>
+                    <p class="post-user-role"> 
+                        user_role (admin)
+                    </p>
+                </div>
+                <div class="col-md-2 post-user-rank">
+                    <table>
+                        <tr>
+                            <td class="post-user-p"> VOJ: voj</td>
+                        </tr>
+                        <tr>
+                            <td class="post-user-p"> Post: 1508</td>
+                        </tr>
+                        <tr>
+                            <td class="post-user-p"> Contribution: 15</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="post-body">
+            <div class="post-content">
+                <div style="margin-left:1em; margin-top: 1em; margin-bottom:1em;">
+                    {{post.content}}
+                </div>
+            </div>
+        </div>
+        <div class="post-tools">
+            <div class="row">
+                <div class="col-xs-9">
+                    <a class="btn btn-default post-reply" href="{% url 'forum:post_create' forum.id topic.id post.id %}" role="button">
+                      Reply
+                    </a>
+		    <a class="btn btn-default post-edit" href="{% url 'forum:post_update' forum.id topic.id post.id %}" role="button">
+		      Edit
+		    </a>
+                </div>
+                <div class="col-xs-1">
+                    <a class="btn btn-default post-upvote" href="{% url 'forum:vote_create' post.id %}?type=u" role="button">
+                      +
+                    </a>
+                </div>
+                <div class="col-xs-1 post-count-upvote" id = "count_upvote">
+                    {{ post.total_votes }}
+                </div>
+                <div class="col-xs-1">
+                    <a class="btn btn-default post-downvote" href="{% url 'forum:vote_create' post.id %}?type=d" role="button">
+                      -
+                    </a> 
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-<div style="margin-left: 30px; margin-bottom: 30px">
+<div style="margin-top: -2em;">
 {% for p in post.get_reply_posts %}
     {% with post=p template_name="forum/post_retrieve" %}
         {% include 'forum/post_retrieve.html' %}
@@ -20,3 +94,18 @@
 </div>
 
 {% endblock postview %}
+
+<!--
+    <div class="col-xs-1">
+    <a class="btn btn-default pinned-post-upvote" href="#" role="button">
+      +
+    </a>
+    </div>
+    <div class="col-xs-1 pinned-post-count-upvote" id = "count_upvote">
+    1508
+    </div>
+    <div class="col-xs-1">
+    <a class="btn btn-default pinned-post-downvote" href="#" role="button">
+      -
+    </a>
+-->

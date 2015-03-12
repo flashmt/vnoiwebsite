@@ -1,0 +1,222 @@
+{% extends 'main/base.html' %}
+{% load staticfiles %}
+
+{% block container %}
+  <div class="row row-offcanvas row-offcanvas-right">
+    <div class="col-xs-12 col-sm-9">
+      <p class="pull-right visible-xs">
+        <button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas">Toggle nav</button>
+      </p>
+      <!--
+      <div class="jumbotron">
+        <h4 class="base-popular-topic-title">
+          Recent topics
+        </h4>
+        <div class = "row base-popular-topic-row">
+          <div class = "col-md-9 base-popular-topic-name">
+            Topic title
+          </div>
+          <div class = "col-md-3 base-popular-topic-user">
+            User started
+          </div>
+        </div>
+      </div>
+      -->
+      <div class="panel panel-primary" id = "recent_post">
+        <div class = "panel-heading">
+            <h3 class="panel-title">
+                Recent topic
+            </h3>
+        </div>
+        <div class="panel-body">
+          <div class = "row base-popular-topic-row">
+            <div class = "col-md-9 base-popular-topic-name">
+              <a href="#" class="base-popular-topic-link">
+                Welcome to VNOI
+              </a>
+            </div>
+            <div class = "col-md-3 base-popular-topic-user">
+              RR
+            </div>
+          </div>
+          <div class = "row base-popular-topic-row">
+            <div class = "col-md-9 base-popular-topic-name">
+              <a href="#" class="base-popular-topic-link">
+                New features in VNOI
+              </a>
+            </div>
+            <div class = "col-md-3 base-popular-topic-user">
+              net12k44
+            </div>
+          </div>
+          <div class = "row base-popular-topic-row">
+            <div class = "col-md-9 base-popular-topic-name">
+              <a href="#" class="base-popular-topic-link">
+                VO2015 Discussion
+              </a>
+            </div>
+            <div class = "col-md-3 base-popular-topic-user">
+              hieult
+            </div>
+          </div>
+          <div class = "row base-popular-topic-row">
+            <div class = "col-md-9 base-popular-topic-name">
+              <a href="#" class="base-popular-topic-link">
+                VM2015 Announcement
+              </a>
+            </div>
+            <div class = "col-md-3 base-popular-topic-user">
+              iamquang95
+            </div>
+          </div>
+          <div class = "row base-popular-topic-row">
+            <div class = "col-md-9 base-popular-topic-name">
+              <a href="#" class="base-popular-topic-link">
+                Untitled topic
+              </a>
+            </div>
+            <div class = "col-md-3 base-popular-topic-user">
+              Unnamed user
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row" id="pinned_post">
+        {% for topic in pinned_topics %}
+          <div class="col-xs-10">
+            <a href="{% url 'forum:topic_retrieve' topic.forum_id topic.topic_id %}">
+              <h2>{{ topic.title }}</h2>
+            </a>
+            <p class = "pinned-post-author">
+              By {{ topic.author }}, 1 day ago.
+            </p>
+            <div class="pinned-post-content-container col-xs-12">
+              <p class= "pinned-post-content">
+                {{ topic.content }}
+              </p>
+            </div>
+            <div>
+              <div class = "row">
+                <div class = "col-xs-9">
+                  <a class="btn btn-default" href="{% url 'forum:topic_retrieve' topic.forum_id topic.topic_id %}" role="button">
+                    See more &raquo;
+                  </a>
+                </div>
+                <div class="col-xs-1">
+                  <a class="btn btn-default pinned-post-upvote" href="{% url 'forum:vote_create' topic.post_id %}?type=u" role="button">
+                    +
+                  </a>
+                </div>
+                <div class="col-xs-1 pinned-post-count-upvote" id = "count_upvote">
+                  {{ topic.total_vote }}
+                </div>
+                <div class="col-xs-1">
+                  <a class="btn btn-default pinned-post-downvote" href="{% url 'forum:vote_create' topic.post_id %}?type=d" role="button">
+                    -
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+{#        <nav>#}
+{#          <ul class="pagination pinned-post-pagination">#}
+{#            <li>#}
+{#              <a href="#" aria-label="Previous">#}
+{#                <span aria-hidden="true">&laquo;</span>#}
+{#              </a>#}
+{#            </li>#}
+{#            <li><a href="#">1</a></li>#}
+{#            <li><a href="#">2</a></li>#}
+{#            <li><a href="#">3</a></li>#}
+{#            <li><a href="#">4</a></li>#}
+{#            <li><a href="#">5</a></li>#}
+{#            <li>#}
+{#              <a href="#" aria-label="Next">#}
+{#                <span aria-hidden="true">&raquo;</span>#}
+{#              </a>#}
+{#            </li>#}
+{#          </ul>#}
+{#        </nav>#}
+      </div><!--/row-->
+    </div><!--/.col-xs-12.col-sm-9-->
+    <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar">
+      <div class="panel panel-primary" id="contest_schedule">
+        <div class="panel-heading">SCHEDULE</div>
+        <table class="table">
+          <thead>
+          </thead>
+          <tbody>
+            <tr><td>
+              <p><a href="">Codeforces round ##</a><p>
+              <p class="text-right">20:00 30/02/2015<br>Last: 2hr</p>
+            </td></tr>
+            <tr><td>
+              <p><a href="">SRM ##</a><p>
+              <p class="text-right">22:30 30/02/2015<br>Last: 75m</p>
+            </td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="panel panel-primary">
+        <div class="panel-heading">TOP RANK</div>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Username</th>
+              <th>Score</th>
+            <tr>
+          </thead>
+          <tbody id="user-rank-table">
+          </tbody>
+        </table>
+        <div class="panel-footer"> <a href="http://ngthanhtrung23.github.io/VOJRanklist/"><small>Full Table</small></a> </div>
+      </div>
+
+      <div class="panel panel-primary">
+        <div class="panel-heading">TOP CONTRIBUTE</div>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Username</th>
+              <th>Score</th>
+            <tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td>mr_invincible</td>
+              <td>123</td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>flash_mt</td>
+              <td>122</td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td>hieult</td>
+              <td>121</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="panel-footer"> <a href=""><small>Full Table</small></a> </div>
+      </div>
+    </div><!--/.sidebar-offcanvas-->
+  </div><!--/row-->
+
+  <hr>
+
+  <footer>
+    <p>&copy; VNOI Admin 2015</p>
+  </footer>
+{% endblock container %}
+
+{% block extra-js %}
+    <script src="http://ngthanhtrung23.github.io/VOJRanklist/js/data.js"></script>
+    <script src="{% static 'js/home.js' %}"></script>
+{% endblock %}

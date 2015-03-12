@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 # Register your models here.
-from forum.models import Topic, Forum, Post, ForumGroup, Vote
+from forum.models import *
 
 
 class PostInline(admin.TabularInline):
@@ -20,3 +20,4 @@ admin.site.register(Topic, TopicAdmin)
 admin.site.register(Forum)
 admin.site.register(Post)
 admin.site.register(Vote)
+admin.site.register(PinnedTopic)
