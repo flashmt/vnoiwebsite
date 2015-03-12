@@ -1,4 +1,4 @@
-# Unit Testing Guide
+# # Unit Testing Guide
 
 ## Why we need testing
 
@@ -36,7 +36,7 @@ For vnoi_website django project, we need to test our custom methods in:
 
 ## Useful links
 1. See example source code in **forum/tests/**
-2. [vnoi_website Django Fixture](https://github.com/VNOI-Admin/vnoiwebsite/blob/master/documents/database/django_fixtures_to_initialize_data.md)
+2. vnoi_website Django Fixture [link](https://github.com/VNOI-Admin/vnoiwebsite/blob/master/documents/database/django_fixtures_to_initialize_data.md)
 3. [http://toastdriven.com/blog/2011/apr/10/guide-to-testing-in-django/](http://toastdriven.com/blog/2011/apr/10/guide-to-testing-in-django/)
 4. [Test-driven Django Tutorial](http://www.tdd-django-tutorial.com/)
 
