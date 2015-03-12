@@ -94,3 +94,6 @@
     <script src="{% static 'js/highlight/highlight.pack.js' %}"></script>
     <script>hljs.initHighlightingOnLoad();</script>
 {% endblock %}
+{% block extra-css %}
+    <link rel="stylesheet" href="{% static 'js/highlight/styles/default.css' %}"/>
+{% endblock %}
