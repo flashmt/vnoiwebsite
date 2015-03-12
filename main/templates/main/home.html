@@ -94,7 +94,7 @@
             </p>
             <div class="pinned-post-content-container col-xs-12">
               <p class= "pinned-post-content">
-                {{ topic.content }}
+                {{ topic.content|bbcode|safe }}
               </p>
             </div>
             <div>
