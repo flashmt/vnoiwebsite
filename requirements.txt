@@ -1,5 +1,8 @@
 Django==1.7.1
 django-bootstrap3==5.0.3
-unittest2==0.8.0
+django-permission==0.8.5
 lettuce==0.2.20
+unittest2==0.8.0
 splinter==0.7.0
+django-postman
+django-mailer

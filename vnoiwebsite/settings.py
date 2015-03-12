@@ -30,8 +30,8 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = (
-    'django.contrib.admin',
     'django.contrib.auth',
+    'django.contrib.admin',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
@@ -40,6 +40,9 @@ INSTALLED_APPS = (
     'main',
     'vnoiusers',
     'bootstrap3',
+    # 'vnoimessage',
+    'mailer',
+    'postman',
 )
 
 
@@ -51,6 +54,11 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+)
+
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',  # default
+    'permission.backends.PermissionBackend',
 )
 
 ROOT_URLCONF = 'vnoiwebsite.urls'
@@ -152,3 +160,11 @@ LOGGING = {
 BOOTSTRAP3 = {
     'horizontal_field_class': 'col-md-6',
 }
+
+# MESSAGE_STORAGE = 'stored_messages.storage.PersistentStorage'
+
+# SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'
+
+# Postman settings
+POSTMAN_DISALLOW_ANONYMOUS = True
+

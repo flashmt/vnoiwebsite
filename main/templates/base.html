@@ -1,0 +1,28 @@
+<!--For use of django-postman-->
+
+{% extends 'main/base.html' %}
+
+{% block navbar %}
+    <li><a href="{% url 'main:index' %}">Home</a></li>
+    <li><a href="#about">Problems</a></li>
+    <li><a href="{% url 'forum:index' %}">Forum</a></li>
+    <li class="active"><a href="/messages">Messages</a></li>
+{% endblock navbar %}
+
+
+{% block container %}
+
+{% block title %}
+{% endblock title %}
+
+{% block extrahead %}
+{% endblock extrahead %}
+
+{% block postman_menu %}
+{% endblock postman_menu %}
+
+
+{% block content %}
+{% endblock content %}
+
+{% endblock container %}
