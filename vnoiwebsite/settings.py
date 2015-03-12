@@ -59,7 +59,6 @@ MIDDLEWARE_CLASSES = (
 
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',  # default
-    'permission.backends.PermissionBackend',
 )
 
 ROOT_URLCONF = 'vnoiwebsite.urls'
