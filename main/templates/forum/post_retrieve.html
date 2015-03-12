@@ -46,6 +46,7 @@
                     <div class="post-body">
                         <div class="post-content">
                             <div style="margin-left:1em; margin-top: 1em; margin-bottom:1em;">
+                                {% bbcode entry.bbcode_content %}
                                 {{post.content|bbcode|safe}}
                             </div>
                         </div>
@@ -91,4 +92,5 @@
 {% endblock postview %}
 {% block extra-js %}
     <script src="{% static 'js/highlight/highlight.pack.js' %}"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
 {% endblock %}
