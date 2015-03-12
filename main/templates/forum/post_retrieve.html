@@ -28,8 +28,8 @@
                 </div>
             </div>
         {% endif %}
-        <div class="row post-wrapper">
-            <div class="post-user-detail col-md-2">
+        <div id = "onerow" class="row post-wrapper">
+            <div class="post-user-detail col-md-2 post-sameheigh">
                 <div>
                     <div class = "post-user-name">
                         <a href="{% url 'user:profile' post.created_by.id %}" class="post-username">
@@ -57,7 +57,7 @@
 {#                    </div>#}
                 </div>
             </div>
-            <div class="col-md-10 post-content">
+            <div class="col-md-10 post-content post-sameheight">
                 <div class="post-body">
                     <div class="post-content">
                         <div style="margin-left:1em; margin-top: 1em; margin-bottom:1em;">
