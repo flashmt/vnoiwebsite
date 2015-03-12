@@ -149,3 +149,13 @@
   margin-bottom: 0.5em;
   text-align: center;
 }
+
+#onerow {
+  display: table;
+}
+
+.post-sameheigh {
+  float: none;
+  display: table-cell;
+  vertical-align: top;
+}
