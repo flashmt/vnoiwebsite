@@ -3,3 +3,4 @@ django-bootstrap3==5.0.3
 unittest2==0.8.0
 lettuce==0.2.20
 splinter==0.7.0
+django-precise-bbcode==1.0.4

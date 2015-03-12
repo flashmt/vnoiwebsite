@@ -40,6 +40,7 @@ INSTALLED_APPS = (
     'main',
     'vnoiusers',
     'bootstrap3',
+    'precise_bbcode',
 )
 
 

@@ -1,5 +1,6 @@
 {% block postview %}
 {% load staticfiles %}
+{% load bbcode_tags %}
 
 <div style="background-color:wheat; margin-left: 0; margin-bottom: 30px">
     <!--
@@ -60,7 +61,7 @@
                 <div class="post-body">
                     <div class="post-content">
                         <div style="margin-left:1em; margin-top: 1em; margin-bottom:1em;">
-                            {{post.content}}
+                            {{post.content|bbcode|safe}}
                         </div>
                     </div>
                 </div>
