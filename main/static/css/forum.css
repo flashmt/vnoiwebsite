@@ -82,7 +82,7 @@
 	background: #e6e9eb;
 }
 .post-user-avatar {
-  margin-left: -0.2em;
+  margin-left: 0.5em;
 	margin-top: 0.5em;
 	margin-bottom: 0.5em;
 	padding:0px;
@@ -110,7 +110,7 @@
 .post-tools{
 	font-size: 12px;
   position: relative;
-  bottom: 1px;
+  margin-bottom: 1em;
 }
 .post-reply {
   font-size: 12px;
@@ -150,12 +150,12 @@
   text-align: center;
 }
 
-#onerow {
+.post-row-same-height {
   display: table;
+  width: 100%;
 }
 
-.post-sameheigh {
-  float: none;
+.col-md-height {
   display: table-cell;
-  vertical-align: top;
+  float: none;
 }
