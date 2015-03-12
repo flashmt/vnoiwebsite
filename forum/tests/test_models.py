@@ -23,7 +23,7 @@ class TopicModelTests(TestCase):
     def test_delete(self):
         cf_294_topic = Topic.objects.get(pk=1)
         cf_forum = Forum.objects.get(pk=1)
-        self.assertEquals(cf_forum.last_post.pk, 2)
+        self.assertEquals(cf_forum.last_post.pk, 1)
         cf_294_topic.delete()
         cf_forum = Forum.objects.get(pk=1)
         self.assertEquals(cf_forum.last_post.pk, 7)
