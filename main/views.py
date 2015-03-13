@@ -8,7 +8,6 @@ def index(request):
     pinned_posts = PinnedTopic.objects.all()
     results = []
     for topic in pinned_posts:
-        print topic.post.created_by
         results.append({
             'title': topic.post.title,
             'forum_id': topic.post.topic.forum_id,

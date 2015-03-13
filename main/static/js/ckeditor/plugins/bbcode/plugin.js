@@ -81,9 +81,12 @@
 		regex = new RegExp( '&(' + regex.join( '|' ) + ');', 'g' );
 
 		return function( html ) {
+            if (typeof vnoi_lang_selection == 'undefined') {
+                vnoi_lang_selection = 'pascal';
+            }
 			return html.replace( regex, function( match, entity ) {
 				return entities[ entity ];
-			} );
+			}).replace('[code]', '[code=' + vnoi_lang_selection + ']');
 		};
 	} )();
 
@@ -148,6 +151,12 @@
 						} else if ( attributesMap[ part ] ) {
 							attribs[attributesMap[part]] = optionPart;
 						}
+
+                        if (part == 'code') {
+                            if (/^[a-z]+$/.test(optionPart)) {
+                                attribs.class = optionPart;
+                            }
+                        }
 					}
 
 					// Two special handling - image and email, protect them
