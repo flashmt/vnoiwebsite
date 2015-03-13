@@ -1,7 +1,7 @@
 {% extends 'main/base.html' %}
 {% load staticfiles %}
 
-{% block extra-css %}
+{% block extra-head %}
     <link href="{% static 'css/forum.css' %}" rel="stylesheet">
 {% endblock %}
 
@@ -9,7 +9,7 @@
     <li><a href="{% url 'main:index' %}">Home</a></li>
     <li><a href="#about">Problems</a></li>
     <li class="active"><a href="{% url 'forum:index' %}">Forum</a></li>
-    <li><a href="/messages">Messages</a></li>
+    <li><a href="{% url 'message:index' %}">Messages</a></li>
 {% endblock navbar %}
 
 {% block container %}

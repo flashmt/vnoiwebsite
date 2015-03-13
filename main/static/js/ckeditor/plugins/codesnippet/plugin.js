@@ -237,7 +237,7 @@
 		 *			coffeescript: 'CoffeeScript',
 		 *			cpp: 'C++',
 		 *			cs: 'C#',
-		 *			css: 'CSS'
+		 *			static: 'CSS'
 		 *		}
 		 *
 		 * More information on how to change the list of languages is available
