@@ -1,3 +1,4 @@
+sudo pip install -r requirements.txt
 rm -f db.sqlite3
 python manage.py migrate
 python manage.py loaddata auth.json
