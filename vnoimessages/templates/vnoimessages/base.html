@@ -4,12 +4,7 @@
 {% load i18n %}
 {% load postman_tags %}
 
-{% block navbar %}
-    <li><a href="{% url 'main:index' %}">Home</a></li>
-    <li><a href="#about">Problems</a></li>
-    <li><a href="{% url 'forum:index' %}">Forum</a></li>
-    <li class="active"><a href="{% url 'message:index' %}">Messages</a></li>
-{% endblock navbar %}
+{% block navbar-highlight %}navbar_messages{% endblock navbar-highlight %}
 
 {% block extra-head %}
     <link href="{% static 'css/postman.css' %}" rel="stylesheet">

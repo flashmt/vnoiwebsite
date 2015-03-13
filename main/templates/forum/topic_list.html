@@ -5,9 +5,7 @@
     <link href="{% static 'css/forum.css' %}" rel="stylesheet">
 {% endblock %}
 
-{% block forum-nav %}
-    <a href="{% url 'forum:index' %}">Forum</a> > {{forum.name}}
-{% endblock forum-nav %}
+{% block navbar-highlight %}navbar_forum{% endblock navbar-highlight %}
 
 {% block forum-body %}
 <div class="btn-toolbar button-container" role="toolbar">
