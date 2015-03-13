@@ -50,8 +50,8 @@
             {% endblock navbar %}
           </ul>
           <ul class="nav navbar-nav navbar-right" style="padding-top: 12px">
-            {% if request.user.is_authenticated %}
-              <span style="color: wheat">Welcome</span>, <a href="{% url 'user:profile' request.user.id %}">{{request.user.username}}</a>
+            {% if user.is_authenticated %}
+              <span style="color: wheat">Welcome</span>, <a href="{% url 'user:profile' user.id %}">{{user.username}}</a>
                 | <a href="{% url 'user:logout' %}">Logout</a>
             {% else %}
               <form id="login-form" class="navbar-form navbar-right" method="post" action="{% url 'user:login' %}">
