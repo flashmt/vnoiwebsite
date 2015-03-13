@@ -45,6 +45,7 @@ INSTALLED_APPS = (
     'postman',
     'precise_bbcode',
     'vnoimessages',
+    'problems',
 )
 
 
