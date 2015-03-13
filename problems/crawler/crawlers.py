@@ -51,7 +51,7 @@ def get_problems_from_category(category):
             if category.fields['name'] == 'acm':
                 problem.fields['accept_count'] = data['ac_count']
                 problem.fields['accept_rate'] = data['ac_rate']
-                problem.fields['score'] = round(80.0 / (40 + int(data['ac_count'])), 2)
+                problem.fields['score'] = round(80.0 / (40 + int(data['ac_count'])), 1)
 
             result.append(problem)
             if problem_code == 'CTAIN':
