@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import re
 import requests
 import sys
@@ -44,12 +46,12 @@ def get_problems_from_category(category):
             problem = Problem(problem_code)
             problem.fields['category'] = category.pk
             problem.fields['problem_id'] = data['id']
-            problem.fields['name'] = data['name']
+            problem.fields['name'] = data['name'].replace('ð', 'đ')
 
             if category.fields['name'] == 'acm':
                 problem.fields['accept_count'] = data['ac_count']
                 problem.fields['accept_rate'] = data['ac_rate']
-                problem.fields['score'] = 80.0 / (40 + int(data['ac_count']))
+                problem.fields['score'] = round(80.0 / (40 + int(data['ac_count'])), 2)
 
             result.append(problem)
             if problem_code == 'CTAIN':
