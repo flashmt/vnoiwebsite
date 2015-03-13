@@ -109,9 +109,10 @@
   height: 100%;
 }
 .post-tools{
-	font-size: 12px;
+    font-size: 12px;
   position: relative;
   margin-bottom: 1em;
+    bottom: -0.5em;
 }
 .post-reply {
   font-size: 12px;
