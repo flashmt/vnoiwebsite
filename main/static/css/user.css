@@ -1,0 +1,59 @@
+.user-detail {
+	border: 1px solid #337ab7;
+}
+
+.user-avatar {
+	margin-top: 1em;	
+	margin-bottom: 1em;
+}
+
+.user-info {
+	margin-top: 1em;	
+	margin-bottom: 1em;
+}
+
+.user-setting-button {
+	float: right;
+	margin-right: 1em;
+}
+
+.user-online-judge-wrapper {
+	border: 1px solid #ddd;
+}
+
+.user-online-judge-title {
+	text-align: left;
+}
+
+.user-online-judge {
+	margin-top: 2em;
+	margin-left: 1em;
+	margin-bottom: 2em;
+}
+
+.user-recent-topic {
+	border: 1px solid #337ab7;
+}
+
+.user-one-post {
+	margin-top: 1em;
+	margin-left: 1em;
+	margin-bottom: 1em;
+	border-bottom: 1px solid #ddd;
+}
+
+.user-post-heading {
+	margin-top: 1em;
+}
+
+.user-post-day-created {
+	text-align: right;
+	margin-top: 1em;
+	margin-right: 1em;
+}
+
+.user-post-content {
+	margin-left: 2em;
+	margin-top: 0em;
+	margin-bottom: 1em; 
+}
