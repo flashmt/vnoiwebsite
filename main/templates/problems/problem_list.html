@@ -28,7 +28,7 @@
                         <td>{{ problem.category.name }}</td>
                         <td><a href="http://vn.spoj.com/problems/{{ problem.code }}">{{ problem.code }}</a></td>
                         <td>{{ problem.name }}</td>
-                        <td>{{ problem.accept_count }}</td>
+                        <td><a href="http://vn.spoj.com/problems/{{ problem.rank }}">{{ problem.accept_count }}</a></td>  <!-- require rank of prob -->
                         <td>{{ problem.score }}</td>
                     </tr>
                 {% endfor %}
