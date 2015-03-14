@@ -1,0 +1,39 @@
+{% extends 'main/base.html' %}
+
+{% block navbar-highlight %}navbar_problems{% endblock navbar-highlight %}
+
+{% block container %}
+<div id="problem-list" style="">
+    <div class="panel panel-primary forum-group-head">
+        <div class="panel-heading">
+            Danh sách bài tập
+        </div>
+        <div class="panel-body">
+            <input id="acm-toggle" type="checkbox" checked="checked" value="checked" onchange="$('.acm').toggle()">
+            <label for="acm-toggle">ACM</label>
+            <input id="oi-toggle" type="checkbox" checked="checked" value="checked" onchange="$('.oi').toggle()">
+            <label for="oi-toggle">OI</label>
+        </div>
+        <table class="table" id="problem-list-table">
+            <tbody>
+                <tr>
+                    <th>Loại bài&nbsp;<span class="glyphicon glyphicon-sort-by-alphabet"></span></th>
+                    <th>Mã bài&nbsp;<span class="glyphicon glyphicon-sort-by-alphabet"></span></th>
+                    <th>Tên bài</th>
+                    <th>Số người giải được&nbsp;<span class="glyphicon glyphicon-sort-by-attributes"></span></th>
+                    <th>Điểm&nbsp;<span class="glyphicon glyphicon-sort-by-attributes"></span></th>
+                </tr>
+                {% for problem in problems %}
+                    <tr class="{{ problem.category.name }}">
+                        <td>{{ problem.category.name }}</td>
+                        <td><a href="http://vn.spoj.com/problems/{{ problem.code }}">{{ problem.code }}</a></td>
+                        <td>{{ problem.name }}</td>
+                        <td><a href="http://vn.spoj.com/problems/{{ problem.rank }}">{{ problem.accept_count }}</a></td>  <!-- require rank of prob -->
+                        <td>{{ problem.score }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    </div>
+{% endblock container %}

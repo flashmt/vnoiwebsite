@@ -5,12 +5,7 @@
     <link href="{% static 'css/forum.css' %}" rel="stylesheet">
 {% endblock %}
 
-{% block navbar %}
-    <li><a href="{% url 'main:index' %}">Home</a></li>
-    <li><a href="#about">Problems</a></li>
-    <li class="active"><a href="{% url 'forum:index' %}">Forum</a></li>
-    <li><a href="{% url 'message:index' %}">Messages</a></li>
-{% endblock navbar %}
+{% block navbar-highlight %}navbar_forum{% endblock navbar-highlight %}
 
 {% block container %}
 
@@ -48,4 +43,7 @@
     </div>
 {% endblock forum-body %}
 
+<footer>
+    <p>&copy; VNOI Admin 2015</p>
+  </footer>
 {% endblock container %}

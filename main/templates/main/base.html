@@ -43,10 +43,10 @@
 
           <ul class="nav navbar-nav">
             {% block navbar %}
-            <li class="active"><a href="{% url 'main:index' %}">Home</a></li>
-            <li><a href="#about">Problems</a></li>
-            <li><a href="{% url 'forum:index' %}">Forum</a></li>
-            <li><a href="{% url 'message:index' %}">Messages</a></li>
+            <li id="navbar_home"><a href="{% url 'main:index' %}">Home</a></li>
+            <li id="navbar_problems"><a href="{% url 'problems:list' %}">Problems</a></li>
+            <li id="navbar_forum"><a href="{% url 'forum:index' %}">Forum</a></li>
+            <li id="navbar_messages"><a href="{% url 'message:index' %}">Messages</a></li>
             {% endblock navbar %}
           </ul>
           <ul class="nav navbar-nav navbar-right" style="padding-top: 12px">
@@ -87,6 +87,14 @@
     <script src="{% static 'js/ie10-viewport-bug-workaround.js' %}"></script>
 
     <script src="{% static 'js/base.js' %}"></script>
+    <script>
+      var navbar_highlight = $.trim("{% block navbar-highlight %}{% endblock navbar-highlight %}");
+      if (navbar_highlight == "") navbar_highlight = "navbar_home";
+      $(document).ready(function () {
+          $("#" + navbar_highlight).addClass("active");
+      });
+    </script>
+
     {% block extra-js %}
     {% endblock extra-js %}
   </body>

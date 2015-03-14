@@ -15,5 +15,6 @@ urlpatterns = patterns(
     url(r'^message/', include('vnoimessages.urls', namespace="message")),
     # url(r'^postman/', include('postman.urls')),
     url(r'^authority/', include('authority.urls')),
+    url(r'^problem/', include('problems.urls', namespace='problems')),
 )
 

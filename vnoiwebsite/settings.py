@@ -48,6 +48,7 @@ INSTALLED_APPS = (
     'precise_bbcode',
     'vnoimessages',
     'authority',
+    'problems',
 )
 
 
