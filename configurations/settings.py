@@ -63,9 +63,9 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',  # default
 )
 
-ROOT_URLCONF = 'vnoiwebsite.urls'
+ROOT_URLCONF = 'configurations.urls'
 
-WSGI_APPLICATION = 'vnoiwebsite.wsgi.application'
+WSGI_APPLICATION = 'configurations.wsgi.application'
 
 
 # Database
@@ -81,7 +81,7 @@ DATABASES = {
 #DATABASES = {
 #    'default': {
 #        'ENGINE': 'django.db.backends.mysql',
-#        'NAME': 'vnoiwebsite',
+#        'NAME': 'configurations',
 #        'USER': 'vnoi_admin',
 #        'PASSWORD': 'vnoi_password',
 #        'HOST': '127.0.0.1', # Using direct IP instead of localhost, to ensure MySQLdb doesn't fail
@@ -133,7 +133,7 @@ LOGGING = {
         'file': {
             'level': 'DEBUG',
             'class': 'logging.FileHandler',
-            'filename': 'vnoiwebsite.log',
+            'filename': 'configurations.log',
             'formatter': 'verbose'
         },
         'console': {
