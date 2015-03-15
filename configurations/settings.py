@@ -159,7 +159,8 @@ LOGGING = {
             'level': 'DEBUG',
         },
         'py.warnings': {
-            'handlers': ['console'],
+            'propagate': False,
+            'handlers': [],
         },
     }
 }
