@@ -48,5 +48,9 @@ def user_profile(request, user_id):
     is_authenticated = False
     if request.user.is_authenticated():
         is_authenticated = request.user.username == user.username
-    context = {'profile_user': user, 'is_authenticated': is_authenticated}
+    context = {
+        'profile_user': user,
+        'is_authenticated': is_authenticated,
+        'topics': user.created_topics.all()
+    }
     return render(request, 'vnoiusers/user_profile.html', context)

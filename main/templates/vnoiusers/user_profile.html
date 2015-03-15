@@ -1,5 +1,7 @@
 {% extends 'main/base.html' %}
 {% load staticfiles %}
+{% load bbcode_tags %}
+
 {% block extra-head %}
     <link href="{% static 'css/user.css' %}" rel="stylesheet">
 {% endblock %}
@@ -9,26 +11,26 @@
         <div class="col-md-9">
             <div class="row user-detail">
                 <div class="col-md-3 user-avatar">
-                    <img class="img-responsive" src="{% static 'img/blank_ava.gif' %}" alt="user-avatar" data-holder-rendered="true" align="middle">            
+                    <img class="img-responsive" src="{% static 'img/blank_ava.gif' %}" alt="user-avatar" data-holder-rendered="true" align="middle">
                 </div>
                 <div class="col-md-9 user-info">
                     <div class="row">
-                        <h3> {{ user.username }} </h3>
+                        <h3> {{ profile_user.username }} </h3>
                     </div>
                     <div class="row">
-                        Name: {{ user.last_name }} {{user.first_name}}                
+                        Name: {{ profile_user.last_name }} {{profile_user.first_name}}
                     </div>
                     <div class="row">
-                        Contribution: {{user.contribution_point}}
+                        Contribution: {{profile_user.contribution_point}}
                     </div>
                     <div class="row">
-                        Email: {{ user.email }}
+                        Email: {{ profile_user.email }}
                     </div>
                     <div class="row">
-                        Last visited: {{ user.last_login }}
+                        Last visited: {{ profile_user.last_login }}
                     </div>
                     <div class="row">
-                        Member since: {{ user.date_joined}}
+                        Member since: {{ profile_user.date_joined}}
                     </div>
                     <div class="row user-setting-button">
                         <a class="btn btn-default post-reply" href="#" role="button">
@@ -59,72 +61,32 @@
     </div>
     <div class="row" style="margin-bottom: 2em;">
         <div class="col-md-9 user-recent-topic">
-            <div class="user-one-post">
-                <div class="user-post-heading">
-                    <div class="row">
-                        <div class="col-md-9">
-                            <a href="#">
-                                <h4> 
-                                    Testing Heading
-                                </h4>
-                            </a>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="user-post-day-created"> 
-                                Aug 15th 2015
+            {% for topic in topics %}
+                <div class="user-one-post">
+                    <div class="user-post-heading">
+                        <div class="row">
+                            <div class="col-md-9">
+                                <a href="{% url 'forum:topic_retrieve' topic.forum_id topic.id %}">
+                                    <h4>
+                                        {{ topic.title }}
+                                    </h4>
+                                </a>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="user-post-day-created">
+                                    Aug 15th 2015
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="user-post-content">
-                        Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content 
+                        <div class="user-post-content">
+                            {{ topic.content|bbcode|safe }}
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="user-one-post">
-                <div class="user-post-heading">
-                    <div class="row">
-                        <div class="col-md-9">
-                            <a href="#">
-                                <h4> 
-                                    Testing Heading
-                                </h4>
-                            </a>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="user-post-day-created"> 
-                                Aug 15th 2015
-                            </div>
-                        </div>
-                    </div>
-                    <div class="user-post-content">
-                        Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content T
-                    </div>
-                </div>
-            </div>
-            <div class="user-one-post">
-                <div class="user-post-heading">
-                    <div class="row">
-                        <div class="col-md-9">
-                            <a href="#">
-                                <h4> 
-                                    Testing Heading
-                                </h4>
-                            </a>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="user-post-day-created"> 
-                                Aug 15th 2015
-                            </div>
-                        </div>
-                    </div>
-                    <div class="user-post-content">
-                        Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content Test content 
-                    </div>
-                </div>
-            </div>
+            {% endfor %}
         </div>
         <div class="col-md-3">
-            <div class="user-voj-static">  
+            <div class="user-voj-static">
                 <div class="panel panel-primary">
                     <div class="panel-heading user-voj-title">
                             VOJ Static
@@ -132,12 +94,12 @@
                     <div class="panel-body user-voj-detail">
                         <table>
                             <tr>
-                                <td> 
-                                    Level: {{ user.voj_lever }} 
+                                <td>
+                                    Level: {{ user.voj_lever }}
                                 </td>
                             </tr>
                             <tr>
-                                <td> 
+                                <td>
                                     Score: {{ user.voj_score }}
                                 </td>
                             </tr>
