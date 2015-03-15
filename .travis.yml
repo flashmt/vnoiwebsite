@@ -9,5 +9,5 @@ notifications:
   email:
     recipients:
       - ngthanhtrung23@gmail.com
-    on_success: always
+    on_success: never
     on_failure: always
