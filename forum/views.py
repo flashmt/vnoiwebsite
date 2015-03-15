@@ -1,7 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
 from django.core.urlresolvers import reverse
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, get_object_or_404
 
 # Create your views here.
@@ -115,15 +115,24 @@ def vote_create(request, post_id=None):
     # Check if user already vote this post
     user = request.user
     if already_voted(user, post):
-        return HttpResponse("User already voted this post")
+        return JsonResponse({
+            'success': 0,
+            'message': 'You already voted'
+        })
 
     if request.GET:
         vote_type = request.GET['type']
         vote = Vote(type=vote_type, post=post, created_by=request.user)
         vote.save()
-        return HttpResponse("Create Vote successfully!")
+        return JsonResponse({
+            'success': 1,
+            'message': 'Vote successfully sent'
+        })
     else:
-        return HttpResponse("Invalid Request: No GET")
+        return JsonResponse({
+            'success': 0,
+            'message': 'Invalid request'
+        })
 
 
 def already_voted(user, post):
