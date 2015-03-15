@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required
+from django.core import exceptions
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
 from django.core.urlresolvers import reverse
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
@@ -8,6 +9,7 @@ from django.shortcuts import render, get_object_or_404
 
 from forum.forms import PostCreateForm, PostUpdateForm
 from forum.models import Topic, Forum, ForumGroup, Post, Vote
+from forum.perms import PostPermission, VotePermission
 
 
 def index(request):
@@ -59,7 +61,9 @@ def post_create(request, forum_id=None, topic_id=None, post_id=None, template="f
     if post_id:
         post = get_object_or_404(Post, pk=post_id)
 
-    # TODO check permission
+    # Check permission
+    if not PostPermission(request.user).can_create_post():
+        raise exceptions.PermissionDenied
 
     if request.POST:
         # if a request is submitted, handle this request
@@ -87,7 +91,9 @@ def post_update(request, forum_id=None, topic_id=None, post_id=None, template="f
     if post_id:
         post = get_object_or_404(Post, pk=post_id)
 
-    # TODO: check permission
+    # check permission
+    if not PostPermission(request.user).can_update_post(post):
+        raise exceptions.PermissionDenied
 
     if request.POST:
         form = PostUpdateForm(instance=post, user=request.user, data=request.POST)
@@ -110,7 +116,9 @@ def vote_create(request, post_id=None):
     if post_id:
         post = get_object_or_404(Post, pk=post_id)
 
-    # TODO: Check user permission
+    # Check user permission
+    if not VotePermission(request.user).can_create_vote():
+        raise exceptions.PermissionDenied
 
     # Check if user already vote this post
     user = request.user

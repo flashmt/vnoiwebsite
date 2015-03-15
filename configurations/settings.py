@@ -10,6 +10,8 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
+from django.db.models.loading import load_app, get_app, get_models
+
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 
@@ -40,11 +42,11 @@ INSTALLED_APPS = (
     'main',
     'vnoiusers',
     'bootstrap3',
-    # 'vnoimessage',
     'mailer',
     'postman',
     'precise_bbcode',
     'vnoimessages',
+    'authority',
     'problems',
 )
 
@@ -57,6 +59,14 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+)
+
+TEMPLATE_CONTEXT_PROCESSORS = (
+    'django.contrib.auth.context_processors.auth',
+    'django.core.context_processors.debug',
+    'django.core.context_processors.i18n',
+    'django.core.context_processors.media',
+    'django.core.context_processors.request',
 )
 
 AUTHENTICATION_BACKENDS = (
@@ -93,7 +103,7 @@ DATABASES = {
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Bangkok'
 
 USE_I18N = True
 
@@ -163,10 +173,14 @@ BOOTSTRAP3 = {
     'horizontal_field_class': 'col-md-6',
 }
 
-# MESSAGE_STORAGE = 'stored_messages.storage.PersistentStorage'
-
-# SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'
 
 # Postman settings
 POSTMAN_DISALLOW_ANONYMOUS = True
+POSTMAN_AUTO_MODERATE_AS = True
+
+# Django-authority
+AUTHORITY_USE_SMART_CACHE = False
+# -------End django-authority----------
+
+
 
