@@ -2,6 +2,12 @@ import authority
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
 
+# TODO: When upgrade to 1.8, re-enable this
+import warnings
+from django.utils.deprecation import RemovedInDjango18Warning
+
+warnings.filterwarnings("ignore", category=RemovedInDjango18Warning)
+
 admin.autodiscover()
 authority.autodiscover()
 

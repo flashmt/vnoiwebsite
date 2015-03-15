@@ -92,7 +92,6 @@ class VoteViewTest(TestCase):
         self.client.get(reverse('forum:vote_create', kwargs={'post_id': 1}), {'type': Vote.UPVOTE})
 
         response = self.client.get(reverse('forum:vote_create', kwargs={'post_id': 1}), {'type': Vote.UPVOTE})
-        print 'response = %s' % response.__dict__['_container']
         self.assertEqual(
             response.__dict__['_container'],
             ['{"message": "You already voted", "success": 0}'])
