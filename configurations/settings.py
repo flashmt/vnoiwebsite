@@ -158,10 +158,14 @@ LOGGING = {
             'handlers': ['console'],
             'level': 'DEBUG',
         },
+        # TODO: The following is to disable RemovedInDjango18Warning --> when updated to 1.8, need to remove
         'py.warnings': {
             'propagate': False,
             'handlers': [],
         },
+        # 'py.warnings': {
+        #     'handlers': ['console'],
+        # },
     }
 }
 
