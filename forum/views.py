@@ -117,7 +117,7 @@ def vote_create(request, post_id=None):
         post = get_object_or_404(Post, pk=post_id)
 
     # Check user permission
-    if not VotePermission(request.user).can_create_vote():
+    if not VotePermission(request.user).can_create_vote(post):
         raise exceptions.PermissionDenied
 
     # Check if user already vote this post
@@ -132,6 +132,13 @@ def vote_create(request, post_id=None):
         vote_type = request.GET['type']
         vote = Vote(type=vote_type, post=post, created_by=request.user)
         vote.save()
+
+        # Each upvote increases the user's contribution by 1
+        if vote_type == 'u':
+            voted_user_profile = post.created_by.profile
+            voted_user_profile.contribution += 1
+            voted_user_profile.save()
+
         return JsonResponse({
             'success': 1,
             'message': 'Vote successfully sent'
