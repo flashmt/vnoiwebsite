@@ -47,10 +47,15 @@ def random_string(length)
 end
 
 def login(user, password)
+  puts 'Logging in...'
   visit ROOT_URL + '/main'
   fill_in 'id_username', with: user
   fill_in 'id_password', with: password
-  click_on 'Login'
+  if ENV.has_key?('TRAVIS_TEST_ENV')
+    find('#login_submit').trigger(:click)
+  else
+    click_on 'Login'
+  end
 end
 
 def fill_in_ckeditor(locator, opts)
