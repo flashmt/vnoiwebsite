@@ -1,10 +1,22 @@
-language: python
-python:
-  - "2.7"
+language: ruby
 
+rvm:
+  - 2.1.2
+
+env:
+  - TRAVIS_TEST_ENV=1
+
+before_install:
+  - sudo apt-get install python-virtualenv
 install:
-  - pip install -r requirements.txt
-script: python manage.py test
+  - ./setup_travis.sh
+before_script:
+  - venv/bin/python manage.py migrate
+  - ./init_database_travis.sh
+  - venv/bin/python manage.py runserver 0.0.0.0:8000 &
+script:
+  - venv/bin/python manage.py test
+  - ./functional_tests/runall.sh
 notifications:
   email:
     recipients:
