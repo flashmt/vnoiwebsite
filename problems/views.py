@@ -10,5 +10,4 @@ def index(request):
         'accept_count',
         'score',
     )
-    print problems[0]
     return render(request, 'problems/problem_list.html', {'problems': problems})
