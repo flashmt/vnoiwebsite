@@ -8,6 +8,7 @@ from django.db import models
 class VnoiUser(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, related_name="profile")
     dob = models.DateTimeField(null=True, blank=True)
+    contribution = models.IntegerField(null=False, blank=False, default=0)
 
     def __unicode__(self):
         return self.user.username

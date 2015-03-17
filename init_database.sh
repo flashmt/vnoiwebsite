@@ -7,3 +7,4 @@ python manage.py loaddata postman.json
 python manage.py loaddata mailer.json
 python manage.py loaddata bbcode.json
 python manage.py loaddata problems.json
+python manage.py loaddata vnoiusers.json

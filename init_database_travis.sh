@@ -7,3 +7,4 @@ venv/bin/python manage.py loaddata postman.json
 venv/bin/python manage.py loaddata mailer.json
 venv/bin/python manage.py loaddata bbcode.json
 venv/bin/python manage.py loaddata problems.json
+venv/bin/python manage.py loaddata vnoiusers.json
