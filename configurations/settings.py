@@ -47,6 +47,7 @@ INSTALLED_APPS = (
     'vnoimessages',
     'authority',
     'problems',
+    'debug_toolbar',
 )
 
 
