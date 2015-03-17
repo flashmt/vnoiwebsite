@@ -5,6 +5,7 @@ require 'capybara-screenshot'
 require 'capybara-screenshot/rspec'
 require 'pry'
 require 'capybara/poltergeist'
+require 'capybara-webkit'
 
 RSpec.configure do |config|
   config.include Capybara::DSL, type: :feature
@@ -17,12 +18,12 @@ Capybara.default_driver = :selenium
 Capybara.default_selector = :css
 if ENV.has_key?('TRAVIS_TEST_ENV')
   puts 'Use headless browser'
-  Capybara.register_driver :poltergeist do |app|
-    Capybara::Poltergeist::Driver.new(app, {
-      js_errors: false
-    })
-  end
-  Capybara.javascript_driver = :poltergeist
+#  Capybara.register_driver :poltergeist do |app|
+#    Capybara::Poltergeist::Driver.new(app, {
+#      js_errors: false
+#    })
+#  end
+  Capybara.javascript_driver = :webkit
 end
 
 

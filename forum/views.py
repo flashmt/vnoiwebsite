@@ -33,7 +33,7 @@ def pagination_items(request, items, num_per_page):
 def topic_list(request, forum_id, template="forum/topic_list.html"):
     forum = get_object_or_404(Forum, pk=forum_id)
     topics = Topic.objects.filter(forum_id=forum_id)
-    topics = pagination_items(request, topics, 2)
+    topics = pagination_items(request, topics, 20)
     return render(request, template, {'forum': forum,
                                       'topics': topics})
 
