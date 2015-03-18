@@ -1,4 +1,10 @@
+from avatar.forms import UploadAvatarForm
+from avatar.models import Avatar
+from avatar.signals import avatar_updated
+from avatar.views import add, _get_avatars, _get_next
+from django.contrib import messages
 from django.contrib.auth import authenticate, logout, login
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 
 from django.http import HttpResponse
@@ -54,3 +60,31 @@ def user_profile(request, user_id):
         'topics': user.created_topics.all()
     }
     return render(request, 'vnoiusers/user_profile.html', context)
+
+
+@login_required
+def user_upload_avatar(request, extra_context=None, next_override=None,
+                       upload_form=UploadAvatarForm, *args, **kwargs):
+    if extra_context is None:
+        extra_context = {}
+    avatar, avatars = _get_avatars(request.user)
+    upload_avatar_form = upload_form(request.POST or None,
+                                     request.FILES or None,
+                                     user=request.user)
+    if request.method == "POST" and 'avatar' in request.FILES:
+        if upload_avatar_form.is_valid():
+            avatar = Avatar(user=request.user, primary=True)
+            image_file = request.FILES['avatar']
+            avatar.avatar.save(image_file.name, image_file)
+            avatar.save()
+            messages.success(request, _("Successfully uploaded a new avatar."))
+            avatar_updated.send(sender=Avatar, user=request.user, avatar=avatar)
+            return redirect(next_override or _get_next(request))
+    context = {
+        'avatar': avatar,
+        'avatars': avatars,
+        'upload_avatar_form': upload_avatar_form,
+        'next': next_override or _get_next(request),
+    }
+    context.update(extra_context)
+    return render(request, 'vnoiusers/user_upload_avatar.html', context)
