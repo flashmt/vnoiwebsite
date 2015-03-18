@@ -57,7 +57,8 @@ def user_profile(request, user_id):
     context = {
         'profile_user': user,
         'is_authenticated': is_authenticated,
-        'topics': user.created_topics.all()
+        'topics': user.created_topics.all(),
+        'disable_breadcrumbs': True,
     }
     return render(request, 'vnoiusers/user_profile.html', context)
 
