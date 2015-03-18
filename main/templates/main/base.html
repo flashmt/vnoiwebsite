@@ -30,7 +30,7 @@
 <body>
 <nav class="navbar navbar-fixed-top navbar-inverse">
     <div class="container">
-        <div class="navbar-header">
+        <div class="navbar-header" style="margin-left: 0.5em">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
                     aria-expanded="false" aria-controls="navbar">
                 <span class="sr-only">Toggle navigation</span>
@@ -52,7 +52,7 @@
                     {% endif %}
                 {% endblock navbar %}
             </ul>
-            <ul class="nav navbar-nav navbar-right" style="padding-top: 12px">
+            <ul class="nav navbar-nav navbar-right" style="padding-top: 12px; margin-right: 0.2em">
                 {% if user.is_authenticated %}
                     <span style="color: wheat">Welcome</span>,
                     <a href="{% url 'user:profile' user.id %}">{{ user.username }}</a>
