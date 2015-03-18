@@ -69,7 +69,16 @@ end
 def verify_breadcrumbs(texts)
   within '#breadcrumbs' do
     texts.each do |text|
-      puts "Check breadcrumbs: #{text}"
+      puts "Checking breadcrumbs: #{text}"
+      expect(page).to have_content(text)
+    end
+  end
+end
+
+def verify_flash_messages(texts)
+  within '#flash-messages' do
+    texts.each do |text|
+      puts "Checking flash message: #{text}"
       expect(page).to have_content(text)
     end
   end

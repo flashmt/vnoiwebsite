@@ -131,3 +131,7 @@ footer {
 #login-form {
     margin-top: -0.1em;
 }
+
+.alert {
+    padding: 7px;
+}

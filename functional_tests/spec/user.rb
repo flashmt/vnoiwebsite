@@ -15,10 +15,12 @@ feature "User" do
     ['/main',
      '/problem/list',
      '/forum', '/forum/1', '/forum/1/1',
-     '/user/1'].each do |path|
+     '/user/1'
+    ].each do |path|
       visit "#{ROOT_URL}#{path}"
       login('admin', 'admin')
       expect(current_path.chomp('/')).to eq("#{path}")
+      verify_flash_messages(['Welcome back, admin'])
       click_on $logout
     end
   end
