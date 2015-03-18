@@ -5,6 +5,7 @@ from django.contrib import admin
 # TODO: When upgrade to 1.8, re-enable this
 import warnings
 from django.utils.deprecation import RemovedInDjango18Warning
+from configurations import settings
 
 warnings.filterwarnings("ignore", category=RemovedInDjango18Warning)
 
@@ -22,5 +23,11 @@ urlpatterns = patterns(
     # url(r'^postman/', include('postman.urls')),
     url(r'^authority/', include('authority.urls')),
     url(r'^problem/', include('problems.urls', namespace='problems')),
+    url(r'^avatar/', include('avatar.urls')),
 )
 
+if settings.DEBUG:
+    # static files (images, css, javascript, etc.)
+    urlpatterns += patterns(
+        '',
+        url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT}))

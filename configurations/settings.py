@@ -48,6 +48,7 @@ INSTALLED_APPS = (
     'authority',
     'problems',
     'debug_toolbar',
+    'avatar',
 )
 
 
@@ -188,4 +189,9 @@ AUTHORITY_USE_SMART_CACHE = False
 # -------End django-authority----------
 
 
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
+
+
+AVATAR_MAX_AVATARS_PER_USER = 1
 
