@@ -5,6 +5,11 @@
     <link href="{% static 'css/forum.css' %}" rel="stylesheet">
 {% endblock %}
 
+{% block breadcrumbs %}
+    <li><a href="{% url 'forum:index' %}">Forum</a></li>
+    <li>{{ forum.name }}</li>
+{% endblock breadcrumbs %}
+
 {% block navbar-highlight %}navbar_forum{% endblock navbar-highlight %}
 
 {% block forum-body %}

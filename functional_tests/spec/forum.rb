@@ -14,7 +14,7 @@ feature "Forum" do
     verify_content($forum_content)
 
     click_on 'Codeforces'
-    click_on 'Create new topic'
+    click_on $create_topic
 
     title = random_string(10)
     content = random_string(50)
@@ -26,8 +26,35 @@ feature "Forum" do
     expect(page).to have_content(title)
     expect(page).to have_content(content)
 
-    expect(page).to have_content('Edit')
-    expect(page).to have_content('Reply')
+    expect(page).to have_content($edit)
+    expect(page).to have_content($reply)
+  end
+
+  scenario "User should see breadcrumbs", :js => true do
+    visit "#{ROOT_URL}/forum/"
+    login('admin', 'admin')
+
+    visit "#{ROOT_URL}/forum/"
+    verify_breadcrumbs(['Forum'])
+
+    click_on 'Codeforces'
+    verify_breadcrumbs(['Forum', 'Codeforces'])
+
+    click_on $create_topic
+    verify_breadcrumbs(['Forum', 'Codeforces', $create_topic])
+
+    visit "#{ROOT_URL}/forum/"
+    click_on 'Codeforces'
+    topic_title = 'CF Round 294'
+    click_on topic_title
+    verify_breadcrumbs(['Forum', 'Codeforces', topic_title])
+
+    first(:link, $reply).click
+    verify_breadcrumbs(['Forum', 'Codeforces', topic_title, $reply])
+
+    browser_history_back
+    first(:link, $edit).click
+    verify_breadcrumbs(['Forum', 'Codeforces', topic_title, $edit])
   end
 end
 

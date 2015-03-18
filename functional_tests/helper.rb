@@ -66,3 +66,16 @@ def fill_in_ckeditor(locator, opts)
     $('textarea##{locator}').text(#{content});
   SCRIPT
 end
+
+def verify_breadcrumbs(texts)
+  within '#breadcrumbs' do
+    texts.each do |text|
+      puts "Check breadcrumbs: #{text}"
+      expect(page).to have_content(text)
+    end
+  end
+end
+
+def browser_history_back
+  page.evaluate_script('window.history.back()')
+end

@@ -74,6 +74,10 @@
     </nav><!-- /.navbar -->
 
     <div class="container">
+        <ol id="breadcrumbs" class="breadcrumb">
+            {% block breadcrumbs %}
+            {% endblock breadcrumbs %}
+        </ol>
         {% block container %}
         {% endblock %}
     </div><!--/.container-->
