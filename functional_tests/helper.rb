@@ -49,7 +49,6 @@ end
 
 def login(user, password)
   puts 'Logging in...'
-  visit ROOT_URL + '/main'
   fill_in 'id_username', with: user
   fill_in 'id_password', with: password
   if ENV.has_key?('TRAVIS_TEST_ENV')

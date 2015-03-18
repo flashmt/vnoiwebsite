@@ -7,7 +7,7 @@ from django.contrib.auth import authenticate, logout, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
 
 # Create your views here.
@@ -27,7 +27,7 @@ def user_login(request, template_name='vnoiusers/user_login.html'):
             user = authenticate(username=username, password=password)
             if (user is not None) and user.is_active:
                 login(request, user)
-                return redirect('main:index')
+                return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
             else:
                 return render(request, template_name, {'form': form, 'message': 'login fail!'})
         except KeyError:
