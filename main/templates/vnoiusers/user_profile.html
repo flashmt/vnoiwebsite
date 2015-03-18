@@ -49,13 +49,13 @@
                 </div>
                 <div class="panel-body user-online-judge">
                     <p>
-                        VOJ: {{ user.voj_account }}
+                        VOJ: {{ user.profile.voj_account | default:"Not linked" }}
                     </p>
                     <p>
-                        Codeforces: {{ user.codeforces_account }}
+                        Codeforces: {{ user.profile.codeforces_account | default:"Not linked" }}
                     </p>
                     <p>
-                        Topcoder: {{ user.topcoder_account }}
+                        Topcoder: {{ user.profile.topcoder_account | default:"Not linked" }}
                     </p>
                 </div>
             </div>

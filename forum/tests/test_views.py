@@ -65,7 +65,7 @@ class PostViewTest(TestCase):
 
 class VoteViewTest(TestCase):
 
-    fixtures = ['auth.json', 'forum.json']
+    fixtures = ['auth.json', 'forum.json', 'vnoiusers.json']
 
     def setUp(self):
         self.client = Client()
