@@ -7,30 +7,31 @@
  
 
 ```bash
-    pip install virtualenvwrapper
+pip install virtualenvwrapper
 ```
 
 2. Add this command to startup file
 
 ```bash
-    source /usr/local/bin/virtualenvwrapper.sh
+source /usr/local/bin/virtualenvwrapper.sh
 ```
 
 3. Create a virtual environment for the project
+
 ```bash
-    mkvirtualenv vnoi_website
+mkvirtualenv vnoi_website
 ```
 
 ##Install required packages
 
-1. Install django
+1. Install dependencies
 ```bash
-    pip install django
+pip install -r requirements.txt
 ```
 
 Check the using django. It should point to your vnoi_website virtualenv directory, using this command:
-```
-    $ which django-admin.py
+```bash
+which django-admin.py
 ```
 
 ##Notes
@@ -39,6 +40,4 @@ right corresponding virtualenv
 ```bash
     workon vnoi_website
 ```
-
-
 
