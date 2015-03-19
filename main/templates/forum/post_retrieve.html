@@ -1,5 +1,9 @@
 {% block postview %}
-<div style="background-color:wheat; margin-left: 30px; margin-bottom: 30px">
+{% load staticfiles %}
+{% load avatar_tags %}
+{% load permissions %}
+
+<div style="background-color:wheat; margin-left: 0; margin-bottom: 30px">
     <!--
     <p>Title: {{post.title}}</p>
     <p>Created by {{post.created_by}} </p>
@@ -12,100 +16,87 @@
     <p><a href="{% url 'forum:vote_create' post.id %}?type=u">Upvote</a>|
        <a href="{% url 'forum:vote_create' post.id %}?type=d">Downvote</a></p>
     -->
-    <div class="panel panel-default">
-        <div class="post-heading">
-            <div class = "row">
-                <div class="col-md-8 post-heading-title">
-                    {{post.title}}
-                </div>
-                <div class="col-md-3 post-heading-created-time">
-                    {{post.created_at}}
-                </div>
-            </div>
-        </div>
-        <div class="post-user-detail">
-            <div class="row">
-                <div class = "col-md-1">
-                    <img class = "post-user-avatar" src="#" alt="user-avatar" style="width: 80px; height=80px" data-holder-rendered="true">
-                </div>
-                <div class = "col-md-9 post-user-name">
-                    <a href="#" class="post-username"> 
-                        {{post.created_by}}
-                    </a>
-                    <p class="post-user-role"> 
-                        user_role (admin)
-                    </p>
-                </div>
-                <div class="col-md-2 post-user-rank">
-                    <table>
-                        <tr>
-                            <td class="post-user-p"> VOJ: voj</td>
-                        </tr>
-                        <tr>
-                            <td class="post-user-p"> Post: 1508</td>
-                        </tr>
-                        <tr>
-                            <td class="post-user-p"> Contribution: 15</td>
-                        </tr>
-                    </table>
+    <div class="panel panel-default post-outer-wrapper">
+        {% if not is_child %}
+            <div class="forum-group-head">
+                <div>
+                    <div class="post-heading-title">
+                        {{post.title}}
+                    </div>
+                    <div class="post-heading-created-time">
+                        {{post.created_at}}
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="post-body">
-            <div class="post-content">
-                <div style="margin-left:1em; margin-top: 1em; margin-bottom:1em;">
-                    {{post.content}}
+        {% endif %}
+        <div class="row post-wrapper">
+            <div class="post-row-same-height">
+                <div class="col-md-height post-user-detail ">
+                    <div>
+                        <div class = "post-user-name">
+                            <a href="{% url 'user:profile' post.created_by.id %}" class="post-username">
+                                {{post.created_by}}
+                            </a>
+                        </div>
+                        <div>
+                            <img class="post-user-avatar" src="{% avatar_url post.created_by 200 %}" alt="user-avatar" data-holder-rendered="true" align="middle">
+                            </div>
+                    </div>
                 </div>
-            </div>
-        </div>
-        <div class="post-tools">
-            <div class="row">
-                <div class="col-xs-9">
-                    <a class="btn btn-default post-reply" href="{% url 'forum:post_create' forum.id topic.id post.id %}" role="button">
-                      Reply
-                    </a>
-		    <a class="btn btn-default post-edit" href="{% url 'forum:post_update' forum.id topic.id post.id %}" role="button">
-		      Edit
-		    </a>
-                </div>
-                <div class="col-xs-1">
-                    <a class="btn btn-default post-upvote" href="{% url 'forum:vote_create' post.id %}?type=u" role="button">
-                      +
-                    </a>
-                </div>
-                <div class="col-xs-1 post-count-upvote" id = "count_upvote">
-                    {{ post.total_votes }}
-                </div>
-                <div class="col-xs-1">
-                    <a class="btn btn-default post-downvote" href="{% url 'forum:vote_create' post.id %}?type=d" role="button">
-                      -
-                    </a> 
+                <div class="post-content col-md-height">
+                    <div class="post-body">
+                        <div class="post-content">
+                            <div style="margin-left:1em; margin-top: 1em; margin-bottom:1em;">
+                                {{post.content|safe}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="post-tools">
+                        <div class="row">
+                            <div class="col-md-9">
+                                <a class="btn btn-default post-reply" href="{% url 'forum:post_create' forum.id topic.id post.id %}" role="button">
+                                  Reply
+                                </a>
+                                {% ifhasperm "post_permission.can_update_post" request.user post %}
+                                    <a class="btn btn-default post-edit" href="{% url 'forum:post_update' forum.id topic.id post.id %}" role="button">
+                                      Edit
+                                    </a>
+                                {% else %}
+                                {% endifhasperm %}
+                            </div>
+                            <div class="col-md-1">
+                                <a class="btn btn-default post-upvote" href="{% url 'forum:vote_create' post.id %}?type=u" role="button">
+                                  +
+                                </a>
+                            </div>
+                            <div class="col-md-1 post-count-upvote" id = "count_upvote">
+                                {{ post.total_votes }}
+                            </div>
+                            <div class="col-md-1">
+                                <a class="btn btn-default post-downvote" href="{% url 'forum:vote_create' post.id %}?type=d" role="button">
+                                  -
+                                </a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<div style="margin-top: -2em;">
+<div style="margin-left:50px; margin-top: -1.5em">
 {% for p in post.get_reply_posts %}
     {% with post=p template_name="forum/post_retrieve" %}
-        {% include 'forum/post_retrieve.html' %}
+        {% include 'forum/post_retrieve.html' with is_child=True %}
     {% endwith %}
 {% endfor %}
 </div>
 
 {% endblock postview %}
-
-<!--
-    <div class="col-xs-1">
-    <a class="btn btn-default pinned-post-upvote" href="#" role="button">
-      +
-    </a>
-    </div>
-    <div class="col-xs-1 pinned-post-count-upvote" id = "count_upvote">
-    1508
-    </div>
-    <div class="col-xs-1">
-    <a class="btn btn-default pinned-post-downvote" href="#" role="button">
-      -
-    </a>
--->
+{% block extra-js %}
+    <script src="{% static 'js/highlight/highlight.pack.js' %}"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+{% endblock %}
+{% block extra-css %}
+    <link rel="stylesheet" href="{% static 'js/highlight/styles/default.css' %}"/>
+{% endblock %}

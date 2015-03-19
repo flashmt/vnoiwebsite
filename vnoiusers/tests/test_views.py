@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 from vnoiusers import views
 
 
+
 class UserProfileTest(TestCase):
 
     fixtures = ['forum.json', 'auth.json']
@@ -14,6 +15,7 @@ class UserProfileTest(TestCase):
         self.factory = RequestFactory()
 
     def test_user_profile(self):
+
         user = User.objects.create(
             username="khoa",
             password="khoa",
@@ -21,16 +23,10 @@ class UserProfileTest(TestCase):
             email="test@test.vn"
         )
 
-        response = self.client.get(
-            reverse(
-                'user:profile',
-                kwargs={'user_id': user.pk}
-            )
-        )
+        response = self.client.get(reverse('user:profile', kwargs={'user_id': user.pk}))
         self.assertEquals(response.status_code, 200)
-        self.assertEquals(response.context['is_authenticated'], False)
-        self.assertEquals(response.context['user'].email, 'test@test.vn')
-        self.assertEquals(response.context['user'].first_name, 'test')
+        self.assertContains(response, 'test@test.vn')
+        self.assertContains(response, 'test')
 
         self.client.login(username="admin", password="admin")
         response = self.client.get(

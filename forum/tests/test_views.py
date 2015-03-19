@@ -16,15 +16,16 @@ class TopicViewTest(TestCase):
 
     def test_topic_create(self):
         self.client.login(username="admin", password="admin")
-        topic = Topic(title="Codeforces round 295", content="Nhớ thi nhé :D")
+        post_content = "Nhớ thi nhé".decode('utf-8')
+        topic = Topic(title="Codeforces round 295", content=post_content)
         response = self.client.post(reverse('forum:topic_create', kwargs={'forum_id': 1}),
                                     {'title': topic.title, 'content': topic.content})
         self.assertEquals(response.status_code, 302)
         self.assertEquals(response['Location'], 'http://testserver/forum/1/3/')
         self.assertEquals(Topic.objects.all().count(), 3)
         self.assertEquals(Post.objects.all().count(), 8)
-        self.assertEquals(Topic.objects.get(pk=3).content, topic.content.decode('utf-8'))
-        self.assertEquals(Post.objects.get(pk=8).content, topic.content.decode('utf-8'))
+        self.assertEquals(Topic.objects.get(pk=3).content, post_content)
+        self.assertEquals(Post.objects.get(pk=8).content, post_content)
 
         # Ensure that non-existent forum throw a 404
         response = self.client.post(reverse('forum:topic_create', kwargs={'forum_id': 100}),
@@ -64,7 +65,7 @@ class PostViewTest(TestCase):
 
 class VoteViewTest(TestCase):
 
-    fixtures = ['auth.json', 'forum.json']
+    fixtures = ['auth.json', 'forum.json', 'vnoiusers.json']
 
     def setUp(self):
         self.client = Client()
@@ -91,14 +92,14 @@ class VoteViewTest(TestCase):
         self.client.get(reverse('forum:vote_create', kwargs={'post_id': 1}), {'type': Vote.UPVOTE})
 
         response = self.client.get(reverse('forum:vote_create', kwargs={'post_id': 1}), {'type': Vote.UPVOTE})
-        self.assertEquals(response.status_code, 200)
-        self.assertEquals(response.content, 'User already voted this post')
-        self.assertEquals(response.context, None)
+        self.assertEqual(
+            response.__dict__['_container'],
+            ['{"message": "You already voted", "success": 0}'])
 
         response = self.client.get(reverse('forum:vote_create', kwargs={'post_id': 1}), {'type': Vote.DOWNVOTE})
-        self.assertEquals(response.status_code, 200)
-        self.assertEquals(response.content, 'User already voted this post')
-        self.assertEquals(response.context, None)
+        self.assertEqual(
+            response.__dict__['_container'],
+            ['{"message": "You already voted", "success": 0}'])
 
         # If user doesn't have permission
         pass

@@ -1,23 +1,17 @@
 {% extends 'main/base.html' %}
 {% load staticfiles %}
 
-{% block extra-css %}
+{% block extra-head %}
     <link href="{% static 'css/forum.css' %}" rel="stylesheet">
 {% endblock %}
 
-{% block navbar %}
-    <li><a href="{% url 'main:index' %}">Home</a></li>
-    <li><a href="#about">Problems</a></li>
-    <li class="active"><a href="{% url 'forum:index' %}">Forum</a></li>
-{% endblock navbar %}
+{% block navbar-highlight %}navbar_forum{% endblock navbar-highlight %}
+
+{% block breadcrumbs %}
+    <li>Forum</li>
+{% endblock breadcrumbs %}
 
 {% block container %}
-
-<div style="padding-bottom: 10px">
-{% block forum-nav %}
-    Forum
-{% endblock forum-nav %}
-</div>
 
 {% block forum-body %}
     <div id="forum-main-container">
@@ -47,4 +41,7 @@
     </div>
 {% endblock forum-body %}
 
+<footer>
+    <p>&copy; VNOI Admin 2015</p>
+  </footer>
 {% endblock container %}

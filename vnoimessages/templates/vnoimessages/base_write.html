@@ -1,0 +1,28 @@
+{% extends "vnoimessages/base.html" %}
+{% load i18n %}
+{% load static %}
+
+{% block extra-head %}
+
+{{ block.super }}
+{% if autocompleter_app.is_active %}
+    {% if autocompleter_app.name == "ajax_select" %}
+        {% if autocompleter_app.version == "1.1.4" or autocompleter_app.version == "1.1.5" %}
+            <script type="text/javascript" src="{% static 'js/jquery.autocomplete.min.js' %}"></script>
+            <link type="text/css" media="all" rel="stylesheet" href="{% static 'css/jquery.autocomplete.css' %}" />
+        {# else: for version 1.2.x use AJAX_SELECT_BOOTSTRAP + AJAX_SELECT_INLINES or arrange to include jqueryUI/js/css #}
+        {% endif %}
+    {% endif %}
+{% endif %}
+{% endblock extra-head %}
+
+
+{% block content %}
+<div id="postman">
+<h1>{% block pm_write_title %}{% endblock %}</h1>
+{% include 'main/base_form.html' with form=form %}
+</div>
+<script>
+CKEDITOR.replace('id_body');
+</script>
+{% endblock content %}

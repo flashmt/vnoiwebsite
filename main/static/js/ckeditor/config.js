@@ -4,7 +4,7 @@
  */
 CKEDITOR.editorConfig = function( config ) {
 	// Define changes to default configuration here.
-    config.extraPlugins = 'codesnippet,bbcode';
+    config.extraPlugins = 'codesnippet';
 	// For complete reference see:
 	// http://docs.ckeditor.com/#!/api/CKEDITOR.config
 
@@ -25,6 +25,12 @@ CKEDITOR.editorConfig = function( config ) {
 //		{ name: 'colors' },
 //		{ name: 'about' }
 	];
+    config.toolbar_Full = [
+        ['Bold', 'Italic'],
+        ['CodeSnippet', 'Link', 'Unlink', 'Image'],
+        [ 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent']
+    ];
+    config.toolbar = 'Full';
     config.codeSnippet_languages = {
         bash: 'Bash',
         cpp: 'C++',

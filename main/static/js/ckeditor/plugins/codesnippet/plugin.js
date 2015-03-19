@@ -7,8 +7,6 @@
  * @fileOverview Rich code snippets for CKEditor.
  */
 
-'use strict';
-
 ( function() {
 	var isBrowserSupported = !CKEDITOR.env.ie || CKEDITOR.env.version > 8;
 
@@ -237,7 +235,7 @@
 		 *			coffeescript: 'CoffeeScript',
 		 *			cpp: 'C++',
 		 *			cs: 'C#',
-		 *			css: 'CSS'
+		 *			static: 'CSS'
 		 *		}
 		 *
 		 * More information on how to change the list of languages is available
@@ -315,6 +313,8 @@
 				callback( CKEDITOR.tools.htmlEncode( widgetData.code ) );
 
 				// Call higlighter to apply its custom highlighting.
+                console.log('lang = ' + widgetData.lang);
+                vnoi_lang_selection = widgetData.lang;
 				editor._.codesnippet.highlighter.highlight( widgetData.code, widgetData.lang, function( formatted ) {
 					editor.fire( 'lockSnapshot' );
 					callback( formatted );

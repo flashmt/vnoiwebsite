@@ -1,6 +1,10 @@
 {% extends 'main/base.html' %}
 {% load staticfiles %}
 
+{% block extra-head %}
+    <link href="{% static 'css/home.css' %}" rel="stylesheet">
+{% endblock %}
+
 {% block container %}
   <div class="row row-offcanvas row-offcanvas-right">
     <div class="col-xs-12 col-sm-9">
@@ -22,66 +26,6 @@
         </div>
       </div>
       -->
-      <div class="panel panel-primary" id = "recent_post">
-        <div class = "panel-heading">
-            <h3 class="panel-title">
-                Recent topic
-            </h3>
-        </div>
-        <div class="panel-body">
-          <div class = "row base-popular-topic-row">
-            <div class = "col-md-9 base-popular-topic-name">
-              <a href="#" class="base-popular-topic-link">
-                Welcome to VNOI
-              </a>
-            </div>
-            <div class = "col-md-3 base-popular-topic-user">
-              RR
-            </div>
-          </div>
-          <div class = "row base-popular-topic-row">
-            <div class = "col-md-9 base-popular-topic-name">
-              <a href="#" class="base-popular-topic-link">
-                New features in VNOI
-              </a>
-            </div>
-            <div class = "col-md-3 base-popular-topic-user">
-              net12k44
-            </div>
-          </div>
-          <div class = "row base-popular-topic-row">
-            <div class = "col-md-9 base-popular-topic-name">
-              <a href="#" class="base-popular-topic-link">
-                VO2015 Discussion
-              </a>
-            </div>
-            <div class = "col-md-3 base-popular-topic-user">
-              hieult
-            </div>
-          </div>
-          <div class = "row base-popular-topic-row">
-            <div class = "col-md-9 base-popular-topic-name">
-              <a href="#" class="base-popular-topic-link">
-                VM2015 Announcement
-              </a>
-            </div>
-            <div class = "col-md-3 base-popular-topic-user">
-              iamquang95
-            </div>
-          </div>
-          <div class = "row base-popular-topic-row">
-            <div class = "col-md-9 base-popular-topic-name">
-              <a href="#" class="base-popular-topic-link">
-                Untitled topic
-              </a>
-            </div>
-            <div class = "col-md-3 base-popular-topic-user">
-              Unnamed user
-            </div>
-          </div>
-        </div>
-      </div>
-
       <div class="row" id="pinned_post">
         {% for topic in pinned_topics %}
           <div class="col-xs-10">
@@ -93,7 +37,7 @@
             </p>
             <div class="pinned-post-content-container col-xs-12">
               <p class= "pinned-post-content">
-                {{ topic.content }}
+                {{ topic.content|safe }}
               </p>
             </div>
             <div>
@@ -140,6 +84,27 @@
 {#          </ul>#}
 {#        </nav>#}
       </div><!--/row-->
+      <div class="panel panel-primary" id = "recent_post">
+        <div class = "panel-heading">
+            <h3 class="panel-title">
+                Recent posts
+            </h3>
+        </div>
+        <div class="panel-body">
+          {% for post in recent_posts %}
+              <div class = "row base-popular-topic-row">
+                <div class = "col-md-9 base-popular-topic-name">
+                  <a href="{% url 'forum:topic_retrieve' post.forum_id post.topic_id %}" class="base-popular-topic-link">
+                    {{ post.topic_title }}
+                  </a>
+                </div>
+                <div class = "col-md-3 base-popular-topic-user">
+                  {{ post.author }}
+                </div>
+              </div>
+          {% endfor %}
+        </div>
+      </div>
     </div><!--/.col-xs-12.col-sm-9-->
     <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar">
       <div class="panel panel-primary" id="contest_schedule">

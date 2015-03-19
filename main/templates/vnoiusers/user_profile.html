@@ -1,0 +1,119 @@
+{% extends 'main/base.html' %}
+{% load staticfiles %}
+{% load bbcode_tags %}
+{% load avatar_tags %}
+
+{% block extra-head %}
+    <link href="{% static 'css/user.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block container %}
+    <div class="row">
+        <div class="col-md-9">
+            <div class="row user-detail">
+                <div class="col-md-3 user-avatar">
+                    <img class="img-responsive" src="{% avatar_url profile_user 180 %}" alt="user-avatar" data-holder-rendered="true" align="middle">
+                    <a href="{% url 'user:upload_avatar' %}">Change profile picture</a>
+                </div>
+                <div class="col-md-9 user-info">
+                    <div class="row">
+                        <h3> {{ profile_user.username }} </h3>
+                    </div>
+                    <div class="row">
+                        Name: {{ profile_user.last_name }} {{profile_user.first_name}}
+                    </div>
+                    <div class="row">
+                        Contribution: {{profile_user.profile.contribution}}
+                    </div>
+                    <div class="row">
+                        Email: {{ profile_user.email }}
+                    </div>
+                    <div class="row">
+                        Last visited: {{ profile_user.last_login }}
+                    </div>
+                    <div class="row">
+                        Member since: {{ profile_user.date_joined}}
+                    </div>
+                    <div class="row user-setting-button">
+                        <a class="btn btn-default post-reply" href="#" role="button">
+                            Edit setting
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="panel panel-primary">
+                <div class="panel-heading user-online-judge-title">
+                        Online judge
+                </div>
+                <div class="panel-body user-online-judge">
+                    <p>
+                        VOJ: {{ user.profile.voj_account | default:"Not linked" }}
+                    </p>
+                    <p>
+                        Codeforces: {{ user.profile.codeforces_account | default:"Not linked" }}
+                    </p>
+                    <p>
+                        Topcoder: {{ user.profile.topcoder_account | default:"Not linked" }}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" style="margin-bottom: 2em;">
+        <div class="col-md-9 user-recent-topic">
+            {% for topic in topics %}
+                <div class="user-one-post">
+                    <div class="user-post-heading">
+                        <div class="row">
+                            <div class="col-md-9">
+                                <a href="{% url 'forum:topic_retrieve' topic.forum_id topic.id %}">
+                                    <h4>
+                                        {{ topic.title }}
+                                    </h4>
+                                </a>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="user-post-day-created">
+                                    Aug 15th 2015
+                                </div>
+                            </div>
+                        </div>
+                        <div class="user-post-content">
+                            {{ topic.content|bbcode|safe }}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="col-md-3">
+            <div class="user-voj-static">
+                <div class="panel panel-primary">
+                    <div class="panel-heading user-voj-title">
+                            VOJ Static
+                    </div>
+                    <div class="panel-body user-voj-detail">
+                        <table>
+                            <tr>
+                                <td>
+                                    Level: {{ user.voj_lever }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Score: {{ user.voj_score }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Rank: {{ user.voj_rank}}
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock container %}

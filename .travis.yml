@@ -1,0 +1,26 @@
+language: ruby
+
+rvm:
+  - 2.1.2
+
+before_install:
+  - sudo apt-get install python-virtualenv
+  - "export DISPLAY=:99.0"
+  - "sh -e /etc/init.d/xvfb start"
+  - "/sbin/start-stop-daemon --start --quiet --pidfile /tmp/custom_xvfb_99.pid --make-pidfile --background --exec /usr/bin/Xvfb -- :99 -ac -screen 0 1280x1024x16"
+install:
+  - ./setup_travis.sh
+before_script:
+  - venv/bin/python manage.py migrate
+  - ./init_database_travis.sh
+  - venv/bin/python manage.py runserver 0.0.0.0:8000 &
+  - sleep 3 # Give web server some time to start
+script:
+  - venv/bin/python manage.py test
+  - ./functional_tests/runall.sh
+notifications:
+  email:
+    recipients:
+      - ngthanhtrung23@gmail.com
+    on_success: change
+    on_failure: always
