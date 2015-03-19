@@ -1,5 +1,5 @@
 from django.db import models
-from precise_bbcode.fields import BBCodeTextField
+from django_bleach.models import BleachField
 
 
 class SpojProblemCategory(models.Model):
@@ -25,7 +25,7 @@ class SpojProblem(models.Model):
     accept_count = models.IntegerField(null=False, blank=False, default=0)
     accept_rate = models.FloatField(null=False, blank=False, default=0.0)
     score = models.FloatField(null=False, blank=False, default=2.0)
-    statement = BBCodeTextField()
+    statement = BleachField()
     author = models.CharField(max_length=250, null=True, blank=True)
     created_at = models.DateField(null=True, blank=True, auto_now_add=True)
     time_limit = models.FloatField(null=False, blank=False, default=1)
