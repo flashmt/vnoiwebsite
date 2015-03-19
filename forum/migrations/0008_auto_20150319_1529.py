@@ -2,25 +2,26 @@
 from __future__ import unicode_literals
 
 from django.db import models, migrations
+import django_bleach.models
 
 
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('forum', '0005_merge'),
+        ('forum', '0007_auto_20150319_0254'),
     ]
 
     operations = [
-        migrations.AddField(
-            model_name='topic',
-            name='_content_rendered',
-            field=models.TextField(null=True, editable=False, blank=True),
+        migrations.AlterField(
+            model_name='post',
+            name='content',
+            field=django_bleach.models.BleachField(),
             preserve_default=True,
         ),
         migrations.AlterField(
             model_name='topic',
             name='content',
-            field=models.TextField(null=True, editable=False, blank=True),
+            field=django_bleach.models.BleachField(),
             preserve_default=True,
         ),
     ]

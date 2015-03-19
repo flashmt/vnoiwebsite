@@ -1,5 +1,6 @@
 {% extends 'main/base.html' %}
 {% load staticfiles %}
+{% load bleach_tags %}
 
 {% block extra-head %}
     <link href="{% static 'css/home.css' %}" rel="stylesheet">
@@ -37,7 +38,7 @@
             </p>
             <div class="pinned-post-content-container col-xs-12">
               <p class= "pinned-post-content">
-                {{ topic.content|safe }}
+                {{ topic.content|bleach }}
               </p>
             </div>
             <div>
