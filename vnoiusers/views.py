@@ -12,7 +12,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
 
 # Create your views here.
-from vnoiusers.forms import UserLoginForm
+from vnoiusers.forms import UserLoginForm, UserCreateForm
 
 
 def user_login(request, template_name='vnoiusers/user_login.html'):
@@ -43,8 +43,39 @@ def user_logout(request):
     return redirect('main:index')
 
 
-def user_create(request, template=None):
-    pass
+def user_create(request, template_name='vnoiusers/user_create.html'):
+    form = UserCreateForm()
+    if request.user.is_authenticated():
+        return render(request, template_name,
+                      {'form': form, 'message': 'You already login!'})
+
+    if request.POST:
+        form = UserCreateForm(request.POST)
+        if form.is_valid():
+            try:
+                username = request.POST['username']
+                password = request.POST['password2']
+                last_name = request.POST['last_name']
+                first_name = request.POST['first_name']
+                dob = request.POST['dob']
+                email = request.POST['email']
+                user = User.objects.create_user(
+                    username=username,
+                    password=password,
+                    last_name=last_name,
+                    first_name=first_name,
+                    email=email
+                )
+                return redirect('user:login')
+            except KeyError:
+                return render(request, template_name,
+                              {'form': form, 'message': 'Please fill out all boxes'})
+        else:
+            return render(request, template_name,
+                          {'form': form, 'message': form.errors})
+    else:
+        return render(request, template_name,
+                      {'form': form, 'message': ''})
 
 
 def user_update(request, user_id):
