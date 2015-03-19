@@ -35,7 +35,7 @@
                 <div class="col-md-height post-user-detail ">
                     <div>
                         <div class = "post-user-name">
-                            <a href="{% url 'user:profile' post.created_by.id %}" class="post-username">
+                            <a href="{{post.created_by.get_absolute_url}}" class="post-username">
                                 {{post.created_by}}
                             </a>
                         </div>

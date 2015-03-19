@@ -63,7 +63,7 @@
                     <div class="user-post-heading">
                         <div class="row">
                             <div class="col-md-9">
-                                <a href="{% url 'forum:topic_retrieve' topic.forum_id topic.id %}">
+                                <a href="{{topic.get_absolute_url}}">
                                     <h4>
                                         {{ topic.title }}
                                     </h4>

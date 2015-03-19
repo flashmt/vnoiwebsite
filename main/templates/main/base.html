@@ -30,48 +30,52 @@
 <body>
   <nav class="navbar navbar-fixed-top navbar-inverse">
     <div class="container">
-      <div class="navbar-header" style="margin-left: 0.5em">
-        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-        <a class="navbar-brand" href="#">VNOI Portal</a>
-      </div>
-      <div id="navbar" class="collapse navbar-collapse">
-        <ul class="nav navbar-nav">
-          {% block navbar %}
-          <li id="navbar_home"><a href="{% url 'main:index' %}">Home</a></li>
-          <li id="navbar_problems"><a href="{% url 'problems:list' %}">Problems</a></li>
-          <li id="navbar_forum"><a href="{% url 'forum:index' %}">Forum</a></li>
-          {% if user.is_authenticated %}
-          <li id="navbar_messages"><a href="{% url 'message:index' %}">Messages</a></li>
-          {% endif %}
-          {% endblock navbar %}
-        </ul>
-        <ul class="nav navbar-nav navbar-right" style="padding-top: 12px; margin-right: 0.2em">
-          {% if user.is_authenticated %}
-          <span style="color: wheat">Welcome</span>,
-          <a href="{% url 'user:profile' user.id %}">{{ user.username }}</a> | <a href="{% url 'user:logout' %}">Logout</a>
-          {% else %}
-          <form id="login-form" class="navbar-form navbar-right" method="post" action="{% url 'user:login' %}">
-            {% csrf_token %}
-            <div class="form-group">
-              <input class="form-control input-xs" id="id_username" maxlength="30" name="username"
-              placeholder="Username" required="required" title="" type="text">
-            </div>
-            <div class="form-group">
-              <input class="form-control input-xs" id="id_password" name="password" placeholder="Password"
-              required="required" title="" type="password">
-            </div>
-            <button type="submit" id="login_submit" class="btn btn-success input-xs">Login</button>
-          </form>
-          {#<a href="{% url 'user:login' %}">Login</a>#}
-          {% endif %}
-        </ul>
-      </div>
-      <!-- /.nav-collapse -->
+        <div class="navbar-header" style="margin-left: 0.5em">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                    aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">VNOI Portal</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+
+            <ul class="nav navbar-nav">
+                {% block navbar %}
+                    <li id="navbar_home"><a href="{% url 'main:index' %}">Home</a></li>
+                    <li id="navbar_problems"><a href="{% url 'problems:list' %}">Problems</a></li>
+                    <li id="navbar_forum"><a href="{% url 'forum:index' %}">Forum</a></li>
+                    {% if user.is_authenticated %}
+                        <li id="navbar_messages"><a href="{% url 'message:index' %}">Messages</a></li>
+                    {% endif %}
+                {% endblock navbar %}
+            </ul>
+            <ul class="nav navbar-nav navbar-right" style="padding-top: 12px; margin-right: 0.2em">
+                {% if user.is_authenticated %}
+                    <span style="color: wheat">Welcome</span>,
+                    <a href="{{user.get_absolute_url}}">{{ user.username }}</a>
+                    | <a href="{% url 'user:logout' %}">Logout</a>
+                {% else %}
+                    <form id="login-form" class="navbar-form navbar-right" method="post"
+                          action="{% url 'user:login' %}">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <input class="form-control input-xs" id="id_username" maxlength="30" name="username"
+                                   placeholder="Username" required="required" title="" type="text">
+                        </div>
+                        <div class="form-group">
+                            <input class="form-control input-xs" id="id_password" name="password" placeholder="Password"
+                                   required="required" title="" type="password">
+                        </div>
+                        <button type="submit" id="login_submit" class="btn btn-success input-xs">Login</button>
+                    </form>
+                    {#              <a href="{% url 'user:login' %}">Login</a>#}
+                {% endif %}
+            </ul>
+        </div>
+        <!-- /.nav-collapse -->
     </div>
     <!-- /.container -->
   </nav>
