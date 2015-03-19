@@ -34,18 +34,22 @@ def topic_list(request, forum_id, template="forum/topic_list.html"):
     forum = get_object_or_404(Forum, pk=forum_id)
     topics = Topic.objects.filter(forum_id=forum_id)
     topics = pagination_items(request, topics, 20)
-    return render(request, template, {'forum': forum,
-                                      'topics': topics})
+    return render(request, template, {
+        'forum': forum,
+        'topics': topics
+    })
 
 
 def topic_retrieve(request, forum_id, topic_id, template="forum/topic_retrieve.html"):
     forum = get_object_or_404(Forum, pk=forum_id)
     topic = get_object_or_404(Topic, pk=topic_id)
-    posts = topic.posts.all()
-    return render(request, template, {'forum': forum,
-                                      'topic': topic,
-                                      'post': topic.post,
-                                      'posts': posts})
+    posts = topic.posts.all().values('content', 'created_at', 'created_by__id', 'created_by')
+    return render(request, template, {
+        'forum': forum,
+        'topic': topic,
+        'post': topic.post,
+        'posts': posts
+    })
 
 
 @login_required
@@ -117,7 +121,7 @@ def vote_create(request, post_id=None):
         post = get_object_or_404(Post, pk=post_id)
 
     # Check user permission
-    if not VotePermission(request.user).can_create_vote():
+    if not VotePermission(request.user).can_create_vote(post):
         raise exceptions.PermissionDenied
 
     # Check if user already vote this post
@@ -132,6 +136,13 @@ def vote_create(request, post_id=None):
         vote_type = request.GET['type']
         vote = Vote(type=vote_type, post=post, created_by=request.user)
         vote.save()
+
+        # Each upvote increases the user's contribution by 1
+        if vote_type == 'u':
+            voted_user_profile = post.created_by.profile
+            voted_user_profile.contribution += 1
+            voted_user_profile.save()
+
         return JsonResponse({
             'success': 1,
             'message': 'Vote successfully sent'

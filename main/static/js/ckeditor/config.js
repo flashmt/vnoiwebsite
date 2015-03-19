@@ -4,7 +4,7 @@
  */
 CKEDITOR.editorConfig = function( config ) {
 	// Define changes to default configuration here.
-    config.extraPlugins = 'codesnippet,bbcode';
+    config.extraPlugins = 'codesnippet';
 	// For complete reference see:
 	// http://docs.ckeditor.com/#!/api/CKEDITOR.config
 

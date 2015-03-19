@@ -48,6 +48,7 @@ INSTALLED_APPS = (
     'authority',
     'problems',
     'debug_toolbar',
+    'avatar',
 )
 
 
@@ -67,6 +68,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.i18n',
     'django.core.context_processors.media',
     'django.core.context_processors.request',
+    'django.contrib.messages.context_processors.messages',
 )
 
 AUTHENTICATION_BACKENDS = (
@@ -190,4 +192,9 @@ AUTHORITY_USE_SMART_CACHE = False
 # -------End django-authority----------
 
 
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
+
+
+AVATAR_MAX_AVATARS_PER_USER = 1
 
