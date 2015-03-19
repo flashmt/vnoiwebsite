@@ -48,6 +48,7 @@ INSTALLED_APPS = (
     'problems',
     'debug_toolbar',
     'avatar',
+    'django_bleach',
 )
 
 
@@ -195,3 +196,7 @@ MEDIA_URL = '/media/'
 
 AVATAR_MAX_AVATARS_PER_USER = 1
 
+BLEACH_ALLOWED_TAGS = ['p', 'strong', 'em', 'pre', 'code', 'a', 'img', 'ol', 'ul', 'li']
+BLEACH_ALLOWED_ATTRIBUTES = ['href', 'class', 'alt', 'style', 'src']
+BLEACH_STRIP_TAGS = True
+BLEACH_STRIP_COMMENTS = True
