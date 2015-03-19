@@ -1,11 +1,12 @@
 from avatar.forms import UploadAvatarForm
 from avatar.models import Avatar
 from avatar.signals import avatar_updated
-from avatar.views import add, _get_avatars, _get_next
+from avatar.views import _get_avatars, _get_next
 from django.contrib import messages
 from django.contrib.auth import authenticate, logout, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.utils.translation import ugettext as _
 
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
