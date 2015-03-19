@@ -1,10 +1,16 @@
-{% extends 'main/base_form.html' %}
+{% extends 'main/base.html' %}
+
+{% block container %}
 
 {% block form-title %}
 <h2>Login Form</h2>
+{% endblock form-title %}
 
-{% block message %}
+{% include 'main/base_form.html' %}
+
+{% block form-message %}
 {{message}}
-{% endblock message %}
+{% endblock form-message %}
 
-{% endblock %}
+
+{% endblock container %}
