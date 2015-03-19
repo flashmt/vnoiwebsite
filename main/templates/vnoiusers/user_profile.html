@@ -1,6 +1,5 @@
 {% extends 'main/base.html' %}
 {% load staticfiles %}
-{% load bbcode_tags %}
 {% load avatar_tags %}
 
 {% block extra-head %}
@@ -81,7 +80,7 @@
                             </div>
                         </div>
                         <div class="user-post-content">
-                            {{ topic.content|bbcode|safe }}
+                            {{ topic.content|safe }}
                         </div>
                     </div>
                 </div>

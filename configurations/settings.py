@@ -43,7 +43,6 @@ INSTALLED_APPS = (
     'bootstrap3',
     'mailer',
     'postman',
-    'precise_bbcode',
     'vnoimessages',
     'authority',
     'problems',
