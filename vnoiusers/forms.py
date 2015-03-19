@@ -44,35 +44,28 @@ class UserCreateForm(forms.ModelForm):
         password1 = self.cleaned_data.get('password1')
         password2 = self.cleaned_data.get('password2')
         if password1 and password2 and password1 != password2:
-            raise forms.ValidationError(
-                u"Mật khẩu nhập lại không khớp")
+            raise forms.ValidationError(u"Mật khẩu nhập lại không khớp")
         return password2
 
     def clean_username(self):
         username = self.cleaned_data.get('username')
         try:
             user = User.objects.get(username=username)
-            raise forms.ValidationError(
-                u"Tài khoản này đã được đăng ký")
+            raise forms.ValidationError(u"Tài khoản này đã được đăng ký")
         except User.DoesNotExist:
             pass
         return username
 
     def clean_email(self):
         email = self.cleaned_data['email']
+        validate_email(email)
         try:
-            validate_email(email)
-            try:
-                user = User.objects.get(email=email)
-                if user is not None:
-                    raise ValidationError(
-                        u"Email này đã được đăng ký!")
-            except User.DoesNotExist:
-                pass       
-        except ValidationError:
+            user = User.objects.filter(email=email)
+            if user:
+                raise ValidationError(u"Email này đã được đăng ký!")
+        except User.DoesNotExist:
             pass
         return email
-
 
     def save(self, commit=True):
         user = super(UserCreateForm, self).save(commit=False)

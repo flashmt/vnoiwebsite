@@ -24,4 +24,41 @@ feature "User" do
       click_on $logout
     end
   end
+
+  scenario "Logged in user should not be able to access login / register page", :js => true do
+    visit "#{ROOT_URL}/main"
+    login('admin', 'admin')
+
+    visit "#{ROOT_URL}/user/login"
+    expect(current_path.chomp('/')).to eq("/main")
+
+    visit "#{ROOT_URL}/user/register"
+    verify_flash_messages(['Invalid request'])
+    expect(current_path.chomp('/')).to eq("/main")
+  end
+
+  scenario "User should be able to register", :js => true do
+    username = random_string(10)
+    email = random_string(10) + '@gmail.com'
+    register(username, email, '12345')
+    visit "#{ROOT_URL}/main"
+    login(username, '12345')
+    verify_flash_messages(['Welcome back'])
+    click_on 'Logout'
+
+    email2 = random_string(10) + '@gmail.com'
+    register(username, email2, '123456')
+    expect(page).to have_content('Tài khoản này đã được đăng ký')
+    visit "#{ROOT_URL}/main"
+    login(username, '123456')
+    expect(page).to have_content('Login')
+
+    username2 = random_string(10)
+    register(username2, email, '123456')
+    expect(page).to have_content('Email này đã được đăng ký')
+    visit "#{ROOT_URL}/main"
+    login(username2, '123456')
+    expect(page).to have_content('Login')
+  end
 end
+

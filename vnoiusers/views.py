@@ -18,8 +18,7 @@ from vnoiusers.forms import UserLoginForm, UserCreateForm
 def user_login(request, template_name='vnoiusers/user_login.html'):
     form = UserLoginForm()
     if request.user.is_authenticated():
-        # user already logged in
-        return render(request, template_name, {'form': form, 'message': 'You already login!'})
+        return HttpResponseRedirect('/main')
 
     if request.POST:
         try:
@@ -46,8 +45,8 @@ def user_logout(request):
 def user_create(request, template_name='vnoiusers/user_create.html'):
     form = UserCreateForm()
     if request.user.is_authenticated():
-        return render(request, template_name,
-                      {'form': form, 'message': 'You already login!'})
+        messages.warning(request, 'Invalid request')
+        return HttpResponseRedirect('/main')
 
     if request.POST:
         form = UserCreateForm(request.POST)
