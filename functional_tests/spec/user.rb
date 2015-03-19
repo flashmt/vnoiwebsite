@@ -59,6 +59,17 @@ feature "User" do
     visit "#{ROOT_URL}/main"
     login(username2, '123456')
     expect(page).to have_content('Login')
+
+    register(username2, email2, '12345', password2: '123456')
+    expect(page).to have_content('Mật khẩu nhập lại không khớp')
+    visit "#{ROOT_URL}/main"
+    login(username2, '12345')
+    expect(page).to have_content('Login')
+
+    register(username2, email2, '12345')
+    visit "#{ROOT_URL}/main"
+    login(username2, '12345')
+    verify_flash_messages(['Welcome back'])
   end
 end
 
