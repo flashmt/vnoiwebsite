@@ -1,9 +1,9 @@
 {% extends 'forum/topic_list.html' %}
 
 {% block breadcrumbs %}
-    <li><a href="{% url 'forum:index' %}">Forum</a></li>
-    <li><a href="{{forum.get_absolute_url}}">{{ forum.name }}</a></li>
-    <li>Create new topic</li>
+  <li><a href="{% url 'forum:index' %}">Forum</a></li>
+  <li><a href="{{forum.get_absolute_url}}">{{ forum.name }}</a></li>
+  <li>Create new topic</li>
 {% endblock breadcrumbs %}
 
 {% block forum-body %}

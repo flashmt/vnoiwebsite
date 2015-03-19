@@ -2,12 +2,12 @@
 {% load staticfiles %}
 
 {% block extra-css %}
-    <link href="{% static 'css/forum.css' %}" rel="stylesheet">
+<link href="{% static 'css/forum.css' %}" rel="stylesheet">
 {% endblock %}
 
 {% block breadcrumbs %}
-    <li><a href="{% url 'forum:index' %}">Forum</a></li>
-    <li>{{ forum.name }}</li>
+<li><a href="{% url 'forum:index' %}">Forum</a></li>
+<li>{{ forum.name }}</li>
 {% endblock breadcrumbs %}
 
 {% block navbar-highlight %}navbar_forum{% endblock navbar-highlight %}
@@ -43,25 +43,26 @@
                     </div>
                 </div>
             </div>
+        </div>
         {% endfor %}
     </div>
 </div>
 
 {% block forum-pagination %}
-    {% if topics and topics.paginator.num_pages > 1 %}
-     <ul class="pagination nav navbar-nav">
-        {% if topics.has_previous %}
-                <li><a href="?page={{ topics.previous_page_number }}">&laquo;</a></li>
-        {% endif %}
-        {% for page in topics.paginator.page_range %}
-            <li class="{% if topics.number == page  %}active{% endif %}"><a href="?page={{page }}">{{ page }}</a></li>
-        {% endfor %}
-
-        {% if topics.has_next %}
-            <li> <a href="?page={{ topics.next_page_number }}">»</a></li>
-        {% endif %}
-     </ul>
+{% if topics and topics.paginator.num_pages > 1 %}
+<ul class="pagination nav navbar-nav">
+    {% if topics.has_previous %}
+    <li><a href="?page={{ topics.previous_page_number }}">&laquo;</a></li>
     {% endif %}
+    {% for page in topics.paginator.page_range %}
+    <li class="{% if topics.number == page  %}active{% endif %}"><a href="?page={{page }}">{{ page }}</a></li>
+    {% endfor %}
+
+    {% if topics.has_next %}
+    <li> <a href="?page={{ topics.next_page_number }}">»</a></li>
+    {% endif %}
+</ul>
+{% endif %}
 
 {% endblock forum-pagination %}
 
