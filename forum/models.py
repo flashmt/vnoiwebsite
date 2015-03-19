@@ -172,6 +172,14 @@ class Post(models.Model):
 class PinnedTopic(models.Model):
     # TODO: In future, this model will cache fields which are displayed in homepage
     post = models.ForeignKey(Post, related_name='+')
+    is_cached = models.BooleanField(null=False, blank=False, default=False)
+    last_updated = models.DateTimeField(null=True, blank=True)
+    topic_title = models.CharField(max_length=500, null=True, blank=True)
+    forum_id = models.IntegerField(null=True, blank=True)
+    topic_id = models.IntegerField(null=True, blank=True)
+    author = models.CharField(max_length=250, null=True, blank=True)
+    content = BleachField(null=True)
+    total_vote = models.IntegerField(null=True, blank=True)
 
     def __unicode__(self):
         return self.post.topic.title
