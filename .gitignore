@@ -61,3 +61,6 @@ db.sqlite3
 
 # Media resource
 media/
+
+# Sass
+.sass-cache/
