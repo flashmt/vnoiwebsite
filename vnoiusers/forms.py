@@ -1,4 +1,5 @@
-from __future__ import unicode_literals
+# -*- coding: utf-8 -*-
+
 from django import forms
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
@@ -20,13 +21,14 @@ class UserLoginForm(forms.ModelForm):
 
 class UserCreateForm(forms.ModelForm):
 
-    last_name = forms.CharField(label=u"H\u1ecd")
-    first_name = forms.CharField(label=u"T\xean")
-    dob = forms.DateField(label=u"Ng\xe0y sinh [dd/mm/yyyy] ",
-                          input_formats=['%d/%m/%Y'])
-    password1 = forms.CharField(label=u"M\u1eadt Kh\u1ea9u",
+    last_name = forms.CharField(label=u"Họ")
+    first_name = forms.CharField(label=u"Tên")
+    dob = forms.DateField(label=u"Ngày sinh",
+                          input_formats=['%d/%m/%Y'],
+                          widget=forms.TextInput(attrs={'placeholder': 'dd/mm/yyyy'}))
+    password1 = forms.CharField(label=u"Mật khẩu",
                                 widget=forms.PasswordInput)
-    password2 = forms.CharField(label="Nh\u1eadp l\u1ea1i m\u1eadt kh\u1ea9u",
+    password2 = forms.CharField(label=u"Nhập lại mật khẩu",
                                 widget=forms.PasswordInput)
 
     def __init__(self, *args, **kwargs):
@@ -43,20 +45,18 @@ class UserCreateForm(forms.ModelForm):
         password2 = self.cleaned_data.get('password2')
         if password1 and password2 and password1 != password2:
             raise forms.ValidationError(
-                u"M\u1eadt kh\u1ea9u nh\u1eadp l\u1ea1i sai!")
+                u"Mật khẩu nhập lại không khớp")
         return password2
-
 
     def clean_username(self):
         username = self.cleaned_data.get('username')
         try:
             user = User.objects.get(username=username)
             raise forms.ValidationError(
-                u"username n\xe0y \u0111\xe3 \u0111\u01b0\u1ee3c \u0111\u0103ng k\xfd b\u1edfi t\xe0i kho\u1ea3n kh\xe1c")
+                u"Tài khoản này đã được đăng ký")
         except User.DoesNotExist:
             pass
         return username
-
 
     def clean_email(self):
         email = self.cleaned_data['email']
@@ -66,7 +66,7 @@ class UserCreateForm(forms.ModelForm):
                 user = User.objects.get(email=email)
                 if user is not None:
                     raise ValidationError(
-                        u"Email n\xe0y \u0111\xe3 \u0111\u01b0\u1ee3c s\u1eed d\u1ee5ng!!")
+                        u"Email này đã được đăng ký!")
             except User.DoesNotExist:
                 pass       
         except ValidationError:
