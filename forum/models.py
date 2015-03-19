@@ -1,4 +1,5 @@
 from django.contrib.auth.models import User
+from django.core.urlresolvers import reverse
 from django.db import models
 from django_bleach.models import BleachField
 
@@ -14,15 +15,11 @@ class ForumGroup(models.Model):
 class Forum(models.Model):
     name = models.CharField(max_length=200)
     desc = models.TextField(default="")
-
     num_topics = models.IntegerField(default=0)
     num_posts = models.IntegerField(default=0)
-
     created_at = models.DateTimeField(auto_now_add=True, null=True)
     created_by = models.ForeignKey(User, related_name="created_forums")
-
     last_post = models.OneToOneField('Post', related_name="+", default=None, null=True, blank=True, on_delete=models.SET_NULL)
-
     forum_group = models.ForeignKey(ForumGroup, related_name="forums")
 
     def __unicode__(self):
@@ -44,6 +41,9 @@ class Forum(models.Model):
     def get_last_post(self):
         return self.last_post
 
+    def get_absolute_url(self):
+        return reverse('forum:topic_list', kwargs={'forum_id': self.id})
+
 
 class Topic(models.Model):
     forum = models.ForeignKey(Forum, related_name="topics")
@@ -51,13 +51,10 @@ class Topic(models.Model):
     num_posts = models.PositiveSmallIntegerField(verbose_name="num_replies", default=0)
     title = models.CharField(max_length=500, null=False, blank=False)
     content = BleachField()
-
     created_at = models.DateTimeField(auto_now_add=True, null=True)
     created_by = models.ForeignKey(User, related_name="created_topics")
-
     updated_at = models.DateTimeField(auto_now_add=True, null=True)
     updated_by = models.ForeignKey(User, related_name="updated_topics", default=None, null=True, on_delete=models.SET_NULL)
-
     last_post = models.OneToOneField('Post', related_name="+", default=None, null=True, blank=True, on_delete=models.SET_NULL)
 
     # TODO created_by, updated_at, level
@@ -96,6 +93,9 @@ class Topic(models.Model):
     def count_num_posts(self):
         return self.num_posts
 
+    def get_absolute_url(self):
+        return reverse('forum:topic_retrieve', kwargs={'forum_id': self.forum.id, 'topic_id': self.id})
+
 
 class Post(models.Model):
     topic_post = models.BooleanField(default=False)
@@ -104,10 +104,8 @@ class Post(models.Model):
     content = BleachField()
     num_upvotes = models.IntegerField(default=0)
     num_downvotes = models.IntegerField(default=0)
-
     created_at = models.DateTimeField(auto_now_add=True, null=True)
     created_by = models.ForeignKey(User, related_name="created_posts", null=True, on_delete=models.SET_NULL)
-
     updated_at = models.DateTimeField(auto_now_add=True, null=True)
     updated_by = models.ForeignKey(User, related_name="updated_posts", default=None, null=True, on_delete=models.SET_NULL)
 
@@ -177,6 +175,9 @@ class PinnedTopic(models.Model):
 
     def __unicode__(self):
         return self.post.topic.title
+
+    def get_absolute_url(self):
+        return self.post.topic.get_absolute_url()
 
 
 class Vote(models.Model):
