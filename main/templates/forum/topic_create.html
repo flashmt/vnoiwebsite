@@ -1,7 +1,12 @@
 {% extends 'forum/topic_list.html' %}
 
+{% block breadcrumbs %}
+    <li><a href="{% url 'forum:index' %}">Forum</a></li>
+    <li><a href="{% url 'forum:topic_list' forum.id %}">{{ forum.name }}</a></li>
+    <li>Create new topic</li>
+{% endblock breadcrumbs %}
+
 {% block forum-body %}
-Create new topic
 
 {% include 'main/base_form.html' %}
 

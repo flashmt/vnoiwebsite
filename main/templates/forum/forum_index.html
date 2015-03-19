@@ -7,13 +7,11 @@
 
 {% block navbar-highlight %}navbar_forum{% endblock navbar-highlight %}
 
-{% block container %}
+{% block breadcrumbs %}
+    <li>Forum</li>
+{% endblock breadcrumbs %}
 
-<div style="padding-bottom: 10px">
-{% block forum-nav %}
-    Forum
-{% endblock forum-nav %}
-</div>
+{% block container %}
 
 {% block forum-body %}
     <div id="forum-main-container">

@@ -34,8 +34,10 @@ def topic_list(request, forum_id, template="forum/topic_list.html"):
     forum = get_object_or_404(Forum, pk=forum_id)
     topics = Topic.objects.filter(forum_id=forum_id)
     topics = pagination_items(request, topics, 20)
-    return render(request, template, {'forum': forum,
-                                      'topics': topics})
+    return render(request, template, {
+        'forum': forum,
+        'topics': topics
+    })
 
 
 def topic_retrieve(request, forum_id, topic_id, template="forum/topic_retrieve.html"):

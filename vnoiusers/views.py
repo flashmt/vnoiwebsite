@@ -8,7 +8,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.utils.translation import ugettext as _
 
-from django.http import HttpResponse
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
 
 # Create your views here.
@@ -28,7 +28,8 @@ def user_login(request, template_name='vnoiusers/user_login.html'):
             user = authenticate(username=username, password=password)
             if (user is not None) and user.is_active:
                 login(request, user)
-                return redirect('main:index')
+                messages.success(request, 'Welcome back, %s' % username)
+                return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
             else:
                 return render(request, template_name, {'form': form, 'message': 'login fail!'})
         except KeyError:
@@ -58,7 +59,8 @@ def user_profile(request, user_id):
     context = {
         'profile_user': user,
         'is_authenticated': is_authenticated,
-        'topics': user.created_topics.all()
+        'topics': user.created_topics.all(),
+        'disable_breadcrumbs': True,
     }
     return render(request, 'vnoiusers/user_profile.html', context)
 
