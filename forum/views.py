@@ -117,6 +117,7 @@ def topic_create(request, forum_id=None, template="forum/topic_create.html"):
 
 @login_required
 def vote_create(request, post_id=None):
+    post = None
     if post_id:
         post = get_object_or_404(Post, pk=post_id)
 
@@ -138,7 +139,7 @@ def vote_create(request, post_id=None):
         vote.save()
 
         # Each upvote increases the user's contribution by 1
-        if vote_type == 'u':
+        if vote_type == Vote.UPVOTE:
             voted_user_profile = post.created_by.profile
             voted_user_profile.contribution += 1
             voted_user_profile.save()
