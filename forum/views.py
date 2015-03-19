@@ -79,7 +79,7 @@ def post_create(request, forum_id=None, topic_id=None, post_id=None, template="f
             else:
                 return HttpResponseRedirect('../..')
         else:
-            return HttpResponse("fail!")
+            return render(request, template, {'form': form, 'forum': forum, 'topic': topic})
     else:
         form = PostCreateForm(user=request.user, forum=forum, topic=topic, parent=post)
         return render(request, template, {'form': form, 'forum': forum, 'topic': topic})
@@ -105,7 +105,7 @@ def post_update(request, forum_id=None, topic_id=None, post_id=None, template="f
             form.save()
             return HttpResponseRedirect('../..')
         else:
-            return HttpResponse("fail!")
+            return render(request, template, {'form': form, 'forum': forum, 'topic': topic})
     else:
         form = PostUpdateForm(instance=post)
         return render(request, template, {'form': form, 'forum': forum, 'topic': topic})
