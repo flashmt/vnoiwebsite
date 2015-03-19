@@ -1,5 +1,6 @@
 {% extends 'main/base.html' %}
 {% load staticfiles %}
+{% load bleach_tags %}
 
 {% block container %}
   <div class="row row-offcanvas row-offcanvas-right">
@@ -33,7 +34,7 @@
             </p>
             <div class="pinned-post-content-container col-xs-12">
               <p class= "pinned-post-content">
-                {{ topic.content|safe }}
+                {{ topic.content|bleach }}
               </p>
             </div>
             <div>

@@ -7,7 +7,6 @@ from django.utils.html import escape
 class PostForm(forms.ModelForm):
 
     title = forms.CharField(label='Title', widget=forms.TextInput(attrs={'size': '80'}))
-    content = forms.CharField(label='Content', widget=forms.Textarea(attrs={'rows': 20}))
 
     class Meta:
         model = Post
@@ -19,8 +18,9 @@ class PostForm(forms.ModelForm):
         self.forum = kwargs.pop('forum', None)
         self.parent = kwargs.pop('parent', None)
         super(PostForm, self).__init__(*args, **kwargs)
-        if self.instance.id:
-            self.forum = self.instance.topic.forum
+        if self.parent:
+            self.topic = self.parent.topic
+            self.forum = self.parent.topic.forum
         self.fields.keyOrder = [
             'title', 'content',
         ]
@@ -31,6 +31,7 @@ class PostCreateForm(PostForm):
     def __init__(self, *args, **kwargs):
         super(PostCreateForm, self).__init__(*args, **kwargs)
         if self.topic:
+            # If this post is not a topic post, title is not required
             self.fields['title'].required = False
             self.fields['title'].widget = forms.HiddenInput()
 

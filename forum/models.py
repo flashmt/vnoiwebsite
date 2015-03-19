@@ -1,8 +1,6 @@
 from django.contrib.auth.models import User
 from django.db import models
-
-
-# Create your models here.
+from django_bleach.models import BleachField
 
 
 class ForumGroup(models.Model):
@@ -52,7 +50,7 @@ class Topic(models.Model):
     post = models.ForeignKey('Post', related_name="topics", null=True, blank=True)
     num_posts = models.PositiveSmallIntegerField(verbose_name="num_replies", default=0)
     title = models.CharField(max_length=500, null=False, blank=False)
-    content = models.TextField(null=False, blank=False)
+    content = BleachField()
 
     created_at = models.DateTimeField(auto_now_add=True, null=True)
     created_by = models.ForeignKey(User, related_name="created_topics")
@@ -103,7 +101,7 @@ class Post(models.Model):
     topic_post = models.BooleanField(default=False)
     topic = models.ForeignKey(Topic, verbose_name='Topic', related_name='posts', null=True, on_delete=models.SET_NULL)
     reply_on = models.ForeignKey("self", related_name="reply_posts", null=True, blank=True, on_delete=models.SET_NULL)
-    content = models.TextField(null=False, blank=False)
+    content = BleachField()
     num_upvotes = models.IntegerField(default=0)
     num_downvotes = models.IntegerField(default=0)
 
