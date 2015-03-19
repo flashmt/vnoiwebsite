@@ -12,6 +12,12 @@ cd vnoiweb_test
 
 - Setup Firefox, version below 36
 
+**Note**: If you do not want to install lower version of Firefox, add the following to your _~/.bashrc_:
+
+```bash
+export TRAVIS_TEST_ENV=1
+```
+
 ## Project structure:
 
 - spec: the tests!
@@ -33,7 +39,7 @@ cd vnoiweb_test
 ### Could not find gem
 - Error:
 ```
-Could not find gem 'capybara-screenshot (~> 0.3.21) ruby' in the gems available on this machine.
+Could not find gem '<something>' in the gems available on this machine.
 ```
 
 - Reason: New gem was added as dependencies --> you need to install those

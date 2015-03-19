@@ -23,7 +23,7 @@ urlpatterns = patterns(
     # url(r'^postman/', include('postman.urls')),
     url(r'^authority/', include('authority.urls')),
     url(r'^problem/', include('problems.urls', namespace='problems')),
-    url(r'^avatar/', include('avatar.urls')),
+    # url(r'^avatar/', include('avatar.urls')),
 )
 
 if settings.DEBUG:

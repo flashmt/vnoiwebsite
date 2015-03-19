@@ -7,20 +7,18 @@ from django.db import models, migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('forum', '0005_merge'),
+        ('forum', '0006_auto_20150312_1647'),
     ]
 
     operations = [
-        migrations.AddField(
+        migrations.RemoveField(
             model_name='topic',
             name='_content_rendered',
-            field=models.TextField(null=True, editable=False, blank=True),
-            preserve_default=True,
         ),
         migrations.AlterField(
             model_name='topic',
             name='content',
-            field=models.TextField(null=True, editable=False, blank=True),
+            field=models.TextField(),
             preserve_default=True,
         ),
     ]

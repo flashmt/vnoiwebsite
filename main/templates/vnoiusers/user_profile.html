@@ -1,11 +1,6 @@
 {% extends 'main/base.html' %}
 {% load staticfiles %}
-{% load bbcode_tags %}
 {% load avatar_tags %}
-
-{% block extra-head %}
-    <link href="{% static 'css/user.css' %}" rel="stylesheet">
-{% endblock %}
 
 {% block container %}
     <div class="row">
@@ -68,7 +63,7 @@
                     <div class="user-post-heading">
                         <div class="row">
                             <div class="col-md-9">
-                                <a href="{% url 'forum:topic_retrieve' topic.forum_id topic.id %}">
+                                <a href="{{topic.get_absolute_url}}">
                                     <h4>
                                         {{ topic.title }}
                                     </h4>
@@ -81,7 +76,7 @@
                             </div>
                         </div>
                         <div class="user-post-content">
-                            {{ topic.content|bbcode|safe }}
+                            {{ topic.content|safe }}
                         </div>
                     </div>
                 </div>

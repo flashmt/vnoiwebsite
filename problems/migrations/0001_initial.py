@@ -2,7 +2,6 @@
 from __future__ import unicode_literals
 
 from django.db import models, migrations
-import precise_bbcode.fields
 
 
 class Migration(migrations.Migration):
@@ -33,7 +32,7 @@ class Migration(migrations.Migration):
                 ('accept_rate', models.FloatField(default=0.0)),
                 ('score', models.FloatField(default=2.0)),
                 ('_statement_rendered', models.TextField(null=True, editable=False, blank=True)),
-                ('statement', precise_bbcode.fields.BBCodeTextField(no_rendered_field=True)),
+                ('statement', models.TextField(null=True, blank=True)),
                 ('author', models.CharField(max_length=250, null=True, blank=True)),
                 ('created_at', models.DateField(auto_now_add=True)),
                 ('time_limit', models.FloatField(default=1)),

@@ -1,10 +1,6 @@
 {% extends 'main/base.html' %}
 {% load staticfiles %}
-{% load bbcode_tags %}
-
-{% block extra-head %}
-    <link href="{% static 'css/home.css' %}" rel="stylesheet">
-{% endblock %}
+{% load bleach_tags %}
 
 {% block container %}
   <div class="row row-offcanvas row-offcanvas-right">
@@ -31,14 +27,14 @@
         {% for topic in pinned_topics %}
           <div class="col-xs-10">
             <a href="{% url 'forum:topic_retrieve' topic.forum_id topic.topic_id %}">
-              <h2>{{ topic.title }}</h2>
+              <h2>{{ topic.topic_title }}</h2>
             </a>
             <p class = "pinned-post-author">
               By {{ topic.author }}, 1 day ago.
             </p>
             <div class="pinned-post-content-container col-xs-12">
               <p class= "pinned-post-content">
-                {{ topic.content|bbcode|safe }}
+                {{ topic.content|bleach }}
               </p>
             </div>
             <div>
@@ -95,12 +91,12 @@
           {% for post in recent_posts %}
               <div class = "row base-popular-topic-row">
                 <div class = "col-md-9 base-popular-topic-name">
-                  <a href="{% url 'forum:topic_retrieve' post.forum_id post.topic_id %}" class="base-popular-topic-link">
-                    {{ post.topic_title }}
+                  <a href="{% url 'forum:topic_retrieve' post.topic__forum__id post.topic__id %}" class="base-popular-topic-link">
+                    {{ post.topic__title }}
                   </a>
                 </div>
                 <div class = "col-md-3 base-popular-topic-user">
-                  {{ post.author }}
+                  {{ post.created_by__username }}
                 </div>
               </div>
           {% endfor %}

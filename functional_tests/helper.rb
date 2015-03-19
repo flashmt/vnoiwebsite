@@ -49,7 +49,6 @@ end
 
 def login(user, password)
   puts 'Logging in...'
-  visit ROOT_URL + '/main'
   fill_in 'id_username', with: user
   fill_in 'id_password', with: password
   if ENV.has_key?('TRAVIS_TEST_ENV')
@@ -65,4 +64,26 @@ def fill_in_ckeditor(locator, opts)
     CKEDITOR.instances['#{locator}'].setData(#{content});
     $('textarea##{locator}').text(#{content});
   SCRIPT
+end
+
+def verify_breadcrumbs(texts)
+  within '#breadcrumbs' do
+    texts.each do |text|
+      puts "Checking breadcrumbs: #{text}"
+      expect(page).to have_content(text)
+    end
+  end
+end
+
+def verify_flash_messages(texts)
+  within '#flash-messages' do
+    texts.each do |text|
+      puts "Checking flash message: #{text}"
+      expect(page).to have_content(text)
+    end
+  end
+end
+
+def browser_history_back
+  page.evaluate_script('window.history.back()')
 end

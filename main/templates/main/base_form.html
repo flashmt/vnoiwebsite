@@ -3,9 +3,9 @@
 
 {% block formbody %}
 <form role="form" class="form-horizontal" method="post">
-    {% bootstrap_form form layout="horizontal" %}
-    {% csrf_token %}
-    {% buttons submit="OK" reset="Reset" layout="horizontal"%}{% endbuttons %}
+  {% bootstrap_form form layout="horizontal" %}
+  {% csrf_token %}
+  {% buttons submit="OK" reset="Reset" layout="horizontal"%}{% endbuttons %}
 </form>
 
 {% endblock formbody %}

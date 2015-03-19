@@ -1,7 +1,8 @@
 {% block postview %}
 {% load staticfiles %}
-{% load bbcode_tags %}
 {% load avatar_tags %}
+{% load bleach_tags %}
+{% load permissions %}
 
 <div style="background-color:wheat; margin-left: 0; margin-bottom: 30px">
     <!--
@@ -34,7 +35,7 @@
                 <div class="col-md-height post-user-detail ">
                     <div>
                         <div class = "post-user-name">
-                            <a href="{% url 'user:profile' post.created_by.id %}" class="post-username">
+                            <a href="{{post.created_by.get_absolute_url}}" class="post-username">
                                 {{post.created_by}}
                             </a>
                         </div>
@@ -47,8 +48,7 @@
                     <div class="post-body">
                         <div class="post-content">
                             <div style="margin-left:1em; margin-top: 1em; margin-bottom:1em;">
-                                {% bbcode entry.bbcode_content %}
-                                {{post.content|bbcode|safe}}
+                                {{post.content|bleach}}
                             </div>
                         </div>
                     </div>
@@ -58,9 +58,12 @@
                                 <a class="btn btn-default post-reply" href="{% url 'forum:post_create' forum.id topic.id post.id %}" role="button">
                                   Reply
                                 </a>
-    		                    <a class="btn btn-default post-edit" href="{% url 'forum:post_update' forum.id topic.id post.id %}" role="button">
-    		                      Edit
-    		                    </a>
+                                {% ifhasperm "post_permission.can_update_post" request.user post %}
+                                    <a class="btn btn-default post-edit" href="{% url 'forum:post_update' forum.id topic.id post.id %}" role="button">
+                                      Edit
+                                    </a>
+                                {% else %}
+                                {% endifhasperm %}
                             </div>
                             <div class="col-md-1">
                                 <a class="btn btn-default post-upvote" href="{% url 'forum:vote_create' post.id %}?type=u" role="button">

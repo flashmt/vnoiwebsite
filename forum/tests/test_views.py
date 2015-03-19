@@ -24,7 +24,7 @@ class TopicViewTest(TestCase):
         self.assertEquals(response['Location'], 'http://testserver/forum/1/3/')
         self.assertEquals(Topic.objects.all().count(), 3)
         self.assertEquals(Post.objects.all().count(), 8)
-        self.assertEquals(Topic.objects.get(pk=3).content.rendered, post_content)
+        self.assertEquals(Topic.objects.get(pk=3).content, post_content)
         self.assertEquals(Post.objects.get(pk=8).content, post_content)
 
         # Ensure that non-existent forum throw a 404

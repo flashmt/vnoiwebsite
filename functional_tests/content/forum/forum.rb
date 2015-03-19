@@ -12,3 +12,6 @@ $forum_content = [
   'Trò chuyện linh tinh',
   'Quảng cáo',
 ]
+$create_topic = 'Create new topic'
+$reply = 'Reply'
+$edit = 'Edit'
