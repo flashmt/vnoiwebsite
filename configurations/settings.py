@@ -43,12 +43,12 @@ INSTALLED_APPS = (
     'bootstrap3',
     'mailer',
     'postman',
-    'precise_bbcode',
     'vnoimessages',
     'authority',
     'problems',
     'debug_toolbar',
     'avatar',
+    'django_bleach',
 )
 
 
@@ -121,6 +121,8 @@ STATIC_URL = '/static/'
 
 LOGIN_URL = '/user/login'
 
+TEMPLATE_DIRS = [os.path.join(BASE_DIR, 'templates')]
+
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
@@ -187,12 +189,19 @@ POSTMAN_AUTO_MODERATE_AS = True
 
 # Django-authority
 AUTHORITY_USE_SMART_CACHE = False
-# -------End django-authority----------
-
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
-
+# Django-avatar setting
 AVATAR_MAX_AVATARS_PER_USER = 1
 
+BLEACH_ALLOWED_TAGS = ['p', 'strong', 'em', 'pre', 'code', 'a', 'img', 'ol', 'ul', 'li']
+BLEACH_ALLOWED_ATTRIBUTES = ['href', 'class', 'alt', 'style', 'src']
+BLEACH_STRIP_TAGS = True
+BLEACH_STRIP_COMMENTS = True
+
+# ABSOLUTE_URL_OVERRIDES now works on models that don't declare get_absolute_url().
+ABSOLUTE_URL_OVERRIDES = {
+    'auth.user': lambda user: "/user/%d/" % user.id,
+}

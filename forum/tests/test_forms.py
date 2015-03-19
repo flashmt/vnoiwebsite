@@ -17,14 +17,18 @@ class PostFormTest(TestCase):
         # Test successful init with instance
         form = PostForm(instance=self.post_id1)
         self.assertTrue(isinstance(form.instance, Post))
-        self.assertEquals(form.forum, self.post_id1.topic.forum)
 
         # Test successful init without instance
         form = PostForm(user=User.objects.get(pk=1), forum=Forum.objects.get(pk=1))
         self.assertTrue(isinstance(form.instance, Post))
-        self.assertEquals(form.forum.id, 1)
         self.assertEquals(form.user.id, 1)
+        self.assertEquals(form.forum.id, 1)
         self.assertEquals(form.parent, None)
+
+        # Test form.forum and form.topic should be follow form.parent if form.parent != None
+        form = PostForm(user=User.objects.get(pk=1), forum=Forum.objects.get(pk=2), topic=Topic.objects.get(pk=2), parent=Post.objects.get(pk=1))
+        self.assertEquals(form.topic.id, 1)
+        self.assertEquals(form.forum.id, 1)
 
 
 class PostCreateFormTest(TestCase):
@@ -36,12 +40,18 @@ class PostCreateFormTest(TestCase):
         self.post_id1 = Post.objects.get(pk=1)
 
     def test_init(self):
-        # Test 'title' field should be hidden if the post is a comment
+        # Test 'tile' field should be display is the post is a topic post
+        form = PostCreateForm(forum=Forum.objects.get(pk=1))
+        self.assertEquals(form.forum.id, 1)
+        self.assertTrue(form.fields['title'].required)
+        self.assertEquals(form.fields['title'].widget.__class__, forms.TextInput().__class__)
+        # Test 'title' field should be hidden if the post is not a topic post
         form = PostCreateForm(topic=Topic.objects.get(pk=1))
         self.assertEquals(form.topic.id, 1)
         self.assertFalse(form.fields['title'].required)
         self.assertEquals(form.fields['title'].widget.__class__, forms.HiddenInput().__class__)
 
+                 
     def test_save(self):
         # Test if commit=False, no actual database updating
         pass
