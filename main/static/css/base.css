@@ -330,7 +330,23 @@ footer {
   border-radius: 3px; }
 
 #login-form {
-  margin-top: -0.1em; }
+  width: 100%;
+  margin-left: 0px;
+  margin-right: 0px; }
+  #login-form .form-group {
+    margin-bottom: 15px; }
+    #login-form .form-group label {
+      color: white; }
+    #login-form .form-group input {
+      width: 100%; }
+  #login-form button {
+    font-weight: bold;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 14px; }
+
+.dropdown-menu {
+  background-color: #222222;
+  width: 250px; }
 
 .alert {
   padding: 7px; }
