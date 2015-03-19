@@ -49,6 +49,7 @@ end
 
 def login(user, password)
   puts 'Logging in...'
+  click_on 'Sign in'
   fill_in 'id_username', with: user
   fill_in 'id_password', with: password
   if ENV.has_key?('TRAVIS_TEST_ENV')
