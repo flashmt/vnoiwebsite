@@ -25,7 +25,7 @@
             <div class="row forum" id="forum-{{ topic.id }}">
                 <span class="forum-icon col-xs-1"></span>
                 <div class="forum-name-div col-xs-8">
-                    <a href="{% url 'forum:topic_retrieve' topic.forum_id topic.id %}">
+                    <a href="{{topic.get_absolute_url}}">
                         <h3 class="forum-name">{{ topic.title }}</h3>
                     </a>
                     <p>by {{ topic.created_by }}</p>

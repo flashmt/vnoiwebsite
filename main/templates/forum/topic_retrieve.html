@@ -4,7 +4,7 @@
 
 {% block breadcrumbs %}
     <li><a href="{% url 'forum:index' %}">Forum</a></li>
-    <li><a href="{% url 'forum:topic_list' forum.id %}">{{ forum.name }}</a></li>
+    <li><a href="{{forum.get_absolute_url}}">{{ forum.name }}</a></li>
     <li>{{ topic.title }}</li>
 {% endblock breadcrumbs %}
 

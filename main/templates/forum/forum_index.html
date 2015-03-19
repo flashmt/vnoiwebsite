@@ -24,7 +24,7 @@
                 <div class="row forum" id="forum-{{ forum.id }}">
                     <span class="forum-icon col-xs-1"></span>
                     <div class="forum-name-div col-xs-8">
-                        <h3 class="forum-name"><a href="{% url 'forum:topic_list' forum.id %}">{{ forum.name }}</a></h3>
+                        <h3 class="forum-name"><a href="{{forum.get_absolute_url}}">{{ forum.name }}</a></h3>
                         <p>{{ forum.desc }}</p>
                     </div>
                     <div class="forum-statistics col-xs-3 row">
