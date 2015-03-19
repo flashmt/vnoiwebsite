@@ -1,7 +1,5 @@
 from __future__ import unicode_literals
 from django import forms
-from django.core.validators import validate_email
-from django.core.exceptions import ValidationError
 from django.contrib.auth.models import User
 
 
@@ -46,7 +44,6 @@ class UserCreateForm(forms.ModelForm):
                 u"M\u1eadt kh\u1ea9u nh\u1eadp l\u1ea1i sai!")
         return password2
 
-
     def clean_username(self):
         username = self.cleaned_data.get('username')
         try:
@@ -56,23 +53,6 @@ class UserCreateForm(forms.ModelForm):
         except User.DoesNotExist:
             pass
         return username
-
-
-    def clean_email(self):
-        email = self.cleaned_data['email']
-        try:
-            validate_email(email)
-            try:
-                user = User.objects.get(email=email)
-                if user is not None:
-                    raise ValidationError(
-                        u"Email n\xe0y \u0111\xe3 \u0111\u01b0\u1ee3c s\u1eed d\u1ee5ng!!")
-            except User.DoesNotExist:
-                pass       
-        except ValidationError:
-            pass
-        return email
-
 
     def save(self, commit=True):
         user = super(UserCreateForm, self).save(commit=False)
