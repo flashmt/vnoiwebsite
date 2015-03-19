@@ -119,6 +119,8 @@ STATIC_URL = '/static/'
 
 LOGIN_URL = '/user/login'
 
+TEMPLATE_DIRS = [os.path.join(BASE_DIR, 'templates')]
+
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
