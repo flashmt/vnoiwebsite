@@ -3,9 +3,9 @@
 {% block navbar-highlight %}navbar_forum{% endblock navbar-highlight %}
 
 {% block breadcrumbs %}
-    <li><a href="{% url 'forum:index' %}">Forum</a></li>
-    <li><a href="{% url 'forum:topic_list' forum.id %}">{{ forum.name }}</a></li>
-    <li>{{ topic.title }}</li>
+  <li><a href="{% url 'forum:index' %}">Forum</a></li>
+  <li><a href="{% url 'forum:topic_list' forum.id %}">{{ forum.name }}</a></li>
+  <li>{{ topic.title }}</li>
 {% endblock breadcrumbs %}
 
 {% block forum-body %}
