@@ -44,10 +44,18 @@
                 </div>
                 <div class="panel-body user-online-judge">
                     <p>
-                        VOJ: {{ user.profile.voj_account | default:"Not linked" }}
+                        {% if user.profile.voj_account %}
+                            VOJ: {{ user.profile.voj_account }} | <a href="{% url 'user:unlink_voj' %}">Unlink VOJ account</a>
+                        {% else %}
+                            <a href="{% url 'user:link_voj' %}">Link VOJ account</a>
+                        {% endif %}
                     </p>
                     <p>
-                        Codeforces: {{ user.profile.codeforces_account | default:"Not linked" }}
+                        {% if user.profile.codeforces_account %}
+                            Codeforces: {{ user.profile.codeforces_account }} | <a href="{% url 'user:unlink_codeforces' %}">Unlink Codeforces account</a>
+                        {% else %}
+                            <a href="{% url 'user:link_codeforces' %}">Link Codeforces account</a>
+                        {% endif %}
                     </p>
                     <p>
                         Topcoder: {{ user.profile.topcoder_account | default:"Not linked" }}
