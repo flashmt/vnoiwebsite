@@ -50,6 +50,7 @@ INSTALLED_APPS = (
     'debug_toolbar',
     'avatar',
     'django_bleach',
+    'externaljudges',
 )
 
 

@@ -85,19 +85,20 @@
     </div><!--/.col-xs-12.col-sm-9-->
     <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar">
       <div class="panel panel-primary" id="contest_schedule">
-        <div class="panel-heading">Schedule</div>
+        <div class="panel-heading">Coming contest</div>
         <table class="table">
           <thead>
           </thead>
           <tbody>
-            <tr><td>
-              <p><a href="">Codeforces round ##</a><p>
-              <p class="text-right">20:00 30/02/2015<br>Last: 2hr</p>
-            </td></tr>
-            <tr><td>
-              <p><a href="">SRM ##</a><p>
-              <p class="text-right">22:30 30/02/2015<br>Last: 75m</p>
-            </td></tr>
+            {% for contest in coming_contests %}
+              <tr>
+                <td>
+                  <a href="{{ contest.url }}">{{ contest.contest_name }}</a>
+                  <p class="text-left">{{ contest.start_time|naturaltime }}</p>
+                  <p class="">Last: {{ contest.duration }}</p>
+                </td>
+              </tr>
+            {% endfor %}
           </tbody>
         </table>
       </div>
