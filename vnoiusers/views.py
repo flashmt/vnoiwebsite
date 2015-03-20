@@ -13,7 +13,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
 
 # Create your views here.
-from vnoiusers.forms import UserLoginForm, UserCreateForm, CodeforcesLinkForm
+from vnoiusers.forms import UserLoginForm, UserCreateForm, CodeforcesLinkForm, VojLinkForm
 
 
 def user_login(request, template_name='vnoiusers/user_login.html'):
@@ -148,5 +148,34 @@ def link_codeforces_account(request):
 def unlink_codeforces_account(request):
     vnoiuser = request.user.profile
     vnoiuser.codeforces_account = ''
+    vnoiuser.save()
+    return HttpResponseRedirect(reverse('user:profile', kwargs={'user_id': request.user.id}))
+
+
+@login_required
+def link_voj_account(request):
+    template_name = 'vnoiusers/link_voj.html'
+    if request.POST:
+        form = VojLinkForm(request.POST)
+        if form.is_valid():
+            vnoiuser = request.user.profile
+            vnoiuser.voj_account = request.POST['username']
+            vnoiuser.save()
+            return HttpResponseRedirect(reverse('user:profile', kwargs={'user_id': request.user.id}))
+        else:
+            return render(request, template_name, {
+                'form': form,
+                'message': form.errors
+            })
+    else:
+        return render(request, template_name, {
+            'form': VojLinkForm()
+        })
+
+
+@login_required
+def unlink_voj_account(request):
+    vnoiuser = request.user.profile
+    vnoiuser.voj_account = ''
     vnoiuser.save()
     return HttpResponseRedirect(reverse('user:profile', kwargs={'user_id': request.user.id}))

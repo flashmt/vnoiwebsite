@@ -32,7 +32,7 @@ def cf_contest_list_crawl():
                     contest.save()
 
 
-def verify_user_account(username, password):
+def verify_codeforces_account(username, password):
     url = 'http://codeforces.com/enter'
     data = {
         'csrf_token': '9042909a39d809c14acb4d720889c698',
