@@ -182,6 +182,7 @@ class PinnedTopic(models.Model):
     author = models.CharField(max_length=250, null=True, blank=True)
     content = BleachField(null=True)
     total_vote = models.IntegerField(null=True, blank=True)
+    created_at = models.DateTimeField(null=True, blank=True)
 
     def __unicode__(self):
         return self.post.topic.title
@@ -202,6 +203,7 @@ class PinnedTopic(models.Model):
         pinned_topic.content = post.content
         pinned_topic.last_updated = timezone.now()
         pinned_topic.total_vote = pinned_topic.post.total_votes()
+        pinned_topic.created_at = post.created_at
         pinned_topic.save()
 
     @classmethod

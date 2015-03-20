@@ -1,6 +1,7 @@
 {% extends 'main/base.html' %}
 {% load staticfiles %}
 {% load bleach_tags %}
+{% load humanize %}
 
 {% block container %}
   <div class="row row-offcanvas row-offcanvas-right">
@@ -30,7 +31,7 @@
               <h2>{{ topic.topic_title }}</h2>
             </a>
             <p class = "pinned-post-author">
-              By {{ topic.author }}, 1 day ago.
+              By {{ topic.author }}, {{ topic.created_at|naturaltime }}
             </p>
             <div class="pinned-post-content-container col-xs-12">
               <p class= "pinned-post-content">

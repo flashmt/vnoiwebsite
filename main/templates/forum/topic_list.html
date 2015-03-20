@@ -1,5 +1,6 @@
 {% extends 'forum/forum_index.html' %}
 {% load staticfiles %}
+{% load humanize %}
 
 {% block extra-css %}
 <link href="{% static 'css/forum.css' %}" rel="stylesheet">
@@ -34,7 +35,7 @@
                     <div class="forum-post-counts col-xs-4">{{ topic.count_num_posts }}</div>
                     <div class="forum-last-post col-xs-8">
                         {% if topic.last_post %}
-                            <p>{{ topic.last_post.created_at }}</p>
+                            <p>{{ topic.last_post.created_at|naturaltime }}</p>
                             <p>by {{ topic.last_post.created_by }}</p>
                         {% else %}
                             <p>Chưa có trả lời</p>
