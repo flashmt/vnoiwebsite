@@ -1,3 +1,5 @@
+#!/bin/bash
+
 rm -f db.sqlite3
 venv/bin/python manage.py migrate
 venv/bin/python manage.py loaddata auth.json
@@ -8,3 +10,4 @@ venv/bin/python manage.py loaddata mailer.json
 venv/bin/python manage.py loaddata bbcode.json
 venv/bin/python manage.py loaddata problems.json
 venv/bin/python manage.py loaddata vnoiusers.json
+venv/bin/python manage.py loaddata externaljudges.json
