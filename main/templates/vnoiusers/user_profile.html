@@ -47,7 +47,11 @@
                         VOJ: {{ user.profile.voj_account | default:"Not linked" }}
                     </p>
                     <p>
-                        Codeforces: {{ user.profile.codeforces_account | default:"Not linked" }}
+                        {% if user.profile.codeforces_account %}
+                            Codeforces: {{ user.profile.codeforces_account }} | <a href="{% url 'user:unlink_codeforces' %}">Unlink</a>
+                        {% else %}
+                            <a href="{% url 'user:link_codeforces' %}">Link Codeforces account</a>
+                        {% endif %}
                     </p>
                     <p>
                         Topcoder: {{ user.profile.topcoder_account | default:"Not linked" }}

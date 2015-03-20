@@ -4,6 +4,7 @@ from django import forms
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
 from django.contrib.auth.models import User
+from externaljudges.crawler.codeforces import verify_user_account
 
 
 class UserLoginForm(forms.ModelForm):
@@ -73,3 +74,18 @@ class UserCreateForm(forms.ModelForm):
         if commit:
             user.save()
         return user
+
+
+class CodeforcesLinkForm(forms.Form):
+    username = forms.CharField(max_length=250, label='Tài khoản Codeforces')
+    password = forms.CharField(widget=forms.PasswordInput, label='Mật khẩu')
+
+    def clean(self):
+        username = self.cleaned_data['username']
+        password = self.cleaned_data['password']
+
+        verify_result = verify_user_account(username, password)
+        if not verify_result['success']:
+            raise forms.ValidationError(verify_result['message'])
+
+        return self.cleaned_data

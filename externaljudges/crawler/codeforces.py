@@ -1,6 +1,9 @@
+# -*- coding: utf-8 -*-
+
 import requests
 import os
 
+from bs4 import BeautifulSoup
 from datetime import timedelta
 from django.utils import timezone
 from django.core.wsgi import get_wsgi_application
@@ -27,6 +30,35 @@ def cf_contest_list_crawl():
                         url='http://codeforces.com/contests'
                     )
                     contest.save()
+
+
+def verify_user_account(username, password):
+    url = 'http://codeforces.com/enter'
+    data = {
+        'csrf_token': '9042909a39d809c14acb4d720889c698',
+        'handle': username,
+        'password': password,
+        'action': 'enter',
+        '_tta': '182',
+    }
+    response = requests.post(url, data=data)
+    if response.status_code != 200:
+        return {
+            'success': False,
+            'message': 'Không kết nối được với server Codeforces. Xin vui lòng thử lại sau',
+        }
+    else:
+        header_text = BeautifulSoup(response.text).find(id='header').text
+        if username in header_text:
+            return {
+                'success': True,
+                'message': '',
+            }
+        else:
+            return {
+                'success': False,
+                'message': 'Tài khoản hoặc mật khẩu không đúng',
+            }
 
 
 if __name__ == "__main__":

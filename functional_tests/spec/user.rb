@@ -71,5 +71,34 @@ feature "User" do
     login(username2, '12345')
     verify_flash_messages(['Welcome back'])
   end
+
+  scenario "User should be able to link Codeforces account", :js => true do
+    # Login
+    visit "#{ROOT_URL}/main"
+    login('admin', 'admin')
+
+    # Link CF account - try wrong password
+    visit "#{ROOT_URL}/user/1"
+    click_on 'Link Codeforces account'
+    fill_in 'id_username', with: 'vnoi_info_001'
+    fill_in 'id_password', with: 'test12345'
+    click_on 'OK'
+    expect(page).to have_content('Tài khoản hoặc mật khẩu không đúng')
+    visit "#{ROOT_URL}/user/1"
+    expect(page).to have_content('Link Codeforces account')
+
+    # Link CF account - try correct password
+    visit "#{ROOT_URL}/user/1"
+    click_on 'Link Codeforces account'
+    fill_in 'id_username', with: 'vnoi_info_001'
+    fill_in 'id_password', with: 'test123'
+    click_on 'OK'
+    expect(page).to have_content('Codeforces: vnoi_info_001')
+
+    # Unlink
+    visit "#{ROOT_URL}/user/1"
+    click_on 'Unlink'
+    expect(page).to have_content('Link Codeforces account')
+  end
 end
 
