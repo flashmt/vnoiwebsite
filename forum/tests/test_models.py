@@ -23,10 +23,10 @@ class TopicModelTests(TestCase):
     def test_delete(self):
         cf_294_topic = Topic.objects.get(pk=1)
         cf_forum = Forum.objects.get(pk=1)
-        self.assertEquals(cf_forum.last_post.pk, 1)
+        self.assertEquals(cf_forum.last_post.pk, 2)
         cf_294_topic.delete()
         cf_forum = Forum.objects.get(pk=1)
-        self.assertEquals(cf_forum.last_post.pk, 7)
+        self.assertEquals(cf_forum.last_post.pk, 5)
 
 
 class PostModelTests(TestCase):
@@ -34,7 +34,7 @@ class PostModelTests(TestCase):
 
     def test_delete(self):
         cf_294_topic_post = Post.objects.get(pk=5)
-        self.assertEquals(cf_294_topic_post.topic.last_post.pk, 7)
+        self.assertEquals(cf_294_topic_post.topic.last_post.pk, 5)
         cm_1 = Post.objects.get(pk=7)
         cm_1.delete()
         cf_294_topic_post = Post.objects.get(pk=5)

@@ -1,6 +1,8 @@
 {% block postview %}
 {% load staticfiles %}
-{% load bbcode_tags %}
+{% load avatar_tags %}
+{% load bleach_tags %}
+{% load permissions %}
 
 <div style="background-color:wheat; margin-left: 0; margin-bottom: 30px">
     <!--
@@ -28,26 +30,25 @@
                 </div>
             </div>
         {% endif %}
-        <div class="row post-wrapper">
+        <div class="row post-wrapper" id="post-{{ post.id }}">
             <div class="post-row-same-height">
                 <div class="col-md-height post-user-detail ">
                     <div>
                         <div class = "post-user-name">
-                            <a href="{% url 'user:profile' post.created_by.id %}" class="post-username">
+                            <a href="{{post.created_by.get_absolute_url}}" class="post-username">
                                 {{post.created_by}}
                             </a>
                         </div>
                         <div>
-                            <img class="post-user-avatar" src="{% static 'img/blank_ava.gif' %}" alt="user-avatar" data-holder-rendered="true" align="middle">
-                        </div>
+                            <img class="post-user-avatar" src="{% avatar_url post.created_by 200 %}" alt="user-avatar" data-holder-rendered="true" align="middle">
+                            </div>
                     </div>
                 </div>
                 <div class="post-content col-md-height">
                     <div class="post-body">
                         <div class="post-content">
                             <div style="margin-left:1em; margin-top: 1em; margin-bottom:1em;">
-                                {% bbcode entry.bbcode_content %}
-                                {{post.content|bbcode|safe}}
+                                {{post.content|bleach}}
                             </div>
                         </div>
                     </div>
@@ -57,9 +58,14 @@
                                 <a class="btn btn-default post-reply" href="{% url 'forum:post_create' forum.id topic.id post.id %}" role="button">
                                   Reply
                                 </a>
-    		                    <a class="btn btn-default post-edit" href="{% url 'forum:post_update' forum.id topic.id post.id %}" role="button">
-    		                      Edit
-    		                    </a>
+                                {% ifhasperm "post_permission.can_update_post" request.user post %}
+                                    <a class="btn btn-default post-edit" href="{% url 'forum:post_update' forum.id topic.id post.id %}" role="button">
+                                      Edit
+                                    </a>
+                                {% endifhasperm %}
+                                  <a class="btn btn-default post-edit" href="{% url 'forum:topic_retrieve' forum.id topic.id %}#post-{{ post.id }}" role="button">
+                                    #
+                                  </a>
                             </div>
                             <div class="col-md-1">
                                 <a class="btn btn-default post-upvote" href="{% url 'forum:vote_create' post.id %}?type=u" role="button">

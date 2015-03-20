@@ -1,10 +1,13 @@
 {% extends 'main/base.html' %}
 
 {% block navbar-highlight %}navbar_problems{% endblock navbar-highlight %}
+{% block breadcrumbs %}
+    <li>Danh sách bài tập</li>
+{% endblock breadcrumbs %}
 
 {% block container %}
 <div id="problem-list" style="">
-    <div class="panel panel-primary forum-group-head">
+    <div class="panel panel-primary">
         <div class="panel-heading">
             Danh sách bài tập
         </div>
@@ -24,11 +27,11 @@
                     <th>Điểm&nbsp;<span class="glyphicon glyphicon-sort-by-attributes"></span></th>
                 </tr>
                 {% for problem in problems %}
-                    <tr class="{{ problem.category.name }}">
-                        <td>{{ problem.category.name }}</td>
+                    <tr class="{{ problem.category__name }}">
+                        <td>{{ problem.category__name }}</td>
                         <td><a href="http://vn.spoj.com/problems/{{ problem.code }}">{{ problem.code }}</a></td>
                         <td>{{ problem.name }}</td>
-                        <td><a href="http://vn.spoj.com/problems/{{ problem.rank }}">{{ problem.accept_count }}</a></td>  <!-- require rank of prob -->
+                        <td><a href="http://vn.spoj.com/problems/ranks/{{ problem.code }}">{{ problem.accept_count }}</a></td>  <!-- require rank of prob -->
                         <td>{{ problem.score }}</td>
                     </tr>
                 {% endfor %}

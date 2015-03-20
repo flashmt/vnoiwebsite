@@ -2,10 +2,10 @@
 {% load staticfiles %}
 
 {% block formbody %}
-<form role="form" class="form-horizontal" method="post">
-    {% bootstrap_form form layout="horizontal" %}
-    {% csrf_token %}
-    {% buttons submit="OK" reset="Reset" layout="horizontal"%}{% endbuttons %}
+<form role="form" class="form-horizontal" method="post" {% if form_id %} id="{{ form_id }}" {% endif %}>
+  {% bootstrap_form form layout="horizontal" %}
+  {% csrf_token %}
+  {% buttons submit="OK" reset="Reset" layout="horizontal"%}{% endbuttons %}
 </form>
 
 {% endblock formbody %}

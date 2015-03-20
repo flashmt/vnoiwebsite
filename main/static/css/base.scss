@@ -1,0 +1,174 @@
+@import 'home';
+@import 'forum';
+@import 'user';
+
+$font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+
+/*
+ * Style tweaks
+ * --------------------------------------------------
+ */
+
+html,
+body {
+	overflow-x: hidden; /* Prevent scroll on narrow devices */
+}
+body {
+	padding-top: 70px;
+}
+footer {
+	padding: 30px 0;
+}
+
+/*
+ * Off Canvas
+ * --------------------------------------------------
+ */
+
+@media screen and (max-width: 767px) {
+	.row-offcanvas {
+		position: relative;
+		-webkit-transition: all .25s ease-out;
+		-o-transition: all .25s ease-out;
+		transition: all .25s ease-out;
+	}
+
+	.row-offcanvas-right {
+		right: 0;
+	}
+
+	.row-offcanvas-left {
+		left: 0;
+	}
+
+	.row-offcanvas-right
+	.sidebar-offcanvas {
+		right: -50%; /* 6 columns */
+	}
+
+	.row-offcanvas-left
+	.sidebar-offcanvas {
+		left: -50%; /* 6 columns */
+	}
+
+	.row-offcanvas-right.active {
+		right: 50%; /* 6 columns */
+	}
+
+	.row-offcanvas-left.active {
+		left: 50%; /* 6 columns */
+	}
+
+	.sidebar-offcanvas {
+		position: absolute;
+		top: 0;
+		width: 50%; /* 6 columns */
+	}
+}
+
+.base-popular-topic-title {
+	color: black;
+}
+
+.base-popular-topic-row {
+	margin-top: 0.5em;
+	border-bottom: 1px solid #ddd;
+}
+
+.base-popular-topic-name {
+	text-align: left;
+	font-weight: bold;
+}
+
+.base-popular-topic-user {
+	text-align: right;
+}
+
+.base-popular-topic-link {
+	color : black;
+}
+
+.pinned-post-author {
+	font-style: italic;
+}
+
+.pinned-post-content-container {
+	border-left: 4px solid #ddd;
+	margin-bottom: 0.5em;
+}
+
+.pinned-post-content {
+	margin-left: 1em;
+}
+
+.pinned-post-upvote {
+	font-weight: bold;
+	font-size: 15px;
+	color: green;
+}
+
+.pinned-post-downvote {
+	font-weight: bold;
+	font-size: 15px;
+	color: red;
+}
+
+.pinned-post-count-upvote {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+	text-align: center;
+}
+
+.pinned-post-pagination {
+	float: right;
+}
+
+/* Square conner panel */
+.panel, .panel-heading {
+	border-radius: 0px;
+}
+
+.input-xs {
+	height: 30px;
+	padding: 4px 8px;
+	font-size: 12px;
+	line-height: 1.5;
+	border-radius: 3px;
+}
+
+#login-form {
+	.form-group {
+		label {
+			color: white;
+		}
+		input {
+			width: 100%
+		}
+		margin-bottom: 15px;
+	}
+	button {
+		font-weight: bold;
+		font-family: $font-family;
+		font-size: 14px;
+	}
+	width: 100%;
+	margin-left: 0px;
+	margin-right: 0px;
+}
+
+.dropdown-menu {
+	background-color: rgb(34, 34, 34);
+	width: 250px;
+}
+
+.alert {
+	padding: 7px;
+}
+
+.footer {
+	position: relative;
+	margin-top: -150px; /* negative value of footer height */
+	height: 150px;
+	clear:both;
+	padding-top:20px;
+}

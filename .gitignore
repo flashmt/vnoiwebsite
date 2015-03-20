@@ -57,3 +57,13 @@ target/
 .idea/
 .DS_Store
 db.sqlite3
+
+
+# Media resource
+media/
+
+# Sass
+.sass-cache/
+
+#Next editor
+*.py~

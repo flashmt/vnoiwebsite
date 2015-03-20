@@ -2,7 +2,6 @@
 from __future__ import unicode_literals
 
 from django.db import models, migrations
-import precise_bbcode.fields
 
 
 class Migration(migrations.Migration):
@@ -21,7 +20,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='topic',
             name='content',
-            field=precise_bbcode.fields.BBCodeTextField(no_rendered_field=True),
+            field=models.TextField(null=True, editable=False, blank=True),
             preserve_default=True,
         ),
     ]

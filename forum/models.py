@@ -1,9 +1,9 @@
+from datetime import timedelta
 from django.contrib.auth.models import User
+from django.core.urlresolvers import reverse
 from django.db import models
-from precise_bbcode.fields import BBCodeTextField
-
-
-# Create your models here.
+from django.utils import timezone
+from django_bleach.models import BleachField
 
 
 class ForumGroup(models.Model):
@@ -17,15 +17,11 @@ class ForumGroup(models.Model):
 class Forum(models.Model):
     name = models.CharField(max_length=200)
     desc = models.TextField(default="")
-
     num_topics = models.IntegerField(default=0)
     num_posts = models.IntegerField(default=0)
-
     created_at = models.DateTimeField(auto_now_add=True, null=True)
     created_by = models.ForeignKey(User, related_name="created_forums")
-
     last_post = models.OneToOneField('Post', related_name="+", default=None, null=True, blank=True, on_delete=models.SET_NULL)
-
     forum_group = models.ForeignKey(ForumGroup, related_name="forums")
 
     def __unicode__(self):
@@ -47,20 +43,20 @@ class Forum(models.Model):
     def get_last_post(self):
         return self.last_post
 
+    def get_absolute_url(self):
+        return reverse('forum:topic_list', kwargs={'forum_id': self.id})
+
 
 class Topic(models.Model):
     forum = models.ForeignKey(Forum, related_name="topics")
     post = models.ForeignKey('Post', related_name="topics", null=True, blank=True)
     num_posts = models.PositiveSmallIntegerField(verbose_name="num_replies", default=0)
     title = models.CharField(max_length=500, null=False, blank=False)
-    content = BBCodeTextField()
-
+    content = BleachField()
     created_at = models.DateTimeField(auto_now_add=True, null=True)
     created_by = models.ForeignKey(User, related_name="created_topics")
-
     updated_at = models.DateTimeField(auto_now_add=True, null=True)
     updated_by = models.ForeignKey(User, related_name="updated_topics", default=None, null=True, on_delete=models.SET_NULL)
-
     last_post = models.OneToOneField('Post', related_name="+", default=None, null=True, blank=True, on_delete=models.SET_NULL)
 
     # TODO created_by, updated_at, level
@@ -99,18 +95,19 @@ class Topic(models.Model):
     def count_num_posts(self):
         return self.num_posts
 
+    def get_absolute_url(self):
+        return reverse('forum:topic_retrieve', kwargs={'forum_id': self.forum.id, 'topic_id': self.id})
+
 
 class Post(models.Model):
     topic_post = models.BooleanField(default=False)
     topic = models.ForeignKey(Topic, verbose_name='Topic', related_name='posts', null=True, on_delete=models.SET_NULL)
     reply_on = models.ForeignKey("self", related_name="reply_posts", null=True, blank=True, on_delete=models.SET_NULL)
-    content = models.TextField(null=False, blank=False)
+    content = BleachField()
     num_upvotes = models.IntegerField(default=0)
     num_downvotes = models.IntegerField(default=0)
-
     created_at = models.DateTimeField(auto_now_add=True, null=True)
     created_by = models.ForeignKey(User, related_name="created_posts", null=True, on_delete=models.SET_NULL)
-
     updated_at = models.DateTimeField(auto_now_add=True, null=True)
     updated_by = models.ForeignKey(User, related_name="updated_posts", default=None, null=True, on_delete=models.SET_NULL)
 
@@ -177,9 +174,65 @@ class Post(models.Model):
 class PinnedTopic(models.Model):
     # TODO: In future, this model will cache fields which are displayed in homepage
     post = models.ForeignKey(Post, related_name='+')
+    is_cached = models.BooleanField(null=False, blank=False, default=False)
+    last_updated = models.DateTimeField(null=True, blank=True)
+    topic_title = models.CharField(max_length=500, null=True, blank=True)
+    forum_id = models.IntegerField(null=True, blank=True)
+    topic_id = models.IntegerField(null=True, blank=True)
+    author = models.CharField(max_length=250, null=True, blank=True)
+    content = BleachField(null=True)
+    total_vote = models.IntegerField(null=True, blank=True)
+    created_at = models.DateTimeField(null=True, blank=True)
 
     def __unicode__(self):
         return self.post.topic.title
+
+    def get_absolute_url(self):
+        return self.post.topic.get_absolute_url()
+
+    @classmethod
+    def get_data_first_time(cls, pinned_topic):
+        post = pinned_topic.post
+
+        # Mark the cached flag --> so we do not get the values again
+        pinned_topic.is_cached = True
+        pinned_topic.topic_title = post.topic.title
+        pinned_topic.forum_id = post.topic.forum_id
+        pinned_topic.topic_id = post.topic_id
+        pinned_topic.author = post.created_by.username
+        pinned_topic.content = post.content
+        pinned_topic.last_updated = timezone.now()
+        pinned_topic.total_vote = pinned_topic.post.total_votes()
+        pinned_topic.created_at = post.created_at
+        pinned_topic.save()
+
+    @classmethod
+    def update_vote_count(cls, pinned_topic):
+        pinned_topic.total_vote = pinned_topic.post.total_votes()
+        pinned_topic.last_updated = timezone.now()
+        pinned_topic.save()
+
+    @classmethod
+    def update_title_content(cls, pinned_topic):
+        pinned_topic.content = pinned_topic.post.content
+        pinned_topic.topic_title = pinned_topic.post.topic.title
+        pinned_topic.save()
+
+    @classmethod
+    def update_and_return_all(cls):
+        # First, we need to update the cached values
+        for pinned_topic in cls.objects.all():
+            # If we never got the data before
+            if not pinned_topic.is_cached:
+                cls.get_data_first_time(pinned_topic)
+
+            # If our data is outdated, update it
+            if pinned_topic.last_updated < timezone.now() - timedelta(minutes=30):
+                cls.update_vote_count(pinned_topic)
+                cls.update_title_content(pinned_topic)
+
+        # At this point, all data are cached, we can return the objects
+        return cls.objects.all()
 
 
 class Vote(models.Model):

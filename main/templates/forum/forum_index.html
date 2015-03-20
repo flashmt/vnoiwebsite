@@ -1,19 +1,13 @@
 {% extends 'main/base.html' %}
 {% load staticfiles %}
 
-{% block extra-head %}
-    <link href="{% static 'css/forum.css' %}" rel="stylesheet">
-{% endblock %}
-
 {% block navbar-highlight %}navbar_forum{% endblock navbar-highlight %}
 
-{% block container %}
+{% block breadcrumbs %}
+    <li>Forum</li>
+{% endblock breadcrumbs %}
 
-<div style="padding-bottom: 10px">
-{% block forum-nav %}
-    Forum
-{% endblock forum-nav %}
-</div>
+{% block container %}
 
 {% block forum-body %}
     <div id="forum-main-container">
@@ -26,14 +20,19 @@
                 <div class="row forum" id="forum-{{ forum.id }}">
                     <span class="forum-icon col-xs-1"></span>
                     <div class="forum-name-div col-xs-8">
-                        <h3 class="forum-name"><a href="{% url 'forum:topic_list' forum.id %}">{{ forum.name }}</a></h3>
+                        <h3 class="forum-name"><a href="{{forum.get_absolute_url}}">{{ forum.name }}</a></h3>
                         <p>{{ forum.desc }}</p>
                     </div>
                     <div class="forum-statistics col-xs-3 row">
                         <div class="forum-post-counts col-xs-4">{{ forum.count_num_posts }}</div>
                         <div class="forum-last-post col-xs-8">
-                            <p>{{ forum.last_post }}</p>
-                            <p>by {{ forum.last_post.created_by }}</p>
+                            {% if forum.last_post %}
+                                <p>{{ forum.last_post.topic }}</p>
+                                <p>by {{ forum.last_post.created_by }}</p>
+                            {% else %}
+                                <p>Chưa có bài viết nào</p>
+                                <p>&nbsp;</p>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
@@ -43,7 +42,4 @@
     </div>
 {% endblock forum-body %}
 
-<footer>
-    <p>&copy; VNOI Admin 2015</p>
-  </footer>
 {% endblock container %}
