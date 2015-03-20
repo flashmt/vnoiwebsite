@@ -5,10 +5,9 @@ from django.contrib.auth.models import User
 from vnoiusers import views
 
 
-
 class UserProfileTest(TestCase):
 
-    fixtures = ['forum.json', 'auth.json']
+    fixtures = ['forum.json', 'auth.json', 'vnoiusers.json']
 
     def setUp(self):
         self.client = Client()
