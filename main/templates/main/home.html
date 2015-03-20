@@ -130,21 +130,13 @@
             <tr>
           </thead>
           <tbody>
-            <tr>
-              <td>1</td>
-              <td>mr_invincible</td>
-              <td>123</td>
-            </tr>
-            <tr>
-              <td>2</td>
-              <td>flash_mt</td>
-              <td>122</td>
-            </tr>
-            <tr>
-              <td>3</td>
-              <td>hieult</td>
-              <td>121</td>
-            </tr>
+            {% for contributor in contributors %}
+              <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ contributor.user__username }}</td>
+                <td>{{ contributor.contribution }}</td>
+              </tr>
+            {% endfor %}
           </tbody>
         </table>
         <div class="panel-footer"> <a href=""><small>Full Table</small></a> </div>
