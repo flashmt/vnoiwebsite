@@ -85,13 +85,18 @@ def user_update(request, user_id):
 def user_profile(request, user_id):
     user = get_object_or_404(User, pk=user_id)
     is_authenticated = False
+    is_friend = False
     if request.user.is_authenticated():
         is_authenticated = request.user.username == user.username
+        vnoi_user = request.user.profile
+        is_friend = True if vnoi_user.friends.filter(id=user_id) else False
+
     context = {
         'profile_user': user,
         'is_authenticated': is_authenticated,
         'topics': user.created_topics.all(),
         'disable_breadcrumbs': True,
+        'is_friend': is_friend,
     }
     return render(request, 'vnoiusers/user_profile.html', context)
 
@@ -179,3 +184,62 @@ def unlink_voj_account(request):
     vnoiuser.voj_account = ''
     vnoiuser.save()
     return HttpResponseRedirect(reverse('user:profile', kwargs={'user_id': request.user.id}))
+
+
+@login_required
+def add_friend(request, user_id):
+    user_id = int(user_id)
+
+    # If the other user does not exist
+    other_user = get_object_or_404(User, pk=user_id)
+
+    redirect_obj = HttpResponseRedirect(reverse('user:profile', kwargs={'user_id': user_id}))
+
+    if user_id == request.user.id:
+        # Two users are the same
+        messages.warning(request, 'You can not add friend yourself')
+        return redirect_obj
+    else:
+        vnoi_user = request.user.profile
+        if vnoi_user.friends.filter(id=user_id):
+            # Two users are already friends
+            messages.warning(request, 'Already friend')
+            return redirect_obj
+
+        vnoi_user.friends.add(other_user.profile)
+        messages.success(request, 'Friend successfully added')
+        vnoi_user.save()
+    return redirect_obj
+
+
+@login_required
+def remove_friend(request, user_id):
+    user_id = int(user_id)
+
+    # If the other user does not exist
+    other_user = get_object_or_404(User, pk=user_id)
+
+    redirect_obj = HttpResponseRedirect(reverse('user:profile', kwargs={'user_id': user_id}))
+
+    if user_id == request.user.id:
+        # Two users are the same
+        messages.warning(request, 'You can not add friend yourself')
+        return redirect_obj
+    else:
+        vnoi_user = request.user.profile
+        if not vnoi_user.friends.filter(id=user_id):
+            # Two users are already friends
+            messages.warning(request, 'Not friend')
+            return redirect_obj
+
+        vnoi_user.friends.remove(other_user.profile)
+        messages.success(request, 'Friend successfully removed')
+        vnoi_user.save()
+    return redirect_obj
+
+
+@login_required
+def friend_list(request):
+    return render(request, 'vnoiusers/friends.html', {
+        'friends': request.user.profile.friends.all()
+    })

@@ -12,4 +12,7 @@ urlpatterns = patterns(
     url(r'^unlink_codeforces$', views.unlink_codeforces_account, name='unlink_codeforces'),
     url(r'^link_voj$', views.link_voj_account, name='link_voj'),
     url(r'^unlink_voj$', views.unlink_voj_account, name='unlink_voj'),
+    url(r'^add_friend/(?P<user_id>\d+)$', views.add_friend, name='add_friend'),
+    url(r'^remove_friend/(?P<user_id>\d+)$', views.remove_friend, name='remove_friend'),
+    url(r'^friend_list$', views.friend_list, name='friend_list'),
 )

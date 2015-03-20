@@ -1,0 +1,15 @@
+{% extends 'main/base.html' %}
+
+{% block container %}
+  <div id="friend-list" class="panel panel-primary">
+    <div class="panel-heading">Danh sách bạn</div>
+    <table>
+      {% for friend in friends %}
+        <tr>
+          <td class="panel-body">{{ forloop.counter }}</td>
+          <td class=""><a href="{% url 'user:profile' friend.user.id %}">{{ friend.user.username }}</a></td>
+        </tr>
+      {% endfor %}
+    </table>
+  </div>
+{% endblock %}
