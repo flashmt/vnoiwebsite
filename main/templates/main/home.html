@@ -81,31 +81,10 @@
 {#          </ul>#}
 {#        </nav>#}
       </div><!--/row-->
-      <div class="panel panel-primary" id = "recent_post">
-        <div class = "panel-heading">
-            <h3 class="panel-title">
-                Recent posts
-            </h3>
-        </div>
-        <div class="panel-body">
-          {% for post in recent_posts %}
-              <div class = "row base-popular-topic-row">
-                <div class = "col-md-9 base-popular-topic-name">
-                  <a href="{% url 'forum:topic_retrieve' post.topic__forum__id post.topic__id %}" class="base-popular-topic-link">
-                    {{ post.topic__title }}
-                  </a>
-                </div>
-                <div class = "col-md-3 base-popular-topic-user">
-                  {{ post.created_by__username }}
-                </div>
-              </div>
-          {% endfor %}
-        </div>
-      </div>
     </div><!--/.col-xs-12.col-sm-9-->
     <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar">
       <div class="panel panel-primary" id="contest_schedule">
-        <div class="panel-heading">SCHEDULE</div>
+        <div class="panel-heading">Schedule</div>
         <table class="table">
           <thead>
           </thead>
@@ -123,7 +102,7 @@
       </div>
 
       <div class="panel panel-primary">
-        <div class="panel-heading">TOP RANK</div>
+        <div class="panel-heading">Top Rank</div>
         <table class="table">
           <thead>
             <tr>
@@ -139,7 +118,7 @@
       </div>
 
       <div class="panel panel-primary">
-        <div class="panel-heading">TOP CONTRIBUTE</div>
+        <div class="panel-heading">Top Contributors</div>
         <table class="table">
           <thead>
             <tr>
@@ -167,6 +146,27 @@
           </tbody>
         </table>
         <div class="panel-footer"> <a href=""><small>Full Table</small></a> </div>
+      </div>
+      <div class="panel panel-primary" id = "recent_post">
+        <div class = "panel-heading">
+            <h3 class="panel-title">
+                Recent Activity
+            </h3>
+        </div>
+        <div class="panel-body">
+          {% for post in recent_posts %}
+              <div class = "row base-popular-topic-row">
+                <div class = "col-md-9 base-popular-topic-name">
+                  <a href="{% url 'forum:topic_retrieve' post.topic__forum__id post.topic__id %}" class="base-popular-topic-link">
+                    {{ post.topic__title }}
+                  </a>
+                </div>
+                <div class = "col-md-3 base-popular-topic-user">
+                  {{ post.created_by__username }}
+                </div>
+              </div>
+          {% endfor %}
+        </div>
       </div>
     </div><!--/.sidebar-offcanvas-->
   </div><!--/row-->
