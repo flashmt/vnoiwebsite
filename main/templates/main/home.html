@@ -85,7 +85,7 @@
     </div><!--/.col-xs-12.col-sm-9-->
     <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar">
       <div class="panel panel-primary" id="contest_schedule">
-        <div class="panel-heading">Coming contest</div>
+        <div class="panel-heading">Các kỳ thi sắp diễn ra</div>
         <table class="table">
           <thead>
           </thead>
@@ -95,7 +95,7 @@
                 <td>
                   <a href="{{ contest.url }}">{{ contest.contest_name }}</a>
                   <p class="text-left">{{ contest.start_time|naturaltime }}</p>
-                  <p class="">Last: {{ contest.duration }}</p>
+                  <p class="">Thời gian: {{ contest.duration }} phút</p>
                 </td>
               </tr>
             {% endfor %}
@@ -130,21 +130,13 @@
             <tr>
           </thead>
           <tbody>
-            <tr>
-              <td>1</td>
-              <td>mr_invincible</td>
-              <td>123</td>
-            </tr>
-            <tr>
-              <td>2</td>
-              <td>flash_mt</td>
-              <td>122</td>
-            </tr>
-            <tr>
-              <td>3</td>
-              <td>hieult</td>
-              <td>121</td>
-            </tr>
+            {% for contributor in contributors %}
+              <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ contributor.user__username }}</td>
+                <td>{{ contributor.contribution }}</td>
+              </tr>
+            {% endfor %}
           </tbody>
         </table>
         <div class="panel-footer"> <a href=""><small>Full Table</small></a> </div>
