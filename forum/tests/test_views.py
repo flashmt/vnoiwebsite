@@ -21,11 +21,11 @@ class TopicViewTest(TestCase):
         response = self.client.post(reverse('forum:topic_create', kwargs={'forum_id': 1}),
                                     {'title': topic.title, 'content': topic.content})
         self.assertEquals(response.status_code, 302)
-        self.assertEquals(response['Location'], 'http://testserver/forum/1/3/')
-        self.assertEquals(Topic.objects.all().count(), 3)
-        self.assertEquals(Post.objects.all().count(), 8)
-        self.assertEquals(Topic.objects.get(pk=3).content, post_content)
-        self.assertEquals(Post.objects.get(pk=8).content, post_content)
+        self.assertEquals(response['Location'], 'http://testserver/forum/1/4/')
+        self.assertEquals(Topic.objects.all().count(), 4)
+        self.assertEquals(Post.objects.all().count(), 9)
+        self.assertEquals(Topic.objects.get(pk=4).content, post_content)
+        self.assertEquals(Post.objects.get(pk=9).content, post_content)
 
         # Ensure that non-existent forum throw a 404
         response = self.client.post(reverse('forum:topic_create', kwargs={'forum_id': 100}),
@@ -48,14 +48,14 @@ class PostViewTest(TestCase):
         post = Post(content="huhu hôm nay bận mất rồi :(")
         response = self.client.post(reverse('forum:post_create', kwargs={'forum_id': 1, 'topic_id': 1, 'post_id': 1}), {'content': post.content})
         self.assertEquals(response.status_code, 302)
-        self.assertEquals(Post.objects.all().count(), 8)
+        self.assertEquals(Post.objects.all().count(), 9)
         self.assertEquals(Post.objects.get(pk=1).reply_posts.all().count(), 3)
 
         # Test create post (comment on comment)
         post = Post(content="Mình cũng chắc chắn hehe")
         response = self.client.post(reverse('forum:post_create', kwargs={'forum_id': 1, 'topic_id': 1, 'post_id': 3}), {'content': post.content})
         self.assertEquals(response.status_code, 302)
-        self.assertEquals(Post.objects.all().count(), 9)
+        self.assertEquals(Post.objects.all().count(), 10)
         self.assertEquals(Post.objects.get(pk=3).reply_posts.all().count(), 1)
 
     def test_post_update(self):
