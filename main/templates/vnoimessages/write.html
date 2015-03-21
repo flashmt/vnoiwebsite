@@ -1,3 +1,12 @@
 {% extends "vnoimessages/base_write.html" %}
 {% load i18n %}
-{% block pm_write_title %}{% trans "Write"%}{% endblock %}
+{% block postman_menu %}
+<ul class="nav nav-pills nav-stacked">
+  <li role = "presentation"><a href="{% url 'message:inbox' %}">{% trans "Hộp thư đến" %}{% if unread_count %} <strong>({{ unread_count }})</strong>{% endif %}</a></li>
+  <li role = "presentation"><a href="{% url 'message:sent' %}">{% trans "Thư đã gửi" %}</a></li>
+  <li role = "presentation" class="active"><a href="{% url 'message:write' %}">{% trans "Viết thư mới" %}</a></li>
+  <li role = "presentation"><a href="{% url 'message:archives' %}">{% trans "Thư đã lưu" %}</a></li>
+  <li role = "presentation"><a href="{% url 'message:trash' %}">{% trans "Thùng rác" %}</a></li>	
+</ul>
+{% endblock %}
+{% block pm_write_title %}{% trans "Viết thư mới"%}{% endblock %}

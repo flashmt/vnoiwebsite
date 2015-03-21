@@ -31,9 +31,9 @@
   <div class="col-md-4">
     <form action="{% block pm_form_action %}{% endblock %}" method="post">{% csrf_token %}
     {% block pm_form_buttons %}<span class = "msg-button" id="pm_buttons">
-    {% block pm_delete_button %}<button class="btn btn-default msg-button" type="submit" onclick="this.form.action='{% url 'message:delete' %}'">{% trans "Delete" %}</button>{% endblock %}
-    {% block pm_archive_button %}<button class="btn btn-default msg-button" type="submit" onclick="this.form.action='{% url 'message:archive' %}'">{% trans "Archive" %}</button>{% endblock %}
-    {% block pm_undelete_button %}<button class="btn btn-default msg-button" type="submit" onclick="this.form.action='{% url 'message:undelete' %}'">{% trans "Undelete" %}</button>{% endblock %}
+    {% block pm_delete_button %}<button class="btn btn-default msg-button" type="submit" onclick="this.form.action='{% url 'message:delete' %}'">{% trans "Xóa" %}</button>{% endblock %}
+    {% block pm_archive_button %}<button class="btn btn-default msg-button" type="submit" onclick="this.form.action='{% url 'message:archive' %}'">{% trans "Lưu trữ" %}</button>{% endblock %}
+    {% block pm_undelete_button %}<button class="btn btn-default msg-button" type="submit" onclick="this.form.action='{% url 'message:undelete' %}'">{% trans "Khôi phục" %}</button>{% endblock %}
     </span>{% endblock %}
   </div>
 </div>
@@ -69,7 +69,7 @@
   <div class="panel-heading">
     <div class = "row">
       <div class="col-md-1" style = "text-align: center">
-        {% trans "Action" %}
+        {% trans "Select" %}
       </div>
       {% block pm_sender_header %}
         <div class="col-md-1 msg-user">
@@ -133,7 +133,7 @@
 {% else %}
 <div class="row">
 </div>
-<p>{% trans "No messages." %}</p>
+<p>{% trans "Không có thư mới." %}</p>
 {% endif %}
 {% endif %}
 {% block pm_footer_info %}{% endblock %}
