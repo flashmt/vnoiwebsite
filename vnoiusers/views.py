@@ -152,6 +152,7 @@ def link_codeforces_account(request):
             'form': CodeforcesLinkForm()
         })
 
+
 @login_required
 def unlink_codeforces_account(request):
     vnoiuser = request.user.profile
@@ -250,4 +251,13 @@ def friend_list(request):
 
 
 def index(request):
-    return None
+    if request.POST:
+        return render(request, 'vnoiusers/user_list.html', {
+            'users': User.objects.filter(username__startswith=request.POST['user_prefix'])[:20],
+            'form': FriendSearchForm(),
+        })
+    else:
+        return render(request, 'vnoiusers/user_list.html', {
+            'users': None,
+            'form': FriendSearchForm(),
+        })
