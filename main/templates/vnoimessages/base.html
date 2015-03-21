@@ -7,7 +7,7 @@
 {% block navbar-highlight %}navbar_messages{% endblock navbar-highlight %}
 
 {% block extra-head %}
-    <link href="{% static 'css/message.css' %}" rel="stylesheet">
+    <link href="{% static 'css/_message.scss' %}" rel="stylesheet">
 {% endblock extra-head %}
 
 {% block breadcrumbs %}
@@ -25,7 +25,7 @@
       <li><a href="{% url 'message:archives' %}">&raquo;&nbsp;{% trans "Archives" %}</a></li>
       <li><a href="{% url 'message:trash' %}">&raquo;&nbsp;{% trans "Trash" %}</a></li>
     </ul>-->
-    <ul class="nav nav-pills nav-stacked msg-nav-bar">
+    <ul class="nav nav-pills nav-stacked">
       <li role = "presentation"><a href="{% url 'message:inbox' %}">{% trans "Hộp thư đến" %}{% if unread_count %} <strong>({{ unread_count }})</strong>{% endif %}</a></li>
       <li role = "presentation"><a href="{% url 'message:sent' %}">{% trans "Thư đã gửi" %}</a></li>
       <li role = "presentation"><a href="{% url 'message:write' %}">{% trans "Viết thư mới" %}</a></li>

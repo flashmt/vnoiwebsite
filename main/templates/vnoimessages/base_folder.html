@@ -19,34 +19,37 @@
 <p>{% trans "Sorry, this page number is invalid." %}</p>
 {% else %}
 {% if pm_messages %}
-{% block pm_by_modes %}<div id="pm_by_modes">
+<!--{% block pm_by_modes %}<div id="pm_by_modes">
 <span class="pm_by_mode">{% if by_message %}<a href="{{ by_conversation_url }}">{% endif %}{% trans "by conversation" %}{% if by_message %}</a>{% endif %}</span>
 <span class="pm_by_mode">{% if by_conversation %}<a href="{{ by_message_url }}">{% endif %}{% trans "by message" %}{% if by_conversation %}</a>{% endif %}</span>
-</div>{% endblock pm_by_modes %}
+</div>{% endblock pm_by_modes %}-->
 <form action="{% block pm_form_action %}{% endblock %}" method="post">{% csrf_token %}
-{% block pm_form_buttons %}<span id="pm_buttons">
-{% block pm_delete_button %}<button type="submit" onclick="this.form.action='{% url 'message:delete' %}'">{% trans "Delete" %}</button>{% endblock %}
-{% block pm_archive_button %}<button type="submit" onclick="this.form.action='{% url 'message:archive' %}'">{% trans "Archive" %}</button>{% endblock %}
-
-{% block pm_undelete_button %}<button type="submit" onclick="this.form.action='{% url 'message:undelete' %}'">{% trans "Undelete" %}</button>{% endblock %}
+{% block pm_form_buttons %}<span class = "msg-button" id="pm_buttons">
+<!--{% block _pm_delete_button %}<button type="submit" onclick="this.form.action='{% url 'message:delete' %}'">{% trans "Delete" %}</button>{% endblock %}
+{% block _pm_archive_button %}<button type="submit" onclick="this.form.action='{% url 'message:archive' %}'">{% trans "Archive" %}</button>{% endblock %}
+{% block _pm_undelete_button %}<button type="submit" onclick="this.form.action='{% url 'message:undelete' %}'">{% trans "Undelete" %}</button>{% endblock %}-->
+{% block pm_delete_button %}<a class="btn btn-default msg-button" href="{% url 'message:delete' %}" role="button">{% trans "Delete" %}</a>{% endblock %}
+{% block pm_archive_button %}<a class="btn btn-default msg-button" href="{% url 'message:archive' %}" role="button">{% trans "Archive" %}</a>{% endblock %}
+{% block pm_undelete_button %}<a class="btn btn-default msg-button" href="{% url 'message:undelete' %}" role="button">{% trans "Undelete" %}</a>{% endblock %}
 </span>{% endblock %}
+<!--
 <table id="pm_messages">
  <thead>
   <tr>
    <th>{% trans "Action" %}</th>
-{% block pm_sender_header %}   <th><a href="{% postman_order_by sender %}">{% trans "Sender" %}</a></th>{% endblock %}
-{% block pm_recipient_header %}   <th><a href="{% postman_order_by recipient %}">{% trans "Recipient" %}</a></th>{% endblock %}
+{% block _pm_sender_header %}   <th><a href="{% postman_order_by sender %}">{% trans "Sender" %}</a></th>{% endblock %}
+{% block _pm_recipient_header %}   <th><a href="{% postman_order_by recipient %}">{% trans "Recipient" %}</a></th>{% endblock %}
    <th><a href="{% postman_order_by subject %}">{% trans "Subject" %}</a></th>
-   <th><a href="{% postman_order_by date %}">{% block pm_date %}{% trans "Date" %}{% endblock %}</a></th>
+   <th><a href="{% postman_order_by date %}">{% block _pm_date %}{% trans "Date" %}{% endblock %}</a></th>
   </tr>
  </thead>
  <tbody>{% for message in pm_messages %}
   <tr>
    <td><input type="checkbox" {% if by_conversation and message.thread_id %}name="tpks" value="{{ message.thread_id }}"{% else %}name="pks" value="{{ message.pk }}"{% endif %} /></td>
-{% block pm_sender_cell %}   <td>{{ message.obfuscated_sender|or_me:user }}{% if message.count %} ({{ message.count }}){% endif %}</td>{% endblock %}
-{% block pm_recipient_cell %}   <td>{{ message.obfuscated_recipient|or_me:user }}{% if message.count %} ({{ message.count }}){% endif %}</td>{% endblock %}
+{% block _pm_sender_cell %}   <td>{{ message.obfuscated_sender|or_me:user }}{% if message.count %} ({{ message.count }}){% endif %}</td>{% endblock %}
+{% block _pm_recipient_cell %}   <td>{{ message.obfuscated_recipient|or_me:user }}{% if message.count %} ({{ message.count }}){% endif %}</td>{% endblock %}
    <td>{% if message.is_new %}<strong>{% endif %}{% if message.is_replied %}<em>{% endif %}
-{% block pm_subject %}
+{% block _pm_subject %}
     <a href="{% if by_conversation and message.thread_id %}{% url 'message:view_conversation' message.thread_id %}{% else %}{% url 'message:view' message.id %}{% endif %}?next={{ current_url|urlencode }}">
     {% include "postman/inc_subject_ex.html" %}
     </a>
@@ -56,6 +59,70 @@
   </tr>{% endfor %}
  </tbody>
 </table>
+-->
+<div class = "panel panel-default" id = "pm_message">
+  <div class="panel-heading">
+    <div class = "row">
+      <div class="col-md-1" style = "text-align: center">
+        {% trans "Action" %}
+      </div>
+      {% block pm_sender_header %}
+        <div class="col-md-1 msg-user">
+          <a href="{% postman_order_by sender %}">{% trans "Sender" %}</a>
+        </div>
+      {% endblock %}
+      {% block pm_recipient_header %}
+        <div class="col-md-1 msg-user">
+          <a href="{% postman_order_by recipient %}">{% trans "Recipient" %}</a>
+        </div>
+      {% endblock %}
+
+      <div class="col-md-8">
+        <a href="{% postman_order_by subject %}">{% trans "Subject" %}</a>  
+      </div>
+
+      <div class="msg-date">
+        <a href="{% postman_order_by date %}">{% block pm_date %}{% trans "Date" %}{% endblock %}</a>
+      </div>
+    </div>
+  </div>
+  <div class="panel-body"> 
+    {% for message in pm_messages %}
+      <div class="row msg-a-message">
+        <div class="col-md-1">
+          <div class="msg-action-tick-button">
+            <input type="checkbox" {% if by_conversation and message.thread_id %}name="tpks" value="{{ message.thread_id }}"{% else %}name="pks" value="{{ message.pk }}"{% endif %} />
+          </div> 
+        </div>
+        {% block pm_sender_cell %}
+          <div class="col-md-1 msg-user">
+            {{ message.obfuscated_sender|or_me:user }}{% if message.count %} ({{ message.count }}){% endif %}
+          </div>
+        {% endblock %}
+        {% block pm_recipient_cell %}
+          <div class="col-md-1 msg-user">
+            {{ message.obfuscated_recipient|or_me:user }}{% if message.count %} ({{ message.count }}){% endif %}
+          </div>
+        {% endblock %}
+        <div class="col-md-8">
+          {% if message.is_new %}<strong>{% endif %}{% if message.is_replied %}<em>{% endif %}
+            {% block pm_subject %}
+              <a href="{% if by_conversation and message.thread_id %}{% url 'message:view_conversation' message.thread_id %}{% else %}{% url 'message:view' message.id %}{% endif %}?next={{ current_url|urlencode }}">
+                {% include "postman/inc_subject_ex.html" %}
+              </a>
+            {% endblock %}
+          {% if message.is_replied %}</em>{% endif %}{% if message.is_new %}</strong>{% endif %}
+        </div>
+        <div >
+          <div class="msg-date">
+            {{ message.sent_at|compact_date:_("g:i A,M j,n/j/y") }}
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+  
+</div>
 </form>
 {% paginate %}
 {% else %}
