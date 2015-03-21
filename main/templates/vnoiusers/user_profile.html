@@ -29,11 +29,33 @@
                     <div class="row">
                         Member since: {{ profile_user.date_joined}}
                     </div>
-                    <div class="row user-setting-button">
-                        <a class="btn btn-default post-reply" href="#" role="button">
-                            Edit setting
-                        </a>
-                    </div>
+                    {% if profile_user.id == user.id %}
+                        <div class="row user-setting-button">
+                            <a class="btn btn-default post-reply" href="#" role="button">
+                                Edit setting
+                            </a>
+                        </div>
+                        <div class="row user-setting-button">
+                            <a class="btn btn-default post-reply" href="{% url 'user:friend_list' %}" role="button">
+                                My friends
+                            </a>
+                        </div>
+                    {% elif user.is_authenticated %}
+                        {% if is_friend %}
+                            <div class="row user-setting-button">
+                                <a class="btn btn-default post-reply" href="{% url 'user:remove_friend' profile_user.id %}" role="button">
+                                    Remove friend
+                                </a>
+                            </div>
+                        {% else %}
+                            <div class="row user-setting-button">
+                                <a class="btn btn-default post-reply"
+                                   href="{% url 'user:add_friend' profile_user.id %}" role="button">
+                                    Add friend
+                                </a>
+                            </div>
+                        {% endif %}
+                    {% endif %}
                 </div>
             </div>
         </div>

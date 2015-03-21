@@ -129,5 +129,35 @@ feature "User" do
     click_on 'Unlink VOJ account'
     expect(page).to have_content('Link VOJ account')
   end
+
+  scenario "User should be able to add friend", :js => true do
+    # Login
+    visit "#{ROOT_URL}/main"
+    login('admin', 'admin')
+    
+    # Add user as friend
+    visit "#{ROOT_URL}/user/2"
+    click_on 'Add friend'
+    verify_flash_messages(['Friend successfully added'])
+    
+    # Check friend list
+    click_on 'admin'
+    click_on 'My friends'
+    within '#body-container' do
+      expect(page).to have_content('vnoiuser')
+    end
+
+    # Remove friend
+    click_on 'vnoiuser'
+    click_on 'Remove friend'
+    verify_flash_messages(['Friend successfully removed'])
+
+    # Check friend list
+    click_on 'admin'
+    click_on 'My friends'
+    within '#body-container' do
+      expect(page).to have_no_content('vnoiuser')
+    end
+  end
 end
 
