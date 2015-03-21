@@ -13,7 +13,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
 
 # Create your views here.
-from vnoiusers.forms import UserLoginForm, UserCreateForm, CodeforcesLinkForm, VojLinkForm
+from vnoiusers.forms import UserLoginForm, UserCreateForm, CodeforcesLinkForm, VojLinkForm, FriendSearchForm
 
 
 def user_login(request, template_name='vnoiusers/user_login.html'):
@@ -29,7 +29,10 @@ def user_login(request, template_name='vnoiusers/user_login.html'):
             if (user is not None) and user.is_active:
                 login(request, user)
                 messages.success(request, 'Welcome back, %s' % username)
-                return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+                last_url = request.META.get('HTTP_REFERER')
+                if '/user/register' in last_url or '/user/login' in last_url:
+                    last_url = reverse('main:index')
+                return HttpResponseRedirect(last_url)
             else:
                 return render(request, template_name, {'form': form, 'message': 'login fail!'})
         except KeyError:
@@ -241,5 +244,10 @@ def remove_friend(request, user_id):
 @login_required
 def friend_list(request):
     return render(request, 'vnoiusers/friends.html', {
-        'friends': request.user.profile.friends.all()
+        'friends': request.user.profile.friends.all(),
+        'form': FriendSearchForm(),
     })
+
+
+def index(request):
+    return None

@@ -105,3 +105,7 @@ class VojLinkForm(forms.Form):
             raise forms.ValidationError(verify_result['message'])
 
         return self.cleaned_data
+
+
+class FriendSearchForm(forms.Form):
+    user_prefix = forms.CharField(max_length=10, min_length=4, label="Tên tài khoản")
