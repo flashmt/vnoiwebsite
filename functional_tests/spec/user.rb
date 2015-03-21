@@ -4,8 +4,7 @@ require './content/users/logout.rb'
 
 feature "User" do
   before :each do
-    visit "#{ROOT_URL}/main"
-    click_on 'Hide'
+    hide_django_profile_bar
   end
 
   scenario "Basic login and logout", :js => true do

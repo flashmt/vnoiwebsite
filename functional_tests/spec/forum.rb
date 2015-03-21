@@ -3,8 +3,7 @@ require './content/forum/forum.rb'
 
 feature "Forum" do
   before :each do
-    visit "#{ROOT_URL}/main"
-    click_on 'Hide'
+    hide_django_profile_bar
   end
 
   scenario "User should see all forums", :js => true do

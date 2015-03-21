@@ -109,3 +109,8 @@ end
 def browser_history_back
   page.evaluate_script('window.history.back()')
 end
+
+def hide_django_profile_bar
+  visit "#{ROOT_URL}/main"
+  click_on 'Hide'
+end
