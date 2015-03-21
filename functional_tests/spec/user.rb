@@ -3,6 +3,11 @@ require './content/users/login.rb'
 require './content/users/logout.rb'
 
 feature "User" do
+  before :each do
+    visit "#{ROOT_URL}/main"
+    click_on 'Hide'
+  end
+
   scenario "Basic login and logout", :js => true do
     visit "#{ROOT_URL}/main"
 
@@ -167,6 +172,35 @@ feature "User" do
     click_on 'My friends'
     within '#body-container' do
       expect(page).to have_no_content('vnoiuser')
+    end
+  end
+
+  scenario "User should be able to search friend", :js => true do
+    visit "#{ROOT_URL}/main"
+    login('admin', 'admin')
+    visit "#{ROOT_URL}/user/1"
+    click_on 'My friends'
+
+    # Search for vnoi
+    fill_in 'id_user_prefix', with: 'vnoi'
+    click_on 'OK'
+    within '#body-container' do
+      expect(page).to have_content('vnoiuser')
+    end
+    click_on 'vnoiuser'
+    within '#body-container' do
+      expect(page).to have_content('vnoiuser')
+    end
+    expect(current_path.chomp('/')).to eq('/user/2')
+
+    # Search for abc
+    visit "#{ROOT_URL}/user/1"
+    click_on 'My friends'
+    fill_in 'id_user_prefix', with: 'abc'
+    click_on 'OK'
+    within '#body-container' do
+      expect(page).to have_no_content('vnoiuser')
+      expect(page).to have_content('Không có kết quả nào')
     end
   end
 end

@@ -250,6 +250,7 @@ def friend_list(request):
     })
 
 
+@login_required
 def index(request):
     if request.POST:
         return render(request, 'vnoiusers/user_list.html', {
