@@ -44,17 +44,39 @@ def verify_content(texts)
 end
 
 def random_string(length)
-  (0...length).map { (65 + rand(26)).chr }.join
+  (0...length).map { ('a'.ord + rand(26)).chr }.join
 end
 
 def login(user, password)
   puts 'Logging in...'
-  fill_in 'id_username', with: user
-  fill_in 'id_password', with: password
-  if ENV.has_key?('TRAVIS_TEST_ENV')
-    find('#login_submit').trigger(:click)
-  else
-    click_on 'Login'
+  within '#navbar' do
+    click_on 'Sign in'
+    fill_in 'id_username', with: user
+    fill_in 'id_password', with: password
+    if ENV.has_key?('TRAVIS_TEST_ENV')
+      find('#login_submit').trigger(:click)
+    else
+      click_on 'Login'
+    end
+  end
+end
+
+def register(username, email, password, password2: nil,
+             last_name: 'Trung', first_name: 'Nguyen',
+             dob: '23/06/1992')
+  password2 ||= password
+  puts "Register #{username}, #{email}, #{password}"
+
+  visit "#{ROOT_URL}/user/register"
+  within '#register_form' do
+    fill_in 'id_username', with: username
+    fill_in 'id_email', with: email
+    fill_in 'id_last_name', with: last_name
+    fill_in 'id_first_name', with: first_name
+    fill_in 'id_dob', with: dob
+    fill_in 'id_password1', with: password
+    fill_in 'id_password2', with: password2
+    click_on 'OK'
   end
 end
 
@@ -86,4 +108,9 @@ end
 
 def browser_history_back
   page.evaluate_script('window.history.back()')
+end
+
+def hide_django_profile_bar
+  visit "#{ROOT_URL}/main"
+  click_on 'Hide'
 end

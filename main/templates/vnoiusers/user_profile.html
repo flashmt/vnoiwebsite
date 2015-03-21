@@ -29,11 +29,33 @@
                     <div class="row">
                         Member since: {{ profile_user.date_joined}}
                     </div>
-                    <div class="row user-setting-button">
-                        <a class="btn btn-default post-reply" href="#" role="button">
-                            Edit setting
-                        </a>
-                    </div>
+                    {% if profile_user.id == user.id %}
+                        <div class="row user-setting-button">
+                            <a class="btn btn-default post-reply" href="#" role="button">
+                                Edit setting
+                            </a>
+                        </div>
+                        <div class="row user-setting-button">
+                            <a class="btn btn-default post-reply" href="{% url 'user:friend_list' %}" role="button">
+                                My friends
+                            </a>
+                        </div>
+                    {% elif user.is_authenticated %}
+                        {% if is_friend %}
+                            <div class="row user-setting-button">
+                                <a class="btn btn-default post-reply" href="{% url 'user:remove_friend' profile_user.id %}" role="button">
+                                    Remove friend
+                                </a>
+                            </div>
+                        {% else %}
+                            <div class="row user-setting-button">
+                                <a class="btn btn-default post-reply"
+                                   href="{% url 'user:add_friend' profile_user.id %}" role="button">
+                                    Add friend
+                                </a>
+                            </div>
+                        {% endif %}
+                    {% endif %}
                 </div>
             </div>
         </div>
@@ -44,10 +66,18 @@
                 </div>
                 <div class="panel-body user-online-judge">
                     <p>
-                        VOJ: {{ user.profile.voj_account | default:"Not linked" }}
+                        {% if user.profile.voj_account %}
+                            VOJ: {{ user.profile.voj_account }} | <a href="{% url 'user:unlink_voj' %}">Unlink VOJ account</a>
+                        {% else %}
+                            <a href="{% url 'user:link_voj' %}">Link VOJ account</a>
+                        {% endif %}
                     </p>
                     <p>
-                        Codeforces: {{ user.profile.codeforces_account | default:"Not linked" }}
+                        {% if user.profile.codeforces_account %}
+                            Codeforces: {{ user.profile.codeforces_account }} | <a href="{% url 'user:unlink_codeforces' %}">Unlink Codeforces account</a>
+                        {% else %}
+                            <a href="{% url 'user:link_codeforces' %}">Link Codeforces account</a>
+                        {% endif %}
                     </p>
                     <p>
                         Topcoder: {{ user.profile.topcoder_account | default:"Not linked" }}

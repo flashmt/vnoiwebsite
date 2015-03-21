@@ -37,6 +37,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.humanize',
     'forum',
     'main',
     'vnoiusers',
@@ -49,6 +50,8 @@ INSTALLED_APPS = (
     'debug_toolbar',
     'avatar',
     'django_bleach',
+    'externaljudges',
+    'vnoilib',
 )
 
 

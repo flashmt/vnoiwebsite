@@ -64,3 +64,6 @@ media/
 
 # Sass
 .sass-cache/
+
+#Next editor
+*.py~

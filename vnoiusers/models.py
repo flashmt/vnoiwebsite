@@ -13,6 +13,7 @@ class VnoiUser(models.Model):
     codeforces_account = models.CharField(max_length=100, null=True, blank=True)
     topcoder_account = models.CharField(max_length=100, null=True, blank=True)
     topcoder_account_url = models.CharField(max_length=1024, null=True, blank=True)
+    friends = models.ManyToManyField('self', related_name='+', symmetrical=False)
 
     def __unicode__(self):
         return self.user.username

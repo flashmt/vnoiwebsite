@@ -28,60 +28,74 @@
 </head>
 
 <body>
-  <nav class="navbar navbar-fixed-top navbar-inverse">
-    <div class="container">
-        <div class="navbar-header" style="margin-left: 0.5em">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
-                    aria-expanded="false" aria-controls="navbar">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="#">VNOI Portal</a>
-        </div>
-        <div id="navbar" class="collapse navbar-collapse">
+  <header>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
 
-            <ul class="nav navbar-nav">
-                {% block navbar %}
-                    <li id="navbar_home"><a href="{% url 'main:index' %}">Home</a></li>
-                    <li id="navbar_problems"><a href="{% url 'problems:list' %}">Problems</a></li>
-                    <li id="navbar_forum"><a href="{% url 'forum:index' %}">Forum</a></li>
-                    {% if user.is_authenticated %}
-                        <li id="navbar_messages"><a href="{% url 'message:index' %}">Messages</a></li>
-                    {% endif %}
-                {% endblock navbar %}
-            </ul>
-            <ul class="nav navbar-nav navbar-right" style="padding-top: 12px; margin-right: 0.2em">
-                {% if user.is_authenticated %}
-                    <span style="color: wheat">Welcome</span>,
-                    <a href="{{user.get_absolute_url}}">{{ user.username }}</a>
-                    | <a href="{% url 'user:logout' %}">Logout</a>
-                {% else %}
-                    <form id="login-form" class="navbar-form navbar-right" method="post"
-                          action="{% url 'user:login' %}">
-                        {% csrf_token %}
-                        <div class="form-group">
-                            <input class="form-control input-xs" id="id_username" maxlength="30" name="username"
-                                   placeholder="Username" required="required" title="" type="text">
-                        </div>
-                        <div class="form-group">
-                            <input class="form-control input-xs" id="id_password" name="password" placeholder="Password"
-                                   required="required" title="" type="password">
-                        </div>
-                        <button type="submit" id="login_submit" class="btn btn-success input-xs">Login</button>
-                    </form>
-                    {#              <a href="{% url 'user:login' %}">Login</a>#}
-                {% endif %}
-            </ul>
+        <div class="navbar-header" style="margin-left: 0.5em">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">VNOI Portal</a>
+        </div>
+
+        <div id="navbar" class="collapse navbar-collapse navbar-right">
+          <ul class="nav navbar-nav">
+            {% block navbar %}
+            <li id="navbar_home"><a href="{% url 'main:index' %}">Home</a></li>
+            <li id="navbar_problems"><a href="{% url 'problems:list' %}">Problems</a></li>
+            <li id="navbar_forum"><a href="{% url 'forum:index' %}">Forum</a></li>
+            <li id="navbar_library"><a href="{% url 'library:index' %}">Thư viện</a></li>
+            {% if user.is_authenticated %}
+            <li id="navbar_messages"><a href="{% url 'message:index' %}">Messages</a></li>
+            <li>
+              <p class="navbar-text" style="color: wheat">Welcome, <a class="navbar-link" style="color:red" href="{% url 'user:profile' user.id %}"><strong>{{ user.username }}</strong></a> | <a href="{% url 'user:logout' %}">Logout</a></p>
+            </li>
+            {% else %}
+
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><strong>Sign in</strong></a>
+              <ul class="dropdown-menu" role="menu">
+                <li>
+                  <form id="login-form" class="navbar-form" method="post" action="{% url 'user:login' %}">
+                    {% csrf_token %}
+
+                    <div class="form-group">
+                      <label for="id_username">Username:</label>
+                      <input class="form-control" id="id_username" maxlength="30" name="username" placeholder="Username" required="required" title="" type="text">
+                    </div>
+
+                    <div class="form-group">
+                      <label for="id_password">Password:</label>
+                      <input class="form-control" id="id_password" name="password" placeholder="Password" required="required" title="" type="password">
+                    </div>
+
+                    <button type="submit" id="login_submit" class="btn btn-success btn-block input-xs">Login</button>
+                  </form>
+                </li>
+              </ul>
+            </li>
+
+
+            <li>
+            </li>
+            {#<a href="{% url 'user:login' %}">Login</a>#}
+            {% endif %}
+
+            {% endblock navbar %}
+          </ul>
         </div>
         <!-- /.nav-collapse -->
-    </div>
-    <!-- /.container -->
-  </nav>
-  <!-- /.navbar -->
+      </div>
+      <!-- /.container -->
+    </nav>
+    <!-- /.navbar -->
+  </header>
 
-  <div class="container">
+  <div class="container" id="body-container">
     {% if not disable_breadcrumbs %}
     <ol id="breadcrumbs" class="breadcrumb">
       {% block breadcrumbs %}
@@ -90,14 +104,19 @@
     </ol>
     {% endif %}
     {% if messages %}
-    <ul id="flash-messages" class="messages">
+    <div id="flash-messages" class="messages">
       {% for message in messages %}
-      <li class="alert alert-{{ message.tags }}">{{ message }}</li>
+      <p class="alert alert-{{ message.tags }}">{{ message }}</p>
       {% endfor %}
-    </ul>
+    </div>
     {% endif %}
     {% block container %}
     {% endblock %}
+    {% block footer %}
+      <footer class="footer">
+        <p>&copy; VNOI Admin 2015</p>
+      </footer>
+    {% endblock footer %}
   </div>
   <!--/.container-->
 

@@ -1,0 +1,27 @@
+{% extends 'main/base.html' %}
+
+{% block container %}
+  <div id="friend-list" class="panel panel-primary">
+    <div class="panel-heading">Tìm kiếm thành viên</div>
+    <div class="panel-body" id="friend-search">
+      {% url 'user:index' as form_action %}
+      {% include 'main/base_form.html' with form_action=form_action %}
+    </div>
+    <table>
+      {% if users %}
+        {% for user in users %}
+          <tr>
+            <td class="panel-body">{{ forloop.counter }}</td>
+            <td class="panel-body"><a href="{% url 'user:profile' user.id %}">{{ user.username }}</a></td>
+          </tr>
+        {% endfor %}
+      {% else %}
+        <tr>
+          <td class="panel-body">
+            Không có kết quả nào
+          </td>
+        </tr>
+      {% endif %}
+    </table>
+  </div>
+{% endblock %}

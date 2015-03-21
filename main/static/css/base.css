@@ -219,6 +219,30 @@
   margin-bottom: 1em; }
 
 /*
+ * Message
+ * --------------------------------------------------
+ */
+.msg-nav-bar {
+  margin-left: 2em; }
+
+.msg-button {
+  margin-top: 0.5em;
+  margin-bottom: 1em; }
+
+.msg-a-message {
+  margin-bottom: 1em;
+  border-bottom: 1px solid #ddd; }
+
+.msg-action-tick-button {
+  text-align: center; }
+
+.msg-date {
+  text-align: center; }
+
+.msg-user {
+  text-align: center; }
+
+/*
  * Style tweaks
  * --------------------------------------------------
  */
@@ -330,9 +354,33 @@ footer {
   border-radius: 3px; }
 
 #login-form {
-  margin-top: -0.1em; }
+  width: 100%;
+  margin-left: 0px;
+  margin-right: 0px; }
+  #login-form .form-group {
+    margin-bottom: 15px; }
+    #login-form .form-group label {
+      color: white; }
+    #login-form .form-group input {
+      width: 100%; }
+  #login-form button {
+    font-weight: bold;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 14px; }
+
+.dropdown-menu {
+  background-color: #222222;
+  width: 250px; }
 
 .alert {
   padding: 7px; }
+
+.footer {
+  position: relative;
+  margin-top: -150px;
+  /* negative value of footer height */
+  height: 150px;
+  clear: both;
+  padding-top: 20px; }
 
 /*# sourceMappingURL=base.css.map */

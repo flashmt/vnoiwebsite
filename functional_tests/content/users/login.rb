@@ -1,3 +1,3 @@
 $login_content = [
-  'Login'
+  'Sign in'
 ]

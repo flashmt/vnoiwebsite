@@ -1,35 +1,21 @@
-from datetime import timedelta
 from django.shortcuts import render
 from django.utils import timezone
+from externaljudges.models import ContestSchedule
 from forum.models import PinnedTopic, Post
 
 # Create your views here.
+from vnoiusers.models import VnoiUser
 
 
 def index(request):
-    pinned_topics = PinnedTopic.objects.all()
-    for pinned_topic in pinned_topics:
-        if not pinned_topic.is_cached:
-            post = pinned_topic.post
-
-            pinned_topic.is_cached = True
-            pinned_topic.topic_title = post.topic.title
-            pinned_topic.forum_id = post.topic.forum_id
-            pinned_topic.topic_id = post.topic_id
-            pinned_topic.author = post.created_by.username
-            pinned_topic.content = post.content
-            pinned_topic.last_updated = timezone.now()
-            pinned_topic.total_vote = pinned_topic.post.total_votes()
-            pinned_topic.save()
-
-        if pinned_topic.last_updated < timezone.now() - timedelta(minutes=30):
-            pinned_topic.total_vote = pinned_topic.post.total_votes()
-            pinned_topic.last_updated = timezone.now()
-            pinned_topic.save()
+    pinned_topics = PinnedTopic.update_and_return_all()
 
     posts = Post.objects.order_by('-created_at').values(
         'pk', 'created_by__username', 'topic__title', 'topic__id', 'topic__forum__id')[:5]
+
     return render(request, 'main/home.html', {
-        'pinned_topics': PinnedTopic.objects.all(),
+        'pinned_topics': pinned_topics,
         'recent_posts': posts,
+        'coming_contests': ContestSchedule.objects.filter(start_time__gt=timezone.now()).order_by('start_time'),
+        'contributors': VnoiUser.objects.all().order_by('-contribution').values('user__username', 'contribution')[:10]
     })

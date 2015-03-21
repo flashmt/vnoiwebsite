@@ -30,7 +30,7 @@
                 </div>
             </div>
         {% endif %}
-        <div class="row post-wrapper">
+        <div class="row post-wrapper" id="post-{{ post.id }}">
             <div class="post-row-same-height">
                 <div class="col-md-height post-user-detail ">
                     <div>
@@ -62,8 +62,10 @@
                                     <a class="btn btn-default post-edit" href="{% url 'forum:post_update' forum.id topic.id post.id %}" role="button">
                                       Edit
                                     </a>
-                                {% else %}
                                 {% endifhasperm %}
+                                  <a class="btn btn-default post-edit" href="{% url 'forum:topic_retrieve' forum.id topic.id %}#post-{{ post.id }}" role="button">
+                                    #
+                                  </a>
                             </div>
                             <div class="col-md-1">
                                 <a class="btn btn-default post-upvote" href="{% url 'forum:vote_create' post.id %}?type=u" role="button">

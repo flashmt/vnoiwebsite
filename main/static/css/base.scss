@@ -1,6 +1,9 @@
 @import 'home';
 @import 'forum';
 @import 'user';
+@import 'message';
+
+$font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 
 /*
  * Style tweaks
@@ -135,9 +138,38 @@ footer {
 }
 
 #login-form {
-	margin-top: -0.1em;
+	.form-group {
+		label {
+			color: white;
+		}
+		input {
+			width: 100%
+		}
+		margin-bottom: 15px;
+	}
+	button {
+		font-weight: bold;
+		font-family: $font-family;
+		font-size: 14px;
+	}
+	width: 100%;
+	margin-left: 0px;
+	margin-right: 0px;
+}
+
+.dropdown-menu {
+	background-color: rgb(34, 34, 34);
+	width: 250px;
 }
 
 .alert {
 	padding: 7px;
+}
+
+.footer {
+	position: relative;
+	margin-top: -150px; /* negative value of footer height */
+	height: 150px;
+	clear:both;
+	padding-top:20px;
 }
