@@ -7,30 +7,38 @@
 {% block navbar-highlight %}navbar_messages{% endblock navbar-highlight %}
 
 {% block extra-head %}
-    <link href="{% static 'css/postman.css' %}" rel="stylesheet">
+    <link href="{% static 'css/message.css' %}" rel="stylesheet">
 {% endblock extra-head %}
 
 {% block breadcrumbs %}
     <li>Tin nhắn</li>
-{% endblock breadcrumbs %}
+{% endblock breadcrumbs %}	
 
 {% block container %}
-
-{% block postman_menu %}
-<ul id="postman_menu">{% postman_unread as unread_count %}
- <li><a href="{% url 'message:inbox' %}">&raquo;&nbsp;{% trans "Inbox" %}{% if unread_count %} <strong>({{ unread_count }})</strong>{% endif %}</a></li>
- <li><a href="{% url 'message:sent' %}">&raquo;&nbsp;{% trans "Sent Messages" %}</a></li>
- <li><a href="{% url 'message:write' %}">&raquo;&nbsp;{% trans "Write" %}</a></li>
- <li><a href="{% url 'message:archives' %}">&raquo;&nbsp;{% trans "Archives" %}</a></li>
- <li><a href="{% url 'message:trash' %}">&raquo;&nbsp;{% trans "Trash" %}</a></li>
-</ul>
-{% endblock %}
-
-
-{% block content %}
-{% endblock content %}
-
-
+<div class = "row">
+  <div class = "col-md-2">
+    {% block postman_menu %}
+    <!--<ul id="postman_menu">{% postman_unread as unread_count %}
+      <li><a href="{% url 'message:inbox' %}">&raquo;&nbsp;{% trans "Inbox" %}{% if unread_count %} <strong>({{ unread_count }})</strong>{% endif %}</a></li>
+      <li><a href="{% url 'message:sent' %}">&raquo;&nbsp;{% trans "Sent Messages" %}</a></li>
+      <li><a href="{% url 'message:write' %}">&raquo;&nbsp;{% trans "Write" %}</a></li>
+      <li><a href="{% url 'message:archives' %}">&raquo;&nbsp;{% trans "Archives" %}</a></li>
+      <li><a href="{% url 'message:trash' %}">&raquo;&nbsp;{% trans "Trash" %}</a></li>
+    </ul>-->
+    <ul class="nav nav-pills nav-stacked msg-nav-bar">
+      <li role = "presentation"><a href="{% url 'message:inbox' %}">{% trans "Hộp thư đến" %}{% if unread_count %} <strong>({{ unread_count }})</strong>{% endif %}</a></li>
+      <li role = "presentation"><a href="{% url 'message:sent' %}">{% trans "Thư đã gửi" %}</a></li>
+      <li role = "presentation"><a href="{% url 'message:write' %}">{% trans "Viết thư mới" %}</a></li>
+      <li role = "presentation"><a href="{% url 'message:archives' %}">{% trans "Thư đã lưu" %}</a></li>
+      <li role = "presentation"><a href="{% url 'message:trash' %}">{% trans "Thùng rác" %}</a></li>	
+    </ul>
+    {% endblock %}
+  </div>
+  <div class = "col-md-10">
+    {% block content %}
+    {% endblock content %}
+   </div>
+  </div>
 {% endblock container %}
 
 
