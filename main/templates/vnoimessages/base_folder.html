@@ -13,33 +13,22 @@
 
 {% block content %}
 <div id="postman">
-<div class = "row">
-  <div class = "col-md-8"> 
-    <h1>
-      {% block pm_folder_title %}{% endblock %}
-    </h1> 
-  </div>
-  {% autopaginate pm_messages %}
-  {% if invalid_page %}
-  <p>{% trans "Sorry, this page number is invalid." %}</p>
-  {% else %}
-  <div class = "col-md-4">
-    {% if pm_messages %}
-    <!--{% block pm_by_modes %}<div id="pm_by_modes">
-    <span class="pm_by_mode">{% if by_message %}<a href="{{ by_conversation_url }}">{% endif %}{% trans "by conversation" %}{% if by_message %}</a>{% endif %}</span>
-    <span class="pm_by_mode">{% if by_conversation %}<a href="{{ by_message_url }}">{% endif %}{% trans "by message" %}{% if by_conversation %}</a>{% endif %}</span>
-    </div>{% endblock pm_by_modes %}-->
-    <form action="{% block pm_form_action %}{% endblock %}" method="post">{% csrf_token %}
-    {% block pm_form_buttons %}<span class = "msg-button" id="pm_buttons">
-    <!--{% block _pm_delete_button %}<button type="submit" onclick="this.form.action='{% url 'message:delete' %}'">{% trans "Delete" %}</button>{% endblock %}
-    {% block _pm_archive_button %}<button type="submit" onclick="this.form.action='{% url 'message:archive' %}'">{% trans "Archive" %}</button>{% endblock %}
-    {% block _pm_undelete_button %}<button type="submit" onclick="this.form.action='{% url 'message:undelete' %}'">{% trans "Undelete" %}</button>{% endblock %}-->
-    {% block pm_delete_button %}<a class="btn btn-default msg-button" href="{% url 'message:delete' %}" role="button">{% trans "Delete" %}</a>{% endblock %}
-    {% block pm_archive_button %}<a class="btn btn-default msg-button" href="{% url 'message:archive' %}" role="button">{% trans "Archive" %}</a>{% endblock %}
-    {% block pm_undelete_button %}<a class="btn btn-default msg-button" href="{% url 'message:undelete' %}" role="button">{% trans "Undelete" %}</a>{% endblock %}
-    </span>{% endblock %}
-  </div>
-</div>
+<h1>{% block pm_folder_title %}{% endblock %}</h1>
+{% autopaginate pm_messages %}
+{% if invalid_page %}
+<p>{% trans "Sorry, this page number is invalid." %}</p>
+{% else %}
+{% if pm_messages %}
+<!--{% block pm_by_modes %}<div id="pm_by_modes">
+<span class="pm_by_mode">{% if by_message %}<a href="{{ by_conversation_url }}">{% endif %}{% trans "by conversation" %}{% if by_message %}</a>{% endif %}</span>
+<span class="pm_by_mode">{% if by_conversation %}<a href="{{ by_message_url }}">{% endif %}{% trans "by message" %}{% if by_conversation %}</a>{% endif %}</span>
+</div>{% endblock pm_by_modes %}-->
+<form action="{% block pm_form_action %}{% endblock %}" method="post">{% csrf_token %}
+{% block pm_form_buttons %}<span class = "msg-button" id="pm_buttons">
+{% block pm_delete_button %}<button class="btn btn-default msg-button" type="submit" onclick="this.form.action='{% url 'message:delete' %}'">{% trans "Delete" %}</button>{% endblock %}
+{% block pm_archive_button %}<button class="btn btn-default msg-button" type="submit" onclick="this.form.action='{% url 'message:archive' %}'">{% trans "Archive" %}</button>{% endblock %}
+{% block pm_undelete_button %}<button class="btn btn-default msg-button" type="submit" onclick="this.form.action='{% url 'message:undelete' %}'">{% trans "Undelete" %}</button>{% endblock %}
+</span>{% endblock %}
 <!--
 <table id="pm_messages">
  <thead>
