@@ -23,6 +23,16 @@ feature "User" do
       verify_flash_messages(['Welcome back, admin'])
       click_on $logout
     end
+
+    visit "#{ROOT_URL}/user/login"
+    login('admin', 'admin')
+    expect(current_path.chomp('/')).to eq('/main')
+    click_on $logout
+
+    visit "#{ROOT_URL}/user/register"
+    login('admin', 'admin')
+    expect(current_path.chomp('/')).to eq('/main')
+    click_on $logout
   end
 
   scenario "Logged in user should not be able to access login / register page", :js => true do
