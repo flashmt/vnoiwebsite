@@ -2,6 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.core import exceptions
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
 from django.core.urlresolvers import reverse
+from django.db.models import Q
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, get_object_or_404
 
@@ -13,7 +14,7 @@ from forum.perms import PostPermission, VotePermission
 
 
 def index(request):
-    forum_groups = ForumGroup.objects.all()
+    forum_groups = ForumGroup.objects.filter(~Q(name__startswith='Library'))
     return render(request, 'forum/forum_index.html', {'forum_groups': forum_groups})
 
 

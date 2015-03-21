@@ -51,6 +51,7 @@ INSTALLED_APPS = (
     'avatar',
     'django_bleach',
     'externaljudges',
+    'vnoilib',
 )
 
 
