@@ -150,12 +150,12 @@
         <div class="panel-body">
           {% for post in recent_posts %}
               <div class = "row base-popular-topic-row">
-                <div class = "col-md-9 base-popular-topic-name">
+                <div class = "base-popular-topic-name">
                   <a href="{% url 'forum:topic_retrieve' post.topic__forum__id post.topic__id %}" class="base-popular-topic-link">
                     {{ post.topic__title }}
                   </a>
                 </div>
-                <div class = "col-md-3 base-popular-topic-user">
+                <div class = "base-popular-topic-user">
                   {{ post.created_by__username }}
                 </div>
               </div>

@@ -281,10 +281,12 @@ footer {
   border-bottom: 1px solid #ddd; }
 
 .base-popular-topic-name {
+  margin-left: 0.5em;
   text-align: left;
   font-weight: bold; }
 
 .base-popular-topic-user {
+   margin-right: 0.5em;
   text-align: right; }
 
 .base-popular-topic-link {

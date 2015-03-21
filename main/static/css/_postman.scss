@@ -1,8 +1,31 @@
 /*
-	This is a basic stylesheet for the django-postman application.
-	Called from templates/postman/base.html.
-	Make your own design in <settings.STATIC_ROOT>/postman/css/postman.css
-*/
+ * postman
+ * --------------------------------------------------
+ */
+
+.msg-nav-bar {
+	margin-left: 1em;
+	color: red;
+	border: 1px solid black;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 .pm_message.pm_deleted {
  text-decoration: line-through;
 }
