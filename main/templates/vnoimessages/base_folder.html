@@ -25,10 +25,13 @@
 </div>{% endblock pm_by_modes %}
 <form action="{% block pm_form_action %}{% endblock %}" method="post">{% csrf_token %}
 {% block pm_form_buttons %}<span id="pm_buttons">
-{% block pm_delete_button %}<button type="submit" onclick="this.form.action='{% url 'message:delete' %}'">{% trans "Delete" %}</button>{% endblock %}
-{% block pm_archive_button %}<button type="submit" onclick="this.form.action='{% url 'message:archive' %}'">{% trans "Archive" %}</button>{% endblock %}
+<!--{% block _pm_delete_button %}<button type="submit" onclick="this.form.action='{% url 'message:delete' %}'">{% trans "Delete" %}</button>{% endblock %}
+{% block _pm_archive_button %}<button type="submit" onclick="this.form.action='{% url 'message:archive' %}'">{% trans "Archive" %}</button>{% endblock %}
+{% block _pm_undelete_button %}<button type="submit" onclick="this.form.action='{% url 'message:undelete' %}'">{% trans "Undelete" %}</button>{% endblock %}-->
+{% block pm_delete_button %}<a class="btn btn-default" href="{% url 'message:delete' %}" role="button">{% trans "Delete" %}</a>{% endblock %}
+{% block pm_archive_button %}<a class="btn btn-default" href="{% url 'message:archive' %}" role="button">{% trans "Archive" %}</a>{% endblock %}
+{% block pm_undelete_button %}<a class="btn btn-default" href="{% url 'message:undelete' %}" role="button">{% trans "Undelete" %}</a>{% endblock %}
 
-{% block pm_undelete_button %}<button type="submit" onclick="this.form.action='{% url 'message:undelete' %}'">{% trans "Undelete" %}</button>{% endblock %}
 </span>{% endblock %}
 <!--
 <table id="pm_messages">
