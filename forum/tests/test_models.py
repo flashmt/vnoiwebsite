@@ -22,19 +22,17 @@ class TopicModelTests(TestCase):
 
     def test_delete(self):
         forum = Forum.objects.get(id=1)
-	forum.update_last_post()
-	old_id = forum.last_post.id
-	
-	user = User.objects.get(id=1)
-  	topic = forum.topics.create(created_by = user, updated_by = 
+        forum.update_last_post()
+        old_id = forum.last_post.id
+
+        user = User.objects.get(id=1)
+        topic = forum.topics.create(created_by = user, updated_by = 
 user)
-	post = topic.posts.create(created_by = user, updated_by = user)
-	new_id = post.id			
-
-	self.assertEquals(forum.last_post.id, new_id)
-	topic.delete()
-	self.assertEquals(forum.last_post.id, old_id)	
-
+        post = topic.posts.create(created_by = user, updated_by = user)
+new_id = post.id			
+        self.assertEquals(forum.last_post.id, new_id)
+        topic.delete()
+        self.assertEquals(forum.last_post.id, old_id)	
 
 class PostModelTests(TestCase):
     fixtures = ['forum.json', 'auth.json']
