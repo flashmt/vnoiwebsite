@@ -16,7 +16,7 @@
 <div class="row">
   <div class="col-md-8">
     <h1>
-      {% block pm_folder_title %}{% endblock %}
+{#      {% block pm_folder_title %}{% endblock %}#}
     </h1>
   </div>
   {% autopaginate pm_messages %}
@@ -24,10 +24,6 @@
   <p>{% trans "Sorry, this page number is invalid." %}</p>
   {% else %}
   {% if pm_messages %}
-  <!--{% block pm_by_modes %}<div id="pm_by_modes">
-  <span class="pm_by_mode">{% if by_message %}<a href="{{ by_conversation_url }}">{% endif %}{% trans "by conversation" %}{% if by_message %}</a>{% endif %}</span>
-  <span class="pm_by_mode">{% if by_conversation %}<a href="{{ by_message_url }}">{% endif %}{% trans "by message" %}{% if by_conversation %}</a>{% endif %}</span>
-  </div>{% endblock pm_by_modes %}-->
   <div class="col-md-4">
     <form action="{% block pm_form_action %}{% endblock %}" method="post">{% csrf_token %}
     {% block pm_form_buttons %}<span class = "msg-button" id="pm_buttons">
@@ -129,6 +125,10 @@
   
 </div>
 </form>
+ {% block pm_by_modes %}<div id="pm_by_modes">
+  <span class="pm_by_mode">{% if by_message %}<a href="{{ by_conversation_url }}">{% endif %}{% trans "by conversation" %}{% if by_message %}</a>{% endif %}</span>
+  <span class="pm_by_mode">{% if by_conversation %}<a href="{{ by_message_url }}">{% endif %}{% trans "by message" %}{% if by_conversation %}</a>{% endif %}</span>
+  </div>{% endblock pm_by_modes %}
 {% paginate %}
 {% else %}
 <div class="row">
