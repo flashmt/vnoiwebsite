@@ -2,7 +2,7 @@ from django.test import TestCase
 
 # Create your tests here.
 from forum.models import Forum, Topic, Post
-
+from django.contrib.auth.models import User
 
 class ForumModelTest(TestCase):
     fixtures = ['forum.json', 'auth.json']
@@ -21,13 +21,17 @@ class TopicModelTests(TestCase):
     fixtures = ['forum.json', 'auth.json']
 
     def test_delete(self):
-        cf_294_topic = Topic.objects.get(pk=1)
-        cf_forum = Forum.objects.get(pk=1)
-        self.assertEquals(cf_forum.last_post.pk, 2)
-        cf_294_topic.delete()
-        cf_forum = Forum.objects.get(pk=1)
-        self.assertEquals(cf_forum.last_post.pk, 5)
+        forum = Forum.objects.get(id=1)
+        forum.update_last_post()
+        old_id = forum.last_post.id
 
+        user = User.objects.get(id=1)
+        topic = forum.topics.create(created_by = user, updated_by = 
+user)
+        post = topic.posts.create(created_by = user, updated_by = user)
+        self.assertEquals(forum.last_post.id, post.id)
+        topic.delete()
+        self.assertEquals(forum.last_post.id, old_id)	
 
 class PostModelTests(TestCase):
     fixtures = ['forum.json', 'auth.json']
