@@ -29,8 +29,7 @@ class TopicModelTests(TestCase):
         topic = forum.topics.create(created_by = user, updated_by = 
 user)
         post = topic.posts.create(created_by = user, updated_by = user)
-new_id = post.id			
-        self.assertEquals(forum.last_post.id, new_id)
+        self.assertEquals(forum.last_post.id, post.id)
         topic.delete()
         self.assertEquals(forum.last_post.id, old_id)	
 
