@@ -88,6 +88,7 @@ def post_create(request, forum_id=None, topic_id=None, post_id=None, template="f
 
 @login_required
 def post_update(request, forum_id=None, topic_id=None, post_id=None, template="forum/post_update.html"):
+    # TODO: if the content is not change, need to update update_at or not?
     forum = topic = post = None
     if forum_id:
         forum = get_object_or_404(Forum, pk=forum_id)
@@ -140,7 +141,7 @@ def vote_create(request, post_id=None):
         vote.save()
 
         # Each upvote increases the user's contribution by 1
-        if vote_type == Vote.UPVOTE:
+        if vote_type == Vote.UP_VOTE:
             voted_user_profile = post.created_by.profile
             voted_user_profile.contribution += 1
             voted_user_profile.save()
