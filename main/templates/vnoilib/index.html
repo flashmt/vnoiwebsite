@@ -1,6 +1,9 @@
 {% extends 'main/base.html' %}
 
 {% block navbar-highlight %}navbar_library{% endblock navbar-highlight %}
+{% block breadcrumbs %}
+  <li>Thư viện</li>
+{% endblock breadcrumbs %}
 
 {% block container %}
   {% for lib_group in lib_groups %}
@@ -8,7 +11,7 @@
     {% for lib_topic in lib_group.forums.all %}
       <h3>{{ lib_topic }}</h3>
       {% for topic in lib_topic.topics.all %}
-        <p><a href="{% url 'forum:topic_retrieve' lib_group.id topic.id %}">{{ topic.title }}</a></p>
+        <p><a href="{% url 'library:topic_retrieve' lib_topic.id topic.id %}">{{ topic.title }}</a></p>
       {% endfor %}
     {% endfor %}
   {% endfor %}

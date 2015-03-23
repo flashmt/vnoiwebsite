@@ -1,5 +1,9 @@
 {% extends "vnoimessages/base_folder.html" %}
 {% load i18n %}
+{% block breadcrumbs %}
+  <li>Thư viện</li>
+  <li>Hộp thư đến</li>
+{% endblock breadcrumbs %}
 {% block postman_menu %}
   <li role = "presentation" class="active"><a href="{% url 'message:inbox' %}">{% trans "Hộp thư đến" %}{% if unread_count %} <strong>({{ unread_count }})</strong>{% endif %}</a></li>
   <li role = "presentation"><a href="{% url 'message:sent' %}">{% trans "Thư đã gửi" %}</a></li>

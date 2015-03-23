@@ -1,0 +1,7 @@
+{% extends 'forum/topic_retrieve.html' %}
+
+{% block breadcrumbs %}
+  <li><a href="{% url 'library:index' %}">Thư viện</a></li>
+  <li><a href="{% url 'library:topic_list' forum.id %}">{{ forum.name }}</a></li>
+  <li>{{ topic.title }}</li>
+{% endblock breadcrumbs %}
