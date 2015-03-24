@@ -2,6 +2,7 @@
 {% load staticfiles %}
 {% load bleach_tags %}
 {% load humanize %}
+{% load utils %}
 
 {% block container %}
   <div class="row row-offcanvas row-offcanvas-right">
@@ -25,36 +26,37 @@
       </div>
       -->
       <div class="row" id="pinned_post">
-        {% for topic in pinned_topics %}
+        {% for pinned_topic in pinned_topics %}
           <div class="col-xs-10">
-            <a href="{% url 'forum:topic_retrieve' topic.forum_id topic.topic_id %}">
-              <h2>{{ topic.topic_title }}</h2>
+            <a href="{% url 'forum:topic_retrieve' pinned_topic.forum pinned_topic.id %}">
+              <h2>{{ pinned_topic.title }}</h2>
             </a>
             <p class = "pinned-post-author">
-              By {{ topic.author }}, {{ topic.created_at|naturaltime }}
+              By <a href="{% url 'user:profile' pinned_topic.created_by %}">{{ pinned_topic.created_by__username }}</a>,
+              {{ pinned_topic.created_at|naturaltime }}
             </p>
             <div class="pinned-post-content-container col-xs-12">
               <p class= "pinned-post-content">
-                {{ topic.content|bleach }}
+                {{ pinned_topic.content|bleach }}
               </p>
             </div>
             <div>
               <div class = "row">
                 <div class = "col-xs-9">
-                  <a class="btn btn-default" href="{% url 'forum:topic_retrieve' topic.forum_id topic.topic_id %}" role="button">
+                  <a class="btn btn-default" href="{% url 'forum:topic_retrieve' pinned_topic.forum pinned_topic.id %}" role="button">
                     See more &raquo;
                   </a>
                 </div>
                 <div class="col-xs-1">
-                  <a class="btn btn-default pinned-post-upvote" href="{% url 'forum:vote_create' topic.post_id %}?type=u" role="button">
+                  <a class="btn btn-default pinned-post-upvote" href="{% url 'forum:vote_create' pinned_topic.post__id %}?type=u" role="button">
                     +
                   </a>
                 </div>
                 <div class="col-xs-1 pinned-post-count-upvote" id = "count_upvote">
-                  {{ topic.total_vote }}
+                  {{ pinned_topic.post__num_upvotes|subtract:pinned_topic.post__num_downvotes }}
                 </div>
                 <div class="col-xs-1">
-                  <a class="btn btn-default pinned-post-downvote" href="{% url 'forum:vote_create' topic.post_id %}?type=d" role="button">
+                  <a class="btn btn-default pinned-post-downvote" href="{% url 'forum:vote_create' pinned_topic.post__id %}?type=d" role="button">
                     -
                   </a>
                 </div>

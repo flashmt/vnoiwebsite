@@ -65,6 +65,7 @@ class Topic(models.Model):
     updated_at = models.DateTimeField(auto_now_add=True, null=True)
     updated_by = models.ForeignKey(User, related_name="updated_topics", null=True, default=None, on_delete=models.SET_NULL)
     last_post = models.OneToOneField('Post', related_name="+", null=True, blank=True, default=None, on_delete=models.SET_NULL)
+    is_pinned = models.BooleanField(null=False, blank=False, default=False)
 
     def __unicode__(self):
         return self.title
@@ -79,6 +80,9 @@ class Topic(models.Model):
 
     def get_absolute_url(self):
         return reverse('forum:topic_retrieve', kwargs={'forum_id': self.forum_id, 'topic_id': self.id})
+
+    def get_total_vote(self):
+        return self.post.num_upvotes - self.post.num_downvotes
 
 
 class Post(models.Model):
@@ -116,69 +120,6 @@ class Post(models.Model):
     def count_num_replies(self):
         """This method query the whole db, use it only when needed """
         return self.posts.all().count()
-
-
-class PinnedTopic(models.Model):
-    post = models.ForeignKey(Post, related_name='+')
-    is_cached = models.BooleanField(null=False, blank=False, default=False)
-    last_updated = models.DateTimeField(null=True, blank=True)
-    topic_title = models.CharField(max_length=500, null=True, blank=True)
-    forum_id = models.IntegerField(null=True, blank=True)
-    topic_id = models.IntegerField(null=True, blank=True)
-    author = models.CharField(max_length=250, null=True, blank=True)
-    content = BleachField(null=True)
-    total_vote = models.IntegerField(null=True, blank=True)
-    created_at = models.DateTimeField(null=True, blank=True)
-
-    def __unicode__(self):
-        return self.post.topic.title
-
-    def get_absolute_url(self):
-        return self.post.topic.get_absolute_url()
-
-    @classmethod
-    def get_data_first_time(cls, pinned_topic):
-        post = pinned_topic.post
-
-        # Mark the cached flag --> so we do not get the values again
-        pinned_topic.is_cached = True
-        pinned_topic.topic_title = post.topic.title
-        pinned_topic.forum_id = post.topic.forum_id
-        pinned_topic.topic_id = post.topic_id
-        pinned_topic.author = post.created_by.username
-        pinned_topic.content = post.content
-        pinned_topic.last_updated = timezone.now()
-        pinned_topic.total_vote = pinned_topic.post.total_votes()
-        pinned_topic.created_at = post.created_at
-        pinned_topic.save()
-
-    @classmethod
-    def update_vote_count(cls, pinned_topic):
-        pinned_topic.total_vote = pinned_topic.post.total_votes()
-        pinned_topic.last_updated = timezone.now()
-        pinned_topic.save()
-
-    @classmethod
-    def update_title_content(cls, pinned_topic):
-        pinned_topic.content = pinned_topic.post.content
-        pinned_topic.topic_title = pinned_topic.post.topic.title
-        pinned_topic.save()
-
-    @classmethod
-    def update_and_return_all(cls):
-        # First, we need to update the cached values
-        for pinned_topic in cls.objects.all():
-            # If we never got the data before
-            if not pinned_topic.is_cached:
-                cls.get_data_first_time(pinned_topic)
-
-            # If our data is outdated, update it
-            if pinned_topic.last_updated < timezone.now() - timedelta(minutes=30):
-                cls.update_vote_count(pinned_topic)
-                cls.update_title_content(pinned_topic)
-
-        # At this point, all data are cached, we can return the objects
-        return cls.objects.all()
 
 
 class Vote(models.Model):

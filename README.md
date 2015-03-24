@@ -3,7 +3,9 @@
 
 # Installation:
 
-## Quick installation
+## Django + Python requirements installation
+### Quick installation
+
 ```bash
 # Install Python dependency
 sudo pip install -r requirements.txt
@@ -12,8 +14,32 @@ sudo pip install -r requirements.txt
 ./init_database.sh
 ```
 
-## Better way
+### Better way
 If you have multiple Python projects, it's better to setup virtualenv so that each project have its own Python + libraries version. To read about how to do it, refer to *documents/setup_project.md*
+
+## Memcache
+### Install libevent
+Memcache has libevent as dependency, so you should install libevent first:
+
+1. Download latest stable release of libevent from [their site](http://libevent.org/).
+2. Unzip and cd to the libevent directory
+3. Run:
+
+```bash
+./configure && make
+sudo make install
+```
+
+### Install memcache
+
+```bash
+wget http://memcached.org/latest
+tar -zxvf memcached-1.x.x.tar.gz
+cd memcached-1.x.x
+./configure && make && make test && sudo make install
+python manage.py createcachetable
+```
+
 
 # Run the project
 ```bash
