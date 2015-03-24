@@ -14,6 +14,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 
 # Create your views here.
 from vnoiusers.forms import UserLoginForm, UserCreateForm, CodeforcesLinkForm, VojLinkForm, FriendSearchForm
+from vnoiusers.models import VnoiUser
 
 
 def user_login(request, template_name='vnoiusers/user_login.html'):
@@ -67,8 +68,14 @@ def user_create(request, template_name='vnoiusers/user_create.html'):
                     password=password,
                     last_name=last_name,
                     first_name=first_name,
-                    email=email
+                    email=email,
                 )
+                profile = VnoiUser.objects.create(user=user)
+                # TODO: save dob
+                profile.save()
+
+                user.profile = profile
+                user.save()
                 return redirect('user:login')
             except KeyError:
                 return render(request, template_name,
