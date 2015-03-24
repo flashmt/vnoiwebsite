@@ -22,8 +22,8 @@ class ProblemCategory(GenericModel):
         GenericModel.__init__(self, 'problems.spojproblemcategory')
         self.fields['name'] = name
 
-    def get_url(self):
-        return '%sproblems/%s/' % (VOJ_BASE_URL, self.fields['name'])
+    def get_url(self, page_id=0, probs_per_page=50):
+        return '%sproblems/%s/sort=0,start=%d' % (VOJ_BASE_URL, self.fields['name'], page_id * probs_per_page)
 
 
 class Problem(GenericModel):

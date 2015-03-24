@@ -67,3 +67,6 @@ media/
 
 #Next editor
 *.py~
+
+#Thumbnail image
+Thumbs.db
