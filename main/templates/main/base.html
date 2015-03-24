@@ -48,11 +48,11 @@
             <li id="navbar_home"><a href="{% url 'main:index' %}">Home</a></li>
             <li id="navbar_problems"><a href="{% url 'problems:list' %}">Problems</a></li>
             <li id="navbar_forum"><a href="{% url 'forum:index' %}">Forum</a></li>
-
-            {% if user.is_authenticated %}
+            <li id="navbar_library"><a href="{% url 'library:index' %}">Thư viện</a></li>
+            {% if request.user.is_authenticated %}
             <li id="navbar_messages"><a href="{% url 'message:index' %}">Messages</a></li>
             <li>
-              <p class="navbar-text" style="color: wheat">Welcome, <a class="navbar-link" style="color:red" href="{% url 'user:profile' user.id %}"><strong>{{ user.username }}</strong></a> | <a href="{% url 'user:logout' %}">Logout</a></p>
+              <p class="navbar-text" style="color: wheat">Welcome, <a class="navbar-link" style="color:red" href="{{request.user.get_absolute_url}}"><strong>{{request.user.username }}</strong></a> | <a href="{% url 'user:logout' %}">Logout</a></p>
             </li>
             {% else %}
 

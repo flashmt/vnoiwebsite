@@ -34,6 +34,18 @@ export TRAVIS_TEST_ENV=1
 
 - Look at `report.html` for HTML reports
 
+## Tip:
+
+### How to debug
+
+- Add breakpoint: add the following line to the script:
+
+```ruby
+binding.pry
+```
+
+--> the test will stop after that line. Then you can print your variables / step through the code line by line by pressing `next`
+
 ## Troubleshoot:
 
 ### Could not find gem

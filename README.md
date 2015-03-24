@@ -6,7 +6,7 @@
 ## Quick installation
 ```bash
 # Install Python dependency
-pip install -r requirements.txt
+sudo pip install -r requirements.txt
 
 # Initialize database
 ./init_database.sh
@@ -38,3 +38,4 @@ python manage.py test
 - Nguyen Duc Nam
 - Che Quoc Huu
 - Tran Phan Anh Khoa
+- Nguyen Xuan Tung

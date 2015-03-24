@@ -32,7 +32,7 @@
                     <p>by {{ topic.created_by }}</p>
                 </div>
                 <div class="forum-statistics col-xs-3 row">
-                    <div class="forum-post-counts col-xs-4">{{ topic.count_num_posts }}</div>
+                    <div class="forum-post-counts col-xs-4">{{ topic.num_posts }}</div>
                     <div class="forum-last-post col-xs-8">
                         {% if topic.last_post %}
                             <p>{{ topic.last_post.created_at|naturaltime }}</p>

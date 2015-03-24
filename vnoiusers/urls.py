@@ -15,4 +15,5 @@ urlpatterns = patterns(
     url(r'^add_friend/(?P<user_id>\d+)$', views.add_friend, name='add_friend'),
     url(r'^remove_friend/(?P<user_id>\d+)$', views.remove_friend, name='remove_friend'),
     url(r'^friend_list$', views.friend_list, name='friend_list'),
+    url(r'^index$', views.index, name='index'),
 )

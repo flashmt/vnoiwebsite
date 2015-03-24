@@ -4,12 +4,26 @@
   <div id="friend-list" class="panel panel-primary">
     <div class="panel-heading">Danh sách bạn</div>
     <table>
-      {% for friend in friends %}
+      <tr>
+        <td class="panel-body" id="friend-search">
+          {% url 'user:index' as form_action %}
+          {% include 'main/base_form.html' with form_action=form_action %}
+        </td>
+      </tr>
+      {% if friends %}
+        {% for friend in friends %}
+          <tr>
+            <td class="panel-body">{{ forloop.counter }}</td>
+            <td class=""><a href="{% url 'user:profile' friend.user.id %}">{{ friend.user.username }}</a></td>
+          </tr>
+        {% endfor %}
+      {% else %}
         <tr>
-          <td class="panel-body">{{ forloop.counter }}</td>
-          <td class=""><a href="{% url 'user:profile' friend.user.id %}">{{ friend.user.username }}</a></td>
+          <td class="panel-body">
+            Chưa có bạn nào. Bạn có thể vào trang cá nhân của thành viên khác để kết bạn.
+          </td>
         </tr>
-      {% endfor %}
+      {% endif %}
     </table>
   </div>
 {% endblock %}

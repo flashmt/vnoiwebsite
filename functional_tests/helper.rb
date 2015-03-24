@@ -49,13 +49,15 @@ end
 
 def login(user, password)
   puts 'Logging in...'
-  click_on 'Sign in'
-  fill_in 'id_username', with: user
-  fill_in 'id_password', with: password
-  if ENV.has_key?('TRAVIS_TEST_ENV')
-    find('#login_submit').trigger(:click)
-  else
-    click_on 'Login'
+  within '#navbar' do
+    click_on 'Sign in'
+    fill_in 'id_username', with: user
+    fill_in 'id_password', with: password
+    if ENV.has_key?('TRAVIS_TEST_ENV')
+      find('#login_submit').trigger(:click)
+    else
+      click_on 'Login'
+    end
   end
 end
 
@@ -106,4 +108,9 @@ end
 
 def browser_history_back
   page.evaluate_script('window.history.back()')
+end
+
+def hide_django_profile_bar
+  visit "#{ROOT_URL}/main"
+  click_on 'Hide'
 end

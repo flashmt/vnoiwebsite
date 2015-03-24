@@ -1,3 +1,4 @@
+from avatar.models import Avatar
 from django.conf import settings
 from django.contrib.auth.models import Group
 from django.db import models
@@ -14,6 +15,7 @@ class VnoiUser(models.Model):
     topcoder_account = models.CharField(max_length=100, null=True, blank=True)
     topcoder_account_url = models.CharField(max_length=1024, null=True, blank=True)
     friends = models.ManyToManyField('self', related_name='+', symmetrical=False)
+    avatar = models.OneToOneField(Avatar, related_name="vnoiuser", null=True, blank=True)
 
     def __unicode__(self):
         return self.user.username

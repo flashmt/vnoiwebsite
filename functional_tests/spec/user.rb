@@ -3,6 +3,10 @@ require './content/users/login.rb'
 require './content/users/logout.rb'
 
 feature "User" do
+  before :each do
+    hide_django_profile_bar
+  end
+
   scenario "Basic login and logout", :js => true do
     visit "#{ROOT_URL}/main"
 
@@ -23,6 +27,16 @@ feature "User" do
       verify_flash_messages(['Welcome back, admin'])
       click_on $logout
     end
+
+    visit "#{ROOT_URL}/user/login"
+    login('admin', 'admin')
+    expect(current_path.chomp('/')).to eq('/main')
+    click_on $logout
+
+    visit "#{ROOT_URL}/user/register"
+    login('admin', 'admin')
+    expect(current_path.chomp('/')).to eq('/main')
+    click_on $logout
   end
 
   scenario "Logged in user should not be able to access login / register page", :js => true do
@@ -157,6 +171,35 @@ feature "User" do
     click_on 'My friends'
     within '#body-container' do
       expect(page).to have_no_content('vnoiuser')
+    end
+  end
+
+  scenario "User should be able to search friend", :js => true do
+    visit "#{ROOT_URL}/main"
+    login('admin', 'admin')
+    visit "#{ROOT_URL}/user/1"
+    click_on 'My friends'
+
+    # Search for vnoi
+    fill_in 'id_user_prefix', with: 'vnoi'
+    click_on 'OK'
+    within '#body-container' do
+      expect(page).to have_content('vnoiuser')
+    end
+    click_on 'vnoiuser'
+    within '#body-container' do
+      expect(page).to have_content('vnoiuser')
+    end
+    expect(current_path.chomp('/')).to eq('/user/2')
+
+    # Search for abc
+    visit "#{ROOT_URL}/user/1"
+    click_on 'My friends'
+    fill_in 'id_user_prefix', with: 'abc'
+    click_on 'OK'
+    within '#body-container' do
+      expect(page).to have_no_content('vnoiuser')
+      expect(page).to have_content('Không có kết quả nào')
     end
   end
 end

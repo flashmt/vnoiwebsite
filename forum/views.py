@@ -2,6 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.core import exceptions
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
 from django.core.urlresolvers import reverse
+from django.db.models import Q
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, get_object_or_404
 
@@ -13,8 +14,10 @@ from forum.perms import PostPermission, VotePermission
 
 
 def index(request):
-    forum_groups = ForumGroup.objects.all()
-    return render(request, 'forum/forum_index.html', {'forum_groups': forum_groups})
+    forum_groups = ForumGroup.objects.filter(~Q(name__startswith='Library'))
+    forums = Forum.objects.filter(~Q(forum_group__name__startswith='Library'))\
+                          .select_related('last_post', 'last_post__created_by', 'last_post__topic')
+    return render(request, 'forum/forum_index.html', {'forum_groups': forum_groups, 'forums': forums})
 
 
 def pagination_items(request, items, num_per_page):
@@ -32,7 +35,7 @@ def pagination_items(request, items, num_per_page):
 
 def topic_list(request, forum_id, template="forum/topic_list.html"):
     forum = get_object_or_404(Forum, pk=forum_id)
-    topics = Topic.objects.filter(forum_id=forum_id)
+    topics = Topic.objects.filter(forum_id=forum_id).select_related("last_post", "created_by", "last_post__created_by")
     topics = pagination_items(request, topics, 20)
     return render(request, template, {
         'forum': forum,
@@ -43,7 +46,7 @@ def topic_list(request, forum_id, template="forum/topic_list.html"):
 def topic_retrieve(request, forum_id, topic_id, template="forum/topic_retrieve.html"):
     forum = get_object_or_404(Forum, pk=forum_id)
     topic = get_object_or_404(Topic, pk=topic_id)
-    posts = topic.posts.all().values('content', 'created_at', 'created_by__id', 'created_by')
+    posts = topic.posts.all().select_related('created_by', 'created_by__profile__avatar')
     return render(request, template, {
         'forum': forum,
         'topic': topic,
@@ -87,6 +90,7 @@ def post_create(request, forum_id=None, topic_id=None, post_id=None, template="f
 
 @login_required
 def post_update(request, forum_id=None, topic_id=None, post_id=None, template="forum/post_update.html"):
+    # TODO: if the content is not change, need to update update_at or not?
     forum = topic = post = None
     if forum_id:
         forum = get_object_or_404(Forum, pk=forum_id)
@@ -139,7 +143,7 @@ def vote_create(request, post_id=None):
         vote.save()
 
         # Each upvote increases the user's contribution by 1
-        if vote_type == Vote.UPVOTE:
+        if vote_type == Vote.UP_VOTE:
             voted_user_profile = post.created_by.profile
             voted_user_profile.contribution += 1
             voted_user_profile.save()

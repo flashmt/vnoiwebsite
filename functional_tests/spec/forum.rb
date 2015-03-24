@@ -2,6 +2,10 @@ require './helper.rb'
 require './content/forum/forum.rb'
 
 feature "Forum" do
+  before :each do
+    hide_django_profile_bar
+  end
+
   scenario "User should see all forums", :js => true do
     visit "#{ROOT_URL}/forum/"
     verify_content($forum_content)

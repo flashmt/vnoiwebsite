@@ -1,6 +1,10 @@
 require './helper.rb'
 
 feature "Messages" do
+  before :each do
+    hide_django_profile_bar
+  end
+
   scenario "User should not see Message URL until logged in", :js => true do
     visit "#{ROOT_URL}/main"
 

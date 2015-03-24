@@ -1,0 +1,19 @@
+{% extends "vnoimessages/base_folder.html" %}
+{% load i18n %}
+{% block breadcrumbs %}
+  <li>Tin nhắn</li>
+  <li>Thư đã lưu</li>
+{% endblock breadcrumbs %}
+{% block postman_menu %}
+  <li role = "presentation"><a href="{% url 'message:inbox' %}">{% trans "Hộp thư đến" %}{% if unread_count %} <strong>({{ unread_count }})</strong>{% endif %}</a></li>
+  <li role = "presentation"><a href="{% url 'message:sent' %}">{% trans "Thư đã gửi" %}</a></li>
+  <li role = "presentation"><a href="{% url 'message:write' %}">{% trans "Viết thư mới" %}</a></li>
+  <li role = "presentation" class="active"><a href="{% url 'message:archives' %}">{% trans "Thư đã lưu" %}</a></li>
+  <li role = "presentation"><a href="{% url 'message:trash' %}">{% trans "Thùng rác" %}</a></li>	
+{% endblock %}
+{% block pm_folder_title %}{% trans "Thư đã lưu" %}{% endblock %}
+{% block pm_archive_button %}{% endblock %}
+{% block pm_undelete_button %}{% endblock %}
+{% block pm_footer_info %}
+<p>{% trans "Thư trong thư mục này sẽ vĩnh viễn không bị xóa. Bạn có thể sử dụng thư mục này để lưu trữ thư lâu dài." %}</p>
+{% endblock %}

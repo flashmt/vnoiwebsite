@@ -2,6 +2,8 @@ from datetime import timedelta
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.db import models
+from django.db.models import Sum
+from django.db.models.signals import post_save, post_delete
 from django.utils import timezone
 from django_bleach.models import BleachField
 
@@ -28,20 +30,25 @@ class Forum(models.Model):
         return self.name
 
     def update_last_post(self):
-        self.last_post = None
         for topic in self.topics.all():
             if (self.last_post is None) or ((topic.last_post is not None) and (self.last_post.created_at < topic.last_post.created_at)):
                 self.last_post = topic.last_post
         self.save()
 
     def count_num_topics(self):
-        return self.num_topics
+        return self.topics.all().count()
 
     def count_num_posts(self):
-        return self.num_posts
+        num_posts = self.topics.all().aggregate(Sum('num_posts'))
+        return num_posts['num_posts__sum'] or 0
 
     def get_last_post(self):
-        return self.last_post
+        """
+        Scan over whole db to get the correct last_post.
+        This method is inefficiently implemented, called only when needed.
+        """
+        last_posts = Post.objects.filter(topic__forum=self).order_by('-updated_at')
+        return last_posts[0]
 
     def get_absolute_url(self):
         return reverse('forum:topic_list', kwargs={'forum_id': self.id})
@@ -49,54 +56,29 @@ class Forum(models.Model):
 
 class Topic(models.Model):
     forum = models.ForeignKey(Forum, related_name="topics")
-    post = models.ForeignKey('Post', related_name="topics", null=True, blank=True)
-    num_posts = models.PositiveSmallIntegerField(verbose_name="num_replies", default=0)
+    post = models.OneToOneField('Post', related_name="self_topic", null=True, blank=True)
+    num_posts = models.PositiveSmallIntegerField(default=0)
     title = models.CharField(max_length=500, null=False, blank=False)
     content = BleachField()
     created_at = models.DateTimeField(auto_now_add=True, null=True)
     created_by = models.ForeignKey(User, related_name="created_topics")
     updated_at = models.DateTimeField(auto_now_add=True, null=True)
-    updated_by = models.ForeignKey(User, related_name="updated_topics", default=None, null=True, on_delete=models.SET_NULL)
-    last_post = models.OneToOneField('Post', related_name="+", default=None, null=True, blank=True, on_delete=models.SET_NULL)
-
-    # TODO created_by, updated_at, level
+    updated_by = models.ForeignKey(User, related_name="updated_topics", null=True, default=None, on_delete=models.SET_NULL)
+    last_post = models.OneToOneField('Post', related_name="+", null=True, blank=True, default=None, on_delete=models.SET_NULL)
 
     def __unicode__(self):
         return self.title
 
-    def save(self, *args, **kwargs):
-        if not self.pk:
-            # New topic
-            self.forum.num_topics += 1
-        else:
-            # Edited topic
-            self.forum.last_post = self.last_post
-        self.forum.save()
-
-        super(Topic, self).save(*args, **kwargs)
-
-    def delete(self, *args, **kwargs):
-        _forum = self.forum
-
-        super(Topic, self).delete(*args, **kwargs)
-
-        _forum.num_topics -= 1
-        _forum.save()
-        _forum.update_last_post()
-
-    def update_last_post(self):
-        self.last_post = None
-        for post in self.posts.all():
-            if (self.last_post is None) or (self.last_post.created_at < post.created_at):
-                self.last_post = post
-        self.save()
-        self.forum.update_last_post()
+    def get_last_post(self):
+        """ This method query the whole db. Call it only when needed. """
+        last_posts = Post.objects.filter(topic=self).order_by('-updated_at')
+        return last_posts[0]
 
     def count_num_posts(self):
         return self.num_posts
 
     def get_absolute_url(self):
-        return reverse('forum:topic_retrieve', kwargs={'forum_id': self.forum.id, 'topic_id': self.id})
+        return reverse('forum:topic_retrieve', kwargs={'forum_id': self.forum_id, 'topic_id': self.id})
 
 
 class Post(models.Model):
@@ -110,6 +92,7 @@ class Post(models.Model):
     created_by = models.ForeignKey(User, related_name="created_posts", null=True, on_delete=models.SET_NULL)
     updated_at = models.DateTimeField(auto_now_add=True, null=True)
     updated_by = models.ForeignKey(User, related_name="updated_posts", default=None, null=True, on_delete=models.SET_NULL)
+    # num_replies = models.PositiveSmallIntegerField(default=0)
 
     def __unicode__(self):
         return self.content[:30]
@@ -117,62 +100,25 @@ class Post(models.Model):
     def total_votes(self):
         return self.num_upvotes - self.num_downvotes
 
-    def save(self, *args, **kwargs):
-        if not self.pk:
-            # New post
-            self.topic.num_posts += 1
-            self.topic.created_by = self.created_by
-            self.topic.created_at = self.created_at
-            self.topic.updated_at = self.updated_at
-            self.topic.updated_by = self.updated_by
-            self.topic.save()
-
-            self.topic.forum.num_posts += 1
-            self.topic.forum.save()
-        else:
-            # Edited post
-            if self.topic_post:
-                # Edited content
-                self.topic.content = self.content
-
-            self.topic.updated_at = self.updated_at
-            self.topic.updated_by = self.updated_by
-            self.topic.save()
-
-        super(Post, self).save(*args, **kwargs)
-        # Assign last_post
-        self.topic.last_post = self
-        self.topic.save()
-
-    def delete(self, auto_delete=False, *args, **kwargs):
-        _topic_post = self.topic_post
-        _topic = self.topic
-
-        for post in self.reply_posts.all():
-            post.delete(auto_delete=True)
-
-        super(Post, self).delete(*args, **kwargs)
-
-        _topic.num_posts -= 1
-        _topic.forum.num_posts -= 1
-        if auto_delete is False:
-            _topic.update_last_post()
-
-        if _topic_post:
-            _topic.delete()
-
-    def title(self):
+    def title(self, parent_title=None):
         if self.topic_post:
-            return self.topic.title
+            if parent_title is None:
+                parent_title = self.topic.title
+            return parent_title
         else:
-            return "Re: " + self.reply_on.content[:10]
+            if parent_title is None:
+                parent_title = self.reply_on.content[:10]
+            return "Re: " + parent_title
 
     def get_reply_posts(self):
         return self.reply_posts.all()
 
+    def count_num_replies(self):
+        """This method query the whole db, use it only when needed """
+        return self.posts.all().count()
+
 
 class PinnedTopic(models.Model):
-    # TODO: In future, this model will cache fields which are displayed in homepage
     post = models.ForeignKey(Post, related_name='+')
     is_cached = models.BooleanField(null=False, blank=False, default=False)
     last_updated = models.DateTimeField(null=True, blank=True)
@@ -236,28 +182,103 @@ class PinnedTopic(models.Model):
 
 
 class Vote(models.Model):
-    UPVOTE = 'u'
-    DOWNVOTE = 'd'
+    UP_VOTE = 'u'
+    DOWN_VOTE = 'd'
 
     VoteChoices = (
-        (UPVOTE, 'UpVote'),
-        (DOWNVOTE, 'DownVote')
+        (UP_VOTE, 'UpVote'),
+        (DOWN_VOTE, 'DownVote')
     )
-    type = models.CharField(max_length=5, choices=VoteChoices, default=UPVOTE)
+    type = models.CharField(max_length=5, choices=VoteChoices, default=UP_VOTE)
     post = models.ForeignKey(Post, related_name="votes")
     created_by = models.ForeignKey(User, related_name="votes")
     created_at = models.DateTimeField(auto_now_add=True, null=True)
 
     def __unicode__(self):
-        return "{0} - {1} - {2}".format(self.type, self.post.id, self.created_by.id)
+        return "{0} - {1} - {2}".format(self.type, self.post.id, self.created_by.username)
 
     def save(self, *args, **kwargs):
         if not self.pk:
-            if self.type == self.UPVOTE:
+            if self.type == self.UP_VOTE:
                 self.post.num_upvotes += 1
-            elif self.type == self.DOWNVOTE:
+            elif self.type == self.DOWN_VOTE:
                 self.post.num_downvotes += 1
-        else:
-            pass
+
         self.post.save()
         super(Vote, self).save(*args, **kwargs)
+
+
+# Django signals
+
+def update_topic_on_save_post(sender, instance, created, **kwargs):
+    if kwargs.get('raw', False):
+        return False
+    topic = instance.topic
+    if created:
+        # If a new post was saved into database
+        topic.num_posts += 1
+        # Update topic.last_post
+        topic.last_post = instance
+
+    else:
+        # On update an existing post
+        if instance.topic_post:
+            topic.content = instance.content
+            topic.updated_at = instance.updated_at
+            topic.updated_by = instance.updated_by
+    topic.save()
+
+
+def update_forum_on_save_post(sender, instance, created, **kwargs):
+    if kwargs.get('raw', False):
+        return False
+    forum = instance.topic.forum
+    if created:
+        forum.num_posts += 1
+        # Update forum last_post
+        forum.last_post = instance
+
+    instance.topic.forum.save()
+
+
+def update_forum_on_save_topic(sender, instance, created, **kwargs):
+    if kwargs.get('raw', False):
+        return False
+    if created:
+        instance.forum.num_topics += 1
+
+    instance.forum.save()
+
+
+def update_forum_on_delete_topic(sender, instance, **kwargs):
+    forum = instance.forum
+    forum.num_topics -= 1
+    forum.save()
+    forum.update_last_post()
+
+
+def update_topic_on_delete_post(sender, instance, auto_delete=False, **kwargs):
+    topic_post = instance.topic_post
+    topic = instance.topic
+
+    for post in instance.reply_posts.all():
+        post.delete(auto_delete=True)
+
+    topic.num_posts -= 1
+    topic.forum.num_posts -= 1
+    if auto_delete is False:
+        topic.last_post = topic.get_last_post()
+        topic.save()
+
+    if topic_post:
+        topic.delete()
+
+
+post_save.connect(update_topic_on_save_post, sender=Post)
+post_save.connect(update_forum_on_save_post, sender=Post)
+post_save.connect(update_forum_on_save_topic, sender=Topic)
+
+post_delete.connect(update_topic_on_delete_post, sender=Post)
+post_delete.connect(update_forum_on_delete_topic, sender=Topic)
+
+
