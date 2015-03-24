@@ -259,6 +259,12 @@ footer {
  */
 .navbar {
   background-image: url(../../static/img/navbar-background.jpg); }
+  .navbar .navbar-nav li a, .navbar .navbar-nav .active a, .navbar .navbar-nav .open a {
+    color: white; }
+  .navbar .navbar-nav li a:hover, .navbar .navbar-nav li a:focus, .navbar .navbar-nav .active a:hover, .navbar .navbar-nav .active a:focus, .navbar .navbar-nav .open a:hover, .navbar .navbar-nav .open a:focus {
+    background-color: #8D2B1F; }
+  .navbar .navbar-nav .active a, .navbar .navbar-nav .open a {
+    background-color: #8D2B1F; }
 
 #login-form {
   width: 100%;
@@ -276,11 +282,9 @@ footer {
     font-size: 14px; }
 
 .dropdown-menu {
-  background-color: #222222;
-  width: 250px; }
-
-.alert {
-  padding: 7px; }
+  background-image: url(../../static/img/navbar-background.jpg);
+  width: 250px;
+  padding-top: 0px; }
 
 /*
  * Off Canvas
@@ -368,6 +372,9 @@ footer {
   float: right; }
 
 /* Square conner panel */
+.alert {
+  padding: 7px; }
+
 .panel, .panel-heading {
   border-radius: 0px; }
 

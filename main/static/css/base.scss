@@ -26,14 +26,30 @@ footer {
  * --------------------------------------------------
  */
 
+$navbar-active-color: #8D2B1F;
 .navbar {
+	.navbar-nav {
+		li, .active, .open {
+			a {
+				color: white;
+			}
+			a:hover, a:focus {
+				background-color: $navbar-active-color;
+			}
+		}
+		.active, .open {
+			a {
+				background-color: $navbar-active-color;
+			}
+		}
+	}
 	background-image: url(../../static/img/navbar-background.jpg);
 }
 
 #login-form {
 	.form-group {
 		label {
-			color: white;
+			color: rgb(255, 255, 255);
 		}
 		input {
 			width: 100%
@@ -51,12 +67,9 @@ footer {
 }
 
 .dropdown-menu {
-	background-color: rgb(34, 34, 34);
+	background-image: url(../../static/img/navbar-background.jpg);
 	width: 250px;
-}
-
-.alert {
-	padding: 7px;
+	padding-top: 0px;
 }
 
 /*
@@ -163,6 +176,10 @@ footer {
 }
 
 /* Square conner panel */
+.alert {
+	padding: 7px;
+}
+
 .panel, .panel-heading {
 	border-radius: 0px;
 }
