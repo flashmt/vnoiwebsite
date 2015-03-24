@@ -78,7 +78,7 @@ class Topic(models.Model):
         return self.num_posts
 
     def get_absolute_url(self):
-        return reverse('forum:topic_retrieve', kwargs={'forum_id': self.forum.id, 'topic_id': self.id})
+        return reverse('forum:topic_retrieve', kwargs={'forum_id': self.forum_id, 'topic_id': self.id})
 
 
 class Post(models.Model):
