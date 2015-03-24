@@ -8,7 +8,7 @@ from vnoiusers.models import VnoiUser
 
 
 def index(request):
-    pinned_topics = PinnedTopic.update_and_return_all()
+    pinned_topics = PinnedTopic.objects.all().select_related('topic')
 
     posts = Post.objects.order_by('-created_at').values(
         'pk', 'created_by__username', 'topic__title', 'topic__id', 'topic__forum__id')[:5]
