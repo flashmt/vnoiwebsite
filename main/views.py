@@ -10,10 +10,10 @@ from vnoiusers.models import VnoiUser
 
 
 def index(request):
-    pinned_topics = cache.get(HOME_PINNED_TOPICS)
-    if pinned_topics is None:
-        pinned_topics = Topic.objects.filter(is_pinned=True)
-        cache.set(HOME_PINNED_TOPICS, pinned_topics, HOME_PINNED_TOPICS_CACHE_TIME)
+    # pinned_topics = cache.get(HOME_PINNED_TOPICS)
+    # if pinned_topics is None:
+    pinned_topics = Topic.objects.filter(is_pinned=True)
+        # cache.set(HOME_PINNED_TOPICS, pinned_topics, HOME_PINNED_TOPICS_CACHE_TIME)
 
     posts = Post.objects.order_by('-created_at').values(
         'pk', 'created_by__username', 'topic__title', 'topic__id', 'topic__forum__id')[:5]
