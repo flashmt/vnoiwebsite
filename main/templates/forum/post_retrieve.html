@@ -52,6 +52,19 @@
                                       Edit
                                     </a>
                                 {% endifhasperm %}
+                                {% if not is_child %}
+                                  {% ifhasperm "topic_permission.can_toggle_pin" request.user topic %}
+                                    {% if topic.is_pinned %}
+                                      <a class="btn btn-default post-edit" href="{% url 'forum:unpin' topic.id %}" role="button">
+                                        Unpin
+                                      </a>
+                                    {% else %}
+                                      <a class="btn btn-default post-edit" href="{% url 'forum:pin' topic.id %}" role="button">
+                                        Pin
+                                      </a>
+                                    {% endif %}
+                                  {% endifhasperm %}
+                                {% endif %}
                                   <a class="btn btn-default post-edit" href="{% url 'forum:topic_retrieve' forum.id topic.id %}#post-{{ post.id }}" role="button">
                                     #
                                   </a>

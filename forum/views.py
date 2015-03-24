@@ -1,16 +1,17 @@
+# -*- coding: utf-8 -*-
+
 from django.contrib.auth.decorators import login_required
 from django.core import exceptions
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
 from django.core.urlresolvers import reverse
-from django.db.models import Q
-from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
+from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, get_object_or_404
 
 # Create your views here.
 
 from forum.forms import PostCreateForm, PostUpdateForm
 from forum.models import Topic, Forum, ForumGroup, Post, Vote
-from forum.perms import PostPermission, VotePermission
+from forum.perms import PostPermission, VotePermission, TopicPermission
 
 
 def index(request):
@@ -161,3 +162,37 @@ def vote_create(request, post_id=None):
 
 def already_voted(user, post):
     return user.votes.filter(post=post).count() > 0
+
+
+@login_required
+def pin(request, topic_id):
+    topic = get_object_or_404(Topic, pk=topic_id)
+    if TopicPermission(request.user).can_toggle_pin(topic):
+        topic.is_pinned = True
+        topic.save()
+        return JsonResponse({
+            'success': 1,
+            'message': 'Chủ đề đã được ghim lên trang chủ'
+        })
+    else:
+        return JsonResponse({
+            'success': 0,
+            'message': 'Bạn không có quyền thực hiện thao tác này'
+        })
+
+
+@login_required
+def unpin(request, topic_id):
+    topic = get_object_or_404(Topic, pk=topic_id)
+    if TopicPermission(request.user).can_toggle_pin(topic):
+        topic.is_pinned = False
+        topic.save()
+        return JsonResponse({
+            'success': 1,
+            'message': 'Chủ đề đã được bỏ khỏi trang chủ'
+        })
+    else:
+        return JsonResponse({
+            'success': 0,
+            'message': 'Bạn không có quyền thực hiện thao tác này'
+        })

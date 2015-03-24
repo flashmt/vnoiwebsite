@@ -1,6 +1,6 @@
 from authority import permissions
 import authority
-from forum.models import Forum, Vote, Post
+from forum.models import Forum, Vote, Post, Topic
 
 # Assume all user must be authenticated before check this permission
 
@@ -42,7 +42,13 @@ class PostPermission(permissions.BasePermission):
 
 
 class TopicPermission(PostPermission):
-    pass
+
+    label = 'topic_permission'
+    checks = 'can_toggle_pin'
+
+    def can_toggle_pin(self, topic):
+        # Only admin can pin topic
+        return self.user.profile.is_admin()
 
 
 class VotePermission(permissions.BasePermission):
@@ -57,5 +63,5 @@ class VotePermission(permissions.BasePermission):
 authority.register(Forum, ForumPermission)
 authority.register(Vote, VotePermission)
 authority.register(Post, PostPermission)
-
+authority.register(Topic, TopicPermission)
 
