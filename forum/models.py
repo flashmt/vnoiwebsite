@@ -65,6 +65,7 @@ class Topic(models.Model):
     updated_at = models.DateTimeField(auto_now_add=True, null=True)
     updated_by = models.ForeignKey(User, related_name="updated_topics", null=True, default=None, on_delete=models.SET_NULL)
     last_post = models.OneToOneField('Post', related_name="+", null=True, blank=True, default=None, on_delete=models.SET_NULL)
+    is_pinned = models.BooleanField(null=False, blank=False, default=False)
 
     def __unicode__(self):
         return self.title
@@ -79,6 +80,9 @@ class Topic(models.Model):
 
     def get_absolute_url(self):
         return reverse('forum:topic_retrieve', kwargs={'forum_id': self.forum_id, 'topic_id': self.id})
+
+    def get_total_vote(self):
+        return self.post.num_upvotes - self.post.num_downvotes
 
 
 class Post(models.Model):
@@ -116,16 +120,6 @@ class Post(models.Model):
     def count_num_replies(self):
         """This method query the whole db, use it only when needed """
         return self.posts.all().count()
-
-
-class PinnedTopic(models.Model):
-    topic = models.ForeignKey(Topic, related_name='+')
-
-    def __unicode__(self):
-        return self.topic.title
-
-    def get_absolute_url(self):
-        return self.topic.get_absolute_url()
 
 
 class Vote(models.Model):

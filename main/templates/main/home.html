@@ -28,14 +28,14 @@
         {% for pinned_topic in pinned_topics %}
           <div class="col-xs-10">
             <a href="{{ pinned_topic.get_absolute_url }}">
-              <h2>{{ pinned_topic.topic.title }}</h2>
+              <h2>{{ pinned_topic.title }}</h2>
             </a>
             <p class = "pinned-post-author">
-              By {{ pinned_topic.topic.created_by }}, {{ pinned_topic.topic.created_at|naturaltime }}
+              By {{ pinned_topic.created_by }}, {{ pinned_topic.created_at|naturaltime }}
             </p>
             <div class="pinned-post-content-container col-xs-12">
               <p class= "pinned-post-content">
-                {{ pinned_topic.topic.content|bleach }}
+                {{ pinned_topic.content|bleach }}
               </p>
             </div>
             <div>
@@ -46,15 +46,15 @@
                   </a>
                 </div>
                 <div class="col-xs-1">
-                  <a class="btn btn-default pinned-post-upvote" href="{% url 'forum:vote_create' pinned_topic.topic.post_id %}?type=u" role="button">
+                  <a class="btn btn-default pinned-post-upvote" href="{% url 'forum:vote_create' pinned_topic.post_id %}?type=u" role="button">
                     +
                   </a>
                 </div>
                 <div class="col-xs-1 pinned-post-count-upvote" id = "count_upvote">
-                  {{ topic.total_vote }}
+                  {{ pinned_topic.get_total_vote }}
                 </div>
                 <div class="col-xs-1">
-                  <a class="btn btn-default pinned-post-downvote" href="{% url 'forum:vote_create' pinned_topic.topic.post_id %}?type=d" role="button">
+                  <a class="btn btn-default pinned-post-downvote" href="{% url 'forum:vote_create' pinned_topic.post_id %}?type=d" role="button">
                     -
                   </a>
                 </div>
