@@ -1,6 +1,7 @@
 require './helper.rb'
 require './content/users/login.rb'
 require './content/users/logout.rb'
+require './content/users/profile.rb'
 
 feature "User" do
   before :each do
@@ -84,6 +85,10 @@ feature "User" do
     visit "#{ROOT_URL}/main"
     login(username2, '12345')
     verify_flash_messages(['Welcome back'])
+
+    click_on username2
+    expect(page).to have_content(username2)
+    verify_content($profile_content)
   end
 
   scenario "User should be able to link Codeforces account", :js => true do
