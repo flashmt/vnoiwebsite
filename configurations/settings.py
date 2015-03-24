@@ -42,7 +42,6 @@ INSTALLED_APPS = (
     'main',
     'vnoiusers',
     'bootstrap3',
-    'mailer',
     'postman',
     'vnoimessages',
     'authority',
@@ -52,6 +51,7 @@ INSTALLED_APPS = (
     'django_bleach',
     'externaljudges',
     'vnoilib',
+    "post_office",
 )
 
 
@@ -189,9 +189,10 @@ BOOTSTRAP3 = {
 # Postman settings
 POSTMAN_DISALLOW_ANONYMOUS = True
 POSTMAN_AUTO_MODERATE_AS = True
+POSTMAN_MAILER_APP = None
 
 # Django-authority
-AUTHORITY_USE_SMART_CACHE = False
+AUTHORITY_USE_SMART_CACHE = True
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
@@ -208,3 +209,21 @@ BLEACH_STRIP_COMMENTS = True
 ABSOLUTE_URL_OVERRIDES = {
     'auth.user': lambda user: "/user/%d/" % user.id,
 }
+
+
+# Setup email
+
+
+# using post office as the default email backend
+EMAIL_BACKEND = 'post_office.EmailBackend'
+
+POST_OFFICE = {
+    'DEFAULT_PRIORITY': 'now'
+}
+
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'vnoiwebsite@gmail.com'
+EMAIL_HOST_PASSWORD = 'vnoipassword'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER

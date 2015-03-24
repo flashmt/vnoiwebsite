@@ -6,6 +6,7 @@ from django.core.exceptions import ValidationError
 from django.contrib.auth.models import User
 from externaljudges.crawler.codeforces import verify_codeforces_account
 from externaljudges.crawler.voj import verify_voj_account
+from vnoiusers.models import VnoiUser
 
 
 class UserLoginForm(forms.ModelForm):
@@ -21,20 +22,17 @@ class UserLoginForm(forms.ModelForm):
         fields = ('username',)
 
 
-class UserCreateForm(forms.ModelForm):
-
+class UserRegisterForm(forms.ModelForm):
     last_name = forms.CharField(label=u"Họ")
     first_name = forms.CharField(label=u"Tên")
     dob = forms.DateField(label=u"Ngày sinh",
                           input_formats=['%d/%m/%Y'],
                           widget=forms.TextInput(attrs={'placeholder': 'dd/mm/yyyy'}))
-    password1 = forms.CharField(label=u"Mật khẩu",
-                                widget=forms.PasswordInput)
-    password2 = forms.CharField(label=u"Nhập lại mật khẩu",
-                                widget=forms.PasswordInput)
+    password1 = forms.CharField(label=u"Mật khẩu", widget=forms.PasswordInput)
+    password2 = forms.CharField(label=u"Nhập lại mật khẩu", widget=forms.PasswordInput)
 
     def __init__(self, *args, **kwargs):
-        super(UserCreateForm, self).__init__(*args, **kwargs)
+        super(UserRegisterForm, self).__init__(*args, **kwargs)
         self.fields['username'].help_text = None
 
     class Meta:
@@ -70,10 +68,14 @@ class UserCreateForm(forms.ModelForm):
         return email
 
     def save(self, commit=True):
-        user = super(UserCreateForm, self).save(commit=False)
+        user = super(UserRegisterForm, self).save(commit=False)
         user.set_password(self.cleaned_data['password1'])
         if commit:
+            user.is_active = False  # not active until user opens activation confirmation link
             user.save()
+            # Update user_profile
+            user.profile.dob = self.cleaned_data['dob']
+            user.profile.save()
         return user
 
 
