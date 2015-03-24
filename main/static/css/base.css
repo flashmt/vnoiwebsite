@@ -2,6 +2,8 @@
  * Home
  * --------------------------------------------------
  */
+@import url(http://fonts.googleapis.com/css?family=Roboto:500&subset=latin,vietnamese);
+@import url(http://fonts.googleapis.com/css?family=Open+Sans&subset=latin,vietnamese);
 #recent_post {
   margin-top: 50px; }
 
@@ -238,12 +240,14 @@
 .msg-action-tick-button, .msg-date, .msg-user {
   text-align: center; }
 
+/*$font-family: 'Helvetica Neue', sans-serif;*/
 /*
  * Style tweaks
  * --------------------------------------------------
  */
 html,
 body {
+  font-family: "Open Sans", sans-serif;
   overflow-x: hidden;
   /* Prevent scroll on narrow devices */ }
 
@@ -265,6 +269,10 @@ footer {
     background-color: #8D2B1F; }
   .navbar .navbar-nav .active a, .navbar .navbar-nav .open a {
     background-color: #8D2B1F; }
+  .navbar .navbar-header a {
+    color: white;
+    background-color: #8D2B1F;
+    font-weight: bold; }
 
 #login-form {
   width: 100%;
@@ -278,7 +286,7 @@ footer {
       width: 100%; }
   #login-form button {
     font-weight: bold;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: "Open Sans", sans-serif;
     font-size: 14px; }
 
 .dropdown-menu {
