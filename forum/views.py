@@ -14,8 +14,8 @@ from forum.perms import PostPermission, VotePermission
 
 
 def index(request):
-    forum_groups = ForumGroup.objects.filter(~Q(name__startswith='Library'))
-    forums = Forum.objects.filter(~Q(forum_group__name__startswith='Library'))\
+    forum_groups = ForumGroup.objects.filter(group_type='f')
+    forums = Forum.objects.filter(forum_group__in=forum_groups)\
                           .select_related('last_post', 'last_post__created_by', 'last_post__topic')
     return render(request, 'forum/forum_index.html', {'forum_groups': forum_groups, 'forums': forums})
 
