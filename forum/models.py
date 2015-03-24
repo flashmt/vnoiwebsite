@@ -100,11 +100,15 @@ class Post(models.Model):
     def total_votes(self):
         return self.num_upvotes - self.num_downvotes
 
-    def title(self):
+    def title(self, parent_title=None):
         if self.topic_post:
-            return self.topic.title
+            if parent_title is None:
+                parent_title = self.topic.title
+            return parent_title
         else:
-            return "Re: " + self.reply_on.content[:10]
+            if parent_title is None:
+                parent_title = self.reply_on.content[:10]
+            return "Re: " + parent_title
 
     def get_reply_posts(self):
         return self.reply_posts.all()
