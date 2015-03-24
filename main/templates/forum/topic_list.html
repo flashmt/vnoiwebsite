@@ -15,52 +15,52 @@
 
 {% block forum-body %}
 <div class="btn-toolbar button-container" role="toolbar">
-    <a href="{% url 'forum:topic_create' forum.id %}" class="btn btn-default">Create new topic</a>
+  <a href="{% url 'forum:topic_create' forum.id %}" class="btn btn-default">Create new topic</a>
 </div>
 <div id="forum-main-container">
-    <div class="forum-group-head">
-        Topics
+  <div class="forum-group-head">
+    Topics
+  </div>
+  <div class="forum-group-container">
+    {% for topic in topics %}
+    <div class="row forum" id="forum-{{ topic.id }}">
+      <span class="forum-icon col-xs-1"></span>
+      <div class="forum-name-div col-xs-8">
+        <a href="{{topic.get_absolute_url}}">
+          <h3 class="forum-name">{{ topic.title }}</h3>
+        </a>
+        <p>by {{ topic.created_by }}</p>
+      </div>
+      <div class="forum-statistics col-xs-3 row">
+        <div class="forum-post-counts col-xs-4">{{ topic.num_posts }}</div>
+        <div class="forum-last-post col-xs-8">
+          {% if topic.last_post %}
+          <p>{{ topic.last_post.created_at|naturaltime }}</p>
+          <p>by {{ topic.last_post.created_by }}</p>
+          {% else %}
+          <p>Chưa có trả lời</p>
+          <p>&nbsp;</p>
+          {% endif %}
+        </div>
+      </div>
     </div>
-    <div class="forum-group-container">
-        {% for topic in topics %}
-            <div class="row forum" id="forum-{{ topic.id }}">
-                <span class="forum-icon col-xs-1"></span>
-                <div class="forum-name-div col-xs-8">
-                    <a href="{{topic.get_absolute_url}}">
-                        <h3 class="forum-name">{{ topic.title }}</h3>
-                    </a>
-                    <p>by {{ topic.created_by }}</p>
-                </div>
-                <div class="forum-statistics col-xs-3 row">
-                    <div class="forum-post-counts col-xs-4">{{ topic.num_posts }}</div>
-                    <div class="forum-last-post col-xs-8">
-                        {% if topic.last_post %}
-                            <p>{{ topic.last_post.created_at|naturaltime }}</p>
-                            <p>by {{ topic.last_post.created_by }}</p>
-                        {% else %}
-                            <p>Chưa có trả lời</p>
-                            <p>&nbsp;</p>
-                        {% endif %}
-                    </div>
-                </div>
-            </div>
-        {% endfor %}
-    </div>
+    {% endfor %}
+  </div>
 </div>
 
 {% block forum-pagination %}
 {% if topics and topics.paginator.num_pages > 1 %}
 <ul class="pagination nav navbar-nav">
-    {% if topics.has_previous %}
-    <li><a href="?page={{ topics.previous_page_number }}">&laquo;</a></li>
-    {% endif %}
-    {% for page in topics.paginator.page_range %}
-    <li class="{% if topics.number == page  %}active{% endif %}"><a href="?page={{page }}">{{ page }}</a></li>
-    {% endfor %}
+  {% if topics.has_previous %}
+  <li><a href="?page={{ topics.previous_page_number }}">&laquo;</a></li>
+  {% endif %}
+  {% for page in topics.paginator.page_range %}
+  <li class="{% if topics.number == page  %}active{% endif %}"><a href="?page={{page }}">{{ page }}</a></li>
+  {% endfor %}
 
-    {% if topics.has_next %}
-    <li> <a href="?page={{ topics.next_page_number }}">»</a></li>
-    {% endif %}
+  {% if topics.has_next %}
+  <li> <a href="?page={{ topics.next_page_number }}">»</a></li>
+  {% endif %}
 </ul>
 {% endif %}
 

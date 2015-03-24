@@ -3,13 +3,13 @@
 {% load url from future %}
 
 {% block container %}
-    <p>{% trans "Your current avatar: " %}</p>
-    {% avatar user %}
-    {% if not avatars %}
-        <p>{% trans "You haven't uploaded an avatar yet. Please upload one now." %}</p>
-    {% endif %}
-    <form enctype="multipart/form-data" method="POST" action="{% url 'user:upload_avatar' %}">
-        {{ upload_avatar_form.as_p }}
-        <p>{% csrf_token %}<input type="submit" value='{% trans "Upload New Image" %}' /></p>
-    </form>
+  <p>{% trans "Your current avatar: " %}</p>
+  {% avatar user %}
+  {% if not avatars %}
+    <p>{% trans "You haven't uploaded an avatar yet. Please upload one now." %}</p>
+  {% endif %}
+  <form enctype="multipart/form-data" method="POST" action="{% url 'user:upload_avatar' %}">
+    {{ upload_avatar_form.as_p }}
+    <p>{% csrf_token %}<input type="submit" value='{% trans "Upload New Image" %}' /></p>
+  </form>
 {% endblock container %}

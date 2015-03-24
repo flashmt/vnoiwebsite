@@ -1,10 +1,10 @@
 {% extends 'forum/topic_retrieve.html' %}
 
 {% block breadcrumbs %}
-    <li><a href="{% url 'forum:index' %}">Forum</a></li>
-    <li><a href="{{forum.get_absolute_url}}">{{ forum.name }}</a></li>
-    <li><a href="{{topic.get_absolute_url}}">{{ topic.title }}</a></li>
-    <li>Reply</li>
+<li><a href="{% url 'forum:index' %}">Forum</a></li>
+<li><a href="{{forum.get_absolute_url}}">{{ forum.name }}</a></li>
+<li><a href="{{topic.get_absolute_url}}">{{ topic.title }}</a></li>
+<li>Reply</li>
 {% endblock breadcrumbs %}
 
 {% block forum-body %}
