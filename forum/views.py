@@ -15,7 +15,9 @@ from forum.perms import PostPermission, VotePermission
 
 def index(request):
     forum_groups = ForumGroup.objects.filter(~Q(name__startswith='Library'))
-    return render(request, 'forum/forum_index.html', {'forum_groups': forum_groups})
+    forums = Forum.objects.filter(~Q(forum_group__name__startswith='Library'))\
+                          .select_related('last_post', 'last_post__created_by', 'last_post__topic')
+    return render(request, 'forum/forum_index.html', {'forum_groups': forum_groups, 'forums': forums})
 
 
 def pagination_items(request, items, num_per_page):
