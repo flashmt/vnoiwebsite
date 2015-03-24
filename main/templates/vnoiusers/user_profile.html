@@ -1,13 +1,13 @@
 {% extends 'main/base.html' %}
 {% load staticfiles %}
-{% load avatar_tags %}
+{% load user_avatar_tags %}
 
 {% block container %}
     <div class="row">
         <div class="col-md-9">
             <div class="row user-detail">
                 <div class="col-md-3 user-avatar">
-                    <img class="img-responsive" src="{% avatar_url user 180 %}" alt="user-avatar" data-holder-rendered="true" align="middle">
+                    <img class="img-responsive" src="{% user_avatar_url user 180 %}" alt="user-avatar" data-holder-rendered="true" align="middle">
                     <a href="{% url 'user:upload_avatar' %}">Change profile picture</a>
                 </div>
                 <div class="col-md-9 user-info">
@@ -18,7 +18,7 @@
                         Name: {{ user.last_name }} {{user.first_name}}
                     </div>
                     <div class="row">
-                        Contribution: {{user_profile.contribution}}
+                        Contribution: {{user.profile.contribution}}
                     </div>
                     <div class="row">
                         Email: {{ user.email }}
@@ -67,20 +67,20 @@
                 <div class="panel-body user-online-judge">
                     <p>
                         {% if user.profile.voj_account %}
-                            VOJ: {{ user_profile.voj_account }} | <a href="{% url 'user:unlink_voj' %}">Unlink VOJ account</a>
+                            VOJ: {{ user.profile.voj_account }} | <a href="{% url 'user:unlink_voj' %}">Unlink VOJ account</a>
                         {% else %}
                             <a href="{% url 'user:link_voj' %}">Link VOJ account</a>
                         {% endif %}
                     </p>
                     <p>
-                        {% if user_profile.codeforces_account %}
+                        {% if user.profile.codeforces_account %}
                             Codeforces: {{ user.profile.codeforces_account }} | <a href="{% url 'user:unlink_codeforces' %}">Unlink Codeforces account</a>
                         {% else %}
                             <a href="{% url 'user:link_codeforces' %}">Link Codeforces account</a>
                         {% endif %}
                     </p>
                     <p>
-                        Topcoder: {{ user_profile.topcoder_account | default:"Not linked" }}
+                        Topcoder: {{ user.profile.topcoder_account | default:"Not linked" }}
                     </p>
                 </div>
             </div>
@@ -122,17 +122,17 @@
                         <table>
                             <tr>
                                 <td>
-                                    Level: {{ user_profile.voj_lever }}
+                                    Level: {{ user.profile.voj_lever }}
                                 </td>
                             </tr>
                             <tr>
                                 <td>
-                                    Score: {{ user_profile.voj_score }}
+                                    Score: {{ user.profile.voj_score }}
                                 </td>
                             </tr>
                             <tr>
                                 <td>
-                                    Rank: {{ user_profile.voj_rank}}
+                                    Rank: {{ user.profile.voj_rank}}
                                 </td>
                             </tr>
                         </table>

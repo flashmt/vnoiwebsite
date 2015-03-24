@@ -86,15 +86,14 @@ def user_update(request, user_id):
 
 
 def user_profile(request, user_id):
-    user = get_object_or_404(User, pk=user_id)
+    user = get_object_or_404(User.objects.select_related("profile", "profile__avatar"), pk=user_id)
     is_friend = False
     if request.user.is_authenticated():
-        vnoi_user = request.user.profile
-        is_friend = True if vnoi_user.friends.filter(id=user_id) else False
+        authenticated_user = request.user.profile
+        is_friend = True if authenticated_user.friends.filter(id=user_id) else False
 
     context = {
         'user': user,
-        'user_profile': user.profile,
         'topics': user.created_topics.all(),
         'disable_breadcrumbs': True,
         'is_friend': is_friend,
