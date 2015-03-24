@@ -44,7 +44,7 @@ def topic_list(request, forum_id, template="forum/topic_list.html"):
 def topic_retrieve(request, forum_id, topic_id, template="forum/topic_retrieve.html"):
     forum = get_object_or_404(Forum, pk=forum_id)
     topic = get_object_or_404(Topic, pk=topic_id)
-    posts = topic.posts.all().values('content', 'created_at', 'created_by__id', 'created_by')
+    posts = topic.posts.all().select_related('created_by', 'created_by__profile__avatar')
     return render(request, template, {
         'forum': forum,
         'topic': topic,

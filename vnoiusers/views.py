@@ -119,6 +119,10 @@ def user_upload_avatar(request, extra_context=None, next_override=None,
             avatar.save()
             messages.success(request, _("Successfully uploaded a new avatar."))
             avatar_updated.send(sender=Avatar, user=request.user, avatar=avatar)
+
+            # Save avatar into user_profile
+            request.user.profile.avatar = avatar
+            request.user.profile.save()
             return redirect(next_override or _get_next(request))
     context = {
         'avatar': avatar,
