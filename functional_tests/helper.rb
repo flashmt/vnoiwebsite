@@ -114,3 +114,11 @@ def hide_django_profile_bar
   visit "#{ROOT_URL}/main"
   click_on 'Hide'
 end
+
+def activate_account(username)
+  # Use magic to get the activation key
+  activation_key = `cd #{`pwd`.chomp}/..; pwd; python -m vnoiusers.get_activation_key '#{username}'`.split[1]
+  puts "activation key = #{activation_key}"
+  visit "#{ROOT_URL}/user/confirm/#{activation_key}"
+  expect(page).to have_content('Sign in')
+end
