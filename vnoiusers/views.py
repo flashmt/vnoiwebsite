@@ -287,7 +287,7 @@ def index(request):
 @login_required
 def update_profile(request):
     if request.POST:
-        form = UserProfileForm(request.POST)
+        form = UserProfileForm(request.POST, instance=request.user)
         if form.is_valid():
             form.save()
             return HttpResponseRedirect(reverse('user:profile', kwargs={'user_id': request.user.id}))
@@ -297,9 +297,5 @@ def update_profile(request):
                 'message': form.errors
             })
     return render(request, 'vnoiusers/update_profile.html', {
-        'form': UserProfileForm(initial={
-            'first_name': request.user.first_name,
-            'last_name': request.user.last_name,
-            'dob': request.user.profile.dob,
-        })
+        'form': UserProfileForm(instance=request.user)
     })
