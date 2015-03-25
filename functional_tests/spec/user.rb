@@ -215,7 +215,7 @@ feature "User" do
     click_on $update_profile
     fill_in 'id_last_name', with: 'Admin - last name'
     fill_in 'id_first_name', with: 'Admin - first name'
-    fill_in 'id_dob', with: '23/06/1992'
+    fill_in 'id_dob', with: '1992-06-23'
     click_on 'OK'
 
     expect(page).to have_content('Admin - last name Admin - first name')
