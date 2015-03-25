@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # Ensure we are in the right directory
 # cd "$(dirname "$0")"
 

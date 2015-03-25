@@ -72,7 +72,11 @@ class UserCreateForm(forms.ModelForm):
         user = super(UserCreateForm, self).save(commit=False)
         user.set_password(self.cleaned_data['password1'])
         if commit:
+            user.is_active = False  # not active until user opens activation confirmation link
             user.save()
+            # Update user_profile
+            user.profile.dob = self.cleaned_data['dob']
+            user.profile.save()
         return user
 
 
@@ -121,8 +125,16 @@ class UserProfileForm(forms.Form):
                           input_formats=['%Y-%m-%d'],
                           widget=forms.TextInput(attrs={'placeholder': 'yyyy-mm-dd'}))
 
-    def clean(self):
-        pass
+    def save(self, commit=True):
+        user = super(UserProfileForm, self).save(commit=False)
+        user.first_name = self.cleaned_data['first_name']
+        user.last_name = self.cleaned_data['last_name']
+        user.profile.dob = self.cleaned_data['dob']
+
+        if commit:
+            user.save()
+            user.profile.save()
+        return user
 
 
 class FriendSearchForm(forms.Form):
