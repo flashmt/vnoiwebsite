@@ -1,5 +1,6 @@
 {% extends 'main/base.html' %}
 {% load staticfiles %}
+{% load humanize %}
 {% load user_avatar_tags %}
 
 {% block container %}
@@ -64,6 +65,35 @@
           {% endif %}
         </div>
       </div>
+      <div class="row" style="margin-top: 1.5em;">
+        {% if topics %}
+          <div class="user-recent-topic">
+            {% for topic in topics %}
+              <div class="user-one-post">
+                <div class="user-post-heading">
+                  <div class="row">
+                    <div class="col-md-9">
+                      <a href="{{ topic.get_absolute_url }}">
+                        <h4>
+                          {{ topic.title }}
+                        </h4>
+                      </a>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="user-post-day-created">
+                        {{ topic.created_at|naturaltime }}
+                      </div>
+                    </div>
+                  </div>
+                  <div class="user-post-content">
+                    {{ topic.content|safe }}
+                  </div>
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+        {% endif %}
+      </div>
     </div>
     <div class="col-md-3">
       <div class="panel panel-primary">
@@ -73,18 +103,31 @@
         <div class="panel-body user-online-judge">
           <p>
             {% if user.profile.voj_account %}
-              VOJ: {{ user.profile.voj_account }} | <a href="{% url 'user:unlink_voj' %}">Unlink VOJ account</a>
+              VOJ: {{ user.profile.voj_account }}
+              {% if user.id == request.user.id %}
+                | <a href="{% url 'user:unlink_voj' %}">Unlink VOJ account</a>
+              {% endif %}
             {% else %}
-              <a href="{% url 'user:link_voj' %}">Link VOJ account</a>
+              {% if user.id == request.user.id %}
+                <a href="{% url 'user:link_voj' %}">Link VOJ account</a>
+              {% else %}
+                VOJ: Not linked
+              {% endif %}
             {% endif %}
           </p>
 
           <p>
             {% if user.profile.codeforces_account %}
-              Codeforces: {{ user.profile.codeforces_account }} |
-              <a href="{% url 'user:unlink_codeforces' %}">Unlink Codeforces account</a>
+              Codeforces: {{ user.profile.codeforces_account }}
+              {% if user.id == request.user.id %}
+                | <a href="{% url 'user:unlink_codeforces' %}">Unlink Codeforces account</a>
+              {% endif %}
             {% else %}
-              <a href="{% url 'user:link_codeforces' %}">Link Codeforces account</a>
+              {% if user.id == request.user.id %}
+                <a href="{% url 'user:link_codeforces' %}">Link Codeforces account</a>
+              {% else %}
+                Codeforces: Not linked
+              {% endif %}
             {% endif %}
           </p>
 
@@ -93,61 +136,34 @@
           </p>
         </div>
       </div>
-    </div>
-  </div>
-  <div class="row" style="margin-bottom: 2em;">
-    <div class="col-md-9 user-recent-topic">
-      {% for topic in topics %}
-        <div class="user-one-post">
-          <div class="user-post-heading">
-            <div class="row">
-              <div class="col-md-9">
-                <a href="{{ topic.get_absolute_url }}">
-                  <h4>
-                    {{ topic.title }}
-                  </h4>
-                </a>
-              </div>
-              <div class="col-md-3">
-                <div class="user-post-day-created">
-                  Aug 15th 2015
-                </div>
-              </div>
+      {% if user.profile.voj_account %}
+        <div class="user-voj-static">
+          <div class="panel panel-primary">
+            <div class="panel-heading user-voj-title">
+              VOJ Static
             </div>
-            <div class="user-post-content">
-              {{ topic.content|safe }}
+            <div class="panel-body user-voj-detail">
+              <table>
+                <tr>
+                  <td>
+                    Level: {{ user.profile.voj_lever }}
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    Score: {{ user.profile.voj_score }}
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    Rank: {{ user.profile.voj_rank }}
+                  </td>
+                </tr>
+              </table>
             </div>
           </div>
         </div>
-      {% endfor %}
-    </div>
-    <div class="col-md-3">
-      <div class="user-voj-static">
-        <div class="panel panel-primary">
-          <div class="panel-heading user-voj-title">
-            VOJ Static
-          </div>
-          <div class="panel-body user-voj-detail">
-            <table>
-              <tr>
-                <td>
-                  Level: {{ user.profile.voj_lever }}
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  Score: {{ user.profile.voj_score }}
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  Rank: {{ user.profile.voj_rank }}
-                </td>
-              </tr>
-            </table>
-          </div>
-        </div>
-      </div>
+      {% endif %}
     </div>
   </div>
 {% endblock container %}
