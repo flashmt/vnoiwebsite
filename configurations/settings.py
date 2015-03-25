@@ -189,9 +189,10 @@ BOOTSTRAP3 = {
 # Postman settings
 POSTMAN_DISALLOW_ANONYMOUS = True
 POSTMAN_AUTO_MODERATE_AS = True
+POSTMAN_MAILER_APP = None
 
 # Django-authority
-AUTHORITY_USE_SMART_CACHE = False
+AUTHORITY_USE_SMART_CACHE = True
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
@@ -215,3 +216,5 @@ CACHES = {
         'LOCATION': '127.0.0.1:11211',
     }
 }
+
+# Email settings
