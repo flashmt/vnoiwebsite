@@ -1,3 +1,5 @@
+import hashlib
+import random
 from avatar.forms import UploadAvatarForm
 from avatar.models import Avatar
 from avatar.signals import avatar_updated
@@ -8,10 +10,11 @@ from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext as _
 
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 
 # Create your views here.
+from post_office import mail
 from vnoiusers.forms import *
 from vnoiusers.models import VnoiUser
 
@@ -56,36 +59,45 @@ def user_create(request, template_name='vnoiusers/user_create.html'):
     if request.POST:
         form = UserCreateForm(request.POST)
         if form.is_valid():
-            try:
-                username = request.POST['username']
-                password = request.POST['password2']
-                last_name = request.POST['last_name']
-                first_name = request.POST['first_name']
-                dob = request.POST['dob']
-                email = request.POST['email']
-                user = User.objects.create_user(
-                    username=username,
-                    password=password,
-                    last_name=last_name,
-                    first_name=first_name,
-                    email=email,
-                )
-                profile = VnoiUser.objects.create(user=user)
-                profile.dob = dob
-                profile.save()
+            form.save()  # save user to database if form is valid
 
-                user.profile = profile
-                user.save()
-                return redirect('user:login')
-            except KeyError:
-                return render(request, template_name,
-                              {'form': form, 'message': 'Please fill out all boxes'})
+            username = form.cleaned_data['username']
+            email = form.cleaned_data['email']
+            salt = hashlib.sha1(str(random.random())).hexdigest()[:8]
+            activation_key = hashlib.sha1(salt+email).hexdigest()
+
+            # Get user by username
+            user = User.objects.get(username=username)
+            user.profile.activation_key = activation_key
+            user.profile.save()
+
+            # Send email with activation key
+            email_subject = 'Vnoiwebsite Account confirmation'
+            email_body = "Hey %s, thanks for signing up. To activate your account, click this link http://127.0.0.1:8000/user/confirm/%s" % (username, activation_key)
+            mail.send(email, subject=email_subject, message=email_body, priority="now")
+
+            return HttpResponse('You have successfully register a new account. An email will be sent to your email shortly. Please click the confirmation link in the email')
         else:
             return render(request, template_name,
                           {'form': form, 'message': form.errors})
     else:
         return render(request, template_name,
                       {'form': form, 'message': ''})
+
+
+def register_confirm(request, activation_key):
+    # check if user is already logged in and if he is redirect him to some other url, e.g. home
+    if request.user.is_authenticated():
+        HttpResponseRedirect(reverse('main:index'))
+
+    # check if there is UserProfile which matches the activation key (if not then display 404)
+    vnoiuser = get_object_or_404(VnoiUser, activation_key=activation_key)
+
+    # save user and set him as active and render some template to confirm activation
+    user = vnoiuser.user
+    user.is_active = True
+    user.save()
+    return HttpResponseRedirect(reverse('user:login'))
 
 
 def user_update(request, user_id):
