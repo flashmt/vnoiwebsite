@@ -118,12 +118,19 @@ class VojLinkForm(forms.Form):
         return self.cleaned_data
 
 
-class UserProfileForm(forms.Form):
-    last_name = forms.CharField(label=u"Họ", max_length=30)
-    first_name = forms.CharField(label=u"Tên", max_length=30)
+class UserProfileForm(forms.ModelForm):
     dob = forms.DateField(label=u"Ngày sinh",
                           input_formats=['%Y-%m-%d'],
                           widget=forms.TextInput(attrs={'placeholder': 'yyyy-mm-dd'}))
+
+    def __init__(self, *args, **kwargs):
+        super(UserProfileForm, self).__init__(*args, **kwargs)
+        self.fields['last_name'].label = u'Họ'
+        self.fields['first_name'].label = u'Tên'
+
+    class Meta:
+        model = User
+        fields = ('last_name', 'first_name', )
 
     def save(self, commit=True):
         user = super(UserProfileForm, self).save(commit=False)

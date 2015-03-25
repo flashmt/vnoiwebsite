@@ -53,7 +53,7 @@ class PostCreateForm(PostForm):
                     created_by=self.user,
                     updated_by=self.user,
                     topic_post=topic_post,
-                    content=escape(self.cleaned_data['content']),
+                    content=self.cleaned_data['content'],
                     reply_on=self.parent)
         post.topic = topic
         if commit:

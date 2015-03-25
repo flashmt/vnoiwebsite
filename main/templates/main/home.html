@@ -47,7 +47,11 @@
             <div>
               <div class = "row">
                 <div class = "col-xs-9">
-                  <a class="btn btn-default" href="{% url 'forum:topic_retrieve' pinned_topic.forum pinned_topic.id %}" role="button">
+                  {% if pinned_topic.forum__forum_group__group_type == 'f' %}
+                    <a class="btn btn-default" href="{% url 'forum:topic_retrieve' pinned_topic.forum pinned_topic.id %}" role="button">
+                  {% else %}
+                    <a class="btn btn-default" href="{% url 'library:topic_retrieve' pinned_topic.forum pinned_topic.id %}" role="button">
+                  {% endif %}
                     See more &raquo;
                   </a>
                 </div>

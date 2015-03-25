@@ -12,6 +12,7 @@ install:
   - ./setup_travis.sh
 before_script:
   - venv/bin/python manage.py migrate
+  - alias python=venv/bin/python
   - ./init_database_travis.sh
   - venv/bin/python manage.py runserver 0.0.0.0:8000 &
   - sleep 3 # Give web server some time to start

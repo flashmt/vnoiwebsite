@@ -57,6 +57,13 @@ feature "User" do
     email = random_string(10) + '@gmail.com'
     register(username, email, '12345')
     visit "#{ROOT_URL}/main"
+
+    # Now, cannot login because account is not yet activated
+    login(username, '12345')
+    expect(current_path.chomp('/')).to eq('/user/login')
+
+    # Activate account & login
+    activate_account(username)
     login(username, '12345')
     verify_flash_messages(['Welcome back'])
     click_on 'Logout'
@@ -82,6 +89,7 @@ feature "User" do
     expect(page).to have_content('Login')
 
     register(username2, email2, '12345')
+    activate_account(username2)
     visit "#{ROOT_URL}/main"
     login(username2, '12345')
     verify_flash_messages(['Welcome back'])
