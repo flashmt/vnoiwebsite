@@ -1,0 +1,26 @@
+{% extends 'main/base.html' %}
+
+{% block navbar-highlight %}navbar_problems{% endblock navbar-highlight %}
+
+{% block breadcrumbs %}
+  <li><a href="{% url 'problems:list' %}">Danh sách bài tập</a></li>
+  <li>{{ problem.code }}</li>
+{% endblock breadcrumbs %}
+
+{% block container %}
+  <h2>Đề bài - {{ problem.name }}</h2>
+  <p>@Các bạn làm frontend: Đề bài sẽ có dạng HTML</p>
+  <p>{{ problem.statement }}</p>
+  <h2>Thông tin:</h2>
+  <ul>
+    <li>Người up: {{ problem.author }}</li>
+    <li>Giới hạn thời gian: {{ problem.time_limit }}s</li>
+    <li>Giới hạn bộ nhớ: {{ problem.memory_limit }}MB</li>
+    <li>Giới hạn mã nguồn: {{ problem.source_limit }} bytes</li>
+    <li>Ngôn ngữ cho phép: {{ problem.allowed_languages }}</li>
+    <li>Nguồn bài: {{ problem.source }}</li>
+    <li>Chấm trên: {{ problem.cluster }}</li>
+  </ul>
+  <h2>Xếp hạng bài</h2>
+  <p>Những người đã AC...</p>
+{% endblock container %}
