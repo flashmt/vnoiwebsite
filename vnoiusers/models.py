@@ -8,7 +8,7 @@ from django.db import models
 
 class VnoiUser(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, related_name="profile")
-    dob = models.DateTimeField(null=True, blank=True)
+    dob = models.DateField(null=True, blank=True)
     contribution = models.IntegerField(null=False, blank=False, default=0)
     voj_account = models.CharField(max_length=100, null=True, blank=True)
     codeforces_account = models.CharField(max_length=100, null=True, blank=True)

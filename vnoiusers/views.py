@@ -71,7 +71,7 @@ def user_create(request, template_name='vnoiusers/user_create.html'):
                     email=email,
                 )
                 profile = VnoiUser.objects.create(user=user)
-                # TODO: save dob
+                profile.dob = dob
                 profile.save()
 
                 user.profile = profile
@@ -280,7 +280,9 @@ def update_profile(request):
             user = request.user
             user.first_name = request.POST['first_name']
             user.last_name = request.POST['last_name']
-            # TODO: Save DOB
+            profile = user.profile
+            profile.dob = request.POST['dob']
+            profile.save()
             user.save()
             return HttpResponseRedirect(reverse('user:profile', kwargs={'user_id': request.user.id}))
         else:

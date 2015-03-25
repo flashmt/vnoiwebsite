@@ -25,8 +25,8 @@ class UserCreateForm(forms.ModelForm):
     last_name = forms.CharField(label=u"Họ", max_length=30)
     first_name = forms.CharField(label=u"Tên", max_length=30)
     dob = forms.DateField(label=u"Ngày sinh",
-                          input_formats=['%d/%m/%Y'],
-                          widget=forms.TextInput(attrs={'placeholder': 'dd/mm/yyyy'}))
+                          input_formats=['%Y-%m-%d'],
+                          widget=forms.TextInput(attrs={'placeholder': 'yyyy-mm-dd'}))
     password1 = forms.CharField(label=u"Mật khẩu",
                                 widget=forms.PasswordInput)
     password2 = forms.CharField(label=u"Nhập lại mật khẩu",
@@ -118,8 +118,8 @@ class UserProfileForm(forms.Form):
     last_name = forms.CharField(label=u"Họ", max_length=30)
     first_name = forms.CharField(label=u"Tên", max_length=30)
     dob = forms.DateField(label=u"Ngày sinh",
-                          input_formats=['%d/%m/%Y'],
-                          widget=forms.TextInput(attrs={'placeholder': 'dd/mm/yyyy'}))
+                          input_formats=['%Y-%m-%d'],
+                          widget=forms.TextInput(attrs={'placeholder': 'yyyy-mm-dd'}))
 
     def clean(self):
         pass
