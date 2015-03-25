@@ -4,3 +4,4 @@ $profile_content = [
   'VOJ Static',
   'Change profile picture'
 ]
+$update_profile = 'Cập nhật'

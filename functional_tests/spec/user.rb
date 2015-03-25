@@ -207,5 +207,21 @@ feature "User" do
       expect(page).to have_content('Không có kết quả nào')
     end
   end
+
+  scenario "User should be able to edit profile", :js => true do
+    visit "#{ROOT_URL}/main"
+    login('admin', 'admin')
+    visit "#{ROOT_URL}/user/1"
+    click_on $update_profile
+    fill_in 'id_last_name', with: 'Admin - last name'
+    fill_in 'id_first_name', with: 'Admin - first name'
+    fill_in 'id_dob', with: '23/06/1992'
+    click_on 'OK'
+
+    expect(page).to have_content('Admin - last name Admin - first name')
+    click_on $update_profile
+    expect(find_field('id_last_name').value).to eq 'Admin - last name'
+    expect(find_field('id_first_name').value).to eq 'Admin - first name'
+  end
 end
 
