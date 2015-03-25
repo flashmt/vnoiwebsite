@@ -3,6 +3,7 @@ import authority
 from forum.models import Forum, Vote, Post, Topic
 
 # Assume all user must be authenticated before check this permission
+from vnoiusers.user_util import is_admin
 
 
 class ForumPermission(permissions.BasePermission):
@@ -11,11 +12,11 @@ class ForumPermission(permissions.BasePermission):
 
     def can_create_forum(self):
         # Admin can create a forum
-        return self.user.profile.is_admin()
+        return is_admin(self.user)
 
     def can_update_forum(self, forum):
         # Admin can update forum
-        return self.user.profile.is_admin()
+        return is_admin(self.user)
 
 
 class PostPermission(permissions.BasePermission):
@@ -29,7 +30,7 @@ class PostPermission(permissions.BasePermission):
 
     def can_update_post(self, post):
         # Admin can update post
-        if self.user.profile.is_admin():
+        if is_admin(self.user):
             return True
         # Author can update post
         if self.user == post.created_by:
@@ -38,7 +39,7 @@ class PostPermission(permissions.BasePermission):
 
     def can_delete_post(self, post):
         # Admin can delete post
-        return self.user.profile.is_admin()
+        return is_admin(self.user)
 
 
 class TopicPermission(PostPermission):
@@ -46,9 +47,9 @@ class TopicPermission(PostPermission):
     label = 'topic_permission'
     checks = 'can_toggle_pin'
 
-    def can_toggle_pin(self, topic):
+    def can_toggle_pin(self):
         # Only admin can pin topic
-        return self.user.profile.is_admin()
+        return is_admin(self.user)
 
 
 class VotePermission(permissions.BasePermission):

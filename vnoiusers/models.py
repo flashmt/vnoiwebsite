@@ -24,9 +24,6 @@ class VnoiUser(models.Model):
     def __unicode__(self):
         return self.user.username
 
-    def is_admin(self):
-        return Group.objects.get(name="Admin") in self.user.groups.all()
-
 
 # Signals
 def create_user_profile(sender, instance, created, **kwargs):
