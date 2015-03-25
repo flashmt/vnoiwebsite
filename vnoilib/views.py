@@ -5,7 +5,7 @@ from forum.views import pagination_items
 
 def index(request):
     return render(request, 'vnoilib/index.html', {
-        'lib_groups': ForumGroup.objects.filter(name__startswith='Library')
+        'lib_groups': ForumGroup.objects.filter(group_type='l')
     })
 
 

@@ -12,6 +12,12 @@ class ForumGroup(models.Model):
     name = models.CharField(max_length=200)
     created_by = models.ForeignKey(User, related_name='forum_groups')
 
+    ForumGroupChoices = (
+        ('f', 'Forum'),
+        ('l', 'Library')
+    )
+    group_type = models.CharField(max_length=3, choices=ForumGroupChoices, default='f')
+
     def __unicode__(self):
         return self.name
 

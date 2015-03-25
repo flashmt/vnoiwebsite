@@ -63,7 +63,7 @@ end
 
 def register(username, email, password, password2: nil,
              last_name: 'Trung', first_name: 'Nguyen',
-             dob: '23/06/1992')
+             dob: '1992-06-23')
   password2 ||= password
   puts "Register #{username}, #{email}, #{password}"
 

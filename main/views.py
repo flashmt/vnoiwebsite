@@ -16,6 +16,7 @@ def index(request):
             'id', 'forum', 'title', 'content',
             'created_by', 'created_by__username', 'created_at',
             'post__id', 'post__num_upvotes', 'post__num_downvotes',
+            'forum__forum_group__group_type'
         )
         cache.set(HOME_PINNED_TOPICS, pinned_topics, HOME_PINNED_TOPICS_CACHE_TIME)
 

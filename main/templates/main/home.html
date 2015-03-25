@@ -28,7 +28,11 @@
       <div class="row" id="pinned_post">
         {% for pinned_topic in pinned_topics %}
           <div class="col-xs-10">
-            <a href="{% url 'forum:topic_retrieve' pinned_topic.forum pinned_topic.id %}">
+            {% if pinned_topic.forum__forum_group__group_type == 'f' %}
+              <a href="{% url 'forum:topic_retrieve' pinned_topic.forum pinned_topic.id %}">
+            {% else %}
+              <a href="{% url 'library:topic_retrieve' pinned_topic.forum pinned_topic.id %}">
+            {% endif %}
               <h2>{{ pinned_topic.title }}</h2>
             </a>
             <p class = "pinned-post-author">

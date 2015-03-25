@@ -28,8 +28,11 @@ class SpojProblem(models.Model):
     statement = BleachField(null=True)
     author = models.CharField(max_length=250, null=True, blank=True)
     created_at = models.DateField(null=True, blank=True, auto_now_add=True)
+    # Time limit in second
     time_limit = models.FloatField(null=False, blank=False, default=1)
+    # Source code limit in bytes
     source_limit = models.IntegerField(null=False, blank=False, default=50000)
+    # Memory limit in MB
     memory_limit = models.IntegerField(null=False, blank=False, default=1536)
     allowed_language = models.CharField(max_length=1024, blank=False, null=False, default='')
     problem_source = models.CharField(max_length=1024, blank=True, null=True)
