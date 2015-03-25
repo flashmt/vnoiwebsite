@@ -125,8 +125,16 @@ class UserProfileForm(forms.Form):
                           input_formats=['%Y-%m-%d'],
                           widget=forms.TextInput(attrs={'placeholder': 'yyyy-mm-dd'}))
 
-    def clean(self):
-        pass
+    def save(self, commit=True):
+        user = super(UserProfileForm, self).save(commit=False)
+        user.first_name = self.cleaned_data['first_name']
+        user.last_name = self.cleaned_data['last_name']
+        user.profile.dob = self.cleaned_data['dob']
+
+        if commit:
+            user.save()
+            user.profile.save()
+        return user
 
 
 class FriendSearchForm(forms.Form):

@@ -289,13 +289,7 @@ def update_profile(request):
     if request.POST:
         form = UserProfileForm(request.POST)
         if form.is_valid():
-            user = request.user
-            user.first_name = request.POST['first_name']
-            user.last_name = request.POST['last_name']
-            profile = user.profile
-            profile.dob = request.POST['dob']
-            profile.save()
-            user.save()
+            form.save()
             return HttpResponseRedirect(reverse('user:profile', kwargs={'user_id': request.user.id}))
         else:
             return render(request, 'vnoiusers/update_profile.html', {
