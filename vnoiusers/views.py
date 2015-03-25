@@ -5,7 +5,6 @@ from avatar.views import _get_avatars, _get_next
 from django.contrib import messages
 from django.contrib.auth import authenticate, logout, login
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext as _
 
@@ -13,7 +12,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
 
 # Create your views here.
-from vnoiusers.forms import UserLoginForm, UserCreateForm, CodeforcesLinkForm, VojLinkForm, FriendSearchForm
+from vnoiusers.forms import *
 from vnoiusers.models import VnoiUser
 
 
@@ -42,6 +41,7 @@ def user_login(request, template_name='vnoiusers/user_login.html'):
         return render(request, template_name, {'form': form, 'message': ''})
 
 
+@login_required
 def user_logout(request):
     logout(request)
     return redirect('main:index')
@@ -270,3 +270,28 @@ def index(request):
             'users': None,
             'form': FriendSearchForm(),
         })
+
+
+@login_required
+def update_profile(request):
+    if request.POST:
+        form = UserProfileForm(request.POST)
+        if form.is_valid():
+            user = request.user
+            user.first_name = request.POST['first_name']
+            user.last_name = request.POST['last_name']
+            # TODO: Save DOB
+            user.save()
+            return HttpResponseRedirect(reverse('user:profile', kwargs={'user_id': request.user.id}))
+        else:
+            return render(request, 'vnoiusers/update_profile.html', {
+                'form': form,
+                'message': form.errors
+            })
+    return render(request, 'vnoiusers/update_profile.html', {
+        'form': UserProfileForm(initial={
+            'first_name': request.user.first_name,
+            'last_name': request.user.last_name,
+            'dob': request.user.profile.dob,
+        })
+    })

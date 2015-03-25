@@ -6,10 +6,10 @@ from django.core.exceptions import ValidationError
 from django.contrib.auth.models import User
 from externaljudges.crawler.codeforces import verify_codeforces_account
 from externaljudges.crawler.voj import verify_voj_account
+from vnoiusers.models import VnoiUser
 
 
 class UserLoginForm(forms.ModelForm):
-
     password = forms.CharField(label='Password', widget=forms.PasswordInput)
 
     def __init__(self, *args, **kwargs):
@@ -22,9 +22,8 @@ class UserLoginForm(forms.ModelForm):
 
 
 class UserCreateForm(forms.ModelForm):
-
-    last_name = forms.CharField(label=u"Họ")
-    first_name = forms.CharField(label=u"Tên")
+    last_name = forms.CharField(label=u"Họ", max_length=30)
+    first_name = forms.CharField(label=u"Tên", max_length=30)
     dob = forms.DateField(label=u"Ngày sinh",
                           input_formats=['%d/%m/%Y'],
                           widget=forms.TextInput(attrs={'placeholder': 'dd/mm/yyyy'}))
@@ -78,12 +77,16 @@ class UserCreateForm(forms.ModelForm):
 
 
 class CodeforcesLinkForm(forms.Form):
-    username = forms.CharField(max_length=250, label='Tài khoản Codeforces')
-    password = forms.CharField(widget=forms.PasswordInput, label='Mật khẩu')
+    username = forms.CharField(max_length=30, label='Tài khoản Codeforces')
+    password = forms.CharField(widget=forms.PasswordInput, label='Mật khẩu', max_length=30)
 
     def clean(self):
         username = self.cleaned_data['username']
         password = self.cleaned_data['password']
+
+        other_profile = VnoiUser.objects.filter(codeforces_account=username)
+        if other_profile:
+            raise forms.ValidationError('Tài khoản Codeforces này đã được kết nối với tài khoản khác')
 
         verify_result = verify_codeforces_account(username, password)
         if not verify_result['success']:
@@ -93,18 +96,33 @@ class CodeforcesLinkForm(forms.Form):
 
 
 class VojLinkForm(forms.Form):
-    username = forms.CharField(max_length=250, label='Tài khoản VOJ')
-    password = forms.CharField(widget=forms.PasswordInput, label='Mật khẩu')
+    username = forms.CharField(max_length=30, label='Tài khoản VOJ')
+    password = forms.CharField(widget=forms.PasswordInput, label='Mật khẩu', max_length=30)
 
     def clean(self):
         username = self.cleaned_data['username']
         password = self.cleaned_data['password']
+
+        other_profile = VnoiUser.objects.filter(voj_account=username)
+        if other_profile:
+            raise forms.ValidationError('Tài khoản VOJ này đã được kết nối với tài khoản khác')
 
         verify_result = verify_voj_account(username, password)
         if not verify_result['success']:
             raise forms.ValidationError(verify_result['message'])
 
         return self.cleaned_data
+
+
+class UserProfileForm(forms.Form):
+    last_name = forms.CharField(label=u"Họ", max_length=30)
+    first_name = forms.CharField(label=u"Tên", max_length=30)
+    dob = forms.DateField(label=u"Ngày sinh",
+                          input_formats=['%d/%m/%Y'],
+                          widget=forms.TextInput(attrs={'placeholder': 'dd/mm/yyyy'}))
+
+    def clean(self):
+        pass
 
 
 class FriendSearchForm(forms.Form):

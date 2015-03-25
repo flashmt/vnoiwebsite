@@ -3,142 +3,151 @@
 {% load user_avatar_tags %}
 
 {% block container %}
-    <div class="row">
-        <div class="col-md-9">
-            <div class="row user-detail">
-                <div class="col-md-3 user-avatar">
-                    <img class="img-responsive" src="{% user_avatar_url user 180 %}" alt="user-avatar" data-holder-rendered="true" align="middle">
-                    <a href="{% url 'user:upload_avatar' %}">Change profile picture</a>
-                </div>
-                <div class="col-md-9 user-info">
-                    <div class="row">
-                        <h3> {{ user.username }} </h3>
-                    </div>
-                    <div class="row">
-                        Name: {{ user.last_name }} {{user.first_name}}
-                    </div>
-                    <div class="row">
-                        Contribution: {{user.profile.contribution}}
-                    </div>
-                    <div class="row">
-                        Email: {{ user.email }}
-                    </div>
-                    <div class="row">
-                        Last visited: {{ user.last_login }}
-                    </div>
-                    <div class="row">
-                        Member since: {{ user.date_joined}}
-                    </div>
-                    {% if user.id == request.user.id %}
-                        <div class="row user-setting-button">
-                            <a class="btn btn-default post-reply" href="#" role="button">
-                                Edit setting
-                            </a>
-                        </div>
-                        <div class="row user-setting-button">
-                            <a class="btn btn-default post-reply" href="{% url 'user:friend_list' %}" role="button">
-                                My friends
-                            </a>
-                        </div>
-                    {% elif request.user.is_authenticated %}
-                        {% if is_friend %}
-                            <div class="row user-setting-button">
-                                <a class="btn btn-default post-reply" href="{% url 'user:remove_friend' user.id %}" role="button">
-                                    Remove friend
-                                </a>
-                            </div>
-                        {% else %}
-                            <div class="row user-setting-button">
-                                <a class="btn btn-default post-reply"
-                                   href="{% url 'user:add_friend' user.id %}" role="button">
-                                    Add friend
-                                </a>
-                            </div>
-                        {% endif %}
-                    {% endif %}
-                </div>
-            </div>
+  <div class="row">
+    <div class="col-md-9">
+      <div class="row user-detail">
+        <div class="col-md-3 user-avatar">
+          <img class="img-responsive" src="{% user_avatar_url user 180 %}" alt="user-avatar" data-holder-rendered="true"
+               align="middle">
+          <a href="{% url 'user:upload_avatar' %}">Change profile picture</a>
         </div>
-        <div class="col-md-3">
-            <div class="panel panel-primary">
-                <div class="panel-heading user-online-judge-title">
-                        Online judge
-                </div>
-                <div class="panel-body user-online-judge">
-                    <p>
-                        {% if user.profile.voj_account %}
-                            VOJ: {{ user.profile.voj_account }} | <a href="{% url 'user:unlink_voj' %}">Unlink VOJ account</a>
-                        {% else %}
-                            <a href="{% url 'user:link_voj' %}">Link VOJ account</a>
-                        {% endif %}
-                    </p>
-                    <p>
-                        {% if user.profile.codeforces_account %}
-                            Codeforces: {{ user.profile.codeforces_account }} | <a href="{% url 'user:unlink_codeforces' %}">Unlink Codeforces account</a>
-                        {% else %}
-                            <a href="{% url 'user:link_codeforces' %}">Link Codeforces account</a>
-                        {% endif %}
-                    </p>
-                    <p>
-                        Topcoder: {{ user.profile.topcoder_account | default:"Not linked" }}
-                    </p>
-                </div>
+        <div class="col-md-9 user-info">
+          <div class="row">
+            <h3> {{ user.username }} </h3>
+          </div>
+          <div class="row">
+            Name: {{ user.last_name }} {{ user.first_name }}
+          </div>
+          <div class="row">
+            Contribution: {{ user.profile.contribution }}
+          </div>
+          <div class="row">
+            Email: {{ user.email }}
+          </div>
+          {% if user.profile.dob %}
+            <div class="row">
+              Ngày sinh: {{ user.profile.dob }}
             </div>
+          {% endif %}
+          <div class="row">
+            Last visited: {{ user.last_login }}
+          </div>
+          <div class="row">
+            Member since: {{ user.date_joined }}
+          </div>
+          {% if user.id == request.user.id %}
+            <div class="row user-setting-button">
+              <a class="btn btn-default post-reply" href="{% url 'user:update_profile' %}" role="button">
+                Cập nhật
+              </a>
+            </div>
+            <div class="row user-setting-button">
+              <a class="btn btn-default post-reply" href="{% url 'user:friend_list' %}" role="button">
+                My friends
+              </a>
+            </div>
+          {% elif request.user.is_authenticated %}
+            {% if is_friend %}
+              <div class="row user-setting-button">
+                <a class="btn btn-default post-reply" href="{% url 'user:remove_friend' user.id %}" role="button">
+                  Remove friend
+                </a>
+              </div>
+            {% else %}
+              <div class="row user-setting-button">
+                <a class="btn btn-default post-reply"
+                   href="{% url 'user:add_friend' user.id %}" role="button">
+                  Add friend
+                </a>
+              </div>
+            {% endif %}
+          {% endif %}
         </div>
+      </div>
     </div>
-    <div class="row" style="margin-bottom: 2em;">
-        <div class="col-md-9 user-recent-topic">
-            {% for topic in topics %}
-                <div class="user-one-post">
-                    <div class="user-post-heading">
-                        <div class="row">
-                            <div class="col-md-9">
-                                <a href="{{topic.get_absolute_url}}">
-                                    <h4>
-                                        {{ topic.title }}
-                                    </h4>
-                                </a>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="user-post-day-created">
-                                    Aug 15th 2015
-                                </div>
-                            </div>
-                        </div>
-                        <div class="user-post-content">
-                            {{ topic.content|safe }}
-                        </div>
-                    </div>
-                </div>
-            {% endfor %}
+    <div class="col-md-3">
+      <div class="panel panel-primary">
+        <div class="panel-heading user-online-judge-title">
+          Online judge
         </div>
-        <div class="col-md-3">
-            <div class="user-voj-static">
-                <div class="panel panel-primary">
-                    <div class="panel-heading user-voj-title">
-                            VOJ Static
-                    </div>
-                    <div class="panel-body user-voj-detail">
-                        <table>
-                            <tr>
-                                <td>
-                                    Level: {{ user.profile.voj_lever }}
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    Score: {{ user.profile.voj_score }}
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    Rank: {{ user.profile.voj_rank}}
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                </div>
-            </div>
+        <div class="panel-body user-online-judge">
+          <p>
+            {% if user.profile.voj_account %}
+              VOJ: {{ user.profile.voj_account }} | <a href="{% url 'user:unlink_voj' %}">Unlink VOJ account</a>
+            {% else %}
+              <a href="{% url 'user:link_voj' %}">Link VOJ account</a>
+            {% endif %}
+          </p>
+
+          <p>
+            {% if user.profile.codeforces_account %}
+              Codeforces: {{ user.profile.codeforces_account }} |
+              <a href="{% url 'user:unlink_codeforces' %}">Unlink Codeforces account</a>
+            {% else %}
+              <a href="{% url 'user:link_codeforces' %}">Link Codeforces account</a>
+            {% endif %}
+          </p>
+
+          <p>
+            Topcoder: {{ user.profile.topcoder_account | default:"Not linked" }}
+          </p>
         </div>
+      </div>
     </div>
+  </div>
+  <div class="row" style="margin-bottom: 2em;">
+    <div class="col-md-9 user-recent-topic">
+      {% for topic in topics %}
+        <div class="user-one-post">
+          <div class="user-post-heading">
+            <div class="row">
+              <div class="col-md-9">
+                <a href="{{ topic.get_absolute_url }}">
+                  <h4>
+                    {{ topic.title }}
+                  </h4>
+                </a>
+              </div>
+              <div class="col-md-3">
+                <div class="user-post-day-created">
+                  Aug 15th 2015
+                </div>
+              </div>
+            </div>
+            <div class="user-post-content">
+              {{ topic.content|safe }}
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+    <div class="col-md-3">
+      <div class="user-voj-static">
+        <div class="panel panel-primary">
+          <div class="panel-heading user-voj-title">
+            VOJ Static
+          </div>
+          <div class="panel-body user-voj-detail">
+            <table>
+              <tr>
+                <td>
+                  Level: {{ user.profile.voj_lever }}
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  Score: {{ user.profile.voj_score }}
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  Rank: {{ user.profile.voj_rank }}
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 {% endblock container %}
