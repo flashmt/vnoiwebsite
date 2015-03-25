@@ -4,7 +4,7 @@
  */
 CKEDITOR.editorConfig = function( config ) {
 	// Define changes to default configuration here.
-    config.extraPlugins = 'codesnippet';
+    config.extraPlugins = 'codesnippet,mathjax';
 	// For complete reference see:
 	// http://docs.ckeditor.com/#!/api/CKEDITOR.config
 
@@ -27,7 +27,7 @@ CKEDITOR.editorConfig = function( config ) {
 	];
     config.toolbar_Full = [
         ['Bold', 'Italic'],
-        ['CodeSnippet', 'Link', 'Unlink', 'Image'],
+        ['CodeSnippet', 'Link', 'Unlink', 'Image', 'SpecialChar', 'Mathjax'],
         [ 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent']
     ];
     config.toolbar = 'Full';
