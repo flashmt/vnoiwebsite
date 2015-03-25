@@ -73,7 +73,11 @@ class UserCreateForm(forms.ModelForm):
         user = super(UserCreateForm, self).save(commit=False)
         user.set_password(self.cleaned_data['password1'])
         if commit:
+            user.is_active = False  # not active until user opens activation confirmation link
             user.save()
+            # Update user_profile
+            user.profile.dob = self.cleaned_data['dob']
+            user.profile.save()
         return user
 
 

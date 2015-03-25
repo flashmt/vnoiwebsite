@@ -42,7 +42,6 @@ INSTALLED_APPS = (
     'main',
     'vnoiusers',
     'bootstrap3',
-    'mailer',
     'postman',
     'vnoimessages',
     'authority',
@@ -52,6 +51,7 @@ INSTALLED_APPS = (
     'django_bleach',
     'externaljudges',
     'vnoilib',
+    'post_office',
 )
 
 
@@ -218,3 +218,16 @@ CACHES = {
 }
 
 # Email settings
+# using post office as the default email backend
+EMAIL_BACKEND = 'post_office.EmailBackend'
+
+POST_OFFICE = {
+    'DEFAULT_PRIORITY': 'now'
+}
+
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'vnoiwebsite@gmail.com'
+EMAIL_HOST_PASSWORD = 'vnoipassword'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
