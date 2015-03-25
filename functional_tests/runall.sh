@@ -1,5 +1,5 @@
 # Ensure we are in the right directory
-cd "$(dirname "$0")"
+# cd "$(dirname "$0")"
 
 total_error_code=0
 

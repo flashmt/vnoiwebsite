@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Ensure we are in project directory
+cd "$(dirname "$0")"
+
 # Clear old database
 rm -f db.sqlite3
 
@@ -15,3 +18,5 @@ python manage.py createcachetable
 
 # Crawl data from external sources
 ./crawl_external_judge_data.sh
+
+
