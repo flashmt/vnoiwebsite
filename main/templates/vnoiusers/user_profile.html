@@ -69,7 +69,7 @@
         {% if topics %}
           <div class="user-recent-topic">
             {% for topic in topics %}
-              <div class="user-one-post">
+              <div class="user-one-post{% if not forloop.last %} user-one-post-middle{% endif %}">
                 <div class="user-post-heading">
                   <div class="row">
                     <div class="col-md-9">
