@@ -164,12 +164,13 @@ feature "User" do
     
     # Add user as friend
     visit "#{ROOT_URL}/user/2"
+    click_on 'Remove friend'
     click_on 'Add friend'
     verify_flash_messages(['Friend successfully added'])
     
     # Check friend list
     click_on 'admin'
-    click_on 'My friends'
+    click_on $friend_list
     within '#body-container' do
       expect(page).to have_content('vnoiuser')
     end
@@ -181,7 +182,7 @@ feature "User" do
 
     # Check friend list
     click_on 'admin'
-    click_on 'My friends'
+    click_on $friend_list
     within '#body-container' do
       expect(page).to have_no_content('vnoiuser')
     end
@@ -191,7 +192,7 @@ feature "User" do
     visit "#{ROOT_URL}"
     login('admin', 'admin')
     visit "#{ROOT_URL}/user/1"
-    click_on 'My friends'
+    click_on $friend_list
 
     # Search for vnoi
     fill_in 'id_user_prefix', with: 'vnoi'
@@ -207,7 +208,7 @@ feature "User" do
 
     # Search for abc
     visit "#{ROOT_URL}/user/1"
-    click_on 'My friends'
+    click_on $friend_list
     fill_in 'id_user_prefix', with: 'abc'
     click_on 'OK'
     within '#body-container' do
