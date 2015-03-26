@@ -150,7 +150,9 @@
   display: inline-block; }
 
 .post-vote-wrapper {
-  float: right;
+  float: right; }
+
+.forum-post-vote-wrapper {
   margin-right: 2.5em; }
 
 .post-count-upvote {
