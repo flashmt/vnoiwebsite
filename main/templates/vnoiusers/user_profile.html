@@ -46,7 +46,12 @@
             </div>
             <div class="row user-setting-button">
               <a class="btn btn-default post-reply" href="{% url 'user:friend_list' %}" role="button">
-                My friends
+                Danh sách bạn bè
+              </a>
+            </div>
+            <div class="row user-setting-button">
+              <a class="btn btn-default post-reply" href="{% url 'user:password_change' %}" role="button">
+                Thay đổi mật khẩu
               </a>
             </div>
           {% elif request.user.is_authenticated %}
