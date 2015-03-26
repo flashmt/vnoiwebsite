@@ -1,10 +1,10 @@
-# vnoi website
+# VNOI website
 [![Build Status](https://travis-ci.org/VNOI-Admin/vnoiwebsite.svg?branch=master)](https://travis-ci.org/VNOI-Admin/vnoiwebsite)
 
-# Installation:
+# 1. Installation:
 
-## Django + Python requirements installation
-### Quick installation
+## 1.1. Django + Python requirements installation
+### 1.1.1. Quick installation
 
 ```bash
 # Install Python dependency
@@ -14,11 +14,14 @@ sudo pip install -r requirements.txt
 ./init_database.sh
 ```
 
-### Better way
+### 1.1.2. Better way
 If you have multiple Python projects, it's better to setup virtualenv so that each project have its own Python + libraries version. To read about how to do it, refer to *documents/setup_project.md*
 
-## Memcache
-### Install libevent
+## 1.2. Memcache
+
+Memcache is an in-memory key-value store, which is widely used for caching.
+
+### 1.2.1. Install libevent
 Memcache has libevent as dependency, so you should install libevent first:
 
 1. Download latest stable release of libevent from [their site](http://libevent.org/).
@@ -30,7 +33,7 @@ Memcache has libevent as dependency, so you should install libevent first:
 sudo make install
 ```
 
-### Install memcache
+### 1.2.2. Install memcache
 
 ```bash
 wget http://memcached.org/latest
@@ -41,13 +44,15 @@ python manage.py createcachetable
 ```
 
 
-# Run the project
+# 2. Run the project
 ```bash
-python manage.py runserver
+./runsass.sh
 # Now the website should be available at http://localhost:8000/main
 ```
 
-# Testing
+This script will run webserver, as well as auto compile our scss to css.
+
+# 3. Testing
 We have 2 sets of tests:
 - Unit test. To run:
 ```bash
@@ -55,7 +60,7 @@ python manage.py test
 ```
 - Functional testing: Please refer to *functional_tests/README.md* for details on how to setup + run.
 
-# Contributors:
+# 4. Contributors:
 
 - Nguyen Thanh Trung
 - Nguyen Hoang Yen

@@ -8,7 +8,7 @@ feature "Homepage" do
   end
 
   scenario "Go to homepage and look around", :js => true do
-    visit "#{ROOT_URL}/main"
+    visit "#{ROOT_URL}"
 
     verify_content($home_content)
     verify_content($login_content)

@@ -55,17 +55,21 @@
                     See more &raquo;
                   </a>
                 </div>
-                <div class="col-xs-1">
-                  <a class="btn btn-default pinned-post-upvote" href="{% url 'forum:vote_create' pinned_topic.post__id %}?type=u" role="button">
-                    +
+                <div class="home-post-vote-wrapper button-container">
+                  <a class="btn btn-default home-post-upvote"
+                     href="javascript:void(0)"
+                     post-id="{{ pinned_topic.post__id }}"
+                     role="button">
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
                   </a>
-                </div>
-                <div class="col-xs-1 pinned-post-count-upvote" id = "count_upvote">
-                  {{ pinned_topic.post__num_upvotes|subtract:pinned_topic.post__num_downvotes }}
-                </div>
-                <div class="col-xs-1">
-                  <a class="btn btn-default pinned-post-downvote" href="{% url 'forum:vote_create' pinned_topic.post__id %}?type=d" role="button">
-                    -
+                  <div class="col-xs-1 home-post-count-upvote" id="total-vote-{{ pinned_topic.post__id }}" role="button">
+                    {{ pinned_topic.post__num_upvotes|subtract:pinned_topic.post__num_downvotes }}
+                  </div>
+                  <a class="btn btn-default home-post-downvote"
+                     href="javascript:void(0)"
+                     post-id="{{ pinned_topic.post__id }}"
+                     role="button">
+                    <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
                   </a>
                 </div>
               </div>

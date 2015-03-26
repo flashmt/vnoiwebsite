@@ -47,7 +47,7 @@ class TopicPermission(PostPermission):
     label = 'topic_permission'
     checks = 'can_toggle_pin'
 
-    def can_toggle_pin(self):
+    def can_toggle_pin(self, topic):
         # Only admin can pin topic
         return is_admin(self.user)
 

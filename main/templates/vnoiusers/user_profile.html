@@ -1,5 +1,6 @@
 {% extends 'main/base.html' %}
 {% load staticfiles %}
+{% load bleach_tags %}
 {% load humanize %}
 {% load user_avatar_tags %}
 
@@ -46,18 +47,25 @@
             </div>
             <div class="row user-setting-button">
               <a class="btn btn-default post-reply" href="{% url 'user:friend_list' %}" role="button">
-                My friends
+                Danh sách bạn bè
+              </a>
+            </div>
+            <div class="row user-setting-button">
+              <a class="btn btn-default post-reply" href="{% url 'user:password_change' %}" role="button">
+                Thay đổi mật khẩu
               </a>
             </div>
           {% elif request.user.is_authenticated %}
             <div class="row user-setting-button">
               <a class="btn btn-default post-reply" href="{% url 'message:write' user.username %}" role="button">
+                <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
                 Gửi tin nhắn
               </a>
             </div>
             {% if is_friend %}
               <div class="row user-setting-button">
                 <a class="btn btn-default post-reply" href="{% url 'user:remove_friend' user.id %}" role="button">
+                  <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
                   Remove friend
                 </a>
               </div>
@@ -65,6 +73,7 @@
               <div class="row user-setting-button">
                 <a class="btn btn-default post-reply"
                    href="{% url 'user:add_friend' user.id %}" role="button">
+                   <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
                   Add friend
                 </a>
               </div>
@@ -93,7 +102,7 @@
                     </div>
                   </div>
                   <div class="user-post-content">
-                    {{ topic.content|safe }}
+                    {{ topic.content|bleach }}
                   </div>
                 </div>
               </div>

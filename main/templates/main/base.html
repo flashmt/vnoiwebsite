@@ -23,6 +23,8 @@
   <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
   <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
   <![endif]-->
+  <!-- jGrowl -->
+  <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/jquery-jgrowl/1.4.1/jquery.jgrowl.min.css" />
   {% block extra-head %}
   {% endblock extra-head %}
 </head>
@@ -76,6 +78,9 @@
                     <button type="submit" id="login_submit" class="btn btn-success btn-block input-xs">Login</button>
                   </form>
                 </li>
+                <li>
+                  <span style="color: #ffffff">Have not had account? <a href="{% url 'user:register' %}">Sign up</a></span>
+                </li>
               </ul>
             </li>
 
@@ -125,6 +130,7 @@
   ================================================== -->
   <!-- Placed at the end of the document so the pages load faster -->
   <script src="{% static 'js/jquery-2.1.0.min.js' %}"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-jgrowl/1.4.1/jquery.jgrowl.min.js"></script>
   <script src="{% static 'js/bootstrap.min.js' %}"></script>
 
   <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->

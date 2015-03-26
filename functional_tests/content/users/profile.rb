@@ -4,3 +4,6 @@ $profile_content = [
   'Change profile picture'
 ]
 $update_profile = 'Cập nhật'
+$friend_list = 'Danh sách bạn bè'
+$add_friend_button = 'Add friend'
+$remove_friend_button = 'Remove friend'

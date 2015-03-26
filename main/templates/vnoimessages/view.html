@@ -2,6 +2,7 @@
 {% load url from future %}
 {% load i18n %}{% load postman_tags %}
 {% load staticfiles %}
+{% load bleach_tags %}
 
 {% block postman_menu %}
   <li role = "presentation" class="active"><a href="{% url 'message:inbox' %}">{% trans "Hộp thư đến" %}{% if unread_count %} <strong>({{ unread_count }})</strong>{% endif %}</a></li>
@@ -47,7 +48,7 @@
             </div>
           {% endif %}
         </div>
-        <div class="panel-body pm_body">{{ message.body|linebreaksbr }}</div>
+        <div class="panel-body pm_body">{{ message.body|bleach }}</div>
       </div>
       {% if forloop.last %}
         <form action="" method="post">{% csrf_token %}
