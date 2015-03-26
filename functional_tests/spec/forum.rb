@@ -60,5 +60,27 @@ feature "Forum" do
     first(:link, $edit).click
     verify_breadcrumbs(['Forum', 'Codeforces', topic_title, $edit])
   end
+
+  scenario "Admin should be able to pin/unpin post", :js => true do
+    # Assumption: this post will always be pinned in fixture
+    # Visit post 1, unpin it
+    visit "#{ROOT_URL}/forum/1/1"
+    login('admin', 'admin')
+    click_on $unpin_button
+    verify_flash_messages(['Chủ đề đã được bỏ khỏi trang chủ'])
+
+    # Verify that it is no longer on home page
+    visit "#{ROOT_URL}/main"
+    expect(page).to have_no_selector('h2', text: 'CF Round 294')
+
+    # Pin the post again
+    visit "#{ROOT_URL}/forum/1/1"
+    click_on $pin_button
+    verify_flash_messages(['Chủ đề đã được ghim lên trang chủ'])
+    
+    # Verify that it is on home page again
+    visit "#{ROOT_URL}/main"
+    expect(page).to have_selector('h2', text: 'CF Round 294')
+  end
 end
 

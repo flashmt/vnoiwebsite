@@ -15,3 +15,5 @@ $forum_content = [
 $create_topic = 'Create new topic'
 $reply = 'Reply'
 $edit = 'Edit'
+$pin_button = 'Pin'
+$unpin_button = 'Unpin'
