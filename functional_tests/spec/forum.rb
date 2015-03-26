@@ -82,5 +82,20 @@ feature "Forum" do
     visit "#{ROOT_URL}/main"
     expect(page).to have_selector('h2', text: 'CF Round 294')
   end
+
+  scenario "Normal user should not be able to pin/unpin post", :js => true do
+    visit "#{ROOT_URL}/forum/1/1"
+    expect(page).to have_no_content $pin_button
+    expect(page).to have_no_content $unpin_button
+    login('vnoiuser', 'vnoiuser')
+    # By redirection rule, user should still be on same page
+    # but still check to be sure
+    expect(current_path.chomp('/')).to eq('/forum/1/1')
+    expect(page).to have_no_content $pin_button
+    expect(page).to have_no_content $unpin_button
+
+    # TODO: add test case for user going directly to pin/unpin URL.
+    # Currently the behaviour is not fixed, so need to do this after it is confirmed
+  end
 end
 
