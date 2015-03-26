@@ -164,8 +164,10 @@ feature "User" do
     
     # Add user as friend
     visit "#{ROOT_URL}/user/2"
-    click_on 'Remove friend'
-    click_on 'Add friend'
+    if page.has_text?($remove_friend_button)
+      click_on $remove_friend_button
+    end
+    click_on $add_friend_button
     verify_flash_messages(['Friend successfully added'])
     
     # Check friend list
@@ -177,7 +179,7 @@ feature "User" do
 
     # Remove friend
     click_on 'vnoiuser'
-    click_on 'Remove friend'
+    click_on $remove_friend_button
     verify_flash_messages(['Friend successfully removed'])
 
     # Check friend list
