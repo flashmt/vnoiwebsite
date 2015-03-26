@@ -9,7 +9,7 @@ from django.contrib.auth import authenticate, logout, login, update_session_auth
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 from django.template.response import TemplateResponse
-from django.utils.http import urlsafe_base64_decode
+from django.utils.http import urlsafe_base64_decode, is_safe_url
 from django.utils.translation import ugettext as _
 
 from django.http import HttpResponseRedirect, HttpResponse
@@ -25,26 +25,27 @@ from vnoiusers.forms import *
 from vnoiusers.models import VnoiUser
 
 
-def user_login(request, template_name='vnoiusers/user_login.html'):
+def user_login(request,
+               template_name='vnoiusers/user_login.html'):
     form = UserLoginForm()
     if request.user.is_authenticated():
         return HttpResponseRedirect('/main')
 
     if request.POST:
-        try:
-            username = request.POST['username']
-            password = request.POST['password']
-            user = authenticate(username=username, password=password)
-            if (user is not None) and user.is_active:
-                login(request, user)
-                messages.success(request, 'Welcome back, %s' % username)
-                last_url = request.META.get('HTTP_REFERER')
-                if '/user/register' in last_url or '/user/login' in last_url:
-                    last_url = reverse('main:index')
-                return HttpResponseRedirect(last_url)
-            else:
-                return render(request, template_name, {'form': form, 'message': 'login fail!'})
-        except KeyError:
+        form = UserLoginForm(request.POST)
+        if form.is_valid():
+            login(request, form.get_user())
+            messages.success(request, 'Welcome back, %s' % form.cleaned_data['username'])
+            last_url = request.META.get('HTTP_REFERER')
+            if '/user/register' in last_url or '/user/login' in last_url:
+                last_url = reverse('main:index')
+
+            # Ensure the user-originating redirection url is safe.
+            if not is_safe_url(url=last_url, host=request.get_host()):
+                last_url = resolve_url(settings.LOGIN_REDIRECT_URL)
+
+            return HttpResponseRedirect(last_url)
+        else:
             return render(request, template_name, {'form': form, 'message': 'login fail!'})
     else:
         return render(request, template_name, {'form': form, 'message': ''})

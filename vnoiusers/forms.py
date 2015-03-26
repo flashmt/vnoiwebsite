@@ -2,6 +2,7 @@
 from collections import OrderedDict
 
 from django import forms
+from django.contrib.auth import authenticate
 from django.contrib.auth.tokens import default_token_generator
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.validators import validate_email
@@ -21,10 +22,40 @@ class UserLoginForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(UserLoginForm, self).__init__(*args, **kwargs)
         self.fields['username'].help_text = None
+        self.user_cache = None
 
     class Meta:
         model = User
         fields = ('username',)
+
+    def clean(self):
+        username = self.cleaned_data['username']
+        password = self.cleaned_data['password']
+
+        if username and password:
+            self.user_cache = authenticate(username=username, password=password)
+            if self.user_cache is None:
+                raise forms.ValidationError(u"Tên hoặc mật khẩu nhập không đúng")
+            else:
+                self.confirm_login_allowed(self.user_cache)
+        return self.cleaned_data
+
+    def confirm_login_allowed(self, user):
+        """
+        Controls whether the given User may log in
+            + allow login by active users, and reject login by inactive users.
+        If the given user may log in, this method should return None.
+        """
+        if not user.is_active:
+            raise forms.ValidationError(u"Người dùng này chưa được kích hoạt")
+
+    def get_user_id(self):
+        if self.user_cache:
+            return self.user_cache.id
+        return None
+
+    def get_user(self):
+        return self.user_cache
 
 
 class UserCreateForm(forms.ModelForm):
@@ -79,7 +110,7 @@ class UserCreateForm(forms.ModelForm):
         user.set_password(self.cleaned_data['password1'])
         if commit:
             user.is_active = False  # not active until user opens activation confirmation link
-            user.save()
+            user.save()  # Note: post_save signal automatically create a new user profile
             # Update user_profile
             user.profile.dob = self.cleaned_data['dob']
             user.profile.save()
@@ -168,7 +199,7 @@ class PasswordResetForm(forms.Form):
         """
         from django.core.mail import send_mail
         email = self.cleaned_data["email"]
-        active_users = User._default_manager.filter(
+        active_users = User.objects.filter(
             email__iexact=email, is_active=True)
         for user in active_users:
             # Make sure that no email is sent to a user that actually has
