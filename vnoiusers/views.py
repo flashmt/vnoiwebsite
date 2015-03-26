@@ -29,7 +29,7 @@ def user_login(request,
                template_name='vnoiusers/user_login.html'):
     form = UserLoginForm()
     if request.user.is_authenticated():
-        return HttpResponseRedirect('/main')
+        return HttpResponseRedirect(reverse('main:index'))
 
     if request.POST:
         form = UserLoginForm(request.POST)
@@ -61,7 +61,7 @@ def user_create(request, template_name='vnoiusers/user_create.html'):
     form = UserCreateForm()
     if request.user.is_authenticated():
         messages.warning(request, 'Invalid request')
-        return HttpResponseRedirect('/main')
+        return HttpResponseRedirect(reverse('main:index'))
 
     if request.POST:
         form = UserCreateForm(request.POST)

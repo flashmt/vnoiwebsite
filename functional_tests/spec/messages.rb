@@ -6,7 +6,7 @@ feature "Messages" do
   end
 
   scenario "User should not see Message URL until logged in", :js => true do
-    visit "#{ROOT_URL}/main"
+    visit "#{ROOT_URL}"
 
     message_url_text = 'Messages'
     expect(page).to have_no_content(message_url_text)

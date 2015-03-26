@@ -70,7 +70,7 @@ feature "Forum" do
     verify_flash_messages(['Chủ đề đã được bỏ khỏi trang chủ'])
 
     # Verify that it is no longer on home page
-    visit "#{ROOT_URL}/main"
+    visit "#{ROOT_URL}"
     expect(page).to have_no_selector('h2', text: 'CF Round 294')
 
     # Pin the post again
@@ -79,7 +79,7 @@ feature "Forum" do
     verify_flash_messages(['Chủ đề đã được ghim lên trang chủ'])
     
     # Verify that it is on home page again
-    visit "#{ROOT_URL}/main"
+    visit "#{ROOT_URL}"
     expect(page).to have_selector('h2', text: 'CF Round 294')
   end
 

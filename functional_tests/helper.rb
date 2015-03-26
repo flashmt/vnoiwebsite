@@ -111,7 +111,7 @@ def browser_history_back
 end
 
 def hide_django_profile_bar
-  visit "#{ROOT_URL}/main"
+  visit "#{ROOT_URL}"
   click_on 'Hide'
 end
 
