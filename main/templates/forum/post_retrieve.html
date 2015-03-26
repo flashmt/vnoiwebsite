@@ -70,15 +70,23 @@
                                   </a>
                             </div>
                             <div class="col-md-1">
-                                <a class="btn btn-default post-upvote" href="{% url 'forum:vote_create' post.id %}?type=u" role="button">
+                                <a class="btn btn-default post-upvote"
+{#                                   href="{% url 'forum:vote_create' post.id %}?type=u"#}
+                                   href="javascript:void(0)"
+                                   post-id="{{ post.id }}"
+                                   role="button">
                                   +
                                 </a>
                             </div>
-                            <div class="col-md-1 post-count-upvote" id = "count_upvote">
+                            <div class="col-md-1 post-count-upvote" id = "total-vote-{{ post.id }}">
                                 {{ post.total_votes }}
                             </div>
                             <div class="col-md-1">
-                                <a class="btn btn-default post-downvote" href="{% url 'forum:vote_create' post.id %}?type=d" role="button">
+                                <a class="btn btn-default post-downvote"
+{#                                   href="{% url 'forum:vote_create' post.id %}?type=d"#}
+                                   href="javascript:void(0)"
+                                   post-id="{{ post.id }}"
+                                   role="button">
                                   -
                                 </a>
                             </div>
