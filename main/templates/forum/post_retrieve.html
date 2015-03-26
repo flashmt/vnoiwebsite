@@ -36,7 +36,7 @@
                 <div class="post-content col-md-height">
                     <div class="post-body">
                         <div class="post-content">
-                            <div style="margin-left:1em; margin-top: 1em; margin-bottom:1em;">
+                            <div style="margin:1em;">
                                 {{post.content|bleach}}
                             </div>
                         </div>
@@ -71,7 +71,6 @@
                             </div>
                             <div class="col-md-1">
                                 <a class="btn btn-default post-upvote"
-{#                                   href="{% url 'forum:vote_create' post.id %}?type=u"#}
                                    href="javascript:void(0)"
                                    post-id="{{ post.id }}"
                                    role="button">
@@ -83,7 +82,6 @@
                             </div>
                             <div class="col-md-1">
                                 <a class="btn btn-default post-downvote"
-{#                                   href="{% url 'forum:vote_create' post.id %}?type=d"#}
                                    href="javascript:void(0)"
                                    post-id="{{ post.id }}"
                                    role="button">
