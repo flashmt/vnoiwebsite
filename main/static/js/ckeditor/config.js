@@ -31,15 +31,15 @@ CKEDITOR.editorConfig = function( config ) {
 
 	// Dialog windows are also simplified.
 	config.removeDialogTabs = 'link:advanced';
-    config.codeSnippet_languages = {
-        bash: 'Bash',
-        cpp: 'C++',
-        java: 'Java',
-        javascript: 'JavaScript',
-        delphi: 'Pascal',
-        perl: 'Perl',
-        php: 'PHP',
-        python: 'Python',
-        ruby: 'Ruby'
-    };
+	config.codeSnippet_languages = {
+		bash: 'Bash',
+		cpp: 'C++',
+		java: 'Java',
+		javascript: 'JavaScript',
+		delphi: 'Pascal',
+		perl: 'Perl',
+		php: 'PHP',
+		python: 'Python',
+		ruby: 'Ruby'
+	};
 };
