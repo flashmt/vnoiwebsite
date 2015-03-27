@@ -203,6 +203,6 @@ def post_delete(request, post_id=None):
         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
     else:
         forum_id = post.topic.forum_id
-        post.topic.delete()
+        post.delete()
         # Now we can not redirect to previous page (because it no longer exist :( )
         return HttpResponseRedirect(reverse('forum:topic_list', args=(forum_id, )))

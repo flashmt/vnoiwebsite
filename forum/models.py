@@ -79,7 +79,10 @@ class Topic(models.Model):
     def get_last_post(self):
         """ This method query the whole db. Call it only when needed. """
         last_posts = Post.objects.filter(topic=self).order_by('-updated_at')
-        return last_posts[0]
+        if len(last_posts) > 0:
+            return last_posts[0]
+        else:
+            return None
 
     def count_num_posts(self):
         return self.num_posts
@@ -96,7 +99,7 @@ class Post(models.Model):
     # All post in the topic will point to this topic
     topic = models.ForeignKey(Topic, verbose_name='Topic', related_name='posts', null=True, on_delete=models.SET_NULL)
     # Point to the parent post. If the post is first post in topic, this will be None
-    reply_on = models.ForeignKey("self", related_name="reply_posts", null=True, blank=True, on_delete=models.SET_NULL)
+    reply_on = models.ForeignKey("self", related_name="reply_posts", null=True, blank=True, on_delete=models.CASCADE)
     content = BleachField()
     num_upvotes = models.IntegerField(default=0)
     num_downvotes = models.IntegerField(default=0)
