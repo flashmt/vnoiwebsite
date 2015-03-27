@@ -93,7 +93,9 @@ class Topic(models.Model):
 
 class Post(models.Model):
     topic_post = models.BooleanField(default=False)
+    # All post in the topic will point to this topic
     topic = models.ForeignKey(Topic, verbose_name='Topic', related_name='posts', null=True, on_delete=models.SET_NULL)
+    # Point to the parent post. If the post is first post in topic, this will be None
     reply_on = models.ForeignKey("self", related_name="reply_posts", null=True, blank=True, on_delete=models.SET_NULL)
     content = BleachField()
     num_upvotes = models.IntegerField(default=0)

@@ -198,5 +198,11 @@ def post_delete(request, post_id=None):
     if not PostPermission(request.user).can_delete_post(post):
         raise exceptions.PermissionDenied
 
-    post.delete()
-    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+    if post.reply_on is not None:
+        post.delete()
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+    else:
+        forum_id = post.topic.forum_id
+        post.topic.delete()
+        # Now we can not redirect to previous page (because it no longer exist :( )
+        return HttpResponseRedirect(reverse('forum:topic_list', args=(forum_id, )))
