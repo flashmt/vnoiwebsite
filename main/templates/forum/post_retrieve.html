@@ -1,9 +1,9 @@
-{% block postview %}
-  {% load staticfiles %}
-  {% load user_avatar_tags %}
-  {% load bleach_tags %}
-  {% load permissions %}
+{% load staticfiles %}
+{% load user_avatar_tags %}
+{% load bleach_tags %}
+{% load permissions %}
 
+{% block postview %}
   <div style="background-color:wheat; margin-left: 0; margin-bottom: 30px">
 
     <div class="panel panel-default post-outer-wrapper">
@@ -55,8 +55,8 @@
                     </a>
                   {% endifhasperm %}
                   {% ifhasperm "post_permission.can_delete_post" request.user post %}
-                    <a class="btn btn-default post-delete" href="{% url 'forum:post_delete' post.id %}"
-                       role="button">
+                    <a class="btn btn-default post-delete" href="javascript:void(0)"
+                       role="button" post-id="{{ post.id }}">
                       Delete
                     </a>
                   {% endifhasperm %}
@@ -111,10 +111,6 @@
   </div>
 
 {% endblock postview %}
-{% block extra-js %}
-  <script src="{% static 'js/highlight/highlight.pack.js' %}"></script>
-  <script>hljs.initHighlightingOnLoad();</script>
-{% endblock %}
 {% block extra-css %}
   <link rel="stylesheet" href="{% static 'js/highlight/styles/default.css' %}"/>
 {% endblock %}
