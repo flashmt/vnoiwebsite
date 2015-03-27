@@ -54,6 +54,12 @@
                       Edit
                     </a>
                   {% endifhasperm %}
+                  {% ifhasperm "post_permission.can_delete_post" request.user post %}
+                    <a class="btn btn-default post-delete" href="{% url 'forum:post_delete' post.id %}"
+                       role="button">
+                      Delete
+                    </a>
+                  {% endifhasperm %}
                   {% if not is_child %}
                     {% ifhasperm "topic_permission.can_toggle_pin" request.user topic %}
                       {% if topic.is_pinned %}

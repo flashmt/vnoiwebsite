@@ -188,3 +188,15 @@ def unpin(request, topic_id):
     else:
         messages.warning(request, 'Bạn không có quyền thực hiện thao tác này')
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+
+def post_delete(request, post_id=None):
+    if post_id:
+        post = get_object_or_404(Post, pk=post_id)
+
+    # check permission
+    if not PostPermission(request.user).can_delete_post(post):
+        raise exceptions.PermissionDenied
+
+    post.delete()
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))

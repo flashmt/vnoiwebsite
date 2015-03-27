@@ -227,5 +227,3 @@ post_save.connect(update_forum_on_save_topic, sender=Topic)
 
 post_delete.connect(update_topic_on_delete_post, sender=Post)
 post_delete.connect(update_forum_on_delete_topic, sender=Topic)
-
-
