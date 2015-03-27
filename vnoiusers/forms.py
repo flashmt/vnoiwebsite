@@ -15,6 +15,12 @@ from externaljudges.crawler.codeforces import verify_codeforces_account
 from externaljudges.crawler.voj import verify_voj_account
 from vnoiusers.models import VnoiUser
 
+import os
+from avatar.models import Avatar
+from django.template.defaultfilters import filesizeformat
+from avatar.conf import settings
+from django.utils.translation import ugettext_lazy as _
+
 
 class UserLoginForm(forms.ModelForm):
     password = forms.CharField(label='Password', widget=forms.PasswordInput)
@@ -292,3 +298,43 @@ PasswordChangeForm.base_fields = OrderedDict(
     (k, PasswordChangeForm.base_fields[k])
     for k in ['old_password', 'new_password1', 'new_password2']
 )
+
+
+class UploadAvatarForm(forms.Form):
+
+    avatar = forms.ImageField(label=_("avatar"))
+
+    def __init__(self, *args, **kwargs):
+        self.user = kwargs.pop('user')
+        super(UploadAvatarForm, self).__init__(*args, **kwargs)
+
+    def clean_avatar(self):
+        data = self.cleaned_data['avatar']
+
+        if settings.AVATAR_ALLOWED_FILE_EXTS:
+            root, ext = os.path.splitext(data.name.lower())
+            if ext not in settings.AVATAR_ALLOWED_FILE_EXTS:
+                valid_exts = ", ".join(settings.AVATAR_ALLOWED_FILE_EXTS)
+                error = _("%(ext)s is an invalid file extension. "
+                          "Authorized extensions are : %(valid_exts_list)s")
+                raise forms.ValidationError(error %
+                                            {'ext': ext,
+                                             'valid_exts_list': valid_exts})
+
+        if data.size > settings.AVATAR_MAX_SIZE:
+            error = _("Your file is too big (%(size)s), "
+                      "the maximum allowed size is %(max_valid_size)s")
+            raise forms.ValidationError(error % {
+                'size': filesizeformat(data.size),
+                'max_valid_size': filesizeformat(settings.AVATAR_MAX_SIZE)
+            })
+
+        count = Avatar.objects.filter(user=self.user).count()
+        if (settings.AVATAR_MAX_AVATARS_PER_USER > 1) and (count >= settings.AVATAR_MAX_AVATARS_PER_USER):
+            error = _("You already have %(nb_avatars)d avatars, "
+                      "and the maximum allowed is %(nb_max_avatars)d.")
+            raise forms.ValidationError(error % {
+                'nb_avatars': count,
+                'nb_max_avatars': settings.AVATAR_MAX_AVATARS_PER_USER,
+            })
+        return
