@@ -67,4 +67,6 @@ $(document).ready(function () {
 	}
 	$('.post-upvote').click(changeVote('u'));
 	$('.post-downvote').click(changeVote('d'));
+	$('.home-post-upvote').click(changeVote('u'));
+	$('.home-post-downvote').click(changeVote('d'));
 });
