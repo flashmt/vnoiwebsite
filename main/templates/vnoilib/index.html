@@ -7,7 +7,7 @@
 
 {% block container %}
   <div class="row lib-row-same-height">
-    <div class="col-md-2">
+    <div class="col-md-3">
       {% block library_menu %}
         <div class = "list-group">
           {% for lib_group in lib_groups %}
@@ -26,10 +26,10 @@
       {% endblock library_menu %}      
     </div>
 
-    <div class="col-md-10">
+    <div class="col-md-9">
       <div class=" lib-list-container">
         {% block library_content %}
-          {% for lib_group in lib_groups %}
+          <!--{% for lib_group in lib_groups %}
             <h3>{{ lib_group.name }}</h3>
             {% for lib_topic in lib_group.forums.all %}
               <h5>{{ lib_topic }}</h5>
@@ -37,7 +37,7 @@
                 <p><a href="{% url 'library:topic_retrieve' lib_topic.id topic.id %}">{{ topic.title }}</a></p>
               {% endfor %}
             {% endfor %}
-          {% endfor %}
+          {% endfor %}-->
         {% endblock library_content %}
       </div>
     </div>
