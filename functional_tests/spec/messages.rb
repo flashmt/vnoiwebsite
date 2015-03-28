@@ -17,4 +17,11 @@ feature "Messages" do
     click_on 'Logout'
     expect(page).to have_no_content(message_url_text)
   end
+
+  scenario "User should be directed to inbox", :js => true do
+  	visit "{ROOT_URL}/main"
+
+  	login('admin', 'admin')
+  	
+  end
 end
