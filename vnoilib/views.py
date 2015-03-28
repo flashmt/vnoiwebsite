@@ -27,5 +27,6 @@ def topic_list(request, forum_id, template="vnoilib/topic_list.html"):
     topics = pagination_items(request, topics, 50)
     return render(request, template, {
         'forum': forum,
-        'topics': topics
+        'topics': topics,
+        'lib_groups': ForumGroup.objects.filter(group_type='l')
     })

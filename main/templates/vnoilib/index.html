@@ -6,13 +6,40 @@
 {% endblock breadcrumbs %}
 
 {% block container %}
-  {% for lib_group in lib_groups %}
-    <h2>{{ lib_group.name }}</h2>
-    {% for lib_topic in lib_group.forums.all %}
-      <h3>{{ lib_topic }}</h3>
-      {% for topic in lib_topic.topics.all %}
-        <p><a href="{% url 'library:topic_retrieve' lib_topic.id topic.id %}">{{ topic.title }}</a></p>
-      {% endfor %}
-    {% endfor %}
-  {% endfor %}
+  <div class="row lib-row-same-height">
+    <div class="col-md-3">
+      {% block library_menu %}
+        <div class = "list-group">
+          {% for lib_group in lib_groups %}
+            <div class="list-group-item">
+              <a data-toggle="collapse" data-target="#lib_group_{{ lib_group.id }}">{{ lib_group.name|slice:"9:" }}</a>
+              <ul class="nav nav-pills nav-stacked collapse lib-small-topic {% if forum in lib_group.forums.all %} in {% endif %}" id = "lib_group_{{ lib_group.id }}">
+                {% for lib_topic in lib_group.forums.all %}
+                  <li role="presentation" {% if lib_topic == forum %} class="active" {% endif %}>
+                    <a href="{% url 'library:topic_list' lib_topic.id %}"> {{ lib_topic }} </a>
+                  </li>
+                {% endfor %}
+              </ul>
+            </div>
+          {% endfor %}
+        </div>
+      {% endblock library_menu %}      
+    </div>
+
+    <div class="col-md-9">
+      <div class=" lib-list-container">
+        {% block library_content %}
+          <!--{% for lib_group in lib_groups %}
+            <h3>{{ lib_group.name }}</h3>
+            {% for lib_topic in lib_group.forums.all %}
+              <h5>{{ lib_topic }}</h5>
+              {% for topic in lib_topic.topics.all %}
+                <p><a href="{% url 'library:topic_retrieve' lib_topic.id topic.id %}">{{ topic.title }}</a></p>
+              {% endfor %}
+            {% endfor %}
+          {% endfor %}-->
+        {% endblock library_content %}
+      </div>
+    </div>
+  </div>
 {% endblock container %}
