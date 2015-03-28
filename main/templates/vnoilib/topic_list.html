@@ -1,14 +1,23 @@
-{% extends 'forum/topic_list.html' %}
+{% extends 'vnoilib/index.html' %}
 
 {% block breadcrumbs %}
   <li><a href="{% url 'library:index' %}">Thư viện</a></li>
   <li>{{ forum.name }}</li>
 {% endblock breadcrumbs %}
 
-{% block forum-body %}
+{% block library_content %}
 {% for topic in topics %}
-  <a href="{% url 'library:topic_retrieve' forum.id topic.id %}">
-    <h3 class="forum-name">{{ topic.title }}</h3>
-  </a>
+  <div class="row">
+    <div class="col-md-9">
+      <a href="{% url 'library:topic_retrieve' forum.id topic.id %}">
+        <h3 class="forum-name">{{ topic.title }}</h3>
+      </a>
+    </div>
+    <div class="col-md-3">
+      <a href="{{ topic.created_by.get_absolute_url }}">
+        <h3 class="forum-name"> {{ topic.created_by.username }} </h3>
+      </a>
+    </div>
+  </div>
 {% endfor %}
-{% endblock forum-body %}
+{% endblock library_content %}
