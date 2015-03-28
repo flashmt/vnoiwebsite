@@ -25,3 +25,11 @@
 	margin-right: 0.5em;
 	text-align: left;
 }
+
+.lib-row-same-height {
+  display: table;
+  width: 100%; }
+
+.lib-col-md-height {
+  display: table-cell;
+  float: none; }
