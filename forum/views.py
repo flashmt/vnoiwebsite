@@ -188,3 +188,21 @@ def unpin(request, topic_id):
     else:
         messages.warning(request, 'Bạn không có quyền thực hiện thao tác này')
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+
+def post_delete(request, post_id=None):
+    if post_id:
+        post = get_object_or_404(Post, pk=post_id)
+
+    # check permission
+    if not PostPermission(request.user).can_delete_post(post):
+        raise exceptions.PermissionDenied
+
+    if post.reply_on is not None:
+        post.delete()
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+    else:
+        forum_id = post.topic.forum_id
+        post.delete()
+        # Now we can not redirect to previous page (because it no longer exist :( )
+        return HttpResponseRedirect(reverse('forum:topic_list', args=(forum_id, )))

@@ -1,11 +1,8 @@
 import hashlib
 import random
-from avatar.forms import UploadAvatarForm
-from avatar.models import Avatar
-from avatar.signals import avatar_updated
-from avatar.views import _get_avatars, _get_next
+from avatar.views import _get_avatars
 from django.contrib import messages
-from django.contrib.auth import authenticate, logout, login, update_session_auth_hash, get_user_model
+from django.contrib.auth import logout, login, update_session_auth_hash, get_user_model
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 from django.template.response import TemplateResponse
@@ -20,7 +17,6 @@ from django.views.decorators.cache import never_cache
 from django.views.decorators.csrf import csrf_protect
 from django.views.decorators.debug import sensitive_post_parameters
 from post_office import mail
-from configurations import settings
 from vnoiusers.forms import *
 from vnoiusers.models import VnoiUser
 
@@ -107,10 +103,6 @@ def register_confirm(request, activation_key):
     return HttpResponseRedirect(reverse('user:login'))
 
 
-def user_update(request, user_id):
-    pass
-
-
 def user_profile(request, user_id):
     user = get_object_or_404(User.objects.select_related("profile", "profile__avatar"), pk=user_id)
     is_friend = False
@@ -128,7 +120,7 @@ def user_profile(request, user_id):
 
 
 @login_required
-def user_upload_avatar(request, extra_context=None, next_override=None,
+def user_upload_avatar(request, extra_context=None,
                        upload_form=UploadAvatarForm, *args, **kwargs):
     if extra_context is None:
         extra_context = {}
@@ -136,6 +128,7 @@ def user_upload_avatar(request, extra_context=None, next_override=None,
     upload_avatar_form = upload_form(request.POST or None,
                                      request.FILES or None,
                                      user=request.user)
+
     if request.method == "POST" and 'avatar' in request.FILES:
         if upload_avatar_form.is_valid():
             avatar = Avatar(user=request.user, primary=True)
@@ -143,17 +136,16 @@ def user_upload_avatar(request, extra_context=None, next_override=None,
             avatar.avatar.save(image_file.name, image_file)
             avatar.save()
             messages.success(request, _("Successfully uploaded a new avatar."))
-            avatar_updated.send(sender=Avatar, user=request.user, avatar=avatar)
 
             # Save avatar into user_profile
-            request.user.profile.avatar = avatar
-            request.user.profile.save()
-            return redirect(next_override or _get_next(request))
+            user_profile = request.user.profile
+            user_profile.avatar = avatar
+            user_profile.save()
+            return HttpResponseRedirect(reverse('user:profile', args=(request.user.id, )))
     context = {
         'avatar': avatar,
         'avatars': avatars,
         'upload_avatar_form': upload_avatar_form,
-        'next': next_override or _get_next(request),
     }
     context.update(extra_context)
     return render(request, 'vnoiusers/user_upload_avatar.html', context)

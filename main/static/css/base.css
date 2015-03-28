@@ -131,7 +131,7 @@
   margin-top: 0.2em;
   margin-bottom: 0.2em; }
 
-.post-edit {
+.post-edit .post-delete {
   font-size: 12px;
   color: black;
   margin-left: 0.5em;
@@ -173,7 +173,7 @@
 
 .home-post-vote-wrapper {
   float: right;
-  margin-right: 2.5em; }
+  margin-right: 2.1em; }
 
 .home-post-count-upvote {
   display: inline-block;
