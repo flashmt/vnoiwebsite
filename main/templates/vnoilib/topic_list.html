@@ -1,4 +1,5 @@
 {% extends 'vnoilib/index.html' %}
+{% load permissions %}
 
 {% block navbar-highlight %}navbar_library{% endblock navbar-highlight %}
 
@@ -8,21 +9,37 @@
 {% endblock breadcrumbs %}
 
 {% block library_content %}
-{% for topic in topics %}
-  <div class = "lib-one-line">
-    <div class="row">
-      <div class="col-md-10">
-        <a class = "" href="{% url 'library:topic_retrieve' forum.id topic.id %}">
-          <h4 class="forum-name lib-topic-title">{{ topic.title }}</h3>
-        </a>
+  {% if topics %}
+    {% for topic in topics %}
+      <div class = "lib-one-line">
+        <div class="row">
+          <div class="col-md-10">
+            <a class = "" href="{% url 'library:topic_retrieve' forum.id topic.id %}">
+              <h4 class="forum-name lib-topic-title">{{ topic.title }}</h4>
+            </a>
+          </div>
+          <div class="col-md-2">
+            <a href="{{ topic.created_by.get_absolute_url }}">
+              <h4 class="forum-name lib-topic-username"> {{ topic.created_by.username }} </h4>
+            </a>
+          </div>
+        </div>
       </div>
-      <div class="col-md-2">
-        <a href="{{ topic.created_by.get_absolute_url }}">
-          <h4 class="forum-name lib-topic-username"> {{ topic.created_by.username }} </h3>
-        </a>
+    {% endfor %}
+  {% else %}
+    <div class="lib-one-line">
+      <div class="row">
+          <div class="col-md-10">
+            <h4 class="forum-name lib-topic-title">Chưa có bài viết nào</h4>
+          </div>
       </div>
     </div>
-  </div>
-{% endfor %}
-</table>
+  {% endif %}
 {% endblock library_content %}
+{% block buttons-wrapper %}
+  {% ifhasperm "post_permission.can_create_library_post" request.user %}
+    <div class="btn-toolbar button-container" role="toolbar">
+      <a href="{% url 'forum:topic_create' forum.id %}" class="btn btn-default">Thêm bài mới</a>
+    </div>
+  {% endifhasperm %}
+{% endblock buttons-wrapper %}

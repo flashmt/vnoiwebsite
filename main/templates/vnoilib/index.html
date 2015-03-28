@@ -6,6 +6,10 @@
 {% endblock breadcrumbs %}
 
 {% block container %}
+  <div class="btn-toolbar button-container" role="toolbar">
+    {% block buttons-wrapper %}
+    {% endblock buttons-wrapper %}
+  </div>
   <div class="row lib-row-same-height">
     <div class="col-md-3">
       {% block library_menu %}
