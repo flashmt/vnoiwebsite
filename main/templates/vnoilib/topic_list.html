@@ -1,5 +1,7 @@
 {% extends 'forum/topic_list.html' %}
 
+{% block navbar-highlight %}navbar_library{% endblock navbar-highlight %}
+
 {% block breadcrumbs %}
   <li><a href="{% url 'library:index' %}">Thư viện</a></li>
   <li>{{ forum.name }}</li>
