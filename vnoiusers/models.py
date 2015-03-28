@@ -4,6 +4,7 @@ from django.contrib.auth.models import Group, User
 from django.db import models
 
 # Create your models here.
+from django.db.models import SET_NULL
 from django.db.models.signals import post_save
 
 
@@ -19,7 +20,7 @@ class VnoiUser(models.Model):
     topcoder_account = models.CharField(max_length=100, null=True, blank=True)
     topcoder_account_url = models.CharField(max_length=1024, null=True, blank=True)
     friends = models.ManyToManyField('self', related_name='+', symmetrical=False, null=True, blank=True)
-    avatar = models.OneToOneField(Avatar, related_name="vnoiuser", null=True, blank=True)
+    avatar = models.OneToOneField(Avatar, related_name="vnoiuser", null=True, blank=True, on_delete=SET_NULL)
 
     def __unicode__(self):
         return self.user.username

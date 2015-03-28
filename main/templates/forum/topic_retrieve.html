@@ -1,5 +1,7 @@
 {% extends 'forum/forum_index.html' %}
 
+{% load staticfiles %}
+
 {% block navbar-highlight %}navbar_forum{% endblock navbar-highlight %}
 
 {% block breadcrumbs %}
@@ -10,6 +12,17 @@
 
 {% block forum-body %}
 
-{% include 'forum/post_retrieve.html' %}
+  {% include 'forum/post_retrieve.html' %}
+
+  <div id="post-delete-confirm-dialog" style="display:none" title="Xóa bài viết">
+    Thao tác này sẽ xóa hoàn toàn bài viết này. Bạn không thế lấy lại bài viết đã xóa.
+    Bạn có muốn tiếp tục không?
+  </div>
 
 {% endblock forum-body %}
+
+{% block extra-js %}
+  <script src="{% static 'js/forum.js' %}"></script>
+  <script src="{% static 'js/highlight/highlight.pack.js' %}"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+{% endblock %}

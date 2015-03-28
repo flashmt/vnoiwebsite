@@ -9,7 +9,7 @@ feature "User" do
   end
 
   scenario "Basic login and logout", :js => true do
-    visit "#{ROOT_URL}/main"
+    visit "#{ROOT_URL}"
 
     verify_content($login_content)
     login('admin', 'admin')
@@ -17,7 +17,7 @@ feature "User" do
   end
 
   scenario "User should be redirected to previous page", :js => true do
-    ['/main',
+    ['',
      '/problem/list',
      '/forum', '/forum/1', '/forum/1/1',
      '/user/1'
@@ -31,32 +31,39 @@ feature "User" do
 
     visit "#{ROOT_URL}/user/login"
     login('admin', 'admin')
-    expect(current_path.chomp('/')).to eq('/main')
+    expect(current_path.chomp('/')).to eq('')
     click_on $logout
 
     visit "#{ROOT_URL}/user/register"
     login('admin', 'admin')
-    expect(current_path.chomp('/')).to eq('/main')
+    expect(current_path.chomp('/')).to eq('')
     click_on $logout
   end
 
   scenario "Logged in user should not be able to access login / register page", :js => true do
-    visit "#{ROOT_URL}/main"
+    visit "#{ROOT_URL}"
     login('admin', 'admin')
 
     visit "#{ROOT_URL}/user/login"
-    expect(current_path.chomp('/')).to eq("/main")
+    expect(current_path.chomp('/')).to eq("")
 
     visit "#{ROOT_URL}/user/register"
     verify_flash_messages(['Invalid request'])
-    expect(current_path.chomp('/')).to eq("/main")
+    expect(current_path.chomp('/')).to eq("")
   end
 
   scenario "User should be able to register", :js => true do
     username = random_string(10)
     email = random_string(10) + '@gmail.com'
     register(username, email, '12345')
-    visit "#{ROOT_URL}/main"
+    visit "#{ROOT_URL}"
+
+    # Now, cannot login because account is not yet activated
+    login(username, '12345')
+    expect(current_path.chomp('/')).to eq('/user/login')
+
+    # Activate account & login
+    activate_account(username)
     login(username, '12345')
     verify_flash_messages(['Welcome back'])
     click_on 'Logout'
@@ -64,25 +71,26 @@ feature "User" do
     email2 = random_string(10) + '@gmail.com'
     register(username, email2, '123456')
     expect(page).to have_content('Tài khoản này đã được đăng ký')
-    visit "#{ROOT_URL}/main"
+    visit "#{ROOT_URL}"
     login(username, '123456')
     expect(page).to have_content('Login')
 
     username2 = random_string(10)
     register(username2, email, '123456')
     expect(page).to have_content('Email này đã được đăng ký')
-    visit "#{ROOT_URL}/main"
+    visit "#{ROOT_URL}"
     login(username2, '123456')
     expect(page).to have_content('Login')
 
     register(username2, email2, '12345', password2: '123456')
     expect(page).to have_content('Mật khẩu nhập lại không khớp')
-    visit "#{ROOT_URL}/main"
+    visit "#{ROOT_URL}"
     login(username2, '12345')
     expect(page).to have_content('Login')
 
     register(username2, email2, '12345')
-    visit "#{ROOT_URL}/main"
+    activate_account(username2)
+    visit "#{ROOT_URL}"
     login(username2, '12345')
     verify_flash_messages(['Welcome back'])
 
@@ -93,7 +101,7 @@ feature "User" do
 
   scenario "User should be able to link Codeforces account", :js => true do
     # Login
-    visit "#{ROOT_URL}/main"
+    visit "#{ROOT_URL}"
     login('admin', 'admin')
 
     # Link CF account - try wrong password
@@ -122,7 +130,7 @@ feature "User" do
 
   scenario "User should be able to link VOJ account", :js => true do
     # Login
-    visit "#{ROOT_URL}/main"
+    visit "#{ROOT_URL}"
     login('admin', 'admin')
 
     # Link VOJ account - wrong password
@@ -151,39 +159,42 @@ feature "User" do
 
   scenario "User should be able to add friend", :js => true do
     # Login
-    visit "#{ROOT_URL}/main"
+    visit "#{ROOT_URL}"
     login('admin', 'admin')
     
     # Add user as friend
     visit "#{ROOT_URL}/user/2"
-    click_on 'Add friend'
+    if page.has_text?($remove_friend_button)
+      click_on $remove_friend_button
+    end
+    click_on $add_friend_button
     verify_flash_messages(['Friend successfully added'])
     
     # Check friend list
     click_on 'admin'
-    click_on 'My friends'
+    click_on $friend_list
     within '#body-container' do
       expect(page).to have_content('vnoiuser')
     end
 
     # Remove friend
     click_on 'vnoiuser'
-    click_on 'Remove friend'
+    click_on $remove_friend_button
     verify_flash_messages(['Friend successfully removed'])
 
     # Check friend list
     click_on 'admin'
-    click_on 'My friends'
+    click_on $friend_list
     within '#body-container' do
       expect(page).to have_no_content('vnoiuser')
     end
   end
 
   scenario "User should be able to search friend", :js => true do
-    visit "#{ROOT_URL}/main"
+    visit "#{ROOT_URL}"
     login('admin', 'admin')
     visit "#{ROOT_URL}/user/1"
-    click_on 'My friends'
+    click_on $friend_list
 
     # Search for vnoi
     fill_in 'id_user_prefix', with: 'vnoi'
@@ -199,7 +210,7 @@ feature "User" do
 
     # Search for abc
     visit "#{ROOT_URL}/user/1"
-    click_on 'My friends'
+    click_on $friend_list
     fill_in 'id_user_prefix', with: 'abc'
     click_on 'OK'
     within '#body-container' do
@@ -209,7 +220,7 @@ feature "User" do
   end
 
   scenario "User should be able to edit profile", :js => true do
-    visit "#{ROOT_URL}/main"
+    visit "#{ROOT_URL}"
     login('admin', 'admin')
     visit "#{ROOT_URL}/user/1"
     click_on $update_profile

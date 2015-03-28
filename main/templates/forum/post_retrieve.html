@@ -1,107 +1,116 @@
-{% block postview %}
 {% load staticfiles %}
 {% load user_avatar_tags %}
 {% load bleach_tags %}
 {% load permissions %}
 
-<div style="background-color:wheat; margin-left: 0; margin-bottom: 30px">
+{% block postview %}
+  <div style="background-color:wheat; margin-left: 0; margin-bottom: 30px">
 
     <div class="panel panel-default post-outer-wrapper">
-        {% if not is_child %}
-            <div class="forum-group-head">
-                <div>
-                    <div class="post-heading-title">
-                        {{topic.title}}
-                    </div>
-                    <div class="post-heading-created-time">
-                        {{post.created_at}}
-                    </div>
-                </div>
+      {% if not is_child %}
+        <div class="forum-group-head">
+          <div>
+            <div class="post-heading-title">
+              {{ topic.title }}
             </div>
-        {% endif %}
-        <div class="row post-wrapper" id="post-{{ post.id }}">
-            <div class="post-row-same-height">
-                <div class="col-md-height post-user-detail ">
-                    <div>
-                        <div class = "post-user-name">
-                            <a href="{{post.created_by.get_absolute_url}}" class="post-username">
-                                {{post.created_by.username}}
-                            </a>
-                        </div>
-                        <div>
-                        <img src="{% user_avatar_url post.created_by 130 %}"/>
-                        </div>
-                    </div>
-                </div>
-                <div class="post-content col-md-height">
-                    <div class="post-body">
-                        <div class="post-content">
-                            <div style="margin-left:1em; margin-top: 1em; margin-bottom:1em;">
-                                {{post.content|bleach}}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="post-tools">
-                        <div class="row">
-                            <div class="col-md-9">
-                                <a class="btn btn-default post-reply" href="{% url 'forum:post_create' forum.id topic.id post.id %}" role="button">
-                                  Reply
-                                </a>
-                                {% ifhasperm "post_permission.can_update_post" request.user post %}
-                                    <a class="btn btn-default post-edit" href="{% url 'forum:post_update' forum.id topic.id post.id %}" role="button">
-                                      Edit
-                                    </a>
-                                {% endifhasperm %}
-                                {% if not is_child %}
-                                  {% ifhasperm "topic_permission.can_toggle_pin" request.user topic %}
-                                    {% if topic.is_pinned %}
-                                      <a class="btn btn-default post-edit" href="{% url 'forum:unpin' topic.id %}" role="button">
-                                        Unpin
-                                      </a>
-                                    {% else %}
-                                      <a class="btn btn-default post-edit" href="{% url 'forum:pin' topic.id %}" role="button">
-                                        Pin
-                                      </a>
-                                    {% endif %}
-                                  {% endifhasperm %}
-                                {% endif %}
-                                  <a class="btn btn-default post-edit" href="{% url 'forum:topic_retrieve' forum.id topic.id %}#post-{{ post.id }}" role="button">
-                                    #
-                                  </a>
-                            </div>
-                            <div class="col-md-1">
-                                <a class="btn btn-default post-upvote" href="{% url 'forum:vote_create' post.id %}?type=u" role="button">
-                                  +
-                                </a>
-                            </div>
-                            <div class="col-md-1 post-count-upvote" id = "count_upvote">
-                                {{ post.total_votes }}
-                            </div>
-                            <div class="col-md-1">
-                                <a class="btn btn-default post-downvote" href="{% url 'forum:vote_create' post.id %}?type=d" role="button">
-                                  -
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div class="post-heading-created-time">
+              {{ post.created_at }}
             </div>
+          </div>
         </div>
+      {% endif %}
+      <div class="row post-wrapper" id="post-{{ post.id }}">
+        <div class="post-row-same-height">
+          <div class="col-md-height post-user-detail ">
+            <div>
+              <div class="post-user-name">
+                <a href="{{ post.created_by.get_absolute_url }}" class="post-username">
+                  {{ post.created_by.username }}
+                </a>
+              </div>
+              <div>
+                <img class = "post-user-avatar" src="{% user_avatar_url post.created_by 130 %}"/>
+              </div>
+            </div>
+          </div>
+          <div class="post-content col-md-height">
+            <div class="post-body">
+              <div class="post-content">
+                <div style="margin:1em;">
+                  {{ post.content|bleach }}
+                </div>
+              </div>
+            </div>
+            <div class="post-tools">
+              <div class="row">
+                <div class="col-md-10">
+                  <a class="btn btn-default post-reply" href="{% url 'forum:post_create' forum.id topic.id post.id %}"
+                     role="button">
+                    Reply
+                  </a>
+                  {% ifhasperm "post_permission.can_update_post" request.user post %}
+                    <a class="btn btn-default post-edit" href="{% url 'forum:post_update' forum.id topic.id post.id %}"
+                       role="button">
+                      Edit
+                    </a>
+                  {% endifhasperm %}
+                  {% ifhasperm "post_permission.can_delete_post" request.user post %}
+                    <a class="btn btn-default post-delete" href="javascript:void(0)"
+                       role="button" post-id="{{ post.id }}">
+                      Delete
+                    </a>
+                  {% endifhasperm %}
+                  {% if not is_child %}
+                    {% ifhasperm "topic_permission.can_toggle_pin" request.user topic %}
+                      {% if topic.is_pinned %}
+                        <a class="btn btn-default post-pin" href="{% url 'forum:unpin' topic.id %}" role="button">
+                          Unpin
+                        </a>
+                      {% else %}
+                        <a class="btn btn-default post-pin" href="{% url 'forum:pin' topic.id %}" role="button">
+                          Pin
+                        </a>
+                      {% endif %}
+                    {% endifhasperm %}
+                  {% endif %}
+                  <a class="btn btn-default post-edit"
+                     href="{% url 'forum:topic_retrieve' forum.id topic.id %}#post-{{ post.id }}" role="button">
+                    #
+                  </a>
+                </div>
+                <div class="post-vote-wrapper forum-post-vote-wrapper">
+                  <a class="btn btn-default post-upvote"
+                     href="javascript:void(0)"
+                     post-id="{{ post.id }}"
+                     role="button">
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                  </a>
+                  <div class="post-count-upvote" id="total-vote-{{ post.id }}">
+                    {{ post.total_votes }}
+                  </div>
+                  <a class="btn btn-default post-downvote"
+                     href="javascript:void(0)"
+                     post-id="{{ post.id }}"
+                     role="button">
+                    <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-</div>
-<div style="margin-left:50px; margin-top: -1.5em">
-{% for p in posts %}{% if p.reply_on_id == post.id %}
-    {% with post=p template_name="forum/post_retrieve" %}
+  </div>
+  <div style="margin-left:50px; margin-top: -1.5em">
+    {% for p in posts %}{% if p.reply_on_id == post.id %}
+      {% with post=p template_name="forum/post_retrieve" %}
         {% include 'forum/post_retrieve.html' with is_child=True %}
-    {% endwith %}
-{% endif %}{% endfor %}
-</div>
+      {% endwith %}
+    {% endif %}{% endfor %}
+  </div>
 
 {% endblock postview %}
-{% block extra-js %}
-    <script src="{% static 'js/highlight/highlight.pack.js' %}"></script>
-    <script>hljs.initHighlightingOnLoad();</script>
-{% endblock %}
 {% block extra-css %}
-    <link rel="stylesheet" href="{% static 'js/highlight/styles/default.css' %}"/>
+  <link rel="stylesheet" href="{% static 'js/highlight/styles/default.css' %}"/>
 {% endblock %}

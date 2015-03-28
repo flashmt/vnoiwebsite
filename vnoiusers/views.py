@@ -1,44 +1,47 @@
 import hashlib
 import random
-from avatar.forms import UploadAvatarForm
-from avatar.models import Avatar
-from avatar.signals import avatar_updated
-from avatar.views import _get_avatars, _get_next
+from avatar.views import _get_avatars
 from django.contrib import messages
-from django.contrib.auth import authenticate, logout, login
+from django.contrib.auth import logout, login, update_session_auth_hash, get_user_model
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
+from django.template.response import TemplateResponse
+from django.utils.http import urlsafe_base64_decode, is_safe_url
 from django.utils.translation import ugettext as _
 
 from django.http import HttpResponseRedirect, HttpResponse
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404, resolve_url
 
 # Create your views here.
+from django.views.decorators.cache import never_cache
+from django.views.decorators.csrf import csrf_protect
+from django.views.decorators.debug import sensitive_post_parameters
 from post_office import mail
 from vnoiusers.forms import *
 from vnoiusers.models import VnoiUser
 
 
-def user_login(request, template_name='vnoiusers/user_login.html'):
+def user_login(request,
+               template_name='vnoiusers/user_login.html'):
     form = UserLoginForm()
     if request.user.is_authenticated():
-        return HttpResponseRedirect('/main')
+        return HttpResponseRedirect(reverse('main:index'))
 
     if request.POST:
-        try:
-            username = request.POST['username']
-            password = request.POST['password']
-            user = authenticate(username=username, password=password)
-            if (user is not None) and user.is_active:
-                login(request, user)
-                messages.success(request, 'Welcome back, %s' % username)
-                last_url = request.META.get('HTTP_REFERER')
-                if '/user/register' in last_url or '/user/login' in last_url:
-                    last_url = reverse('main:index')
-                return HttpResponseRedirect(last_url)
-            else:
-                return render(request, template_name, {'form': form, 'message': 'login fail!'})
-        except KeyError:
+        form = UserLoginForm(request.POST)
+        if form.is_valid():
+            login(request, form.get_user())
+            messages.success(request, 'Welcome back, %s' % form.cleaned_data['username'])
+            last_url = request.META.get('HTTP_REFERER')
+            if '/user/register' in last_url or '/user/login' in last_url:
+                last_url = reverse('main:index')
+
+            # Ensure the user-originating redirection url is safe.
+            if not is_safe_url(url=last_url, host=request.get_host()):
+                last_url = resolve_url(settings.LOGIN_REDIRECT_URL)
+
+            return HttpResponseRedirect(last_url)
+        else:
             return render(request, template_name, {'form': form, 'message': 'login fail!'})
     else:
         return render(request, template_name, {'form': form, 'message': ''})
@@ -54,7 +57,7 @@ def user_create(request, template_name='vnoiusers/user_create.html'):
     form = UserCreateForm()
     if request.user.is_authenticated():
         messages.warning(request, 'Invalid request')
-        return HttpResponseRedirect('/main')
+        return HttpResponseRedirect(reverse('main:index'))
 
     if request.POST:
         form = UserCreateForm(request.POST)
@@ -100,10 +103,6 @@ def register_confirm(request, activation_key):
     return HttpResponseRedirect(reverse('user:login'))
 
 
-def user_update(request, user_id):
-    pass
-
-
 def user_profile(request, user_id):
     user = get_object_or_404(User.objects.select_related("profile", "profile__avatar"), pk=user_id)
     is_friend = False
@@ -121,7 +120,7 @@ def user_profile(request, user_id):
 
 
 @login_required
-def user_upload_avatar(request, extra_context=None, next_override=None,
+def user_upload_avatar(request, extra_context=None,
                        upload_form=UploadAvatarForm, *args, **kwargs):
     if extra_context is None:
         extra_context = {}
@@ -129,6 +128,7 @@ def user_upload_avatar(request, extra_context=None, next_override=None,
     upload_avatar_form = upload_form(request.POST or None,
                                      request.FILES or None,
                                      user=request.user)
+
     if request.method == "POST" and 'avatar' in request.FILES:
         if upload_avatar_form.is_valid():
             avatar = Avatar(user=request.user, primary=True)
@@ -136,17 +136,16 @@ def user_upload_avatar(request, extra_context=None, next_override=None,
             avatar.avatar.save(image_file.name, image_file)
             avatar.save()
             messages.success(request, _("Successfully uploaded a new avatar."))
-            avatar_updated.send(sender=Avatar, user=request.user, avatar=avatar)
 
             # Save avatar into user_profile
-            request.user.profile.avatar = avatar
-            request.user.profile.save()
-            return redirect(next_override or _get_next(request))
+            user_profile = request.user.profile
+            user_profile.avatar = avatar
+            user_profile.save()
+            return HttpResponseRedirect(reverse('user:profile', args=(request.user.id, )))
     context = {
         'avatar': avatar,
         'avatars': avatars,
         'upload_avatar_form': upload_avatar_form,
-        'next': next_override or _get_next(request),
     }
     context.update(extra_context)
     return render(request, 'vnoiusers/user_upload_avatar.html', context)
@@ -287,7 +286,7 @@ def index(request):
 @login_required
 def update_profile(request):
     if request.POST:
-        form = UserProfileForm(request.POST)
+        form = UserProfileForm(request.POST, instance=request.user)
         if form.is_valid():
             form.save()
             return HttpResponseRedirect(reverse('user:profile', kwargs={'user_id': request.user.id}))
@@ -297,9 +296,164 @@ def update_profile(request):
                 'message': form.errors
             })
     return render(request, 'vnoiusers/update_profile.html', {
-        'form': UserProfileForm(initial={
-            'first_name': request.user.first_name,
-            'last_name': request.user.last_name,
-            'dob': request.user.profile.dob,
-        })
+        'form': UserProfileForm(instance=request.user)
     })
+
+# 4 views for password reset:
+# - password_reset sends the mail
+# - password_reset_done shows a success message for the above
+# - password_reset_confirm checks the link the user clicked and
+#   prompts for a new password
+# - password_reset_complete shows a success message for the above
+
+@csrf_protect
+def password_reset(request,
+                   template_name='vnoiusers/password_reset.html',
+                   email_template_name='vnoiusers/password_reset_email.html',
+                   subject_template_name='vnoiusers/password_reset_subject.txt',
+                   password_reset_form=PasswordResetForm,
+                   token_generator=default_token_generator,
+                   post_reset_redirect=None,
+                   from_email=None,
+                   current_app=None,
+                   extra_context=None,
+                   html_email_template_name=None):
+    if post_reset_redirect is None:
+        post_reset_redirect = reverse('user:password_reset_done')
+    else:
+        post_reset_redirect = resolve_url(post_reset_redirect)
+    if request.method == "POST":
+        form = password_reset_form(request.POST)
+        if form.is_valid():
+            opts = {
+                'use_https': request.is_secure(),
+                'token_generator': token_generator,
+                'from_email': from_email,
+                'email_template_name': email_template_name,
+                'subject_template_name': subject_template_name,
+                'request': request,
+                'html_email_template_name': html_email_template_name,
+            }
+            form.save(**opts)
+            return HttpResponseRedirect(post_reset_redirect)
+    else:
+        form = password_reset_form()
+    context = {
+        'form': form,
+    }
+    if extra_context is not None:
+        context.update(extra_context)
+    return TemplateResponse(request, template_name, context,
+                            current_app=current_app)
+
+
+def password_reset_done(request,
+                        template_name='vnoiusers/password_reset_done.html',
+                        current_app=None, extra_context=None):
+    context = {}
+    if extra_context is not None:
+        context.update(extra_context)
+    return TemplateResponse(request, template_name, context, current_app=current_app)
+
+
+# Doesn't need csrf_protect since no-one can guess the URL
+@sensitive_post_parameters()
+@never_cache
+def password_reset_confirm(request, uidb64=None, token=None,
+                           template_name='vnoiusers/password_reset_confirm.html',
+                           token_generator=default_token_generator,
+                           set_password_form=SetPasswordForm,
+                           post_reset_redirect=None,
+                           current_app=None, extra_context=None):
+    """
+    View that checks the hash in a password reset link and presents a
+    form for entering a new password.
+    """
+    UserModel = get_user_model()
+    assert uidb64 is not None and token is not None  # checked by URLconf
+    if post_reset_redirect is None:
+        post_reset_redirect = reverse('user:password_reset_complete')
+    else:
+        post_reset_redirect = resolve_url(post_reset_redirect)
+    try:
+        uid = urlsafe_base64_decode(uidb64)
+        user = UserModel._default_manager.get(pk=uid)
+    except (TypeError, ValueError, OverflowError, UserModel.DoesNotExist):
+        user = None
+
+    if user is not None and token_generator.check_token(user, token):
+        validlink = True
+        title = _('Enter new password')
+        if request.method == 'POST':
+            form = set_password_form(user, request.POST)
+            if form.is_valid():
+                form.save()
+                return HttpResponseRedirect(post_reset_redirect)
+        else:
+            form = set_password_form(user)
+    else:
+        validlink = False
+        form = None
+        title = _('Password reset unsuccessful')
+    context = {
+        'form': form,
+        'title': title,
+        'validlink': validlink,
+    }
+    if extra_context is not None:
+        context.update(extra_context)
+    return TemplateResponse(request, template_name, context,
+                            current_app=current_app)
+
+
+def password_reset_complete(request,
+                            template_name='vnoiusers/password_reset_complete.html',
+                            current_app=None, extra_context=None):
+    context = {}
+    if extra_context is not None:
+        context.update(extra_context)
+    return TemplateResponse(request, template_name, context,
+                            current_app=current_app)
+
+
+@sensitive_post_parameters()
+@csrf_protect
+@login_required
+def password_change(request,
+                    template_name='vnoiusers/password_change.html',
+                    post_change_redirect=None,
+                    password_change_form=PasswordChangeForm,
+                    current_app=None, extra_context=None):
+    if post_change_redirect is None:
+        post_change_redirect = reverse('user:password_change_done')
+    else:
+        post_change_redirect = resolve_url(post_change_redirect)
+    if request.method == "POST":
+        form = password_change_form(user=request.user, data=request.POST)
+        if form.is_valid():
+            form.save()
+            # Updating the password logs out all other sessions for the user
+            # except the current one if
+            # django.contrib.auth.middleware.SessionAuthenticationMiddleware
+            # is enabled.
+            update_session_auth_hash(request, form.user)
+            return HttpResponseRedirect(post_change_redirect)
+    else:
+        form = password_change_form(user=request.user)
+    context = {
+        'form': form,
+    }
+    if extra_context is not None:
+        context.update(extra_context)
+    return TemplateResponse(request, template_name, context, current_app=current_app)
+
+
+@login_required
+def password_change_done(request,
+                         template_name='vnoiusers/password_change_done.html',
+                         current_app=None, extra_context=None):
+    context = {}
+    if extra_context is not None:
+        context.update(extra_context)
+    return TemplateResponse(request, template_name, context,
+                            current_app=current_app)

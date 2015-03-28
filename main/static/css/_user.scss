@@ -5,6 +5,9 @@
 
 .user-detail {
 	border: 1px solid #337ab7;
+	padding-left: 0.5em;
+	padding-right: -0.5em;
+	padding-top: 0.5em;
 }
 
 .user-avatar {
@@ -38,6 +41,8 @@
 
 .user-recent-topic {
 	border: 1px solid #337ab7;
+	padding-left: 0.5em;
+	padding-right: 2em;
 }
 
 .user-one-post {
@@ -57,11 +62,9 @@
 .user-post-day-created {
 	text-align: right;
 	margin-top: 1em;
-	margin-right: 1em;
 }
 
 .user-post-content {
-	margin-left: 2em;
 	margin-top: 0em;
-	margin-bottom: 1em; 
+	margin-bottom: 1em;
 }

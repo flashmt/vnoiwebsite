@@ -111,6 +111,18 @@ def browser_history_back
 end
 
 def hide_django_profile_bar
-  visit "#{ROOT_URL}/main"
+  visit "#{ROOT_URL}"
   click_on 'Hide'
+end
+
+def activate_account(username)
+  # Use magic to get the activation key
+  if ENV.has_key?('USE_VIRTUAL_ENV')
+    activation_key = `cd #{`pwd`.chomp}/..; pwd; venv/bin/python -m vnoiusers.get_activation_key '#{username}'`.split[1]
+  else
+    activation_key = `cd #{`pwd`.chomp}/..; pwd; python -m vnoiusers.get_activation_key '#{username}'`.split[1]
+  end
+  puts "activation key = #{activation_key}"
+  visit "#{ROOT_URL}/user/confirm/#{activation_key}"
+  expect(page).to have_content('Sign in')
 end
