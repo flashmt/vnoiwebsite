@@ -25,7 +25,13 @@ class SpojProblem(models.Model):
     accept_count = models.IntegerField(null=False, blank=False, default=0)
     accept_rate = models.FloatField(null=False, blank=False, default=0.0)
     score = models.FloatField(null=False, blank=False, default=2.0)
-    statement = BleachField(null=True)
+    statement = BleachField(null=True,
+                            allowed_tags=[
+                                'p', 'strong', 'em', 'pre', 'code', 'a', 'img', 'ol', 'ul', 'li', 'span', 'i', 'sub',
+                                'h1', 'h2', 'h3', 'h4', 'h5', 'h6'
+                            ],
+                            allowed_attributes=['href', 'class', 'alt', 'style', 'src'],
+                            strip_tags=False)
     author = models.CharField(max_length=250, null=True, blank=True)
     created_at = models.DateField(null=True, blank=True, auto_now_add=True)
     # Time limit in second
