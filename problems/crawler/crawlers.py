@@ -2,6 +2,7 @@
 import time
 import re
 import requests
+import html5lib
 
 from bs4 import BeautifulSoup
 from problems.models import SpojProblem
@@ -23,7 +24,9 @@ def get_html(url):
     response = requests.get(url)
     if response.status_code != 200:
         return None
-    return BeautifulSoup(response.text)
+    # Since the problem statement of SPOJ sometimes contains '&', '<' and '>', which are not valid in correct HTML,
+    # we must use a lenient parser
+    return BeautifulSoup(response.text, 'html5lib')
 
 
 def get_elements_from_html(html, selector):
@@ -48,6 +51,7 @@ def get_problem_rank_url(problem_code):
     return '%sranks/%s' % (VOJ_BASE_URL, problem_code)
 
 
+# Return: problem statement in HTML
 def get_problem_statement(problem_code):
     problem_url = get_problem_url(problem_code)
     soup = get_html(problem_url)
@@ -64,9 +68,11 @@ def get_problem_statement(problem_code):
     return prob_content.prettify()
 
 
+# Find available language for a problem
+# Return: array of language code
 def get_problem_languages(problem_code):
     problem_rank_url = get_problem_rank_url(problem_code)
-    soup = get_html(problem_url)
+    soup = get_html(problem_rank_url)
     div_langs = soup.find("small")
     div_langs = BeautifulSoup(div_langs.prettify())
 
@@ -123,6 +129,7 @@ def get_problem_codes_from_category(category):
                     problem.score = round(80.0 / (40 + int(data['ac_count'])), 1)
 
                 problem.save()
+                time.sleep(1)
 
                 result.append(problem)
         page_id += 1
