@@ -130,7 +130,8 @@ end
 def init_database
   if ENV.has_key?('USE_VIRTUAL_ENV')
     init_file = 'init_database_travis.sh'
-  else init_file = 'init_database.sh'
+  else 
+    init_file = 'init_database.sh'
   end
   cmd = "cd #{__dir__} && cd .. && ./#{init_file}"
   execute = system(cmd)
