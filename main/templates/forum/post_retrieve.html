@@ -29,7 +29,7 @@
                 </a>
               </div>
               <div>
-                <img src="{% user_avatar_url post.created_by 130 %}"/>
+                <img class = "post-user-avatar" src="{% user_avatar_url post.created_by 130 %}"/>
               </div>
             </div>
           </div>
@@ -63,11 +63,11 @@
                   {% if not is_child %}
                     {% ifhasperm "topic_permission.can_toggle_pin" request.user topic %}
                       {% if topic.is_pinned %}
-                        <a class="btn btn-default post-edit" href="{% url 'forum:unpin' topic.id %}" role="button">
+                        <a class="btn btn-default post-pin" href="{% url 'forum:unpin' topic.id %}" role="button">
                           Unpin
                         </a>
                       {% else %}
-                        <a class="btn btn-default post-edit" href="{% url 'forum:pin' topic.id %}" role="button">
+                        <a class="btn btn-default post-pin" href="{% url 'forum:pin' topic.id %}" role="button">
                           Pin
                         </a>
                       {% endif %}

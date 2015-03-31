@@ -1,0 +1,35 @@
+/*
+ * VnoiLib
+ * --------------------------------------------------
+ */
+
+.lib-small-topic {
+ 	margin-top: 0.5em;
+}
+
+.lib-list-container {
+	border: 1px solid #ddd;
+	border-radius: 5px;
+}
+
+.lib-one-line {
+	border-bottom: 1px solid #ddd;
+}
+
+.lib-topic-title {
+	margin-left: 0.5em;
+	text-align: left;
+}
+
+.lib-topic-username {
+	margin-right: 0.5em;
+	text-align: left;
+}
+
+.lib-row-same-height {
+  display: table;
+  width: 100%; }
+
+.lib-col-md-height {
+  display: table-cell;
+  float: none; }

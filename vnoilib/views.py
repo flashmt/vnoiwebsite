@@ -1,18 +1,19 @@
-from django.shortcuts import render, get_object_or_404
+from django.core.urlresolvers import reverse
+from django.shortcuts import render, get_object_or_404, redirect
 from forum.models import ForumGroup, Forum, Topic
 from forum.views import pagination_items
 
 
 def index(request):
-    return render(request, 'vnoilib/index.html', {
-        'lib_groups': ForumGroup.objects.filter(group_type='l')
-    })
+    lib_group = ForumGroup.objects.filter(group_type='l').first()
+    forum = lib_group.forums.first()
+    return redirect(reverse('library:topic_list', kwargs={'forum_id': forum.id}))
 
 
 def topic_retrieve(request, forum_id, topic_id, template="vnoilib/post_view.html"):
     forum = get_object_or_404(Forum, pk=forum_id)
     topic = get_object_or_404(Topic, pk=topic_id)
-    posts = topic.posts.all().values('content', 'created_at', 'created_by__id', 'created_by')
+    posts = topic.posts.all().select_related('created_by', 'created_by__profile__avatar')
     return render(request, template, {
         'forum': forum,
         'topic': topic,
@@ -27,5 +28,6 @@ def topic_list(request, forum_id, template="vnoilib/topic_list.html"):
     topics = pagination_items(request, topics, 50)
     return render(request, template, {
         'forum': forum,
-        'topics': topics
+        'topics': topics,
+        'lib_groups': ForumGroup.objects.filter(group_type='l')
     })

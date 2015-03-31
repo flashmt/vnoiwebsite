@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
+import time
 import re
 import requests
+import html5lib
 
 from bs4 import BeautifulSoup
 from problems.models import SpojProblem
@@ -22,7 +24,9 @@ def get_html(url):
     response = requests.get(url)
     if response.status_code != 200:
         return None
-    return BeautifulSoup(response.text)
+    # Since the problem statement of SPOJ sometimes contains '&', '<' and '>', which are not valid in correct HTML,
+    # we must use a lenient parser
+    return BeautifulSoup(response.text, 'html5lib')
 
 
 def get_elements_from_html(html, selector):
@@ -43,30 +47,39 @@ def get_problem_url(problem_code):
     return '%sproblems/%s' % (VOJ_BASE_URL, problem_code)
 
 
+def get_problem_rank_url(problem_code):
+    return '%sranks/%s' % (VOJ_BASE_URL, problem_code)
+
+
+# Return: problem statement in HTML
 def get_problem_statement(problem_code):
-    problem_url = "%sproblems/%s" % (VOJ_BASE_URL, problem_code)
+    problem_url = get_problem_url(problem_code)
     soup = get_html(problem_url)
+
+    # remove redundancy sections
+    soup.find("div", {"style": "position: absolute; right: 0px"}).decompose()
+    soup.find("div", {"class": "aProblemTop"}).decompose()
+    soup.find("div", {"class": "fb-like"}).decompose()
+    soup.find("div", {"id": "ccontent"}).decompose()
+    soup.find("table", {"class": "probleminfo"}).decompose()
 
     # problem statement
     prob_content = soup.find("div", {"class": "prob"})
-    # gg+ ads
-    div_gg_ads = soup.find("div", {"style": "position: absolute; right: 0px"})
-    # fb ads
-    div_fb_ads = soup.find("div", {"class": "aProblemTop"})
-    # problem info
-    tab_prob_info = soup.find("table", {"class": "probleminfo"})
-    # comments
-    ccontent = soup.find("div", {"id": "ccontent"})
+    return prob_content.prettify()
 
-    prob_statement = prob_content.text
 
-    # remove redundant sections
-    prob_statement.replace(div_fb_ads.text, "")
-    prob_statement.replace(div_gg_ads.text, "")
-    prob_statement.replace(tab_prob_info.text, "")
-    prob_statement.replace(ccontent.text, "")
+# Find available language for a problem
+# Return: array of language code
+def get_problem_languages(problem_code):
+    problem_rank_url = get_problem_rank_url(problem_code)
+    soup = get_html(problem_rank_url)
+    div_langs = soup.find("small")
+    div_langs = BeautifulSoup(div_langs.prettify())
 
-    return prob_statement
+    langs = []
+    for lang in div_langs.find_all("a"):
+        langs.append(lang.text.strip())
+    return langs
 
 
 def get_problem_codes_from_category(category):
@@ -79,6 +92,7 @@ def get_problem_codes_from_category(category):
         if page_id >= 1:
             break
 
+        time.sleep(1)
         problem_rows = get_elements_from_url(get_category_url(category, page_id=page_id), 'tr[class="problemrow"]')
 
         if problem_rows is None:
@@ -115,6 +129,7 @@ def get_problem_codes_from_category(category):
                     problem.score = round(80.0 / (40 + int(data['ac_count'])), 1)
 
                 problem.save()
+                time.sleep(1)
 
                 result.append(problem)
         page_id += 1

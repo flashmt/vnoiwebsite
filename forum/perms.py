@@ -22,11 +22,14 @@ class ForumPermission(permissions.BasePermission):
 class PostPermission(permissions.BasePermission):
 
     label = 'post_permission'
-    checks = ('can_create_post', 'can_update_post', 'can_delete_post')
+    checks = ('can_create_post', 'can_update_post', 'can_delete_post', 'can_create_library_post')
 
     def can_create_post(self):
         # Authenticated User can create post
         return True
+
+    def can_create_library_post(self):
+        return is_admin(self.user)
 
     def can_update_post(self, post):
         # Admin can update post
