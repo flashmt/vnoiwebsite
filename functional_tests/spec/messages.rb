@@ -17,7 +17,7 @@ feature "Messages" do
     login('vnoiuser', 'vnoiuser')
     click_on $messages
   end
-=begin
+
   scenario "User should not see Message URL until logged in", :js => true do
     visit "#{ROOT_URL}"
 
@@ -122,7 +122,7 @@ feature "Messages" do
 
     init_database
   end
-=end
+
   scenario "User should be able to write and receive message", :js => true do
     login_as_admin
     visit "#{ROOT_URL}/message/write"
