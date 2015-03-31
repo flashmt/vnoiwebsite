@@ -128,6 +128,9 @@ def activate_account(username)
 end
 
 def init_database
-  cmd = "cd #{__dir__} && cd .. && ./init_database.sh"
+  if ENV.has_key?('USE_VIRTUAL_ENV')
+    init_file = 'init_database_travis.sh'
+  else init_file = 'init_database.sh'
+  cmd = "cd #{__dir__} && cd .. && ./#{init_file}"
   execute = system(cmd)
 end
