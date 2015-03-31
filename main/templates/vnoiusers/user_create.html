@@ -1,11 +1,16 @@
 {% extends 'main/base.html' %}
+{% load staticfiles %}
+
+{% block extra-js %}
+  <script src="{% static 'js/user.js' %}"></script>
+{% endblock %}
 
 {% block container %}
 
-    {% block form-title %}
-        <h2>Register Form</h2>
-    {% endblock %}
+  {% block form-title %}
+    <h2>Register Form</h2>
+  {% endblock %}
 
-    {% include 'main/base_form.html' with form_id='register_form' %}
+  {% include 'main/base_form.html' with form_id='register_form' %}
 
 {% endblock container %}
