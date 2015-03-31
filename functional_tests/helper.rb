@@ -28,7 +28,7 @@ end
 
 
 # Set default wait time for page elements lookup to 5 seconds
-Capybara.default_wait_time = 5
+Capybara.default_wait_time = 15
 # HTML files & screenshots at failure points will be saved in output folder
 Capybara.save_and_open_page_path = './output'
 Capybara::Screenshot::RSpec.add_link_to_screenshot_for_failed_examples = true
