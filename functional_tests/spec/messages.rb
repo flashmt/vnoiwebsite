@@ -101,7 +101,7 @@ feature "Messages" do
     visit("#{ROOT_URL}/message/sent")
     verify_content(['second letter', 'Welcome'])
   end  
-#=begin
+
   scenario "Archive not empty after saving message", :js => true do
     login_as_admin
     visit "#{ROOT_URL}/message/archives"
@@ -139,9 +139,5 @@ feature "Messages" do
 
     init_database
   end
-#=end
-  #scenario "Database should be restored to original point", :js => true do
-  #  init_database
-  #end
 
 end
