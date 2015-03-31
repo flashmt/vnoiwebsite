@@ -126,3 +126,8 @@ def activate_account(username)
   visit "#{ROOT_URL}/user/confirm/#{activation_key}"
   expect(page).to have_content('Sign in')
 end
+
+def init_database
+  cmd = "cd #{__dir__} && cd .. && ./init_database.sh"
+  execute = system(cmd)
+end
