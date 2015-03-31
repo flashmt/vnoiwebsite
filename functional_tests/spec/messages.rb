@@ -6,12 +6,6 @@ feature "Messages" do
     hide_django_profile_bar
   end
 
-  #reinit database after performing write/delete/...
-  def init_database
-    cmd = "cd #{__dir__} && cd .. && cd .. && ./init_database.sh"
-    execute = system(cmd)
-  end
-
   def login_as_admin
     visit "#{ROOT_URL}"
     login('admin', 'admin')
@@ -27,14 +21,13 @@ feature "Messages" do
   scenario "User should not see Message URL until logged in", :js => true do
     visit "#{ROOT_URL}"
 
-    message_url_text = 'Messages'
-    expect(page).to have_no_content(message_url_text)
+    expect(page).to have_no_content($messages)
 
     login('admin', 'admin')
-    expect(page).to have_content(message_url_text)
+    expect(page).to have_content($messages)
 
     click_on 'Logout'
-    expect(page).to have_no_content(message_url_text)
+    expect(page).to have_no_content($messages)
   end
 
   scenario "Path and breadcrumbs should be correct", :js => true do
@@ -108,7 +101,7 @@ feature "Messages" do
     visit("#{ROOT_URL}/message/sent")
     verify_content(['second letter', 'Welcome'])
   end  
-
+#=begin
   scenario "Archive not empty after saving message", :js => true do
     login_as_admin
     visit "#{ROOT_URL}/message/archives"
@@ -122,6 +115,8 @@ feature "Messages" do
 
     visit("#{ROOT_URL}/message/archives")    
     expect(page).to have_content('second letter')
+
+    init_database
   end
 
   scenario "User should be able to write and receive message", :js => true do
@@ -141,10 +136,12 @@ feature "Messages" do
     login_as_vnoiuser
     visit("#{ROOT_URL}/message/inbox")    
     expect(page).to have_content('new message')
-  end
 
-  scenario "Database should be restored to original point", :js => true do
     init_database
   end
+#=end
+  #scenario "Database should be restored to original point", :js => true do
+  #  init_database
+  #end
 
 end
