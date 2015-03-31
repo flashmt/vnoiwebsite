@@ -17,7 +17,7 @@ feature "Messages" do
     login('vnoiuser', 'vnoiuser')
     click_on $messages
   end
-
+=begin
   scenario "User should not see Message URL until logged in", :js => true do
     visit "#{ROOT_URL}"
 
@@ -69,14 +69,16 @@ feature "Messages" do
     check("message#1")
     check("message#2")
     click_on("Xóa")
-    verify_content([$messages_empty, $messages_deleted])
+    verify_content([$messages_empty])
+    verify_flash_messages([$messages_deleted])
     
     visit "#{ROOT_URL}/message/trash"
     verify_content(['second letter', 'Hi admin'])
     check("message#1")
     check("message#2")
     click_on("Khôi phục")
-    verify_content([$messages_empty, $messages_recovered])
+    verify_content([$messages_empty])
+    verify_flash_messages([$messages_recovered])
 
     visit("#{ROOT_URL}/message/inbox")
     verify_content(['second letter', 'Hi admin'])
@@ -89,14 +91,16 @@ feature "Messages" do
     check("message#1")
     check("message#2")
     click_on("Xóa")
-    verify_content([$messages_empty, $messages_deleted])
+    verify_content([$messages_empty])
+    verify_flash_messages([$messages_deleted])
 
     visit "#{ROOT_URL}/message/trash"
     verify_content(['second letter', 'Welcome'])
     check("message#1")
     check("message#2")
     click_on("Khôi phục")
-    verify_content([$messages_empty, $messages_recovered])
+    verify_content([$messages_empty])
+    verify_flash_messages([$messages_recovered])    
 
     visit("#{ROOT_URL}/message/sent")
     verify_content(['second letter', 'Welcome'])
@@ -105,34 +109,31 @@ feature "Messages" do
   scenario "Archive not empty after saving message", :js => true do
     login_as_admin
     visit "#{ROOT_URL}/message/archives"
-    expect(page).to have_content("Không có thư mới.")
+    verify_content([$messages_empty])
 
     visit("#{ROOT_URL}/message/inbox")
     check("message#1")
     click_on("Lưu trữ")
-    expect(page).to have_content($messages_archived)
+    verify_flash_messages([$messages_archived])
     expect(page).to have_no_content('second letter')
 
     visit("#{ROOT_URL}/message/archives")    
-    expect(page).to have_content('second letter')
+    verify_content(['second letter'])
 
     init_database
   end
-
+=end
   scenario "User should be able to write and receive message", :js => true do
     login_as_admin
-    visit("#{ROOT_URL}/message/write")
+    visit "#{ROOT_URL}/message/write"
 
     within '#postman' do
       fill_in 'id_recipients', with: 'vnoiuser'
       fill_in 'id_subject', with: 'new message'
-      #within '#id_body' do
-      #  fill_in "id_body", with: 'blank test message'
-      #end
       click_on 'OK'
     end
-
-    click_on 'Logout'
+    verify_flash_messages([$messages_sent])
+    visit "#{ROOT_URL}/user/logout"
     login_as_vnoiuser
     visit("#{ROOT_URL}/message/inbox")    
     expect(page).to have_content('new message')
