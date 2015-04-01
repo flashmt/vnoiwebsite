@@ -59,6 +59,8 @@ class Forum(models.Model):
         return last_posts[0]
 
     def get_absolute_url(self):
+        if self.forum_group.group_type == 'l':
+            return reverse('library:topic_list', kwargs={'forum_id': self.id})
         return reverse('forum:topic_list', kwargs={'forum_id': self.id})
 
 
@@ -90,6 +92,8 @@ class Topic(models.Model):
         return self.num_posts
 
     def get_absolute_url(self):
+        if self.forum.forum_group.group_type == 'l':
+            return reverse('library:topic_retrieve', kwargs={'forum_id': self.forum_id, 'topic_id': self.id})
         return reverse('forum:topic_retrieve', kwargs={'forum_id': self.forum_id, 'topic_id': self.id})
 
     def get_total_vote(self):

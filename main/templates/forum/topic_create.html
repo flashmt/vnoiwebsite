@@ -1,7 +1,11 @@
 {% extends 'forum/topic_list.html' %}
 
 {% block breadcrumbs %}
-  <li><a href="{% url 'forum:index' %}">Forum</a></li>
+  {% if forum.forum_group.group_type == 'f' %}
+    <li><a href="{% url 'forum:index' %}">Forum</a></li>
+  {% else %}
+    <li><a href="{% url 'library:index' %}">Thư viện</a></li>
+  {% endif %}
   <li><a href="{{forum.get_absolute_url}}">{{ forum.name }}</a></li>
   <li>Create new topic</li>
 {% endblock breadcrumbs %}

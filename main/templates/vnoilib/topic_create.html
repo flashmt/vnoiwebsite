@@ -1,0 +1,7 @@
+{% extends 'forum/topic_create.html' %}
+
+{% block breadcrumbs %}
+  <li><a href="{% url 'library:index' %}">Thư viện</a></li>
+  <li><a href="{{forum.get_absolute_url}}">{{ forum.name }}</a></li>
+  <li>Tạo chủ đề mới</li>
+{% endblock breadcrumbs %}
