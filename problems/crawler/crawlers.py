@@ -130,6 +130,7 @@ def get_problem_codes_from_category(category):
 
                 if need_update_statement:
                     problem.statement = get_problem_statement(problem_code)
+                    time.sleep(1)
 
                 if category.name == 'acm':
                     problem.accept_count = data['ac_count']
@@ -137,7 +138,6 @@ def get_problem_codes_from_category(category):
                     problem.score = round(80.0 / (40 + int(data['ac_count'])), 1)
 
                 problem.save()
-                time.sleep(1)
 
                 result.append(problem)
         page_id += 1
