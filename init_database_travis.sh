@@ -17,4 +17,4 @@ venv/bin/python manage.py loaddata vnoiusers.json
 
 # Crawl data from external sources
 # Get coming contest from CF
-venv/bin/python -m externaljudges.crawler.codeforces
+#venv/bin/python -m externaljudges.crawler.codeforces

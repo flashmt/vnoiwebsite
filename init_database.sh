@@ -16,6 +16,6 @@ python manage.py loaddata vnoiusers.json
 python manage.py createcachetable
 
 # Crawl data from external sources
-./crawl_external_judge_data.sh
+#./crawl_external_judge_data.sh
 
 
