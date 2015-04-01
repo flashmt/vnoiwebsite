@@ -1,10 +1,8 @@
-from datetime import timedelta
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.db import models
 from django.db.models import Sum
 from django.db.models.signals import post_save, post_delete
-from django.utils import timezone
 from django_bleach.models import BleachField
 
 
@@ -12,9 +10,13 @@ class ForumGroup(models.Model):
     name = models.CharField(max_length=200)
     created_by = models.ForeignKey(User, related_name='forum_groups')
 
+    # Forum group "Problem" is used to store forums of each Spoj Problem.
+    # Assumption: there is only one forum group of type Problem. If this behaviour is
+    # broken, it may also break problems/discuss view
     ForumGroupChoices = (
         ('f', 'Forum'),
-        ('l', 'Library')
+        ('l', 'Library'),
+        ('p', 'Problem')
     )
     group_type = models.CharField(max_length=3, choices=ForumGroupChoices, default='f')
 

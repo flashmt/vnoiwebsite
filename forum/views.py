@@ -35,14 +35,20 @@ def pagination_items(request, items, num_per_page):
     return items
 
 
-def topic_list(request, forum_id, template="forum/topic_list.html"):
+def topic_list(request,
+               forum_id,
+               template="forum/topic_list.html",
+               extra_context=None):
     forum = get_object_or_404(Forum, pk=forum_id)
     topics = Topic.objects.filter(forum_id=forum_id).select_related("last_post", "created_by", "last_post__created_by")
     topics = pagination_items(request, topics, 20)
-    return render(request, template, {
+    context = {
         'forum': forum,
         'topics': topics
-    })
+    }
+    if extra_context is not None:
+        context.update(extra_context)
+    return render(request, template, context)
 
 
 def topic_retrieve(request, forum_id, topic_id, template="forum/topic_retrieve.html"):
