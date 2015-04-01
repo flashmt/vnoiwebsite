@@ -56,6 +56,9 @@ def get_problem_statement(problem_code):
     problem_url = get_problem_url(problem_code)
     soup = get_html(problem_url)
 
+    # Remove problem title
+    soup.find("table", {"style": "margin-top:10px"}).decompose()
+
     # Remove Google +1 button
     soup.find("div", {"style": "position: absolute; right: 0px"}).decompose()
 
@@ -65,14 +68,17 @@ def get_problem_statement(problem_code):
     # Remove FB like button
     soup.find("div", {"class": "fb-like"}).decompose()
 
-    soup.find("div", {"id": "ccontent"}).decompose()
-
     # Remove problem information (at the bottom)
     soup.find("table", {"class": "probleminfo"}).decompose()
 
+    # Remove users' comment
+    soup.find("div", {"id": "ccontent"}).decompose()
+
     # problem statement
     prob_content = soup.find("div", {"class": "prob"})
-    prob_content.find('table').decompose()
+
+    print '%s' % prob_content.prettify()
+
     return prob_content.prettify()
 
 
@@ -95,10 +101,6 @@ def get_problem_codes_from_category(category):
 
     page_id = 0
     while True:
-
-        # For testing
-        if page_id >= 1:
-            break
 
         time.sleep(1)
         problem_rows = get_elements_from_url(get_category_url(category, page_id=page_id), 'tr[class="problemrow"]')
@@ -140,6 +142,7 @@ def get_problem_codes_from_category(category):
                 time.sleep(1)
 
                 result.append(problem)
+                
         page_id += 1
 
     return result
