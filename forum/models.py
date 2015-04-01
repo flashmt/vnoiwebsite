@@ -61,6 +61,8 @@ class Forum(models.Model):
     def get_absolute_url(self):
         if self.forum_group.group_type == 'l':
             return reverse('library:topic_list', kwargs={'forum_id': self.id})
+        elif self.forum_group.group_type == 'p':
+            return reverse('problems:show', kwargs={'code': self.name})
         return reverse('forum:topic_list', kwargs={'forum_id': self.id})
 
 
