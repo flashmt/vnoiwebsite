@@ -15,6 +15,12 @@ String.prototype.supplant = function (o) {
         }
     );
 };
+
+function showNotification(message) {
+	$.jGrowl(message, {
+		position: 'bottom-right'
+	});
+}
 // END OF HELPER METHODS
 
 
@@ -55,8 +61,7 @@ $(document).ready(function () {
 					vote_type: type
 				}),
 				success: function (data) {
-					console.log(data);
-					$.jGrowl(data['message'], {position: 'bottom-right'});
+					showNotification(data['message']);
 					if (data['success'] == 1) {
 						if (type == 'u') {
 							totalVoteElement.text(currentVote + 1);
@@ -67,6 +72,9 @@ $(document).ready(function () {
 							voteSuccess(postId, 'd');
 						}
 					}
+				},
+				error: function (data) {
+					showNotification('Bạn cần phải đăng nhập trước.');
 				},
 				dataType: 'json'
 			});
