@@ -20,8 +20,20 @@ def index(request):
         )
         cache.set(HOME_PINNED_TOPICS, pinned_topics, HOME_PINNED_TOPICS_CACHE_TIME)
 
-    posts = Post.objects.order_by('-created_at').values(
-        'pk', 'created_by__username', 'topic__title', 'topic__id', 'topic__forum__id')[:5]
+    # Since sqlite does not support select distinct, we must make it distinct by flatten QuerySet and then
+    #  wrapping it in a set
+    recent_posts = set(Post.objects.values_list(
+        'created_by__username', 'topic__title', 'topic__id', 'topic__forum__id'
+    ).order_by('-created_at')[:20])
+    # and then convert the set to nicely looking array of hash
+    posts = []
+    for post in recent_posts:
+        posts.append({
+            'created_by__username': post[0],
+            'topic__title': post[1],
+            'topic__id': post[2],
+            'topic__forum__id': post[3]
+        })
 
     if request.user.is_authenticated():
         post_ids = Post.objects.filter(topic__is_pinned=True).values('id')
