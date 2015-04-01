@@ -43,6 +43,11 @@ cd memcached-1.x.x
 python manage.py createcachetable
 ```
 
+## Troubleshoot
+
+If you have problem with user avatar (avatar does not show up after uploading), PIL might be the issue
+To fix it: [follow this tutorial](http://stackoverflow.com/questions/15258335/ioerror-decoder-zip-not-available-ubuntu-python-pil).
+
 
 # 2. Run the project
 ```bash
