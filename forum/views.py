@@ -127,6 +127,7 @@ def post_update(request, forum_id=None, topic_id=None, post_id=None, template="f
 def topic_create(request, forum_id=None, template="forum/topic_create.html"):
     return post_create(request, forum_id=forum_id, template=template)
 
+
 @login_required
 def vote_create(request, post_id=None):
     post = None
