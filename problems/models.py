@@ -1,5 +1,6 @@
 from django.db import models
 from django_bleach.models import BleachField
+from forum.models import Forum
 
 
 class SpojProblemCategory(models.Model):
@@ -46,3 +47,7 @@ class SpojProblem(models.Model):
 
     def __unicode__(self):
         return self.name
+
+
+class SpojProblemForum(Forum):
+    problem = models.ForeignKey(SpojProblem, related_name='forum', null=False, blank=False)
