@@ -23,9 +23,5 @@
   <script src="{% static 'js/forum.js' %}"></script>
   <script src="{% static 'js/highlight/highlight.pack.js' %}"></script>
   <script>hljs.initHighlightingOnLoad();</script>
-  <script>
-    {% for vote in votes %}
-      voteSuccess('{{ vote.post_id }}', '{{ vote.type }}');
-    {% endfor %}
-  </script>
+  {% include 'forum/disable_voted.html' %}
 {% endblock %}

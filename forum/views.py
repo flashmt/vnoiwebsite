@@ -50,7 +50,10 @@ def topic_retrieve(request, forum_id, topic_id, template="forum/topic_retrieve.h
     topic = get_object_or_404(Topic.objects.select_related('post', 'post__created_by', 'post__created_by__profile__avatar'),
                               pk=topic_id)
     posts = topic.posts.all().select_related('created_by', 'created_by__profile__avatar')
-    votes = Vote.objects.filter(post__in=posts, created_by=request.user).values('post_id', 'type')
+    if request.user.is_authenticated():
+        votes = Vote.objects.filter(post__in=posts, created_by=request.user).values('post_id', 'type')
+    else:
+        votes = None
     return render(request, template, {
         'forum': forum,
         'topic': topic,
