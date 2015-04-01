@@ -28,7 +28,7 @@ end
 
 
 # Set default wait time for page elements lookup to 5 seconds
-Capybara.default_wait_time = 5
+Capybara.default_wait_time = 15
 # HTML files & screenshots at failure points will be saved in output folder
 Capybara.save_and_open_page_path = './output'
 Capybara::Screenshot::RSpec.add_link_to_screenshot_for_failed_examples = true
@@ -125,4 +125,14 @@ def activate_account(username)
   puts "activation key = #{activation_key}"
   visit "#{ROOT_URL}/user/confirm/#{activation_key}"
   expect(page).to have_content('Sign in')
+end
+
+def init_database
+  if ENV.has_key?('USE_VIRTUAL_ENV')
+    init_file = 'init_database_travis.sh'
+  else 
+    init_file = 'init_database.sh'
+  end
+  cmd = "cd #{__dir__} && cd .. && ./#{init_file}"
+  execute = system(cmd)
 end

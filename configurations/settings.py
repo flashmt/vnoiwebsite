@@ -200,7 +200,7 @@ MEDIA_URL = '/media/'
 # Django-avatar setting
 AVATAR_MAX_AVATARS_PER_USER = 1
 
-BLEACH_ALLOWED_TAGS = ['p', 'strong', 'em', 'pre', 'code', 'a', 'img', 'ol', 'ul', 'li', 'span']
+BLEACH_ALLOWED_TAGS = ['p', 'strong', 'em', 'pre', 'code', 'a', 'img', 'ol', 'ul', 'li', 'span', 'br']
 BLEACH_ALLOWED_ATTRIBUTES = ['href', 'class', 'alt', 'style', 'src']
 BLEACH_STRIP_TAGS = True
 BLEACH_STRIP_COMMENTS = True

@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Ensure we are in project directory
+cd "$(dirname "$0")"
+
 # Clear old database
 rm -f db.sqlite3
 
@@ -13,4 +16,6 @@ python manage.py loaddata vnoiusers.json
 python manage.py createcachetable
 
 # Crawl data from external sources
-./crawl_external_judge_data.sh
+#./crawl_external_judge_data.sh
+
+

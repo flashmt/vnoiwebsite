@@ -26,7 +26,7 @@ def get_html(url):
         return None
     # Since the problem statement of SPOJ sometimes contains '&', '<' and '>', which are not valid in correct HTML,
     # we must use a lenient parser
-    return BeautifulSoup(response.text, 'html5lib')
+    return BeautifulSoup(response.text.replace(u'ð', u'đ'), 'html5lib')
 
 
 def get_elements_from_html(html, selector):
@@ -56,15 +56,23 @@ def get_problem_statement(problem_code):
     problem_url = get_problem_url(problem_code)
     soup = get_html(problem_url)
 
-    # remove redundancy sections
+    # Remove Google +1 button
     soup.find("div", {"style": "position: absolute; right: 0px"}).decompose()
+
+    # Remove Google ads
     soup.find("div", {"class": "aProblemTop"}).decompose()
+
+    # Remove FB like button
     soup.find("div", {"class": "fb-like"}).decompose()
+
     soup.find("div", {"id": "ccontent"}).decompose()
+
+    # Remove problem information (at the bottom)
     soup.find("table", {"class": "probleminfo"}).decompose()
 
     # problem statement
     prob_content = soup.find("div", {"class": "prob"})
+    prob_content.find('table').decompose()
     return prob_content.prettify()
 
 
@@ -122,6 +130,7 @@ def get_problem_codes_from_category(category):
 
                 if need_update_statement:
                     problem.statement = get_problem_statement(problem_code)
+                    time.sleep(1)
 
                 if category.name == 'acm':
                     problem.accept_count = data['ac_count']
@@ -129,7 +138,6 @@ def get_problem_codes_from_category(category):
                     problem.score = round(80.0 / (40 + int(data['ac_count'])), 1)
 
                 problem.save()
-                time.sleep(1)
 
                 result.append(problem)
         page_id += 1

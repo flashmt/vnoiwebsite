@@ -28,7 +28,7 @@ class SpojProblem(models.Model):
     statement = BleachField(null=True,
                             allowed_tags=[
                                 'p', 'strong', 'em', 'pre', 'code', 'a', 'img', 'ol', 'ul', 'li', 'span', 'i', 'sub',
-                                'h1', 'h2', 'h3', 'h4', 'h5', 'h6'
+                                'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'br', 'sub', 'sup'
                             ],
                             allowed_attributes=['href', 'class', 'alt', 'style', 'src'],
                             strip_tags=False)

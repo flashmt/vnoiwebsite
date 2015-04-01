@@ -92,7 +92,7 @@
       <div class="row msg-a-message">
         <div class="col-md-1">
           <div class="msg-action-tick-button">
-            <input type="checkbox" {% if by_conversation and message.thread_id %}name="tpks" value="{{ message.thread_id }}"{% else %}name="pks" value="{{ message.pk }}"{% endif %} />
+            <input type="checkbox" {% if by_conversation and message.thread_id %}name="tpks" value="{{ message.thread_id }}"{% else %}name="pks" value="{{ message.pk }}"{% endif %} id="message#{{ forloop.counter }}"/>
           </div> 
         </div>
         {% block pm_sender_cell %}

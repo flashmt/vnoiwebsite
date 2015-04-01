@@ -26,6 +26,14 @@ VOTING_URL = "/forum/vote/{post_id}/?type={vote_type}";
 
 
 // METHODS THAT SHOULD BE COMMON TO ALL PAGES
+function voteSuccess(post_id, type) {
+	console.log('voted: ' + post_id + ' - ' + type);
+	var otherButtonId = (type == 'd' ? 'upvote' : 'downvote') + '-' + post_id;
+	var buttonId = (type == 'u' ? 'upvote' : 'downvote') + '-' + post_id;
+	$('#' + buttonId).attr('disabled', true);
+	$('#' + otherButtonId).hide();
+}
+
 $(document).ready(function () {
 	$('[data-toggle="offcanvas"]').click(function () {
 		$('.row-offcanvas').toggleClass('active')
@@ -41,9 +49,6 @@ $(document).ready(function () {
 			var totalVoteElement = $("#total-vote-{post_id}".supplant({post_id: postId}));
 			var currentVote = parseInt(totalVoteElement.text(), 10);
 
-			console.log("Current vote = " + currentVote);
-			console.log("type = " + type);
-
 			$.ajax({
 				url: VOTING_URL.supplant({
 					post_id: postId,
@@ -55,9 +60,11 @@ $(document).ready(function () {
 					if (data['success'] == 1) {
 						if (type == 'u') {
 							totalVoteElement.text(currentVote + 1);
+							voteSuccess(postId, 'u')
 						}
 						else {
 							totalVoteElement.text(currentVote - 1);
+							voteSuccess(postId, 'd');
 						}
 					}
 				},

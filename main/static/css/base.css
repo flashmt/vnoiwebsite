@@ -172,7 +172,8 @@
 
 .home-post-vote-wrapper {
   float: right;
-  margin-right: 2.1em; }
+  margin-right: 2.1em;
+  margin-top: -0.1em; }
 
 .home-post-count-upvote {
   display: inline-block;
