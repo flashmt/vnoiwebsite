@@ -10,18 +10,6 @@ def index(request):
     return redirect(reverse('library:topic_list', kwargs={'forum_id': forum.id}))
 
 
-def topic_retrieve(request, forum_id, topic_id, template="vnoilib/post_view.html"):
-    forum = get_object_or_404(Forum, pk=forum_id)
-    topic = get_object_or_404(Topic, pk=topic_id)
-    posts = topic.posts.all().select_related('created_by', 'created_by__profile__avatar')
-    return render(request, template, {
-        'forum': forum,
-        'topic': topic,
-        'post': topic.post,
-        'posts': posts
-    })
-
-
 def topic_list(request, forum_id, template="vnoilib/topic_list.html"):
     forum = get_object_or_404(Forum, pk=forum_id)
     topics = Topic.objects.filter(forum_id=forum_id)

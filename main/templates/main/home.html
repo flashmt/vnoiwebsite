@@ -59,7 +59,8 @@
                   <a class="btn btn-default home-post-downvote"
                      href="javascript:void(0)"
                      post-id="{{ pinned_topic.post__id }}"
-                     role="button">
+                     role="button"
+                     id="downvote-{{ pinned_topic.post__id }}">
                     <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
                   </a>
                   <div class="col-xs-1 home-post-count-upvote" id="total-vote-{{ pinned_topic.post__id }}" role="button">
@@ -68,7 +69,8 @@
                   <a class="btn btn-default home-post-upvote"
                      href="javascript:void(0)"
                      post-id="{{ pinned_topic.post__id }}"
-                     role="button">
+                     role="button"
+                     id="upvote-{{ pinned_topic.post__id }}">
                     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
                   </a>
                 </div>
