@@ -26,7 +26,7 @@ def get_html(url):
         return None
     # Since the problem statement of SPOJ sometimes contains '&', '<' and '>', which are not valid in correct HTML,
     # we must use a lenient parser
-    return BeautifulSoup(response.text, 'html5lib')
+    return BeautifulSoup(response.text.replace(u'ð', u'đ'), 'html5lib')
 
 
 def get_elements_from_html(html, selector):
