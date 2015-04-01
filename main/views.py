@@ -24,7 +24,8 @@ def index(request):
         'pk', 'created_by__username', 'topic__title', 'topic__id', 'topic__forum__id')[:5]
 
     if request.user.is_authenticated():
-        votes = Vote.objects.filter(post__topic__in=pinned_topics, created_by=request.user).values('post_id', 'type')
+        post_ids = Post.objects.filter(topic__is_pinned=True).values('id')
+        votes = Vote.objects.filter(post_id__in=post_ids, created_by=request.user).values('post_id', 'type')
     else:
         votes = None
 

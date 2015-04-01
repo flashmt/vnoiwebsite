@@ -185,4 +185,5 @@
 {% block extra-js %}
   <script src="http://ngthanhtrung23.github.io/VOJRanklist/js/data.js"></script>
   <script src="{% static 'js/home.js' %}"></script>
+  {% include 'forum/disable_voted.html' with votes=votes %}
 {% endblock %}
