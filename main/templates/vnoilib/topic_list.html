@@ -39,7 +39,7 @@
 {% block buttons-wrapper %}
   {% ifhasperm "post_permission.can_create_library_post" request.user %}
     <div class="btn-toolbar button-container" role="toolbar">
-      <a href="{% url 'library:topic_create' forum.id %}" class="btn btn-default">Thêm bài mới</a>
+      <a href="{% url 'forum:topic_create' forum.id %}" class="btn btn-default">Thêm bài mới</a>
     </div>
   {% endifhasperm %}
 {% endblock buttons-wrapper %}

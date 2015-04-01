@@ -32,7 +32,8 @@ def discuss(request, code):
         problem=problem,
         created_by=request.user,
         forum_group=problem_forum_group,
-        name=code + ' - Discuss'
+        # Name must be equal to code - see models.py for more details
+        name=code
     )
     return topic_list(
         request,

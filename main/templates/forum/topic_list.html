@@ -11,7 +11,10 @@
 <li>{{ forum.name }}</li>
 {% endblock breadcrumbs %}
 
-{% block navbar-highlight %}navbar_forum{% endblock navbar-highlight %}
+{# The next messy line is used to correctly highlight navbar #}
+{# Everything must be in one line, because the result is part of a JS string #}
+{# IT WORKS. DO NOT TOUCH #}
+{% block navbar-highlight %}{% if forum.forum_group.group_type == 'p' %}navbar_problems{% elif forum.forum_group.group_type == 'l' %}navbar_library{% else %}navbar_forum{% endif %}{% endblock navbar-highlight %}
 
 {% block forum-body %}
 <div class="btn-toolbar button-container" role="toolbar">

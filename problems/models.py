@@ -50,4 +50,6 @@ class SpojProblem(models.Model):
 
 
 class SpojProblemForum(Forum):
+    # Assumption: forum name must be equal to problem code.
+    # This is used in get_absolute_url in forum.models.Forum
     problem = models.ForeignKey(SpojProblem, related_name='forum', null=False, blank=False)
