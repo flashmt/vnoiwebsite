@@ -65,6 +65,14 @@ class Forum(models.Model):
             return reverse('problems:show', kwargs={'code': self.name})
         return reverse('forum:topic_list', kwargs={'forum_id': self.id})
 
+    def get_navbar_highlight(self):
+        if self.forum_group.group_type == 'l':
+            return 'library'
+        elif self.forum_group.group_type == 'p':
+            return 'problems'
+        else:
+            return 'forum'
+
 
 class Topic(models.Model):
     forum = models.ForeignKey(Forum, related_name="topics")

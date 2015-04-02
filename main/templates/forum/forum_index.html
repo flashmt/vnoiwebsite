@@ -1,48 +1,48 @@
 {% extends 'main/base.html' %}
 {% load staticfiles %}
 
-{# The next messy line is used to correctly highlight navbar #}
-{# Everything must be in one line, because the result is part of a JS string #}
-{# IT WORKS. DO NOT TOUCH #}
-{% block navbar-highlight %}{% if forum.forum_group.group_type == 'p' %}navbar_problems{% elif forum.forum_group.group_type == 'l' %}navbar_library{% else %}navbar_forum{% endif %}{% endblock navbar-highlight %}
+{% block navbar-highlight %}navbar_forum{% endblock navbar-highlight %}
 
 {% block breadcrumbs %}
-    <li>Forum</li>
+  <li>Forum</li>
 {% endblock breadcrumbs %}
 
 {% block container %}
 
-{% block forum-body %}
+  {% block forum-body %}
     <div id="forum-main-container">
-    {% for group in forum_groups %}
+      {% for group in forum_groups %}
         <div class="forum-group-head">
-            {{ group.name }}
+          {{ group.name }}
         </div>
         <div class="forum-group-container">
-            {% for forum in forums %}{% if forum.forum_group_id == group.id %}
-                <div class="row forum" id="forum-{{ forum.id }}">
-                    <span class="forum-icon col-xs-1"></span>
-                    <div class="forum-name-div col-xs-8">
-                        <h3 class="forum-name"><a href="{{forum.get_absolute_url}}">{{ forum.name }}</a></h3>
-                        <p>{{ forum.desc }}</p>
-                    </div>
-                    <div class="forum-statistics col-xs-3 row">
-                        <div class="forum-post-counts col-xs-4">{{ forum.num_posts }}</div>
-                        <div class="forum-last-post col-xs-8">
-                            {% if forum.last_post %}
-                                <a href="{{forum.last_post.topic.get_absolute_url}}"><p>{{ forum.last_post.topic }}</p></a>
-                                <p> by <a href="{{forum.last_post.created_by.get_absolute_url}}"> {{ forum.last_post.created_by }}</a></p>
-                            {% else %}
-                                <p>Chưa có bài viết nào</p>
-                                <p>&nbsp;</p>
-                            {% endif %}
-                        </div>
-                    </div>
+          {% for forum in forums %}{% if forum.forum_group_id == group.id %}
+            <div class="row forum" id="forum-{{ forum.id }}">
+              <span class="forum-icon col-xs-1"></span>
+
+              <div class="forum-name-div col-xs-8">
+                <h3 class="forum-name"><a href="{{ forum.get_absolute_url }}">{{ forum.name }}</a></h3>
+
+                <p>{{ forum.desc }}</p>
+              </div>
+              <div class="forum-statistics col-xs-3 row">
+                <div class="forum-post-counts col-xs-4">{{ forum.num_posts }}</div>
+                <div class="forum-last-post col-xs-8">
+                  {% if forum.last_post %}
+                    <a href="{{ forum.last_post.topic.get_absolute_url }}"><p>{{ forum.last_post.topic }}</p></a>
+                    <p> by <a
+                      href="{{ forum.last_post.created_by.get_absolute_url }}"> {{ forum.last_post.created_by }}</a></p>
+                  {% else %}
+                    <p>Chưa có bài viết nào</p>
+                    <p>&nbsp;</p>
+                  {% endif %}
                 </div>
-            {% endif %}{% endfor %}
+              </div>
+            </div>
+          {% endif %}{% endfor %}
         </div>
-    {% endfor %}
+      {% endfor %}
     </div>
-{% endblock forum-body %}
+  {% endblock forum-body %}
 
 {% endblock container %}
