@@ -17,6 +17,7 @@ from django.views.decorators.cache import never_cache
 from django.views.decorators.csrf import csrf_protect
 from django.views.decorators.debug import sensitive_post_parameters
 from post_office import mail
+from forum.models import Topic
 from vnoiusers.forms import *
 from vnoiusers.models import VnoiUser
 
@@ -112,7 +113,8 @@ def user_profile(request, user_id):
 
     context = {
         'user': user,
-        'topics': user.created_topics.all(),
+        # We must select forum & forum_group, so that get_absolute_url does not need additional queries
+        'topics': user.created_topics.all().select_related('forum', 'forum__forum_group'),
         'disable_breadcrumbs': True,
         'is_friend': is_friend,
     }
