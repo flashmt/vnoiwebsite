@@ -5,11 +5,11 @@ from django.contrib import messages
 from django.contrib.auth import logout, login, update_session_auth_hash, get_user_model
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
+from django.core import serializers
 from django.template.response import TemplateResponse
 from django.utils.http import urlsafe_base64_decode, is_safe_url
-from django.utils.translation import ugettext as _
 
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404, resolve_url
 
 # Create your views here.
@@ -17,7 +17,6 @@ from django.views.decorators.cache import never_cache
 from django.views.decorators.csrf import csrf_protect
 from django.views.decorators.debug import sensitive_post_parameters
 from post_office import mail
-from forum.models import Topic
 from vnoiusers.forms import *
 from vnoiusers.models import VnoiUser
 
@@ -459,3 +458,9 @@ def password_change_done(request,
         context.update(extra_context)
     return TemplateResponse(request, template_name, context,
                             current_app=current_app)
+
+
+def get_user_from_voj_account(request, voj_accounts):
+    voj_accounts = voj_accounts.split(';')
+    users = VnoiUser.objects.filter(voj_account__in=voj_accounts)
+    return JsonResponse(serializers.serialize('json', users, fields=('voj_account', )), safe=False)
