@@ -25,6 +25,7 @@
           <th>Tên bài</th>
           <th>Số người giải được&nbsp;<span class="glyphicon glyphicon-sort-by-attributes"></span></th>
           <th>Điểm&nbsp;<span class="glyphicon glyphicon-sort-by-attributes"></span></th>
+          <th></th>
         </tr>
         {% for problem in problems %}
           <tr class="{{ problem.category__name }}">
@@ -34,6 +35,7 @@
             <td><a href="http://vn.spoj.com/problems/ranks/{{ problem.code }}">{{ problem.accept_count }}</a></td>
             <!-- require rank of prob -->
             <td>{{ problem.score }}</td>
+            <td><a href="{% url 'problems:discuss' problem.code %}">Thảo luận</a></td>
           </tr>
         {% endfor %}
         </tbody>

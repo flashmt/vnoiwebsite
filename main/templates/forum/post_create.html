@@ -1,10 +1,19 @@
 {% extends 'forum/topic_retrieve.html' %}
 
+{# 3 components: Forum, Problem discuss, Library reuse this template #}
+{# thus we must handle breadcrumbs to show correct component #}
 {% block breadcrumbs %}
+  {% if forum.forum_group.group_type == 'f' %}
     <li><a href="{% url 'forum:index' %}">Forum</a></li>
-    <li><a href="{{forum.get_absolute_url}}">{{ forum.name }}</a></li>
-    <li><a href="{{topic.get_absolute_url}}">{{ topic.title }}</a></li>
-    <li>Reply</li>
+  {% elif forum.forum_group.group_type == 'l' %}
+    <li><a href="{% url 'library:index' %}">Thư viện</a></li>
+  {% else %}
+    <li><a href="{% url 'problems:list' %}">Danh sách bài tập</a></li>
+  {% endif %}
+  {# get_absolute_url should returns correct URL depends on component #}
+  <li><a href="{{forum.get_absolute_url}}">{{ forum.name }}</a></li>
+  <li><a href="{{topic.get_absolute_url}}">{{ topic.title }}</a></li>
+  <li>Reply</li>
 {% endblock breadcrumbs %}
 
 {% block forum-body %}

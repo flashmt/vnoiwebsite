@@ -14,7 +14,7 @@
       <div class = "lib-one-line">
         <div class="row">
           <div class="col-md-10">
-            <a class = "" href="{% url 'library:topic_retrieve' forum.id topic.id %}">
+            <a class = "" href="{{ topic.get_absolute_url }}">
               <h4 class="forum-name lib-topic-title">{{ topic.title }}</h4>
             </a>
           </div>

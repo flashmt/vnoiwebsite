@@ -1,5 +1,6 @@
 from django.db import models
 from django_bleach.models import BleachField
+from forum.models import Forum
 
 
 class SpojProblemCategory(models.Model):
@@ -28,7 +29,7 @@ class SpojProblem(models.Model):
     statement = BleachField(null=True,
                             allowed_tags=[
                                 'p', 'strong', 'em', 'pre', 'code', 'a', 'img', 'ol', 'ul', 'li', 'span', 'i', 'sub',
-                                'h1', 'h2', 'h3', 'h4', 'h5', 'h6'
+                                'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'br', 'sub', 'sup'
                             ],
                             allowed_attributes=['href', 'class', 'alt', 'style', 'src'],
                             strip_tags=False)
@@ -46,3 +47,9 @@ class SpojProblem(models.Model):
 
     def __unicode__(self):
         return self.name
+
+
+class SpojProblemForum(Forum):
+    # Assumption: forum name must be equal to problem code.
+    # This is used in get_absolute_url in forum.models.Forum
+    problem = models.ForeignKey(SpojProblem, related_name='forum', null=False, blank=False)

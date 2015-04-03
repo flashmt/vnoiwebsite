@@ -82,7 +82,8 @@
                   <a class="btn btn-default post-upvote"
                      href="javascript:void(0)"
                      post-id="{{ post.id }}"
-                     role="button">
+                     role="button"
+                     id="upvote-{{ post.id }}">
                     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
                   </a>
                   <div class="post-count-upvote" id="total-vote-{{ post.id }}">
@@ -91,7 +92,8 @@
                   <a class="btn btn-default post-downvote"
                      href="javascript:void(0)"
                      post-id="{{ post.id }}"
-                     role="button">
+                     role="button"
+                     id="downvote-{{ post.id }}">
                     <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
                   </a>
                 </div>

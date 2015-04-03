@@ -1,0 +1,7 @@
+<script>
+  {% if votes %}
+    {% for vote in votes %}
+      voteSuccess('{{ vote.post_id }}', '{{ vote.type }}');
+    {% endfor %}
+  {% endif %}
+</script>

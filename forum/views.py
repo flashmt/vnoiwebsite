@@ -6,7 +6,7 @@ from django.core import exceptions
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect, JsonResponse
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 
 # Create your views here.
 
@@ -18,7 +18,7 @@ from forum.perms import PostPermission, VotePermission, TopicPermission
 def index(request):
     forum_groups = ForumGroup.objects.filter(group_type='f')
     forums = Forum.objects.filter(forum_group__in=forum_groups)\
-                          .select_related('last_post', 'last_post__created_by', 'last_post__topic')
+                          .select_related('last_post', 'last_post__created_by', 'last_post__topic', 'forum_group')
     return render(request, 'forum/forum_index.html', {'forum_groups': forum_groups, 'forums': forums})
 
 
@@ -35,14 +35,21 @@ def pagination_items(request, items, num_per_page):
     return items
 
 
-def topic_list(request, forum_id, template="forum/topic_list.html"):
+def topic_list(request,
+               forum_id,
+               template="forum/topic_list.html",
+               extra_context=None):
     forum = get_object_or_404(Forum, pk=forum_id)
-    topics = Topic.objects.filter(forum_id=forum_id).select_related("last_post", "created_by", "last_post__created_by")
+    topics = Topic.objects.filter(forum_id=forum_id).select_related(
+        "last_post", "created_by", "last_post__created_by", "forum__forum_group")
     topics = pagination_items(request, topics, 20)
-    return render(request, template, {
+    context = {
         'forum': forum,
         'topics': topics
-    })
+    }
+    if extra_context is not None:
+        context.update(extra_context)
+    return render(request, template, context)
 
 
 def topic_retrieve(request, forum_id, topic_id, template="forum/topic_retrieve.html"):
@@ -50,11 +57,16 @@ def topic_retrieve(request, forum_id, topic_id, template="forum/topic_retrieve.h
     topic = get_object_or_404(Topic.objects.select_related('post', 'post__created_by', 'post__created_by__profile__avatar'),
                               pk=topic_id)
     posts = topic.posts.all().select_related('created_by', 'created_by__profile__avatar')
+    if request.user.is_authenticated():
+        votes = Vote.objects.filter(post__in=posts, created_by=request.user).values('post_id', 'type')
+    else:
+        votes = None
     return render(request, template, {
         'forum': forum,
         'topic': topic,
         'post': topic.post,
-        'posts': posts
+        'posts': posts,
+        'votes': votes
     })
 
 
@@ -80,10 +92,7 @@ def post_create(request, forum_id=None, topic_id=None, post_id=None, template="f
         form = PostCreateForm(request.POST, user=request.user, forum=forum, topic=topic, parent=post)
         if form.is_valid():
             post = form.save()
-            if post.topic_post:
-                return HttpResponseRedirect(reverse("forum:topic_retrieve", args=(forum.id, post.topic.id,)))
-            else:
-                return HttpResponseRedirect('../..')
+            return redirect(post.topic.get_absolute_url())
         else:
             return render(request, template, {'form': form, 'forum': forum, 'topic': topic})
     else:
@@ -110,7 +119,7 @@ def post_update(request, forum_id=None, topic_id=None, post_id=None, template="f
         form = PostUpdateForm(instance=post, user=request.user, data=request.POST)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect('../..')
+            return redirect(topic.get_absolute_url())
         else:
             return render(request, template, {'form': form, 'forum': forum, 'topic': topic})
     else:
@@ -121,6 +130,7 @@ def post_update(request, forum_id=None, topic_id=None, post_id=None, template="f
 @login_required
 def topic_create(request, forum_id=None, template="forum/topic_create.html"):
     return post_create(request, forum_id=forum_id, template=template)
+
 
 @login_required
 def vote_create(request, post_id=None):
@@ -191,18 +201,19 @@ def unpin(request, topic_id):
 
 
 def post_delete(request, post_id=None):
-    if post_id:
-        post = get_object_or_404(Post, pk=post_id)
+    post = get_object_or_404(Post, pk=post_id)
 
     # check permission
     if not PostPermission(request.user).can_delete_post(post):
         raise exceptions.PermissionDenied
 
     if post.reply_on is not None:
+        topic = post.topic
         post.delete()
-        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+        return redirect(topic.get_absolute_url())
     else:
         forum_id = post.topic.forum_id
         post.delete()
         # Now we can not redirect to previous page (because it no longer exist :( )
-        return HttpResponseRedirect(reverse('forum:topic_list', args=(forum_id, )))
+        # So we must redirect to forum
+        return redirect(Forum.objects.get(pk=forum_id).get_absolute_url())
