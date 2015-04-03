@@ -1,3 +1,5 @@
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 from django.shortcuts import render, get_object_or_404, redirect
 from django.core.urlresolvers import reverse
 from problems.models import SpojProblem, SpojProblemForum
@@ -25,13 +27,21 @@ def show(request, code):
     })
 
 
+@login_required
 def discuss(request, code):
     problem = get_object_or_404(SpojProblem, code=code)
     problem_forum_group = ForumGroup.objects.get(group_type='p')
+
+    # Create new forum for this problem, or retrieve the one that already exists
+    # Note:
+    # - Since created_by can not be None, we must specify some value.
+    #   But, if we use request.user, then get_or_create will not find existing
+    #   forum created by different user. So the most easy way is to set it to
+    #   2nd user (vnoiuser)
     forum, created = SpojProblemForum.objects.get_or_create(
         problem=problem,
-        created_by=request.user,
         forum_group=problem_forum_group,
+        created_by=User.objects.get(pk=2),
         # Name must be equal to code - see models.py for more details
         name=code
     )
