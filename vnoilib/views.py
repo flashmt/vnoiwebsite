@@ -13,10 +13,10 @@ def index(request):
 def topic_list(request, forum_id, template="vnoilib/topic_list.html"):
     forum = get_object_or_404(Forum, pk=forum_id)
     topics = Topic.objects.filter(forum_id=forum_id).select_related(
-        'forum__forum_group', 'created_by')
+        'forum', 'forum__forum_group', 'created_by')
     topics = pagination_items(request, topics, 50)
     return render(request, template, {
         'forum': forum,
         'topics': topics,
-        'lib_groups': ForumGroup.objects.filter(group_type='l')
+        'lib_groups': ForumGroup.objects.filter(group_type='l').prefetch_related('forums')
     })

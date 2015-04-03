@@ -17,7 +17,9 @@
           {% for lib_group in lib_groups %}
             <div class="list-group-item">
               <a data-toggle="collapse" data-target="#lib_group_{{ lib_group.id }}">{{ lib_group.name|slice:"9:" }}</a>
-              <ul class="nav nav-pills nav-stacked collapse lib-small-topic {% if forum in lib_group.forums.all %} in {% endif %}" id = "lib_group_{{ lib_group.id }}">
+                {# Note: the following line, even though correct, adds 2 extra queries per page #}
+{#              <ul class="nav nav-pills nav-stacked collapse lib-small-topic {% if forum in lib_group.forums.all %} in {% endif %}" id = "lib_group_{{ lib_group.id }}">#}
+              <ul class="nav nav-pills nav-stacked collapse lib-small-topic in" id = "lib_group_{{ lib_group.id }}">
                 {% for lib_topic in lib_group.forums.all %}
                   <li role="presentation" {% if lib_topic == forum %} class="active" {% endif %}>
                     <a href="{% url 'library:topic_list' lib_topic.id %}"> {{ lib_topic }} </a>
@@ -27,7 +29,7 @@
             </div>
           {% endfor %}
         </div>
-      {% endblock library_menu %}      
+      {% endblock library_menu %}
     </div>
 
     <div class="col-md-9">

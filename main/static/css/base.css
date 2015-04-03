@@ -436,4 +436,8 @@ footer {
 .alert {
   padding: 7px; }
 
+a.disabled {
+  pointer-events: none;
+  cursor: default; }
+
 /*# sourceMappingURL=base.css.map */
