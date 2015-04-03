@@ -1,5 +1,5 @@
 require './helper.rb'
-require './content/problems/problems.rb'
+require './content/problems.rb'
 
 feature "Problems" do
   before :each do

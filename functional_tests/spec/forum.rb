@@ -1,5 +1,5 @@
 require './helper.rb'
-require './content/forum/forum.rb'
+require './content/forum.rb'
 
 feature "Forum" do
   before :each do

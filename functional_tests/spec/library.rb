@@ -1,5 +1,5 @@
 require './helper.rb'
-require './content/library/library.rb'
+require './content/library.rb'
 
 feature "Library" do
   before :each do

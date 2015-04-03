@@ -1,5 +1,5 @@
 require './helper.rb'
-require './content/messages/messages.rb'
+require './content/messages.rb'
 
 feature "Messages" do
   before :each do

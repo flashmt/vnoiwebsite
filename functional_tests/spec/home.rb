@@ -1,6 +1,6 @@
 require './helper.rb'
 require './content/home.rb'
-require './content/users/login.rb'
+require './content/users.rb'
 
 feature "Homepage" do
   before :each do
