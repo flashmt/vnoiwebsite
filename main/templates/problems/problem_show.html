@@ -8,18 +8,31 @@
 {% endblock breadcrumbs %}
 
 {% block container %}
-  <h2>Đề bài - {{ problem.name }}</h2>
-  <p>{{ problem.statement|safe }}</p>
-  <h2>Thông tin:</h2>
-  <ul>
-    <li>Người up: {{ problem.author }}</li>
-    <li>Giới hạn thời gian: {{ problem.time_limit }}s</li>
-    <li>Giới hạn bộ nhớ: {{ problem.memory_limit }}MB</li>
-    <li>Giới hạn mã nguồn: {{ problem.source_limit }} bytes</li>
-    <li>Ngôn ngữ cho phép: {{ problem.allowed_languages }}</li>
-    <li>Nguồn bài: {{ problem.source }}</li>
-    <li>Chấm trên: {{ problem.cluster }}</li>
-  </ul>
-  <h2>Xếp hạng bài</h2>
-  <p>Những người đã AC...</p>
+  <div class="row">
+    <div class="col-md-2 nav nav-pills nav-stacked"> 
+      {% block problem_menu %}
+        <li role="presentation" class="active"> <a href="#"> Problems </a> </li>
+        <li role="presentation" class=""> <a href="#"> Submit </a>  </li>
+        <li role="presentation" class=""> <a href="http://vn.spoj.com/status/{{ problem.code }}"> Status </a>  </li>
+        <li role="presentation" class=""> <a href="http://vn.spoj.com/ranks/{{ problem.code }}"> Ranks </a> </li>
+        <li role="presentation" class=""> <a href="{% url 'problems:discuss' problem.code %}"> Discuss </a>  </li>
+      {% endblock problem_menu %}    
+    </div>
+    <div class="col-md-8">
+      <h2>Đề bài - {{ problem.name }}</h2>
+      <p>{{ problem.statement|safe }}</p>
+      <h2>Thông tin:</h2>
+      <ul>
+        <li>Người up: {{ problem.author }}</li>
+        <li>Giới hạn thời gian: {{ problem.time_limit }}s</li>
+        <li>Giới hạn bộ nhớ: {{ problem.memory_limit }}MB</li>
+        <li>Giới hạn mã nguồn: {{ problem.source_limit }} bytes</li>
+        <li>Ngôn ngữ cho phép: {{ problem.allowed_languages }}</li>
+        <li>Nguồn bài: {{ problem.source }}</li>
+        <li>Chấm trên: {{ problem.cluster }}</li>
+      </ul>
+      <h2>Xếp hạng bài</h2>
+      <p>Những người đã AC...</p>
+    </div>
+  </div>
 {% endblock container %}
