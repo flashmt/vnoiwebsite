@@ -19,7 +19,7 @@ class SpojCluster(models.Model):
 
 
 class SpojProblem(models.Model):
-    category = models.ForeignKey(SpojProblemCategory, related_name='problems', null=False, blank=False)
+    category = models.ForeignKey(SpojProblemCategory, related_name='problems', null=True, blank=True, on_delete=models.SET_NULL)
     problem_id = models.IntegerField(null=False, blank=False)
     name = models.CharField(max_length=250, null=False, blank=False)
     code = models.CharField(max_length=20, null=False, blank=False)
@@ -43,7 +43,7 @@ class SpojProblem(models.Model):
     memory_limit = models.IntegerField(null=False, blank=False, default=1536)
     allowed_language = models.CharField(max_length=1024, blank=True, null=True, default='')
     problem_source = models.CharField(max_length=1024, blank=True, null=True)
-    cluster = models.ForeignKey(SpojCluster, related_name='+', null=True, blank=True)
+    cluster = models.ForeignKey(SpojCluster, related_name='+', null=True, blank=True, on_delete=models.SET_NULL)
 
     def __unicode__(self):
         return self.name
@@ -52,4 +52,4 @@ class SpojProblem(models.Model):
 class SpojProblemForum(Forum):
     # Assumption: forum name must be equal to problem code.
     # This is used in get_absolute_url in forum.models.Forum
-    problem = models.ForeignKey(SpojProblem, related_name='forum', null=False, blank=False)
+    problem = models.ForeignKey(SpojProblem, related_name='forum', null=True, blank=True, on_delete=models.SET_NULL)
