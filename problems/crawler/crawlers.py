@@ -113,7 +113,8 @@ def get_problem_time_limit(soup):
     table_info = BeautifulSoup(soup.find("table", {"class": "probleminfo"}).prettify())
     time_row = table_info.find_all("tr")[2]
     time_cell = time_row.find_all("td")[1]
-    return float(time_cell.text.strip().replace("s", ""))
+    time_elements = time_cell.text.split("-")
+    return float(time_elements[len(time_elements) - 1].replace("s", ""))
 
 
 # Return: problem's source limit as int (Byte)
@@ -143,6 +144,8 @@ def get_problem_cluster(soup):
 # Return: problem's source as a string
 def get_problem_source(soup):
     table_info = BeautifulSoup(soup.find("table", {"class": "probleminfo"}).prettify())
+    if len(table_info.find_all("tr")) < 8:
+        return ""
     src_row = table_info.find_all("tr")[7]
     src_cell = src_row.find_all("td")[1]
     return src_cell.text.strip()
@@ -168,7 +171,9 @@ def get_problem_codes_from_category(category):
     page_id = 0
     while True:
 
-        time.sleep(1)
+        # if page_id == 1:
+            # return result
+
         problem_rows = get_elements_from_url(get_category_url(category, page_id=page_id), 'tr[class="problemrow"]')
 
         if problem_rows is None:
@@ -218,8 +223,6 @@ def get_problem_codes_from_category(category):
                 time.sleep(1)
 
                 result.append(problem)
-
-                return result
 
         page_id += 1
 
