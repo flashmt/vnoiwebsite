@@ -32,7 +32,7 @@
             <td>{{ problem.category__name }}</td>
             <td><a href="{% url 'problems:show' problem.code %}">{{ problem.code }}</a></td>
             <td>{{ problem.name }}</td>
-            <td><a href="http://vn.spoj.com/problems/ranks/{{ problem.code }}">{{ problem.accept_count }}</a></td>
+            <td><a href="http://vn.spoj.com/ranks/{{ problem.code }}">{{ problem.accept_count }}</a></td>
             <!-- require rank of prob -->
             <td>{{ problem.score }}</td>
             <td><a href="{% url 'problems:discuss' problem.code %}">Thảo luận</a></td>
