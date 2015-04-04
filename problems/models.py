@@ -41,7 +41,7 @@ class SpojProblem(models.Model):
     source_limit = models.IntegerField(null=False, blank=False, default=50000)
     # Memory limit in MB
     memory_limit = models.IntegerField(null=False, blank=False, default=1536)
-    allowed_language = models.CharField(max_length=1024, blank=False, null=False, default='')
+    allowed_language = models.CharField(max_length=1024, blank=True, null=True, default='')
     problem_source = models.CharField(max_length=1024, blank=True, null=True)
     cluster = models.ForeignKey(SpojCluster, related_name='+', null=True, blank=True)
 

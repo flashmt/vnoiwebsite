@@ -86,7 +86,7 @@ def get_problem_statement(soup):
 
     prob_statement = prob_content.prettify()
 
-    prob_statement = prob_statement.replace("\"../../../SPOJVN", "http://vn.spoj.com/SPOJVN")
+    prob_statement = prob_statement.replace("../../../SPOJVN", "http://vn.spoj.com/SPOJVN")
 
     return prob_statement
 
@@ -198,6 +198,7 @@ def get_problem_codes_from_category(category):
                     problem = problem[0]
 
                 # Crawling problem statement
+                # need_update_statement = True
                 if need_update_statement:
                     prob_html = get_problem_html(problem_code)
                     problem.author = get_problem_author(prob_html)
