@@ -8,6 +8,52 @@
 {% endblock breadcrumbs %}
 
 {% block container %}
+  <div class="row">
+    <div class="col-md-2 nav nav-pills nav-stacked"> 
+      {% block problem_menu %}
+        <li role="presentation" class="active"> <a href="#"> Problems </a> </li>
+        <li role="presentation" class=""> <a href="#"> Submit </a>  </li>
+        <li role="presentation" class=""> <a href="http://vn.spoj.com/status/{{ problem.code }}"> Status </a>  </li>
+        <li role="presentation" class=""> <a href="http://vn.spoj.com/ranks/{{ problem.code }}"> Ranks </a> </li>
+        <li role="presentation" class=""> <a href="{% url 'problems:discuss' problem.code %}"> Discuss </a>  </li>
+      {% endblock problem_menu %}    
+    </div>
+    <div class="col-md-8">
+      <h2>{{ problem.name }} ( {{problem.code}} )</h2>
+      <p>{{ problem.statement|safe }}</p>
+      
+      <h2>Xếp hạng bài</h2>
+      <p>Những người đã AC...</p>
+    </div>
+    <div class="col-md-2"> 
+      <h2>Thông tin</h2>
+      <li class="prob-info">Người up:</li>
+      <p class="prob-detail-info">{{ problem.author }}</p>
+      <li class="prob-info">Giới hạn thời gian: </li>
+      <p class="prob-detail-info">{{ problem.time_limit }}s</p>
+      <li class="prob-info">Giới hạn bộ nhớ: </li>
+      <p class="prob-detail-info">{{ problem.memory_limit }}MB</p>
+      <li class="prob-info">Giới hạn mã nguồn: </li>
+      <p class="prob-detail-info">{{ problem.source_limit }} bytes</p>
+      <li class="prob-info">Ngôn ngữ cho phép: </li>
+      <p class="prob-detail-info">{{ problem.allowed_languages }}</p>
+      <li class="prob-info">Nguồn bài: </li>
+      <p class="prob-detail-info">{{ problem.source }}</p>
+      <li class="prob-info">Chấm trên: </li>
+      <p class="prob-detail-info">{{ problem.cluster }}</p>
+    </div>
+  </div>
+{% endblock container %}
+<!--
+
+{% block _navbar-highlight %}navbar_problems{% endblock _navbar-highlight %}
+
+{% block _breadcrumbs %}
+  <li><a href="{% url 'problems:list' %}">Danh sách bài tập</a></li>
+  <li>{{ problem.code }}</li>
+{% endblock _breadcrumbs %}
+
+{% block _container %}
   <h2>Đề bài - {{ problem.name }}</h2>
   <p>{{ problem.statement|safe }}</p>
   <h2>Thông tin:</h2>
@@ -21,4 +67,5 @@
   </ul>
   <h2>Xếp hạng bài</h2>
   <p>Những người đã AC...</p>
-{% endblock container %}
+>>>>>>> upstream/master
+{% endblock _container %}-->
