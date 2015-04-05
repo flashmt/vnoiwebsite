@@ -75,3 +75,4 @@ python manage.py test
 - Che Quoc Huu
 - Tran Phan Anh Khoa
 - Nguyen Xuan Tung
+- Duong Thanh Dat

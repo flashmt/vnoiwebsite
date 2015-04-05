@@ -1,7 +1,5 @@
 require './helper.rb'
-require './content/users/login.rb'
-require './content/users/logout.rb'
-require './content/users/profile.rb'
+require './content/users.rb'
 
 feature "User" do
   before :each do

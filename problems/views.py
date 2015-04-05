@@ -1,7 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from django.shortcuts import render, get_object_or_404, redirect
-from django.core.urlresolvers import reverse
+from django.shortcuts import render, get_object_or_404
 from problems.models import SpojProblem, SpojProblemForum
 from forum.models import ForumGroup
 from forum.views import topic_list

@@ -3,6 +3,8 @@ import time
 import re
 import requests
 import html5lib
+import dateutil.parser
+import copy
 
 from bs4 import BeautifulSoup
 from problems.models import SpojProblem
@@ -51,10 +53,18 @@ def get_problem_rank_url(problem_code):
     return '%sranks/%s' % (VOJ_BASE_URL, problem_code)
 
 
+def get_problem_html(problem_code):
+    return get_html(get_problem_url(problem_code))
+
+
+def get_problem_rank_html(problem_code):
+    return get_html(get_problem_rank_url(problem_code))
+
+
 # Return: problem statement in HTML
-def get_problem_statement(problem_code):
-    problem_url = get_problem_url(problem_code)
-    soup = get_html(problem_url)
+def get_problem_statement(soup):
+    # Remove problem title
+    soup.find("table", {"style": "margin-top:10px"}).decompose()
 
     # Remove Google +1 button
     soup.find("div", {"style": "position: absolute; right: 0px"}).decompose()
@@ -65,15 +75,80 @@ def get_problem_statement(problem_code):
     # Remove FB like button
     soup.find("div", {"class": "fb-like"}).decompose()
 
-    soup.find("div", {"id": "ccontent"}).decompose()
-
     # Remove problem information (at the bottom)
     soup.find("table", {"class": "probleminfo"}).decompose()
 
+    # Remove users' comment
+    soup.find("div", {"id": "ccontent"}).decompose()
+
     # problem statement
     prob_content = soup.find("div", {"class": "prob"})
-    prob_content.find('table').decompose()
-    return prob_content.prettify()
+
+    prob_statement = prob_content.prettify()
+
+    prob_statement = prob_statement.replace("../../../SPOJVN", "http://vn.spoj.com/SPOJVN")
+
+    return prob_statement
+
+
+# Return: author's handle
+def get_problem_author(soup):
+    table_info = BeautifulSoup(soup.find("table", {"class": "probleminfo"}).prettify())
+    author_row = table_info.find_all("tr")[0]
+    author_cell = author_row.find_all("td")[1]
+    author_url = author_cell.find("a")["href"]
+    return author_url[7:]
+
+
+# Return: problem's crated date as date
+def get_problem_created_date(soup):
+    table_info = BeautifulSoup(soup.find("table", {"class": "probleminfo"}).prettify())
+    date_row = table_info.find_all("tr")[1]
+    date_cell = date_row.find_all("td")[1]
+    return dateutil.parser.parse(date_cell.text.strip())
+
+
+# Return: problem's time limit as float (second)
+def get_problem_time_limit(soup):
+    table_info = BeautifulSoup(soup.find("table", {"class": "probleminfo"}).prettify())
+    time_row = table_info.find_all("tr")[2]
+    time_cell = time_row.find_all("td")[1]
+    time_elements = time_cell.text.split("-")
+    return float(time_elements[len(time_elements) - 1].replace("s", ""))
+
+
+# Return: problem's source limit as int (Byte)
+def get_problem_source_limit(soup):
+    table_info = BeautifulSoup(soup.find("table", {"class": "probleminfo"}).prettify())
+    time_row = table_info.find_all("tr")[3]
+    time_cell = time_row.find_all("td")[1]
+    return int(time_cell.text.strip().replace("B", ""))
+
+
+# Return: problem's memory limit as string (parse if needed)
+def get_problem_memory_limit(soup):
+    table_info = BeautifulSoup(soup.find("table", {"class": "probleminfo"}).prettify())
+    mem_row = table_info.find_all("tr")[4]
+    mem_cell = mem_row.find_all("td")[1]
+    return int(mem_cell.text.strip().replace("MB", ""))
+
+
+# Return: problem's cluster as string
+def get_problem_cluster(soup):
+    table_info = BeautifulSoup(soup.find("table", {"class": "probleminfo"}).prettify())
+    cluster_row = table_info.find_all("tr")[5]
+    cluster_cell = cluster_row.find_all("td")[1]
+    return cluster_cell.text.strip()
+
+
+# Return: problem's source as a string
+def get_problem_source(soup):
+    table_info = BeautifulSoup(soup.find("table", {"class": "probleminfo"}).prettify())
+    if len(table_info.find_all("tr")) < 8:
+        return ""
+    src_row = table_info.find_all("tr")[7]
+    src_cell = src_row.find_all("td")[1]
+    return src_cell.text.strip()
 
 
 # Find available language for a problem
@@ -96,11 +171,9 @@ def get_problem_codes_from_category(category):
     page_id = 0
     while True:
 
-        # For testing
-        if page_id >= 1:
-            break
+        # if page_id == 1:
+            # return result
 
-        time.sleep(1)
         problem_rows = get_elements_from_url(get_category_url(category, page_id=page_id), 'tr[class="problemrow"]')
 
         if problem_rows is None:
@@ -113,14 +186,15 @@ def get_problem_codes_from_category(category):
             if matcher:
                 data = matcher.groupdict()
                 problem_code = data['code']
-                print 'problem = %s' % problem_code
+                print 'Crawling %s' % problem_code
 
+                # Check if problem is exists in database
                 problem = SpojProblem.objects.filter(code=problem_code)
                 if len(problem) == 0:
                     problem = SpojProblem.objects.create(
                         code=problem_code,
                         problem_id=data['id'],
-                        name=data['name'].replace('ð', 'đ'),
+                        name=data['name'],
                         category=category
                     )
                     need_update_statement = True
@@ -128,9 +202,17 @@ def get_problem_codes_from_category(category):
                     need_update_statement = False
                     problem = problem[0]
 
+                # Crawling problem statement
+                # need_update_statement = True
                 if need_update_statement:
-                    problem.statement = get_problem_statement(problem_code)
-                    time.sleep(1)
+                    prob_html = get_problem_html(problem_code)
+                    problem.author = get_problem_author(prob_html)
+                    problem.created_at = get_problem_created_date(prob_html)
+                    problem.time_limit = get_problem_time_limit(prob_html)
+                    problem.source_limit = get_problem_source_limit(prob_html)
+                    problem.memory_limit = get_problem_memory_limit(prob_html)
+                    problem.problem_source = get_problem_source(prob_html)
+                    problem.statement = get_problem_statement(prob_html)
 
                 if category.name == 'acm':
                     problem.accept_count = data['ac_count']
@@ -138,8 +220,10 @@ def get_problem_codes_from_category(category):
                     problem.score = round(80.0 / (40 + int(data['ac_count'])), 1)
 
                 problem.save()
+                time.sleep(1)
 
                 result.append(problem)
+
         page_id += 1
 
     return result
