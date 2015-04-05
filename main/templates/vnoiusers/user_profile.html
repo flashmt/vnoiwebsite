@@ -134,7 +134,7 @@
 
           <p>
             {% if user.profile.codeforces_account %}
-              Codeforces: {{ user.profile.codeforces_account }}
+              Codeforces: <a href="http://codeforces.com/profile/{{ user.profile.codeforces_account }}" id="my-codeforces-account" class="codeforces-handle">{{ user.profile.codeforces_account }}</a>
               {% if user.id == request.user.id %}
                 | <a href="{% url 'user:unlink_codeforces' %}">Unlink Codeforces account</a>
               {% endif %}
@@ -183,3 +183,7 @@
     </div>
   </div>
 {% endblock container %}
+
+{% block extra-js %}
+  <script src="{% static 'js/user.js' %}"></script>
+{% endblock extra-js %}
