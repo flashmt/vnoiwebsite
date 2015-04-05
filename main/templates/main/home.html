@@ -165,6 +165,7 @@
         </div>
         <div class="panel-body">
           {% for post in recent_posts %}
+            {% if post.topic__id %}
               <div class = "row base-popular-topic-row">
                 <div class = "base-popular-topic-name">
                   <a href="{% url 'forum:topic_retrieve' post.topic__forum__id post.topic__id %}" class="base-popular-topic-link">
@@ -175,6 +176,7 @@
                   {{ post.created_by__username }}
                 </div>
               </div>
+            {% endif %}
           {% endfor %}
         </div>
       </div>
