@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {% extends 'main/base.html' %}
 
 {% block navbar-highlight %}navbar_problems{% endblock navbar-highlight %}
@@ -35,4 +36,29 @@
       <p>Những người đã AC...</p>
     </div>
   </div>
+=======
+{% extends 'main/base.html' %}
+
+{% block navbar-highlight %}navbar_problems{% endblock navbar-highlight %}
+
+{% block breadcrumbs %}
+  <li><a href="{% url 'problems:list' %}">Danh sách bài tập</a></li>
+  <li>{{ problem.code }}</li>
+{% endblock breadcrumbs %}
+
+{% block container %}
+  <h2>Đề bài - {{ problem.name }}</h2>
+  <p>{{ problem.statement|safe }}</p>
+  <h2>Thông tin:</h2>
+  <ul>
+    <li>Người up: {{ problem.author }}</li>
+    <li>Giới hạn thời gian: {{ problem.time_limit }}s</li>
+    <li>Giới hạn bộ nhớ: {{ problem.memory_limit }}MB</li>
+    <li>Giới hạn mã nguồn: {{ problem.source_limit }} bytes</li>
+    <li>Ngôn ngữ cho phép: {{ problem.allowed_languages }}</li>
+    <li>Nguồn bài: {{ problem.problem_source }}</li>
+  </ul>
+  <h2>Xếp hạng bài</h2>
+  <p>Những người đã AC...</p>
+>>>>>>> upstream/master
 {% endblock container %}
