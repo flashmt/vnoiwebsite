@@ -19,14 +19,14 @@
       {% endblock problem_menu %}    
     </div>
     <div class="col-md-8">
-      <h2>Đề bài - {{ problem.name }}</h2>
+      <h2>{{ problem.name }} ( {{problem.code}} )</h2>
       <p>{{ problem.statement|safe }}</p>
       
       <h2>Xếp hạng bài</h2>
       <p>Những người đã AC...</p>
     </div>
     <div class="col-md-2"> 
-      <h2>Thông tin:</h2>
+      <h2>Thông tin</h2>
       <li class="prob-info">Người up:</li>
       <p class="prob-detail-info">{{ problem.author }}</p>
       <li class="prob-info">Giới hạn thời gian: </li>
