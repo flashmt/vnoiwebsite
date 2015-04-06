@@ -47,7 +47,7 @@ def random_string(length)
   (0...length).map { ('a'.ord + rand(26)).chr }.join
 end
 
-def login(user, password)
+def login(user, password, sucess = true)
   puts 'Logging in...'
   within '#navbar' do
     click_on 'Sign in'
@@ -59,7 +59,18 @@ def login(user, password)
       click_on 'Login'
     end
   end
+  if (success== true)
+    expect(page).to have_content 'Logout'
+  else 
+    expect(page).to have_content('Sign in')
+  end
 end
+
+def logout()
+  click_on 'Logout'
+  expect(page).to have_content 'Sign in' 
+end
+
 
 def register(username, email, password, password2: nil,
              last_name: 'Trung', first_name: 'Nguyen',

@@ -26,7 +26,7 @@ feature "Messages" do
     login('admin', 'admin')
     expect(page).to have_content($messages)
 
-    click_on 'Logout'
+    logout()
     expect(page).to have_no_content($messages)
   end
 
