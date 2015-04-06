@@ -19,7 +19,7 @@ feature "Library" do
     visit "#{ROOT_URL}/library"
     expect(page).to have_no_content $create_topic
 
-    click_on 'Logout'
+    logout()
     expect(page).to have_content 'Sign in'
     login('admin', 'admin')
     visit "#{ROOT_URL}/library"
@@ -42,7 +42,7 @@ feature "Library" do
     expect(page).to have_no_content $edit
     expect(page).to have_no_content $unpin
 
-    click_on 'Logout'
+    logout()
     expect(page).to have_content('Sign in')
     login('admin', 'admin')
     visit "#{ROOT_URL}/library"
