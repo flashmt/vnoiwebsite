@@ -32,15 +32,19 @@ def user_login(request,
         if form.is_valid():
             login(request, form.get_user())
             messages.success(request, 'Welcome back, %s' % form.cleaned_data['username'])
-            last_url = request.META.get('HTTP_REFERER')
-            if '/user/register' in last_url or '/user/login' in last_url:
-                last_url = reverse('main:index')
+
+            if 'next' in request.GET:
+                next_url = request.GET['next']
+            else:
+                next_url = request.META.get('HTTP_REFERER')
+            if '/user/register' in next_url or '/user/login' in next_url:
+                next_url = reverse('main:index')
 
             # Ensure the user-originating redirection url is safe.
-            if not is_safe_url(url=last_url, host=request.get_host()):
-                last_url = resolve_url(settings.LOGIN_REDIRECT_URL)
+            if not is_safe_url(url=next_url, host=request.get_host()):
+                next_url = resolve_url(settings.LOGIN_REDIRECT_URL)
 
-            return HttpResponseRedirect(last_url)
+            return HttpResponseRedirect(next_url)
         else:
             return render(request, template_name, {'form': form, 'message': 'login fail!'})
     else:

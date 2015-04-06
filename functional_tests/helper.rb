@@ -112,7 +112,7 @@ end
 
 def hide_django_profile_bar
   visit "#{ROOT_URL}"
-#  click_on 'Hide'
+  click_on 'Hide'
 end
 
 def activate_account(username)
