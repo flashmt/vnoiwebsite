@@ -5,7 +5,7 @@ require 'capybara-screenshot'
 require 'capybara-screenshot/rspec'
 require 'pry'
 require 'capybara/poltergeist'
-#require 'capybara-webkit'
+require 'capybara-webkit'
 
 RSpec.configure do |config|
   config.include Capybara::DSL, type: :feature
