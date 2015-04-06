@@ -47,10 +47,11 @@ def random_string(length)
   (0...length).map { ('a'.ord + rand(26)).chr }.join
 end
 
-def login(user, password, success = true)
+def login(user, password, success : true)
   puts 'Logging in...'
   within '#navbar' do
     click_on 'Sign in'
+    expect(page).to have_content 'Login'
     fill_in 'id_username', with: user
     fill_in 'id_password', with: password
     if ENV.has_key?('TRAVIS_TEST_ENV')
