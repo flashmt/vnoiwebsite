@@ -5,7 +5,7 @@ require 'capybara-screenshot'
 require 'capybara-screenshot/rspec'
 require 'pry'
 require 'capybara/poltergeist'
-require 'capybara-webkit'
+#require 'capybara-webkit'
 
 RSpec.configure do |config|
   config.include Capybara::DSL, type: :feature
@@ -47,7 +47,7 @@ def random_string(length)
   (0...length).map { ('a'.ord + rand(26)).chr }.join
 end
 
-def login(user, password, sucess = true)
+def login(user, password, success = true)
   puts 'Logging in...'
   within '#navbar' do
     click_on 'Sign in'
