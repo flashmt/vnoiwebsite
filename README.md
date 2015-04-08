@@ -76,3 +76,4 @@ python manage.py test
 - Tran Phan Anh Khoa
 - Nguyen Xuan Tung
 - Duong Thanh Dat
+- Nguyen Tan Sy Nguyen
