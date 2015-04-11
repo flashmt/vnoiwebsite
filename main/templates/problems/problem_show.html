@@ -8,7 +8,7 @@
 {% endblock breadcrumbs %}
 
 {% block container %}
-  <div class="row">
+  <div class="row" style="margin-left:0">
     <div class="col-md-2 nav nav-pills nav-stacked"> 
       {% block problem_menu %}
         <li role="presentation" class="active"> <a href="#"> Problems </a> </li>
@@ -20,17 +20,18 @@
     </div>
     <div class="col-md-10">
       <h2>{{ problem.name }} ( {{problem.code}} )</h2>
+      <strong>Giới hạn</strong>
       <ul>
         <li class="prob-info">
-          <strong>Giới hạn thời gian:</strong>
+          <strong>Thời gian:</strong>
           <span class="prob-detail-info">{{ problem.time_limit }}s</span>
         </li>
         <li class="prob-info">
-          <strong>Giới hạn bộ nhớ:</strong>
+          <strong>Bộ nhớ:</strong>
           <span class="prob-detail-info">{{ problem.memory_limit }}MB</span>
         </li>
         <li class="prob-info">
-          <strong>Giới hạn mã nguồn:</strong>
+          <strong>Mã nguồn:</strong>
           <span class="prob-detail-info">{{ problem.source_limit }} bytes</span>
         </li>
       </ul>
@@ -45,10 +46,12 @@
           <strong>Ngôn ngữ cho phép:</strong>
           <span class="prob-detail-info">{{ problem.allowed_languages }}</span>
         </li>
-        <li class="prob-info">
-          <strong>Nguồn bài:</strong>
-          <span class="prob-detail-info">{{ problem.problem_source }}</span>
-        </li>
+        {% if problem.problem_source %}
+          <li class="prob-info">
+            <strong>Nguồn bài:</strong>
+            <span class="prob-detail-info">{{ problem.problem_source }}</span>
+          </li>
+        {% endif %}
       </ul>
     </div>
   </div>
