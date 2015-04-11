@@ -24,18 +24,18 @@ feature "User" do
       login('admin', 'admin')
       expect(current_path.chomp('/')).to eq("#{path}")
       verify_flash_messages(['Welcome back, admin'])
-      click_on $logout
+      logout()
     end
 
     visit "#{ROOT_URL}/user/login"
     login('admin', 'admin')
     expect(current_path.chomp('/')).to eq('')
-    click_on $logout
+    logout()
 
     visit "#{ROOT_URL}/user/register"
     login('admin', 'admin')
     expect(current_path.chomp('/')).to eq('')
-    click_on $logout
+    logout()
   end
 
   scenario "Logged in user should not be able to access login / register page", :js => true do
@@ -57,33 +57,33 @@ feature "User" do
     visit "#{ROOT_URL}"
 
     # Now, cannot login because account is not yet activated
-    login(username, '12345')
+    login(username, '12345', false)
     expect(current_path.chomp('/')).to eq('/user/login')
 
     # Activate account & login
     activate_account(username)
     login(username, '12345')
     verify_flash_messages(['Welcome back'])
-    click_on 'Logout'
+    logout()
 
     email2 = random_string(10) + '@gmail.com'
     register(username, email2, '123456')
     expect(page).to have_content('Tài khoản này đã được đăng ký')
     visit "#{ROOT_URL}"
-    login(username, '123456')
+    login(username, '123456',false)
     expect(page).to have_content('Login')
 
     username2 = random_string(10)
     register(username2, email, '123456')
     expect(page).to have_content('Email này đã được đăng ký')
     visit "#{ROOT_URL}"
-    login(username2, '123456')
+    login(username2, '123456', false)
     expect(page).to have_content('Login')
 
     register(username2, email2, '12345', password2: '123456')
     expect(page).to have_content('Mật khẩu nhập lại không khớp')
     visit "#{ROOT_URL}"
-    login(username2, '12345')
+    login(username2, '12345', false)
     expect(page).to have_content('Login')
 
     register(username2, email2, '12345')
