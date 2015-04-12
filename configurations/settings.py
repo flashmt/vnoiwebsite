@@ -10,6 +10,7 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
+import sys
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
@@ -86,23 +87,26 @@ WSGI_APPLICATION = 'configurations.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.7/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-#     }
-# }
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'vnoi',
-        'USER': 'root',
-        'PASSWORD': '',
-        'HOST': '127.0.0.1',  # Using direct IP instead of localhost, to ensure MySQLdb doesn't fail
-        'OPTIONS': {'init_command': 'SET storage_engine=INNODB'}
-    },
-}
+if 'test' in sys.argv:
+    # We use sqlite database for testing, because it is much faster to create
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        }
+    }
+else:
+    # But stick to mysql database for production, because it is more trusted
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': 'vnoi',
+            'USER': 'root',
+            'PASSWORD': '',
+            'HOST': '127.0.0.1',  # Using direct IP instead of localhost, to ensure MySQLdb doesn't fail
+            'OPTIONS': {'init_command': 'SET storage_engine=INNODB'}
+        },
+    }
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.7/topics/i18n/
