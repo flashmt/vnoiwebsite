@@ -4,7 +4,8 @@
 cd "$(dirname "$0")"
 
 # Clear old database
-rm -f db.sqlite3
+mysql -u root -p -e 'drop database vnoi;'
+mysql -u root -p -e 'create database vnoi CHARACTER SET utf8;'
 
 # Create new database
 python manage.py migrate

@@ -86,22 +86,23 @@ WSGI_APPLICATION = 'configurations.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.7/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#     }
+# }
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'vnoi',
+        'USER': 'root',
+        'PASSWORD': '',
+        'HOST': '127.0.0.1',  # Using direct IP instead of localhost, to ensure MySQLdb doesn't fail
+        'OPTIONS': {'init_command': 'SET storage_engine=INNODB'}
+    },
 }
-
-#DATABASES = {
-#    'default': {
-#        'ENGINE': 'django.db.backends.mysql',
-#        'NAME': 'configurations',
-#        'USER': 'vnoi_admin',
-#        'PASSWORD': 'vnoi_password',
-#        'HOST': '127.0.0.1', # Using direct IP instead of localhost, to ensure MySQLdb doesn't fail
-#    },
-#}
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.7/topics/i18n/
