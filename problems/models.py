@@ -2,7 +2,6 @@ from django.db import models
 from django_bleach.models import BleachField
 from forum.models import Forum
 
-
 class SpojProblemCategory(models.Model):
     name = models.CharField(max_length=50, null=False, blank=False)
 
@@ -13,6 +12,21 @@ class SpojProblemCategory(models.Model):
 class SpojCluster(models.Model):
     name = models.CharField(max_length=50)
     description = models.CharField(max_length=250)
+
+    def __unicode__(self):
+        return self.name
+
+
+class SpojProblemTag(models.Model):
+    name = models.CharField(max_length=20, null=True, blank=False)
+
+    def __unicode__(self):
+        return self.name
+
+
+class SpojProblemLanguage(models.Model):
+    name = models.CharField(max_length=50, null=False, blank=False)
+    lang_id = models.IntegerField(null=False, blank=False)
 
     def __unicode__(self):
         return self.name
@@ -41,8 +55,13 @@ class SpojProblem(models.Model):
     source_limit = models.IntegerField(null=False, blank=False, default=50000)
     # Memory limit in MB
     memory_limit = models.IntegerField(null=False, blank=False, default=1536)
-    allowed_language = models.CharField(max_length=1024, blank=True, null=True, default='')
+    # Allowed languages
+    allowed_languages = models.ManyToManyField(SpojProblemLanguage, related_name='+', null=True, blank=True)
+    # Problem's tags
+    tags = models.ManyToManyField(SpojProblemTag, related_name='problems', null=True, blank=True)
+    # Problem's source
     problem_source = models.CharField(max_length=1024, blank=True, null=True)
+    # Cluster (doesn't need anymore)
     cluster = models.ForeignKey(SpojCluster, related_name='+', null=True, blank=True, on_delete=models.SET_NULL)
 
     def __unicode__(self):
