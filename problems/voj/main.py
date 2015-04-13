@@ -6,12 +6,13 @@ from django.core.wsgi import get_wsgi_application
 if __name__ == "__main__":
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "configurations.settings")
 
-from problems.crawler.crawlers import get_problem_codes_from_category
+from problems.voj.crawlers import get_problem_codes_from_category
+from problems.voj.crawlers import save_all_languages
 from problems.models import SpojProblemCategory
-
 
 if __name__ == "__main__":
     application = get_wsgi_application()
+
     problem_category_acm = SpojProblemCategory.objects.filter(name='acm')
     if len(problem_category_acm) == 0:
         problem_category_acm = SpojProblemCategory.objects.create(name='acm')
@@ -26,6 +27,7 @@ if __name__ == "__main__":
     else:
         problem_category_oi = problem_category_oi[0]
 
+    save_all_languages()
     problems_acm = get_problem_codes_from_category(problem_category_acm)
     problems_oi = get_problem_codes_from_category(problem_category_oi)
 
