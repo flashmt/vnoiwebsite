@@ -102,7 +102,7 @@ else:
             'ENGINE': 'django.db.backends.mysql',
             'NAME': 'vnoi',
             'USER': 'root',
-            'PASSWORD': 'dkhdsdtkd',
+            'PASSWORD': '',
             'HOST': '127.0.0.1',  # Using direct IP instead of localhost, to ensure MySQLdb doesn't fail
             'OPTIONS': {'init_command': 'SET storage_engine=INNODB'}
         },
