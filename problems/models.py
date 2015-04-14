@@ -2,6 +2,15 @@ from django.db import models
 from django_bleach.models import BleachField
 from forum.models import Forum
 
+
+class SpojContest(models.Model):
+    code = models.CharField(max_length=20, null=False, blank=False)
+    name = models.CharField(max_length=250, null=False, blank=False)
+
+    def __unicode__(self):
+        return self.name
+
+
 class SpojProblemCategory(models.Model):
     name = models.CharField(max_length=50, null=False, blank=False)
 
@@ -33,6 +42,7 @@ class SpojProblemLanguage(models.Model):
 
 
 class SpojProblem(models.Model):
+    contest = models.ForeignKey(SpojContest, related_name='problems', null=True, blank=True, on_delete=models.SET_NULL)
     category = models.ForeignKey(SpojProblemCategory, related_name='problems', null=True, blank=True, on_delete=models.SET_NULL)
     problem_id = models.IntegerField(null=False, blank=False)
     name = models.CharField(max_length=250, null=False, blank=False)
