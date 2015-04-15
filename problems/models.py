@@ -1,6 +1,7 @@
 from django.db import models
 from django_bleach.models import BleachField
 from forum.models import Forum
+from vnoiusers.models import VnoiUser
 
 
 class SpojContest(models.Model):
@@ -9,6 +10,26 @@ class SpojContest(models.Model):
 
     def __unicode__(self):
         return self.name
+
+    def get_standings(self):
+        return self.participants.all().order_by('-get_total_score')
+
+
+class SpojContestParticipant(models.Model):
+    contest = models.ForeignKey(SpojContest, related_name='participants', null=False, blank=False)
+    # cache name
+    name = models.CharField(max_length=250, null=False, blank=False)
+
+    # calculate total score of last submissions (each problem)
+    def get_total_score(self):
+        calculated = []
+        total_score = 0
+        for submission in self.submissions.all().order_by('-submit_time'):
+            if submission.problem.code in calculated:
+                continue
+            calculated.append(submission.problem.code)
+            total_score = total_score + submission.get_actual_score(is_contest=True)
+        return total_score
 
 
 class SpojProblemCategory(models.Model):
@@ -42,7 +63,11 @@ class SpojProblemLanguage(models.Model):
 
 
 class SpojProblem(models.Model):
+    # contest that contain this problem
     contest = models.ForeignKey(SpojContest, related_name='problems', null=True, blank=True, on_delete=models.SET_NULL)
+    # coefficient of this problem in the above contest
+    coefficient = models.FloatField(null=False, blank=False, default=1.0)
+
     category = models.ForeignKey(SpojProblemCategory, related_name='problems', null=True, blank=True, on_delete=models.SET_NULL)
     problem_id = models.IntegerField(null=False, blank=False)
     name = models.CharField(max_length=250, null=False, blank=False)
@@ -76,6 +101,39 @@ class SpojProblem(models.Model):
 
     def __unicode__(self):
         return self.name
+
+
+class SpojProblemSubmission(models.Model):
+    row = models.ForeignKey(SpojContestParticipant, related_name='submissions', null=True, blank=True)
+    problem = models.ForeignKey(SpojProblem, related_name='submissions', null=False, blank=False)
+
+    voj_account = models.CharField(max_length=100, null=True, blank=True)
+    vnoi_account = models.ForeignKey(VnoiUser, related_name='submissions', null=True, blank=True)
+
+    submission_id = models.IntegerField(null=False, blank=False)
+    submit_time = models.DateField(null=False, blank=False)
+    verdict = models.CharField(max_length=50, null=True, blank=True)
+    raw_score = models.FloatField(null=False, blank=False, default=0.0)
+
+    def get_actual_score(self, is_contest=False):
+        if is_contest:
+            if self.problem.category.name is 'acm':
+                # check error < 10^-4
+                if abs(self.raw_score - 1.0) < 1e-4:
+                    return self.problem.coefficient
+                else:
+                    return 0
+            else:
+                return self.raw_score * self.problem.coefficient
+        else:
+            if self.problem.category.name is 'acm':
+                # check error < 10^-4
+                if abs(self.raw_score - 1.0) < 1e-4:
+                    return self.raw_score * self.problem.score
+                else:
+                    return 0
+            else:
+                return self.raw_score * self.problem.score
 
 
 class SpojProblemForum(Forum):
