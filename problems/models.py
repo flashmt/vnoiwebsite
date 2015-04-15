@@ -104,7 +104,7 @@ class SpojProblem(models.Model):
 
 
 class SpojProblemSubmission(models.Model):
-    row = models.ForeignKey(SpojContestParticipant, related_name='submissions', null=True, blank=True)
+    participant = models.ForeignKey(SpojContestParticipant, related_name='submissions', null=True, blank=True)
     problem = models.ForeignKey(SpojProblem, related_name='submissions', null=False, blank=False)
 
     voj_account = models.CharField(max_length=100, null=True, blank=True)
