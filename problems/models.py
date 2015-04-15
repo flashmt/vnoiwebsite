@@ -32,6 +32,13 @@ class SpojContestParticipant(models.Model):
         return total_score
 
 
+class SpojVerdict(models.Model):
+    message = models.CharField(max_length=50, null=True, blank=True)
+
+    def __unicode__(self):
+        return self.message
+
+
 class SpojProblemCategory(models.Model):
     name = models.CharField(max_length=50, null=False, blank=False)
 
@@ -112,7 +119,7 @@ class SpojProblemSubmission(models.Model):
 
     submission_id = models.IntegerField(null=False, blank=False)
     submit_time = models.DateField(null=False, blank=False)
-    verdict = models.CharField(max_length=50, null=True, blank=True)
+    verdict = models.ForeignKey(SpojVerdict, related_name='+', null=True, blank=True, on_delete=models.SET_NULL)
     raw_score = models.FloatField(null=False, blank=False, default=0.0)
 
     def get_actual_score(self, is_contest=False):
