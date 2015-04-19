@@ -4,7 +4,7 @@ rvm:
   - 2.1.2
 
 env:
-  - USE_VIRTUAL_ENV=1
+  - USE_VIRTUAL_ENV=1 TRAVIS_TEST_ENV=1
 
 before_install:
   - sudo apt-get install python-virtualenv

@@ -12,3 +12,4 @@ django-bleach==0.3.0
 python-memcached==1.54
 django-post_office
 python-dateutil
+requests_toolbelt

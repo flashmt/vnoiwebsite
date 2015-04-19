@@ -87,7 +87,7 @@ WSGI_APPLICATION = 'configurations.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.7/ref/settings/#databases
 
-if 'test' in sys.argv:
+if 'test' in sys.argv or os.environ.get('TRAVIS_TEST_ENV') == '1':
     # We use sqlite database for testing, because it is much faster to create
     DATABASES = {
         'default': {
