@@ -77,3 +77,6 @@ nohup.out
 
 # Ignore static folder
 main/static/
+
+# Settings
+configurations/settings.py

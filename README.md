@@ -58,7 +58,7 @@ To fix it: [follow this tutorial](http://stackoverflow.com/questions/15258335/io
 # 2. Run the project
 ```bash
 ./runsass.sh
-# Now the website should be available at http://localhost:8000/main
+# Now the website should be available at http://localhost:8000/
 ```
 
 This script will run webserver, as well as auto compile our scss to css.
