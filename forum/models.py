@@ -19,6 +19,7 @@ class ForumGroup(models.Model):
         ('p', 'Problem')
     )
     group_type = models.CharField(max_length=3, choices=ForumGroupChoices, default='f')
+    position = models.IntegerField(default=0)
 
     def __unicode__(self):
         return self.name
@@ -33,6 +34,7 @@ class Forum(models.Model):
     created_by = models.ForeignKey(User, related_name="created_forums")
     last_post = models.OneToOneField('Post', related_name="+", default=None, null=True, blank=True, on_delete=models.SET_NULL)
     forum_group = models.ForeignKey(ForumGroup, related_name="forums")
+    position = models.IntegerField(default=0)
 
     def __unicode__(self):
         return self.name

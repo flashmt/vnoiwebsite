@@ -16,9 +16,10 @@ from forum.perms import PostPermission, VotePermission, TopicPermission
 
 
 def index(request):
-    forum_groups = ForumGroup.objects.filter(group_type='f')
+    forum_groups = ForumGroup.objects.filter(group_type='f').order_by('position')
     forums = Forum.objects.filter(forum_group__in=forum_groups)\
-                          .select_related('last_post', 'last_post__created_by', 'last_post__topic', 'forum_group')
+                          .select_related('last_post', 'last_post__created_by', 'last_post__topic', 'forum_group')\
+                          .order_by('position')
     return render(request, 'forum/forum_index.html', {'forum_groups': forum_groups, 'forums': forums})
 
 
