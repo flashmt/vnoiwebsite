@@ -8,6 +8,8 @@ import copy
 
 from bs4 import BeautifulSoup
 from problems.models import SpojProblem
+from problems.models import SpojProblemLanguage
+
 
 PROBLEM_RE = re.compile(
     r'<tr class="problemrow">'
@@ -20,6 +22,8 @@ PROBLEM_RE = re.compile(
 )
 
 VOJ_BASE_URL = 'http://vn.spoj.com/'
+# this url is used to get all languages
+VOJ_TEST_URL = 'http://vn.spoj.com/submit/TEST/'
 
 
 def get_html(url):
@@ -51,6 +55,10 @@ def get_problem_url(problem_code):
 
 def get_problem_rank_url(problem_code):
     return '%sranks/%s' % (VOJ_BASE_URL, problem_code)
+
+
+def get_problem_submit_url(problem_code):
+    return '%ssubmit/%s' % (VOJ_BASE_URL, problem_code)
 
 
 def get_problem_html(problem_code):
@@ -154,15 +162,16 @@ def get_problem_source(soup):
 # Find available language for a problem
 # Return: array of language code
 def get_problem_languages(problem_code):
-    problem_rank_url = get_problem_rank_url(problem_code)
-    soup = get_html(problem_rank_url)
-    div_langs = soup.find("small")
-    div_langs = BeautifulSoup(div_langs.prettify())
+    url = get_problem_submit_url(problem_code)
+    soup = get_html(url)
+    langs = BeautifulSoup(soup.find("select", {"name": "lang", "id": "lang"}).prettify())
+    options = langs.find_all("option")
 
-    langs = []
-    for lang in div_langs.find_all("a"):
-        langs.append(lang.text.strip())
-    return langs
+    languages = []
+    for option in options:
+        languages.append({"id": option["value"],
+                          "name": option.text.strip()})
+    return languages
 
 
 def get_problem_codes_from_category(category):
@@ -214,6 +223,12 @@ def get_problem_codes_from_category(category):
                     problem.problem_source = get_problem_source(prob_html)
                     problem.statement = get_problem_statement(prob_html)
 
+                    languages = get_problem_languages(problem_code)
+                    for language in languages:
+                        lang = SpojProblemLanguage.objects.filter(lang_id=int(language["id"]))
+                        if len(lang) is not 0:
+                            problem.allowed_languages.add(lang[0])
+
                 if category.name == 'acm':
                     problem.accept_count = data['ac_count']
                     problem.accept_rate = data['ac_rate']
@@ -227,3 +242,23 @@ def get_problem_codes_from_category(category):
         page_id += 1
 
     return result
+
+
+# save all languages and save to database
+def save_all_languages():
+    url = VOJ_TEST_URL
+    soup = get_html(url)
+    langs = BeautifulSoup(soup.find("select", {"name": "lang", "id": "lang"}).prettify())
+    options = langs.find_all("option")
+
+    for option in options:
+        # Check if problem is exists in database
+        spojlang = SpojProblemLanguage.objects.filter(lang_id=int(option["value"]))
+        if len(spojlang) == 0:
+            spojlang = SpojProblemLanguage.objects.create(lang_id=int(option["value"]),
+                                                          name=option.text.strip())
+        else:
+            spojlang = spojlang[0]
+
+        spojlang.name = option.text.strip()
+        spojlang.save()

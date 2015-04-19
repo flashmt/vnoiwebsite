@@ -19,4 +19,4 @@ python manage.py createcachetable
 # Crawl data from external sources
 #./crawl_external_judge_data.sh
 
-
+python manage.py collectstatic

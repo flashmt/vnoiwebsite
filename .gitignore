@@ -70,3 +70,13 @@ media/
 
 #Thumbnail image
 Thumbs.db
+
+# Socket
+*.sock
+nohup.out
+
+# Ignore static folder
+main/static/
+
+# Settings
+configurations/settings.py

@@ -11,6 +11,12 @@
 sudo pip install -r requirements.txt
 
 # Initialize database
+First of all, we have to install mysql
+sudo apt-get update
+sudo apt-get install mysql-server
+(in this step, we have to choose the password for root)
+sudo apt-get install python-mysqldb
+Then go to configurations/settings.py, edit 'PASSWORD' in DATABASES to password of root
 ./init_database.sh
 ```
 
@@ -56,7 +62,7 @@ To fix it: [follow this tutorial](http://stackoverflow.com/questions/15258335/io
 # 2. Run the project
 ```bash
 ./runsass.sh
-# Now the website should be available at http://localhost:8000/main
+# Now the website should be available at http://localhost:8000/
 ```
 
 This script will run webserver, as well as auto compile our scss to css.
