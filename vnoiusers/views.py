@@ -140,7 +140,7 @@ def user_upload_avatar(request, extra_context=None,
             image_file = request.FILES['avatar']
             avatar.avatar.save(image_file.name, image_file)
             avatar.save()
-            messages.success(request, _("Successfully uploaded a new avatar."))
+            messages.success(request, "Successfully uploaded a new avatar.")
 
             # Save avatar into user_profile
             user_profile = request.user.profile
