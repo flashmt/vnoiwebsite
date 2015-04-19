@@ -43,6 +43,10 @@ cd memcached-1.x.x
 python manage.py createcachetable
 ```
 
+## 1.3. Server config
+
+[Nginx config for Django](http://uwsgi-docs.readthedocs.org/en/latest/tutorials/Django_and_nginx.html#configure-nginx-for-your-site)
+
 ## Troubleshoot
 
 If you have problem with user avatar (avatar does not show up after uploading), PIL might be the issue
