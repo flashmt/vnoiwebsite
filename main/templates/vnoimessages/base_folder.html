@@ -87,13 +87,13 @@
       </div>
     </div>
   </div>
-  <div class="panel-body"> 
+  <div class="panel-body">
     {% for message in pm_messages %}
       <div class="row msg-a-message">
         <div class="col-md-1">
           <div class="msg-action-tick-button">
             <input type="checkbox" {% if by_conversation and message.thread_id %}name="tpks" value="{{ message.thread_id }}"{% else %}name="pks" value="{{ message.pk }}"{% endif %} id="message#{{ forloop.counter }}"/>
-          </div> 
+          </div>
         </div>
         {% block pm_sender_cell %}
           <div class="col-md-1 msg-user">
@@ -109,7 +109,7 @@
           {% if message.is_new %}<strong>{% endif %}{% if message.is_replied %}<em>{% endif %}
             {% block pm_subject %}
               <a href="{% if by_conversation and message.thread_id %}{% url 'message:view_conversation' message.thread_id %}{% else %}{% url 'message:view' message.id %}{% endif %}?next={{ current_url|urlencode }}">
-                {% include "postman/inc_subject_ex.html" %}
+                {% include "vnoimessages/inc_subject.html" %}
               </a>
             {% endblock %}
           {% if message.is_replied %}</em>{% endif %}{% if message.is_new %}</strong>{% endif %}
@@ -122,7 +122,7 @@
       </div>
     {% endfor %}
   </div>
-  
+
 </div>
 </form>
  {% block pm_by_modes %}<div id="pm_by_modes">
