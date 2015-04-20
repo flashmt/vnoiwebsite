@@ -310,6 +310,9 @@
  * Problems
  * --------------------------------------------------
  */
+.prob-name {
+  margin-top: 0.2em; }
+
 .prob-detail-info {
   text-align: left; }
 
