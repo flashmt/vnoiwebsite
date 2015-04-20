@@ -17,7 +17,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 # Load local settings file and store as SETTINGS_LOCAL
 SETTINGS_LOCAL_FILE = 'settings_local.py'
 SETTINGS_LOCAL = {}
-execfile(SETTINGS_LOCAL_FILE, {}, SETTINGS_LOCAL)
+try:
+    execfile(SETTINGS_LOCAL_FILE, {}, SETTINGS_LOCAL)
+except IOError as e:
+    pass
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.7/howto/deployment/checklist/
