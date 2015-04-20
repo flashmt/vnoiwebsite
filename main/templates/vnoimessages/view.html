@@ -16,9 +16,9 @@
   <div id="postman">
     <h1 class = "msg-title">
       {% if pm_messages|length > 1 %}
-        {% trans "Conversation" %}
+        {% trans "Hội thoại" %}
       {% else %}
-        {% trans "Message" %}
+        {% trans "Tin nhắn" %}
       {% endif %}
     </h1>
     {% for message in pm_messages %}
@@ -56,19 +56,18 @@
                  value="{{ message.thread_id }}"{% else %}name="pks" value="{{ message.pk }}"{% endif %}/>
           <a href="{{ next_url }}">{% trans "Back" %}</a>
           <span id="pm_buttons">
-            <button type="submit"
-                    onclick="this.form.action='{% url 'message:delete' %}?next={{ next_url|urlencode }}'">{% trans "Delete" %}</button>
+            <button class="btn btn-default msg-view-button" type="submit" onclick="this.form.action='{% url 'message:delete' %}?next={{ next_url|urlencode }}'">{% trans "Delete" %}</button>
             {% if not archived %}
-              <button type="submit" onclick="this.form.action='{% url 'message:archive' %}?next={{ next_url|urlencode }}'">
+              <button class="btn btn-default msg-view-button" type="submit" onclick="this.form.action='{% url 'message:archive' %}?next={{ next_url|urlencode }}'">
                 {% trans "Archive" %}
               </button>
             {% endif %}
           </span>
-          {% if reply_to_pk %}
+          <!--{% if reply_to_pk %}
             <a href="{% url 'message:reply' reply_to_pk %}?next={{ next_url|urlencode }}">
               {% trans "Reply" %}
             </a>
-          {% endif %}
+          {% endif %}-->
         </form>
         {% if reply_to_pk %}
           <hr/>
