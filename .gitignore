@@ -79,4 +79,4 @@ nohup.out
 main/static/
 
 # Settings
-configurations/settings.py
+configurations/settings_local.py
