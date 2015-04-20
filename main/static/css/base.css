@@ -254,6 +254,9 @@
  * Message
  * --------------------------------------------------
  */
+.msg-title {
+  margin-top: 0em; }
+
 .msg-action-button-container {
   margin-top: -2em; }
 
@@ -263,6 +266,12 @@
 .msg-button {
   margin-top: 1em;
   margin-bottom: 0.5em;
+  margin-right: 0.5em;
+  float: right; }
+
+.msg-view-button {
+  margin-top: 0em;
+  margin-bottom: 0em;
   margin-right: 0.5em;
   float: right; }
 
