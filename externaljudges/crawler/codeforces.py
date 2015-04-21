@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+# To run: python -m externaljudges.crawler.codeforces
 
 import requests
 import os
