@@ -80,3 +80,4 @@ main/static/
 
 # Settings
 configurations/settings.py
+configurations/settings.py.backup
