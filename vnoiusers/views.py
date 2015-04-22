@@ -119,7 +119,7 @@ def user_profile(request, user_id):
         # We must select forum & forum_group, so that get_absolute_url does not need additional queries
         'topics': user.created_topics.all().select_related('forum', 'forum__forum_group'),
         'disable_breadcrumbs': True,
-        'is_friend': is_friend,
+        'is_friend': is_friend
     }
     return render(request, 'vnoiusers/user_profile.html', context)
 

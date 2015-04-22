@@ -15,12 +15,16 @@
 $font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 $normal-font-size: 1.3em;
 $corner-radius: 2px;
+$background-color: #be4236;
+$border-color: #96342b;
 
 /*
  * Style tweaks
  * --------------------------------------------------
  */
-
+input:focus, textarea:focus, a:focus {
+    outline: none;
+}
 html,
 body {
 	overflow-x: hidden; /* Prevent scroll on narrow devices */
@@ -37,7 +41,35 @@ footer {
 .clear-margin {
 	margin: 0 !important;
 }
-
+ul.nav li:not(.ui-state-active) a:hover {
+	background-color: $border-color !important;
+	color: #ffffff;
+	border: 0;
+	margin-top: -1px;
+}
+ul.nav li.ui-state-active a:focus {
+	background-color: #ffffff !important;
+	pointer-events: none;
+}
+ul.nav li.ui-state-active a:hover {
+	background-color: #ffffff !important;
+	pointer-events: none;
+}
+.nav .open>a, .nav .open>a:hover, .nav .open>a:focus {
+	background-color: $border-color !important;
+	margin-top: -1px;
+}
+@mixin heading-url {
+	color: $border-color;
+	text-decoration: none;
+}
+h2 a {
+	@include heading-url;
+}
+h2 a:hover {
+	@include heading-url;
+	border-bottom: 2px solid $border-color;
+}
 /*
  * Navigation bar
  */
@@ -196,7 +228,7 @@ $navbar-padding: 0px;
 }
 
 .dropdown-menu {
-	background-color: rgb(34, 34, 34);
+	background-color: #96342b;
 	width: 250px;
 }
 

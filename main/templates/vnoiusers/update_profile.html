@@ -1,5 +1,9 @@
 {% extends 'main/base.html' %}
 
+{% load staticfiles %}
+
+{% block navbar-highlight %}navbar_profile{% endblock navbar-highlight %}
+
 {% block container %}
 
     {% block form-title %}
@@ -11,10 +15,5 @@
 {% endblock container %}
 
 {% block extra-js %}
-  <script>
-    $('#id_dob').datepicker({
-      'dateFormat': 'yy-mm-dd',
-      'altFormat': 'yy-mm-dd'
-    });
-  </script>
+  <script src="{% static 'js/user.js' %}"></script>
 {% endblock extra-js %}

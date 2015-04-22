@@ -334,6 +334,9 @@
  * Style tweaks
  * --------------------------------------------------
  */
+input:focus, textarea:focus, a:focus {
+  outline: none; }
+
 html,
 body {
   overflow-x: hidden;
@@ -350,6 +353,33 @@ footer {
 
 .clear-margin, #contest_schedule > div > table, #recent_post > div > table {
   margin: 0 !important; }
+
+ul.nav li:not(.ui-state-active) a:hover {
+  background-color: #96342b !important;
+  color: #ffffff;
+  border: 0;
+  margin-top: -1px; }
+
+ul.nav li.ui-state-active a:focus {
+  background-color: #ffffff !important;
+  pointer-events: none; }
+
+ul.nav li.ui-state-active a:hover {
+  background-color: #ffffff !important;
+  pointer-events: none; }
+
+.nav .open > a, .nav .open > a:hover, .nav .open > a:focus {
+  background-color: #96342b !important;
+  margin-top: -1px; }
+
+h2 a {
+  color: #96342b;
+  text-decoration: none; }
+
+h2 a:hover {
+  color: #96342b;
+  text-decoration: none;
+  border-bottom: 2px solid #96342b; }
 
 /*
  * Navigation bar
@@ -481,7 +511,7 @@ footer {
     font-size: 14px; }
 
 .dropdown-menu {
-  background-color: #222222;
+  background-color: #96342b;
   width: 250px; }
 
 .alert {

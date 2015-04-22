@@ -65,12 +65,9 @@
             <li id="navbar_forum"><a href="{% url 'forum:index' %}">Diễn đàn</a></li>
             <li id="navbar_library"><a href="{% url 'library:index' %}">Thư viện</a></li>
             {% if request.user.is_authenticated %}
-            <li id="navbar_messages"><a href="{% url 'message:index' %}">Messages</a></li>
-            <li style="padding-top: 10px;margin-left:10px;">
-              <span>
-                <a class="username-admin" href="{{request.user.get_absolute_url}}"><strong>{{request.user.username }}</strong></a>
-                | <a href="{% url 'user:logout' %}">Logout</a>
-              </span>
+            <li id="navbar_messages"><a href="{% url 'message:index' %}">Tin nhắn</a></li>
+              <li id="navbar_profile"><a class="username-admin" href="{{request.user.get_absolute_url}}"><strong>{{request.user.username }}</strong></a></li>
+              <li><a href="{% url 'user:logout' %}">Đăng xuất</a></li>
             </li>
             {% else %}
 
@@ -161,7 +158,7 @@
   var navbar_highlight = $.trim("{% block navbar-highlight %}{% endblock navbar-highlight %}");
   if (navbar_highlight == "") navbar_highlight = "navbar_home";
   $(document).ready(function () {
-    $("#" + navbar_highlight).addClass("active");
+    $("#" + navbar_highlight).addClass("ui-state-active").css('border', '0');
   });
   </script>
   {% block extra-js %}
