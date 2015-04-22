@@ -45,6 +45,8 @@ $(document).ready(function () {
 		$('.row-offcanvas').toggleClass('active')
 	});
 
+	$('.button').button();
+
 	// Handling clicking on up-vote / down-vote. Since these elements are shown in home page + forum topic retrieve
 	// page, I'm putting these methods here.
 

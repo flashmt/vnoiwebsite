@@ -2,13 +2,24 @@
  * Home
  * --------------------------------------------------
  */
-
+#contest_schedule>div>table {
+	@extend .clear-margin;
+}
+#recent_post>div>table {
+	@extend .clear-margin;
+}
 #recent_post {
-	margin-top: 50px;
+	margin-top: 20px;
 }
-.base-popular-topic-name {
-	margin-left: 0.5em;
+#top-rank-panel {
+	margin-top: 20px;
 }
-.base-popular-topic-user {
-	margin-right: 0.5em;
+#contest-schedule-content {
+	@extend .clear-padding;
+}
+#top-voj {
+	@extend .clear-padding;
+}
+#top-contribution {
+	@extend .clear-padding;
 }

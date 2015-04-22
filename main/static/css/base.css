@@ -3,13 +3,10 @@
  * --------------------------------------------------
  */
 #recent_post {
-  margin-top: 50px; }
+  margin-top: 20px; }
 
-.base-popular-topic-name {
-  margin-left: 0.5em; }
-
-.base-popular-topic-user {
-  margin-right: 0.5em; }
+#top-rank-panel {
+  margin-top: 20px; }
 
 /*
  * Forum
@@ -329,6 +326,11 @@
   text-align: left; }
 
 /*
+ * Basic styles for most elements
+ * Note:
+ * - keep in sync with jQuery UI
+ */
+/*
  * Style tweaks
  * --------------------------------------------------
  */
@@ -342,6 +344,30 @@ body {
 
 footer {
   padding: 30px 0; }
+
+.clear-padding, #contest-schedule-content, #top-voj, #top-contribution {
+  padding: 0 !important; }
+
+.clear-margin, #contest_schedule > div > table, #recent_post > div > table {
+  margin: 0 !important; }
+
+/*
+ * Navigation bar
+ */
+.navbar {
+  min-height: 40px;
+  height: 40px; }
+
+.navbar .navbar-brand {
+  padding-top: 0px;
+  padding-bottom: 0px;
+  font-size: 16px;
+  line-height: 40px; }
+
+.navbar .navbar-nav > li > a {
+  padding-top: 0px;
+  padding-bottom: 0px;
+  line-height: 40px; }
 
 /*
  * Off Canvas

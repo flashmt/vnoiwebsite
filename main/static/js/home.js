@@ -1,4 +1,7 @@
 $(document).ready(function () {
+	$('#top-rank-panel').tabs();
+	$('#recent_post').tabs();
+	$('#contest_schedule').tabs();
 	if (typeof rank_users != 'undefined') {
 		var i, users = '';
 		for (i = 0; i < 10; ++i) {

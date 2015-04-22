@@ -44,7 +44,7 @@
 
 <body>
   <header>
-    <nav class="navbar navbar-inverse navbar-fixed-top">
+    <nav class="ui-widget-header navbar navbar-fixed-top" id="navigation-bar">
       <div class="container">
 
         <div class="navbar-header" style="margin-left: 0.5em">
@@ -60,19 +60,22 @@
         <div id="navbar" class="collapse navbar-collapse navbar-right">
           <ul class="nav navbar-nav">
             {% block navbar %}
-            <li id="navbar_home"><a href="{% url 'main:index' %}">Home</a></li>
-            <li id="navbar_problems"><a href="{% url 'problems:list' %}">Problems</a></li>
-            <li id="navbar_forum"><a href="{% url 'forum:index' %}">Forum</a></li>
+            <li id="navbar_home"><a href="{% url 'main:index' %}">Trang chủ</a></li>
+            <li id="navbar_problems"><a href="{% url 'problems:list' %}">Đề bài</a></li>
+            <li id="navbar_forum"><a href="{% url 'forum:index' %}">Diễn đàn</a></li>
             <li id="navbar_library"><a href="{% url 'library:index' %}">Thư viện</a></li>
             {% if request.user.is_authenticated %}
             <li id="navbar_messages"><a href="{% url 'message:index' %}">Messages</a></li>
-            <li>
-              <p class="navbar-text" style="color: wheat">Welcome, <a class="navbar-link" style="color:red" href="{{request.user.get_absolute_url}}"><strong>{{request.user.username }}</strong></a> | <a href="{% url 'user:logout' %}">Logout</a></p>
+            <li style="padding-top: 10px;margin-left:10px;">
+              <span>
+                <a class="username-admin" href="{{request.user.get_absolute_url}}"><strong>{{request.user.username }}</strong></a>
+                | <a href="{% url 'user:logout' %}">Logout</a>
+              </span>
             </li>
             {% else %}
 
             <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><strong>Sign in</strong></a>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><strong>Đăng nhập</strong></a>
               <ul class="dropdown-menu" role="menu">
                 <li>
                   <form id="login-form" class="navbar-form" method="post" action="{% url 'user:login' %}">
@@ -88,11 +91,11 @@
                       <input class="form-control" id="id_password" name="password" placeholder="Password" required="required" title="" type="password">
                     </div>
 
-                    <button type="submit" id="login_submit" class="btn btn-success btn-block input-xs">Login</button>
+                    <button type="submit" id="login_submit" class="btn btn-success btn-block input-xs">Đăng nhập</button>
                   </form>
                 </li>
                 <li>
-                  <span style="color: #ffffff; margin-left:1em;">Have not had account? <a href="{% url 'user:register' %}">Sign up</a></span>
+                  <span style="color: #ffffff; margin-left:1em;">Chưa có tài khoản? <a href="{% url 'user:register' %}">Đăng ký</a></span>
                 </li>
               </ul>
             </li>

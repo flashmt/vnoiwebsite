@@ -6,7 +6,15 @@
 @import 'problems';
 
 
+/*
+ * Basic styles for most elements
+ * Note:
+ * - keep in sync with jQuery UI
+ */
+
 $font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+$normal-font-size: 1.3em;
+$corner-radius: 2px;
 
 /*
  * Style tweaks
@@ -22,6 +30,33 @@ body {
 }
 footer {
 	padding: 30px 0;
+}
+.clear-padding {
+	padding: 0 !important;
+}
+.clear-margin {
+	margin: 0 !important;
+}
+
+/*
+ * Navigation bar
+ */
+$navbar-height: 40px;
+$navbar-padding: 0px;
+.navbar {
+	min-height:$navbar-height;
+	height: $navbar-height;
+}
+.navbar .navbar-brand {
+	padding-top: $navbar-padding;
+	padding-bottom: $navbar-padding;
+	font-size: 16px;
+	line-height: $navbar-height;
+}
+.navbar .navbar-nav > li > a {
+	padding-top: $navbar-padding;
+	padding-bottom: $navbar-padding;
+	line-height: $navbar-height;
 }
 
 /*
