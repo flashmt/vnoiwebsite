@@ -15,8 +15,8 @@
 $font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 $normal-font-size: 1.3em;
 $corner-radius: 2px;
-$background-color: #be4236;
-$border-color: #96342b;
+$background-color: #333333;
+$border-color: #333333;
 
 /*
  * Style tweaks
@@ -61,20 +61,9 @@ ul.nav li.ui-state-active a:hover {
 	color: $border-color;
 	text-decoration: none;
 }
-h2 a {
-	@include heading-url;
-}
-h2 a:hover {
-	@include heading-url;
-	border-bottom: 2px solid $border-color;
-}
 .nav-pills>li.active>a, .nav-pills>li.active>a:hover, .nav-pills>li.active>a:focus {
 	background-color: $background-color;
 	margin-top: -1px;
-}
-a.button:link a.button:visited, a.button:hover, a.button:active {
-	color: white;
-	background-color: $background-color;
 }
 /*
  * Navigation bar
@@ -234,7 +223,7 @@ $navbar-padding: 0px;
 }
 
 .dropdown-menu {
-	background-color: #96342b;
+	background-color: $border-color;
 	width: 250px;
 }
 
