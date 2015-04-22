@@ -72,6 +72,10 @@ h2 a:hover {
 	background-color: $background-color;
 	margin-top: -1px;
 }
+a.button:link a.button:visited, a.button:hover, a.button:active {
+	color: white;
+	background-color: $background-color;
+}
 /*
  * Navigation bar
  */

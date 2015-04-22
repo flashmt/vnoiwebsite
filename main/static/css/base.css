@@ -383,6 +383,10 @@ h2 a:hover {
   background-color: #be4236;
   margin-top: -1px; }
 
+a.button:link a.button:visited, a.button:hover, a.button:active {
+  color: white;
+  background-color: #be4236; }
+
 /*
  * Navigation bar
  */
