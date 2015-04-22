@@ -68,6 +68,10 @@ h2 a:hover {
 	@include heading-url;
 	border-bottom: 2px solid $border-color;
 }
+.nav-pills>li.active>a, .nav-pills>li.active>a:hover, .nav-pills>li.active>a:focus {
+	background-color: $background-color;
+	margin-top: -1px;
+}
 /*
  * Navigation bar
  */
