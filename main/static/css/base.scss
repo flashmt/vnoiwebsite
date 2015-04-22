@@ -49,11 +49,9 @@ ul.nav li:not(.ui-state-active) a:hover {
 }
 ul.nav li.ui-state-active a:focus {
 	background-color: #ffffff !important;
-	pointer-events: none;
 }
 ul.nav li.ui-state-active a:hover {
 	background-color: #ffffff !important;
-	pointer-events: none;
 }
 .nav .open>a, .nav .open>a:hover, .nav .open>a:focus {
 	background-color: $border-color !important;
