@@ -72,6 +72,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'utils.middleware.force_english.ForceInEnglish'
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
