@@ -17,6 +17,8 @@
   <link href="{% static 'js/jquery-ui-1.11.4.custom/jquery-ui.min.css' %}" rel="stylesheet">
   <link href="{% static 'js/jquery-ui-1.11.4.custom/jquery-ui.theme.min.css' %}" rel="stylesheet">
   <link href="{% static 'css/base.css' %}" rel="stylesheet">
+  <!-- highlightjs -->
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.5/styles/tomorrow-night.min.css">
   <!--&lt;!&ndash; Custom styles for this template &ndash;&gt;-->
   <!--<link href="offcanvas.static" rel="stylesheet">-->
 
@@ -152,8 +154,16 @@
   <script type="text/javascript"
     src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
   </script>
-
+  {# highlightjs #}
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.5/highlight.min.js"></script>
+  <script>
+    $(document).ready(function () {
+      $('pre:has(code)').css('background-color', '#1d1f21');
+      hljs.initHighlightingOnLoad();
+    });
+  </script>
   <script src="{% static 'js/base.js' %}"></script>
+  {# highlight navigation bar #}
   <script>
   var navbar_highlight = $.trim("{% block navbar-highlight %}{% endblock navbar-highlight %}");
   if (navbar_highlight == "") navbar_highlight = "navbar_home";

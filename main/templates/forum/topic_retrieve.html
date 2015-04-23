@@ -29,7 +29,5 @@
 
 {% block extra-js %}
   <script src="{% static 'js/forum.js' %}"></script>
-  <script src="{% static 'js/highlight/highlight.pack.js' %}"></script>
-  <script>hljs.initHighlightingOnLoad();</script>
   {% include 'forum/disable_voted.html' %}
 {% endblock %}
