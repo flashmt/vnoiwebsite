@@ -2,6 +2,7 @@
 {% load user_avatar_tags %}
 {% load bleach_tags %}
 {% load permissions %}
+{% load humanize %}
 
 {% block postview %}
   <div style="background-color:wheat; margin-left: 0; margin-bottom: 30px">
@@ -14,7 +15,7 @@
               {{ topic.title }}
             </div>
             <div class="post-heading-created-time">
-              {{ post.created_at }}
+              {{ post.created_at|naturaltime }}
             </div>
           </div>
         </div>
