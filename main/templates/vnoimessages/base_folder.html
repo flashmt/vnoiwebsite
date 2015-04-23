@@ -1,6 +1,7 @@
 {% extends "vnoimessages/base.html" %}
 {% load url from future %}
 {% load i18n postman_tags %}{% load pagination_tags %}
+{% load humanize %}
 
 {% comment %}
     WARNING: 'pagination_tags' is a name from the django-pagination application.
@@ -106,7 +107,7 @@
               {{ message.obfuscated_recipient|or_me:user }}{% if message.count %} ({{ message.count }}){% endif %}
             </td>
           {% endblock %}
-          <td class="col-md-8">
+          <td class="col-md-7">
             {% if message.is_new %}<strong>{% endif %}{% if message.is_replied %}<em>{% endif %}
               {% block pm_subject %}
                 <a href="{% if by_conversation and message.thread_id %}{% url 'message:view_conversation' message.thread_id %}{% else %}{% url 'message:view' message.id %}{% endif %}?next={{ current_url|urlencode }}">
@@ -117,7 +118,7 @@
           </td>
           <td >
             <div class="msg-date">
-              {{ message.sent_at|compact_date:_("g:i A,M j,n/j/y") }}
+              {{ message.sent_at|naturaltime }}
             </div>
           </td>
         </tr>

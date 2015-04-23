@@ -29,7 +29,7 @@
               <a href="{{ topic.get_absolute_url }}">
                 <strong>{{ topic.title }}</strong>
               </a>
-              <p>by {{ topic.created_by }}</p>
+              <p>bởi {{ topic.created_by }}</p>
             </td>
             <td class="col-xs-1">
               {{ topic.num_posts }}
@@ -37,7 +37,7 @@
             <td class="col-xs-2">
               {% if topic.last_post %}
                 <p>{{ topic.last_post.created_at|naturaltime }}</p>
-                <p>by {{ topic.last_post.created_by }}</p>
+                <p>bởi {{ topic.last_post.created_by }}</p>
               {% else %}
                 <p>Chưa có trả lời</p>
                 <p>&nbsp;</p>
