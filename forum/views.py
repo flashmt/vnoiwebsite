@@ -213,12 +213,17 @@ def post_delete(request, post_id=None):
         raise exceptions.PermissionDenied
 
     if post.reply_on is not None:
+        # Normal case: delete some post that is not 1st post of topic
         topic = post.topic
         post.delete()
         return redirect(topic.get_absolute_url())
     else:
+        # Special case: the deleted post is 1st post of topic
         forum_id = post.topic.forum_id
+        topic = post.topic
+        topic.post = None
         post.delete()
+        # topic.delete()
         # Now we can not redirect to previous page (because it no longer exist :( )
         # So we must redirect to forum
         return redirect(Forum.objects.get(pk=forum_id).get_absolute_url())
