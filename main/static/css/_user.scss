@@ -3,8 +3,10 @@
  * --------------------------------------------------
  */
 
+@import 'const';
+
 .user-detail {
-	border: 1px solid #337ab7;
+	border: 1px solid $color-main-color;
 	padding-left: 0.5em;
 	padding-right: -0.5em;
 	padding-top: 0.5em;
@@ -40,7 +42,7 @@
 }
 
 .user-recent-topic {
-	border: 1px solid #337ab7;
+	border: 1px solid $color-main-color;
 	padding-left: 0.5em;
 	padding-right: 2em;
 }

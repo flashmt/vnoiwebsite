@@ -15,7 +15,8 @@ def index(request):
         'score',
     )
     return render(request, 'problems/problem_list.html', {
-        'problems': problems
+        'problems': problems,
+        'disable_breadcrumbs': True
     })
 
 

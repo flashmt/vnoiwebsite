@@ -54,25 +54,26 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="{% url 'main:index' %}">VNOI Portal</a>
+{#          <img src="{% static 'img/logo.jpg' %}" height="50px"/>#}
+          <a class="navbar-brand" href="{% url 'main:index' %}" id="logo-text">VNOI</a>
         </div>
 
         <div id="navbar" class="collapse navbar-collapse navbar-right">
           <ul class="nav navbar-nav">
             {% block navbar %}
-            <li id="navbar_home"><a href="{% url 'main:index' %}"><span class="glyphicon glyphicon-home" aria-hidden="true">&nbsp;</span>Home</a></li>
-            <li id="navbar_problems"><a href="{% url 'problems:list' %}"><span class="glyphicon glyphicon-th-list" aria-hidden="true">&nbsp;</span>Problems</a></li>
-            <li id="navbar_forum"><a href="{% url 'forum:index' %}"><span class="glyphicon glyphicon-comment" aria-hidden="true">&nbsp;</span>Forum</a></li>
-            <li id="navbar_library"><a href="{% url 'library:index' %}"><span class="glyphicon glyphicon-book" aria-hidden="true">&nbsp;</span>Thư viện</a></li>
+            <li id="navbar_home"><a href="{% url 'main:index' %}"><span class="glyphicon glyphicon-home" aria-hidden="true"></span>Trang chủ</a></li>
+            <li id="navbar_problems"><a href="{% url 'problems:list' %}"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>Đề bài</a></li>
+            <li id="navbar_forum"><a href="{% url 'forum:index' %}"><span class="glyphicon glyphicon-comment" aria-hidden="true"></span>Diễn đàn</a></li>
+            <li id="navbar_library"><a href="{% url 'library:index' %}"><span class="glyphicon glyphicon-book" aria-hidden="true"></span>Thư viện</a></li>
             {% if request.user.is_authenticated %}
-            <li id="navbar_messages"><a href="{% url 'message:index' %}"><span class="glyphicon glyphicon-envelope" aria-hidden="true">&nbsp;</span>Messages</a></li>
+            <li id="navbar_messages"><a href="{% url 'message:index' %}"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>Tin nhắn</a></li>
             <li>
-              <p class="navbar-text" style="color: wheat">Welcome, <a class="navbar-link" style="color:red" href="{{request.user.get_absolute_url}}"><strong>{{request.user.username }}</strong></a> | <a href="{% url 'user:logout' %}">Logout</a></p>
+              <p class="navbar-text" style="color: wheat"><span class="glyphicon glyphicon-user icon"></span><a class="navbar-link" style="color:red" href="{{request.user.get_absolute_url}}"><strong>{{request.user.username }}</strong></a><span class="icon">&nbsp;|&nbsp;</span><a href="{% url 'user:logout' %}">Đăng xuất</a></p>
             </li>
             {% else %}
 
             <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><strong>Sign in</strong></a>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><strong>Đăng nhập</strong></a>
               <ul class="dropdown-menu" role="menu">
                 <li>
                   <form id="login-form" class="navbar-form" method="post" action="{% url 'user:login' %}">
@@ -88,11 +89,11 @@
                       <input class="form-control" id="id_password" name="password" placeholder="Password" required="required" title="" type="password">
                     </div>
 
-                    <button type="submit" id="login_submit" class="btn btn-success btn-block input-xs">Login</button>
+                    <button type="submit" id="login_submit" class="btn btn-success btn-block input-xs">Đăng nhập</button>
                   </form>
                 </li>
                 <li>
-                  <span style="color: #ffffff; margin-left:1em;">Have not had account? <a href="{% url 'user:register' %}">Sign up</a></span>
+                  <span style="color: #ffffff; margin-left:1em;">Chưa có tài khoản? <a href="{% url 'user:register' %}">Đăng ký</a></span>
                 </li>
               </ul>
             </li>

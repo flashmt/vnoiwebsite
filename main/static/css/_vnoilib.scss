@@ -8,12 +8,6 @@
 }
 
 .lib-list-container {
-	border: 1px solid #ddd;
-	border-radius: 5px;
-}
-
-.lib-one-line {
-	border-bottom: 1px solid #ddd;
 }
 
 .lib-topic-title {
@@ -28,8 +22,14 @@
 
 .lib-row-same-height {
   display: table;
-  width: 100%; }
+  width: 100%;
+}
 
 .lib-col-md-height {
   display: table-cell;
-  float: none; }
+  float: none;
+}
+.lib-menu-item {
+	margin-left: -20px !important;
+	margin-right: -20px !important;
+}

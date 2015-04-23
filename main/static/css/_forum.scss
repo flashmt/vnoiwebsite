@@ -3,58 +3,24 @@
  * --------------------------------------------------
  */
 
-#forum-main-container {
-	position: relative;
-	outline: none;
-	margin: 0;
-	padding: 0;
-	display: block;
-}
-.forum-group-head {
-	background: #337ab7;
-	color: #ddd;
-	padding: 0.7em 1.417em;
-	border: 1px solid #337ab7;
+@import 'const';
 
-}
-.forum-group-container {
-	background: #fbfbfb;
-	border: 1px solid #DFE6ED;
-	border-bottom-color: #CBD1D8;
-}
-.forum {
-	line-height: 1em;
-	overflow: hidden;
-	position: relative;
-}
-.forum-icon {
-	float: left;
-}
-.forum-name-div {
-	margin-top: -1em;
-	border-right: 1px solid #DDE4EB;
-	border-left: 1px solid #DDE4EB;
-	border-bottom: 1px solid #DDE4EB;
-}
-.forum-name {
-	font-size: 1em;
-	font-weight: bold;
-}
-.forum-post-counts {
-	margin-top: 1.5em;
-	float: left;
-	height: 100%;
+// Forum index page
+.forum-index-table {
+	margin-bottom: 0;
 }
 .forum-last-post {
-	margin-top: -0.5em;
-	padding-top: 1em;
-	border-left: 1px solid #DDE4EB;
-	overflow: hidden;
-	white-space: nowrap;
+	margin-bottom: -5px;
 }
-.forum-statistics {
-	height: 100%;
-	border-bottom: 1px solid #DDE4EB;
+.forum-desc {
+	margin-top: 4px;
+	font-size: small;
+}
+
+// Topic retrieve page
+.post-retrieve-heading {
+	background-color: $color-main-color !important;
+	color: white !important;
 }
 .button-container {
 	margin: 1em -0.3em;
@@ -84,7 +50,7 @@
 }
 .post-user-detail {
 	width: 150px;
-	background: #e6e9eb;
+	background: #eceff1;
 }
 .post-user-avatar {
 	margin-left: 0.7em;

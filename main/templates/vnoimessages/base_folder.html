@@ -61,19 +61,19 @@
  </tbody>
 </table>
 -->
-<div class = "panel panel-default" id = "pm_message">
+<div class = "panel panel-primary" id = "pm_message">
   <div class="panel-heading">
     <div class = "row">
       <div class="col-md-1" style = "text-align: center">
         {% trans "Select" %}
       </div>
       {% block pm_sender_header %}
-        <div class="col-md-1 msg-user">
+        <div class="col-md-2 msg-user">
           <a href="{% postman_order_by sender %}">{% trans "Sender" %}</a>
         </div>
       {% endblock %}
       {% block pm_recipient_header %}
-        <div class="col-md-1 msg-user">
+        <div class="col-md-2 msg-user">
           <a href="{% postman_order_by recipient %}">{% trans "Recipient" %}</a>
         </div>
       {% endblock %}
@@ -87,40 +87,42 @@
       </div>
     </div>
   </div>
-  <div class="panel-body">
-    {% for message in pm_messages %}
-      <div class="row msg-a-message">
-        <div class="col-md-1">
-          <div class="msg-action-tick-button">
-            <input type="checkbox" {% if by_conversation and message.thread_id %}name="tpks" value="{{ message.thread_id }}"{% else %}name="pks" value="{{ message.pk }}"{% endif %} id="message#{{ forloop.counter }}"/>
-          </div>
-        </div>
-        {% block pm_sender_cell %}
-          <div class="col-md-1 msg-user">
-            {{ message.obfuscated_sender|or_me:user }}{% if message.count %} ({{ message.count }}){% endif %}
-          </div>
-        {% endblock %}
-        {% block pm_recipient_cell %}
-          <div class="col-md-1 msg-user">
-            {{ message.obfuscated_recipient|or_me:user }}{% if message.count %} ({{ message.count }}){% endif %}
-          </div>
-        {% endblock %}
-        <div class="col-md-8">
-          {% if message.is_new %}<strong>{% endif %}{% if message.is_replied %}<em>{% endif %}
-            {% block pm_subject %}
-              <a href="{% if by_conversation and message.thread_id %}{% url 'message:view_conversation' message.thread_id %}{% else %}{% url 'message:view' message.id %}{% endif %}?next={{ current_url|urlencode }}">
-                {% include "vnoimessages/inc_subject.html" %}
-              </a>
-            {% endblock %}
-          {% if message.is_replied %}</em>{% endif %}{% if message.is_new %}</strong>{% endif %}
-        </div>
-        <div >
-          <div class="msg-date">
-            {{ message.sent_at|compact_date:_("g:i A,M j,n/j/y") }}
-          </div>
-        </div>
-      </div>
-    {% endfor %}
+  <div>
+    <table class="table table-bordered table-striped msg-folder-table"><tbody>
+      {% for message in pm_messages %}
+        <tr class="msg-a-message">
+          <td class="col-md-1">
+            <div class="msg-action-tick-button">
+              <input type="checkbox" {% if by_conversation and message.thread_id %}name="tpks" value="{{ message.thread_id }}"{% else %}name="pks" value="{{ message.pk }}"{% endif %} id="message#{{ forloop.counter }}"/>
+            </div>
+          </td>
+          {% block pm_sender_cell %}
+            <td class="col-md-2 msg-user">
+              {{ message.obfuscated_sender|or_me:user }}{% if message.count %} ({{ message.count }}){% endif %}
+            </td>
+          {% endblock %}
+          {% block pm_recipient_cell %}
+            <td class="col-md-2 msg-user">
+              {{ message.obfuscated_recipient|or_me:user }}{% if message.count %} ({{ message.count }}){% endif %}
+            </td>
+          {% endblock %}
+          <td class="col-md-8">
+            {% if message.is_new %}<strong>{% endif %}{% if message.is_replied %}<em>{% endif %}
+              {% block pm_subject %}
+                <a href="{% if by_conversation and message.thread_id %}{% url 'message:view_conversation' message.thread_id %}{% else %}{% url 'message:view' message.id %}{% endif %}?next={{ current_url|urlencode }}">
+                  {% include "vnoimessages/inc_subject.html" %}
+                </a>
+              {% endblock %}
+            {% if message.is_replied %}</em>{% endif %}{% if message.is_new %}</strong>{% endif %}
+          </td>
+          <td >
+            <div class="msg-date">
+              {{ message.sent_at|compact_date:_("g:i A,M j,n/j/y") }}
+            </div>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody></table>
   </div>
 
 </div>

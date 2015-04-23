@@ -4,9 +4,7 @@
 @import 'message';
 @import 'vnoilib';
 @import 'problems';
-
-
-$font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+@import 'const';
 
 /*
  * Style tweaks
@@ -23,12 +21,55 @@ body {
 footer {
 	padding: 30px 0;
 }
+
+// Navigation bar
 .navbar-inverse {
-	background-color: #212933;
+	background-color: $color-navbar;
 	font-weight: bold;
 }
 .navbar-inverse .active {
-	border-bottom: 4px solid #337ab7;
+	border-bottom: 4px solid $color-main-color;
+}
+.navbar a, .navbar a:hover {
+	color: #9d9d9d;
+}
+.navbar-inverse .active a {
+	padding-bottom: 11px;
+}
+.navbar-text .icon {
+	color: wheat;
+}
+#logo-text {
+	font-family: Calibri, sans-serif;
+	color: white;
+	font-weight: bold;
+	font-size: 30px;
+	height: 50px;
+	letter-spacing: 7px;
+}
+
+// Heading link
+h2 a, h1 a {
+	color: $color-main-color;
+}
+h2 a:hover, h1 a:hover {
+	color: $color-main-color;
+	text-decoration: underline;
+}
+.panel-heading a, .panel-heading a:hover {
+	color: white;
+}
+
+// Misc
+.glyphicon {
+	margin-right: 0.5em;
+}
+.panel-primary>.panel-heading {
+	background-color: $color-main-color;
+	border-color: $color-main-color;
+}
+.panel-primary {
+	border-color: $color-main-color;
 }
 
 /*
@@ -77,34 +118,16 @@ footer {
 	}
 }
 
-.base-popular-topic-title {
-	color: black;
-}
-
-.base-popular-topic-row {
-	margin-top: 0.5em;
-	border-bottom: 1px solid #ddd;
-}
-
-.base-popular-topic-name {
-	text-align: left;
-	font-weight: bold;
-}
-
-.base-popular-topic-user {
-	text-align: right;
-}
-
-.base-popular-topic-link {
-	color : black;
-}
-
 .pinned-post-author {
 	font-style: italic;
 }
 
 .pinned-post-content-container {
-	border-left: 4px solid #ddd;
+	border-left: 4px solid $color-main-color;
+	border-top: 1px solid rgb(238, 238, 238);
+	border-bottom: 1px solid rgb(238, 238, 238);
+	border-right: 1px solid rgb(238, 238, 238);
+	border-radius: $border-radius;
 	margin-bottom: 0.5em;
 }
 
@@ -135,8 +158,11 @@ footer {
 }
 
 /* Square conner panel */
-.panel, .panel-heading {
-	border-radius: 0px;
+.panel {
+	border-radius: $border-radius;
+}
+.panel-heading {
+	border-radius: 0;
 }
 
 .input-xs {
@@ -144,7 +170,7 @@ footer {
 	padding: 4px 8px;
 	font-size: 12px;
 	line-height: 1.5;
-	border-radius: 3px;
+	border-radius: $border-radius;
 }
 
 #login-form {

@@ -1,0 +1,20 @@
+{% load humanize %}
+
+<div class="panel panel-primary" id="contest_schedule">
+  <div class="panel-heading"><span class="glyphicon glyphicon-calendar"></span>Các kỳ thi sắp diễn ra</div>
+  <table class="table">
+    <thead>
+    </thead>
+    <tbody>
+      {% for contest in coming_contests %}
+        <tr>
+          <td>
+            <a href="{{ contest.url }}">{{ contest.contest_name }}</a>
+            <p class="text-left">{{ contest.start_time|naturaltime }}</p>
+            <p class="">Thời gian: {{ contest.duration }} phút</p>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>

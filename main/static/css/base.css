@@ -5,12 +5,6 @@
 #recent_post {
   margin-top: 50px; }
 
-.base-popular-topic-name {
-  margin-left: 0.5em; }
-
-.base-popular-topic-user {
-  margin-right: 0.5em; }
-
 #sidebar {
   margin-top: 20px; }
 
@@ -18,57 +12,19 @@
  * Forum
  * --------------------------------------------------
  */
-#forum-main-container {
-  position: relative;
-  outline: none;
-  margin: 0;
-  padding: 0;
-  display: block; }
-
-.forum-group-head {
-  background: #337ab7;
-  color: #ddd;
-  padding: 0.7em 1.417em;
-  border: 1px solid #337ab7; }
-
-.forum-group-container {
-  background: #fbfbfb;
-  border: 1px solid #DFE6ED;
-  border-bottom-color: #CBD1D8; }
-
-.forum {
-  line-height: 1em;
-  overflow: hidden;
-  position: relative; }
-
-.forum-icon {
-  float: left; }
-
-.forum-name-div {
-  margin-top: -1em;
-  border-right: 1px solid #DDE4EB;
-  border-left: 1px solid #DDE4EB;
-  border-bottom: 1px solid #DDE4EB; }
-
-.forum-name {
-  font-size: 1em;
-  font-weight: bold; }
-
-.forum-post-counts {
-  margin-top: 1.5em;
-  float: left;
-  height: 100%; }
+.forum-index-table {
+  margin-bottom: 0; }
 
 .forum-last-post {
-  margin-top: -0.5em;
-  padding-top: 1em;
-  border-left: 1px solid #DDE4EB;
-  overflow: hidden;
-  white-space: nowrap; }
+  margin-bottom: -5px; }
 
-.forum-statistics {
-  height: 100%;
-  border-bottom: 1px solid #DDE4EB; }
+.forum-desc {
+  margin-top: 4px;
+  font-size: small; }
+
+.post-retrieve-heading {
+  background-color: #337ab7 !important;
+  color: white !important; }
 
 .button-container {
   margin: 1em -0.3em; }
@@ -98,7 +54,7 @@
 
 .post-user-detail {
   width: 150px;
-  background: #e6e9eb; }
+  background: #eceff1; }
 
 .post-user-avatar {
   margin-left: 0.7em;
@@ -278,10 +234,6 @@
   margin-right: 0.5em;
   float: right; }
 
-.msg-a-message {
-  margin-bottom: 1em;
-  border-bottom: 1px solid #ddd; }
-
 .msg-action-tick-button {
   text-align: center; }
 
@@ -291,19 +243,15 @@
 .msg-user {
   text-align: center; }
 
+.msg-folder-table {
+  margin-bottom: 0; }
+
 /*
  * VnoiLib
  * --------------------------------------------------
  */
 .lib-small-topic {
   margin-top: 0.5em; }
-
-.lib-list-container {
-  border: 1px solid #ddd;
-  border-radius: 5px; }
-
-.lib-one-line {
-  border-bottom: 1px solid #ddd; }
 
 .lib-topic-title {
   margin-left: 0.5em;
@@ -320,6 +268,10 @@
 .lib-col-md-height {
   display: table-cell;
   float: none; }
+
+.lib-menu-item {
+  margin-left: -20px !important;
+  margin-right: -20px !important; }
 
 /*
  * Problems
@@ -352,6 +304,43 @@ footer {
 
 .navbar-inverse .active {
   border-bottom: 4px solid #337ab7; }
+
+.navbar a, .navbar a:hover {
+  color: #9d9d9d; }
+
+.navbar-inverse .active a {
+  padding-bottom: 11px; }
+
+.navbar-text .icon {
+  color: wheat; }
+
+#logo-text {
+  font-family: Calibri, sans-serif;
+  color: white;
+  font-weight: bold;
+  font-size: 30px;
+  height: 50px;
+  letter-spacing: 7px; }
+
+h2 a, h1 a {
+  color: #337ab7; }
+
+h2 a:hover, h1 a:hover {
+  color: #337ab7;
+  text-decoration: underline; }
+
+.panel-heading a, .panel-heading a:hover {
+  color: white; }
+
+.glyphicon {
+  margin-right: 0.5em; }
+
+.panel-primary > .panel-heading {
+  background-color: #337ab7;
+  border-color: #337ab7; }
+
+.panel-primary {
+  border-color: #337ab7; }
 
 /*
  * Off Canvas
@@ -393,28 +382,15 @@ footer {
     top: 0;
     width: 50%;
     /* 6 columns */ } }
-.base-popular-topic-title {
-  color: black; }
-
-.base-popular-topic-row {
-  margin-top: 0.5em;
-  border-bottom: 1px solid #ddd; }
-
-.base-popular-topic-name {
-  text-align: left;
-  font-weight: bold; }
-
-.base-popular-topic-user {
-  text-align: right; }
-
-.base-popular-topic-link {
-  color: black; }
-
 .pinned-post-author {
   font-style: italic; }
 
 .pinned-post-content-container {
-  border-left: 4px solid #ddd;
+  border-left: 4px solid #337ab7;
+  border-top: 1px solid #eeeeee;
+  border-bottom: 1px solid #eeeeee;
+  border-right: 1px solid #eeeeee;
+  border-radius: 3px;
   margin-bottom: 0.5em; }
 
 .pinned-post-content {
@@ -439,8 +415,11 @@ footer {
   float: right; }
 
 /* Square conner panel */
-.panel, .panel-heading {
-  border-radius: 0px; }
+.panel {
+  border-radius: 3px; }
+
+.panel-heading {
+  border-radius: 0; }
 
 .input-xs {
   height: 30px;
