@@ -60,12 +60,12 @@
         <div id="navbar" class="collapse navbar-collapse navbar-right">
           <ul class="nav navbar-nav">
             {% block navbar %}
-            <li id="navbar_home"><a href="{% url 'main:index' %}">Home</a></li>
-            <li id="navbar_problems"><a href="{% url 'problems:list' %}">Problems</a></li>
-            <li id="navbar_forum"><a href="{% url 'forum:index' %}">Forum</a></li>
-            <li id="navbar_library"><a href="{% url 'library:index' %}">Thư viện</a></li>
+            <li id="navbar_home"><a href="{% url 'main:index' %}"><span class="glyphicon glyphicon-home" aria-hidden="true">&nbsp;</span>Home</a></li>
+            <li id="navbar_problems"><a href="{% url 'problems:list' %}"><span class="glyphicon glyphicon-th-list" aria-hidden="true">&nbsp;</span>Problems</a></li>
+            <li id="navbar_forum"><a href="{% url 'forum:index' %}"><span class="glyphicon glyphicon-comment" aria-hidden="true">&nbsp;</span>Forum</a></li>
+            <li id="navbar_library"><a href="{% url 'library:index' %}"><span class="glyphicon glyphicon-book" aria-hidden="true">&nbsp;</span>Thư viện</a></li>
             {% if request.user.is_authenticated %}
-            <li id="navbar_messages"><a href="{% url 'message:index' %}">Messages</a></li>
+            <li id="navbar_messages"><a href="{% url 'message:index' %}"><span class="glyphicon glyphicon-envelope" aria-hidden="true">&nbsp;</span>Messages</a></li>
             <li>
               <p class="navbar-text" style="color: wheat">Welcome, <a class="navbar-link" style="color:red" href="{{request.user.get_absolute_url}}"><strong>{{request.user.username }}</strong></a> | <a href="{% url 'user:logout' %}">Logout</a></p>
             </li>

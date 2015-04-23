@@ -11,6 +11,9 @@
 .base-popular-topic-user {
   margin-right: 0.5em; }
 
+#sidebar {
+  margin-top: 20px; }
+
 /*
  * Forum
  * --------------------------------------------------
@@ -343,6 +346,13 @@ body {
 footer {
   padding: 30px 0; }
 
+.navbar-inverse {
+  background-color: #212933;
+  font-weight: bold; }
+
+.navbar-inverse .active {
+  border-bottom: 4px solid #337ab7; }
+
 /*
  * Off Canvas
  * --------------------------------------------------
@@ -455,7 +465,7 @@ footer {
     font-size: 14px; }
 
 .dropdown-menu {
-  background-color: #222222;
+  background-color: #212933;
   width: 250px; }
 
 .alert {

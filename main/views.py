@@ -56,5 +56,6 @@ def index(request):
         'recent_posts': posts,
         'coming_contests': coming_contests,
         'contributors': contributors,
-        'votes': votes
+        'votes': votes,
+        'disable_breadcrumbs': True
     })
