@@ -1,0 +1,46 @@
+<div class="panel panel-primary">
+  <div class="panel-heading user-online-judge-title">
+    <span class="glyphicon glyphicon-link"></span>Kết nối tài khoản
+  </div>
+  <div class="user-online-judge">
+    <p>
+      <strong>VOJ:</strong>
+      <span>
+        {% if user.profile.voj_account %}
+          VOJ: {{ user.profile.voj_account }}
+          {% if user.id == request.user.id %}
+            | <a href="{% url 'user:unlink_voj' %}">Ngừng kết nối</a>
+          {% endif %}
+        {% else %}
+          {% if user.id == request.user.id %}
+            <a href="{% url 'user:link_voj' %}">Kết nối</a>
+          {% else %}
+            Chưa kết nối
+          {% endif %}
+        {% endif %}
+      </span>
+    </p>
+
+    <p>
+      <strong>Codeforces:</strong>
+      <span>
+        {% if user.profile.codeforces_account %}
+          <a href="http://codeforces.com/profile/{{ user.profile.codeforces_account }}" id="my-codeforces-account" class="codeforces-handle">{{ user.profile.codeforces_account }}</a>
+          {% if user.id == request.user.id %}
+            | <a href="{% url 'user:unlink_codeforces' %}">Ngừng kết nối</a>
+          {% endif %}
+        {% else %}
+          {% if user.id == request.user.id %}
+            <a href="{% url 'user:link_codeforces' %}">Kết nối</a>
+          {% else %}
+            Chưa kết nối
+          {% endif %}
+        {% endif %}
+      </span>
+    </p>
+
+    <p>
+      Topcoder: {{ user.profile.topcoder_account | default:"Not linked" }}
+    </p>
+  </div>
+</div>

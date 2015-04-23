@@ -1,4 +1,4 @@
-{% extends 'main/base.html' %}
+{% extends 'vnoiusers/base_user.html' %}
 {% load staticfiles %}
 {% load bleach_tags %}
 {% load humanize %}
@@ -112,73 +112,9 @@
       </div>
     </div>
     <div class="col-md-3">
-      <div class="panel panel-primary">
-        <div class="panel-heading user-online-judge-title">
-          Online judge
-        </div>
-        <div class="panel-body user-online-judge">
-          <p>
-            {% if user.profile.voj_account %}
-              VOJ: {{ user.profile.voj_account }}
-              {% if user.id == request.user.id %}
-                | <a href="{% url 'user:unlink_voj' %}">Unlink VOJ account</a>
-              {% endif %}
-            {% else %}
-              {% if user.id == request.user.id %}
-                <a href="{% url 'user:link_voj' %}">Link VOJ account</a>
-              {% else %}
-                VOJ: Not linked
-              {% endif %}
-            {% endif %}
-          </p>
-
-          <p>
-            {% if user.profile.codeforces_account %}
-              Codeforces: <a href="http://codeforces.com/profile/{{ user.profile.codeforces_account }}" id="my-codeforces-account" class="codeforces-handle">{{ user.profile.codeforces_account }}</a>
-              {% if user.id == request.user.id %}
-                | <a href="{% url 'user:unlink_codeforces' %}">Unlink Codeforces account</a>
-              {% endif %}
-            {% else %}
-              {% if user.id == request.user.id %}
-                <a href="{% url 'user:link_codeforces' %}">Link Codeforces account</a>
-              {% else %}
-                Codeforces: Not linked
-              {% endif %}
-            {% endif %}
-          </p>
-
-          <p>
-            Topcoder: {{ user.profile.topcoder_account | default:"Not linked" }}
-          </p>
-        </div>
-      </div>
+      {% include 'vnoiusers/widgets/oj_accounts.html' %}
       {% if user.profile.voj_account %}
-        <div class="user-voj-static">
-          <div class="panel panel-primary">
-            <div class="panel-heading user-voj-title">
-              VOJ Static
-            </div>
-            <div class="panel-body user-voj-detail">
-              <table>
-                <tr>
-                  <td>
-                    Level: {{ user.profile.voj_lever }}
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    Score: {{ user.profile.voj_score }}
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    Rank: {{ user.profile.voj_rank }}
-                  </td>
-                </tr>
-              </table>
-            </div>
-          </div>
-        </div>
+        {% include 'vnoiusers/widgets/voj_statistics.html' %}
       {% endif %}
     </div>
   </div>

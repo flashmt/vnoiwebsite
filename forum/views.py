@@ -20,7 +20,11 @@ def index(request):
     forums = Forum.objects.filter(forum_group__in=forum_groups)\
                           .select_related('last_post', 'last_post__created_by', 'last_post__topic', 'forum_group')\
                           .order_by('position')
-    return render(request, 'forum/forum_index.html', {'forum_groups': forum_groups, 'forums': forums})
+    return render(request, 'forum/forum_index.html', {
+        'forum_groups': forum_groups,
+        'forums': forums,
+        'disable_breadcrumbs': True
+    })
 
 
 def pagination_items(request, items, num_per_page):

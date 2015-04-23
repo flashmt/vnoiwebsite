@@ -67,13 +67,12 @@
             <li id="navbar_library"><a href="{% url 'library:index' %}"><span class="glyphicon glyphicon-book" aria-hidden="true"></span>Thư viện</a></li>
             {% if request.user.is_authenticated %}
             <li id="navbar_messages"><a href="{% url 'message:index' %}"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>Tin nhắn</a></li>
-            <li>
-              <p class="navbar-text" style="color: wheat"><span class="glyphicon glyphicon-user icon"></span><a class="navbar-link" style="color:red" href="{{request.user.get_absolute_url}}"><strong>{{request.user.username }}</strong></a><span class="icon">&nbsp;|&nbsp;</span><a href="{% url 'user:logout' %}">Đăng xuất</a></p>
-            </li>
+            <li id="navbar_profile"><a style="color:red" href="{{request.user.get_absolute_url}}"><span style="color:wheat" class="glyphicon glyphicon-user icon"></span>{{ request.user }}</a></li>
+            <li id="navbar_logout"><a href="{% url 'user:logout' %}"><span class="glyphicon glyphicon-log-out"></span>Đăng xuất</a></li>
             {% else %}
 
             <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><strong>Đăng nhập</strong></a>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="glyphicon glyphicon-log-in icon"></span><strong>Đăng nhập</strong></a>
               <ul class="dropdown-menu" role="menu">
                 <li>
                   <form id="login-form" class="navbar-form" method="post" action="{% url 'user:login' %}">
