@@ -18,6 +18,9 @@ sudo apt-get install mysql-server
 sudo apt-get install python-mysqldb
 Then go to configurations/settings.py, edit 'PASSWORD' in DATABASES to password of root
 ./init_database.sh
+
+# Install sass to compile scss to css when running server
+sudo su -c "gem install sass"
 ```
 
 ### 1.1.2. Better way
@@ -66,6 +69,10 @@ To fix it: [follow this tutorial](http://stackoverflow.com/questions/15258335/io
 ```
 
 This script will run webserver, as well as auto compile our scss to css.
+
+## 2.1. Local settings
+
+Create a file named settings_local.py in configurations and follow the format of settings_local_example.py to store local settings (use your own database password)
 
 # 3. Testing
 We have 2 sets of tests:
