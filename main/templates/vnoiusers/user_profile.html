@@ -34,10 +34,10 @@
             </div>
           {% endif %}
           <div class="row">
-            Last visited: {{ user.last_login }}
+            Last visited: {{ user.last_login|naturaltime }}
           </div>
           <div class="row">
-            Member since: {{ user.date_joined }}
+            Member since: {{ user.date_joined|naturaltime }}
           </div>
           {% if user.id == request.user.id %}
             <div class="row user-setting-button">
