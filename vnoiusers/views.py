@@ -19,6 +19,7 @@ from django.views.decorators.debug import sensitive_post_parameters
 from post_office import mail
 from vnoiusers.forms import *
 from vnoiusers.models import VnoiUser
+from configurations.settings import ROOT_URL, DEBUG
 
 
 def user_login(request,
@@ -79,9 +80,10 @@ def user_create(request, template_name='vnoiusers/user_create.html'):
             user.profile.save()
 
             # Send email with activation key
-            email_subject = 'Vnoiwebsite Account confirmation'
-            email_body = "Hey %s, thanks for signing up. To activate your account, click this link http://127.0.0.1:8000/user/confirm/%s" % (username, activation_key)
-            mail.send(email, subject=email_subject, message=email_body, priority="now")
+            if not DEBUG:
+                email_subject = 'Vnoiwebsite Account confirmation'
+                email_body = "Hey %s, thanks for signing up. To activate your account, click this link %s/user/confirm/%s" % (username, ROOT_URL, activation_key)
+                mail.send(email, subject=email_subject, message=email_body, priority="now")
 
             return HttpResponse('You have successfully register a new account. An email will be sent to your email shortly. Please click the confirmation link in the email')
         else:
