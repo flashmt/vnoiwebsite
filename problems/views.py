@@ -51,3 +51,11 @@ def discuss(request, code):
         template='problems/problem_discuss.html',
         extra_context={'problem': problem}
     )
+
+
+@login_required
+def submit(request, code):
+    problem = get_object_or_404(SpojProblem, code=code)
+    return render(request, 'problems/submit.html', {
+        'problem': problem
+    })

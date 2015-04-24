@@ -48,6 +48,10 @@ footer {
 	height: 50px;
 	letter-spacing: 7px;
 }
+.dropdown-menu>li>a {
+	font-weight: strong;
+	color: white;
+}
 
 // Heading link
 h2 a, h1 a {

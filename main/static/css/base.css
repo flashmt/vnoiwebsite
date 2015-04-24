@@ -75,6 +75,9 @@
   opacity: 0;
   filter: alpha(opacity=0); }
 
+.post-avatar-wrapper {
+  margin-top: 20px; }
+
 .post-content-wrapper {
   padding-left: 0;
   margin-left: 2em;
@@ -316,6 +319,10 @@ footer {
   font-size: 30px;
   height: 50px;
   letter-spacing: 7px; }
+
+.dropdown-menu > li > a {
+  font-weight: strong;
+  color: white; }
 
 h2 a, h1 a {
   color: #337ab7; }
