@@ -3,9 +3,58 @@
  * --------------------------------------------------
  */
 
+@import 'const';
+
 #recent_post {
 	margin-top: 50px;
 }
 #sidebar {
 	margin-top: 20px;
+}
+.home-post-buttons {
+	margin-left: 5px;
+	margin-bottom: 8px;
+}
+.pinned-post-author {
+	font-style: italic;
+}
+.pinned-post-content-container {
+	border-left: 4px solid $color-main-color;
+	border-top: 1px solid rgb(238, 238, 238);
+	border-bottom: 1px solid rgb(238, 238, 238);
+	border-right: 1px solid rgb(238, 238, 238);
+	border-radius: $border-radius;
+	margin-bottom: 0.5em;
+}
+.home-post-vote-wrapper a, .home-post-vote-wrapper div {
+	margin-top: 5px;
+}
+.home-post-vote-panel {
+	border-left: 4px solid $color-main-color;
+}
+
+.pinned-post-content {
+	margin-left: 1em;
+}
+
+.pinned-post-upvote {
+	font-weight: bold;
+	font-size: 15px;
+	color: green;
+}
+
+.pinned-post-downvote {
+	font-weight: bold;
+	font-size: 15px;
+	color: red;
+}
+
+.pinned-post-count-upvote {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+	text-align: center;
+}
+
+.pinned-post-pagination {
+	float: right;
 }

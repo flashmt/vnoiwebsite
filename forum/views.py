@@ -17,9 +17,9 @@ from forum.perms import PostPermission, VotePermission, TopicPermission
 
 def index(request):
     forum_groups = ForumGroup.objects.filter(group_type='f').order_by('position')
-    forums = Forum.objects.filter(forum_group__in=forum_groups)\
-                          .select_related('last_post', 'last_post__created_by', 'last_post__topic', 'forum_group')\
-                          .order_by('position')
+    forums = Forum.objects.filter(forum_group__in=forum_groups) \
+        .select_related('last_post', 'last_post__created_by', 'last_post__topic', 'forum_group') \
+        .order_by('position')
     return render(request, 'forum/forum_index.html', {
         'forum_groups': forum_groups,
         'forums': forums,
@@ -62,7 +62,8 @@ def topic_retrieve(request, forum_id, topic_id, template="forum/topic_retrieve.h
     topic = get_object_or_404(
         Topic.objects.select_related('post', 'post__created_by', 'post__created_by__profile__avatar'),
         pk=topic_id)
-    posts = topic.posts.all().select_related('created_by', 'created_by__profile__avatar')
+    posts = topic.posts.all().select_related('created_by', 'created_by__profile__avatar', 'reply_on') \
+        .order_by('created_at')
     if request.user.is_authenticated():
         votes = Vote.objects.filter(post__in=posts, created_by=request.user).values('post_id', 'type')
     else:
@@ -81,7 +82,6 @@ def topic_retrieve(request, forum_id, topic_id, template="forum/topic_retrieve.h
 
 @login_required
 def post_create(request, forum_id=None, topic_id=None, post_id=None, template="forum/post_create.html"):
-
     topic = forum = post = None
 
     if forum_id:
@@ -156,7 +156,7 @@ def vote_create(request, post_id=None):
     if already_voted(user, post):
         return JsonResponse({
             'success': 0,
-            'message': 'You already voted'
+            'message': 'Bạn không thể vote 1 bài viết 2 lần'
         })
 
     if request.GET:
@@ -172,12 +172,12 @@ def vote_create(request, post_id=None):
 
         return JsonResponse({
             'success': 1,
-            'message': 'Vote successfully sent'
+            'message': 'Vote của bạn đã được gửi đi'
         })
     else:
         return JsonResponse({
             'success': 0,
-            'message': 'Invalid request'
+            'message': 'Bạn cần phải đăng nhập trước khi vote'
         })
 
 

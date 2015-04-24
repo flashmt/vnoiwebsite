@@ -19,7 +19,11 @@
 {% endblock breadcrumbs %}
 
 {% block forum-body %}
-  {% include 'forum/post_retrieve.html' %}
+  <div class="grid">
+    {% for post in posts %}
+      {% include 'forum/post_retrieve.html' with is_root=forloop.first %}
+    {% endfor %}
+  </div>
 
   <div id="post-delete-confirm-dialog" style="display:none" title="Xóa bài viết">
     Thao tác này sẽ xóa hoàn toàn bài viết này. Bạn không thế lấy lại bài viết đã xóa.
