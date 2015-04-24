@@ -45,8 +45,9 @@
             <div class="post-tools">
               <div class="row">
                 <div class="col-md-10">
-                  <a class="btn btn-default post-reply" href="{% url 'forum:post_create' forum.id topic.id post.id %}"
-                     role="button">
+                  <a class="btn btn-default post-reply" href="javascript:void(0)"
+                     role="button" post-id="{{ post.id }}"
+                     post-reply-url="{% url 'forum:post_create' forum.id topic.id post.id %}">
                     Reply
                   </a>
                   {% ifhasperm "post_permission.can_update_post" request.user post %}

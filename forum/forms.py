@@ -66,6 +66,18 @@ class PostCreateForm(PostForm):
         return post
 
 
+class PostFormNoParent(PostCreateForm):
+
+    def __init__(self, *args, **kwargs):
+        super(PostFormNoParent, self).__init__(*args, **kwargs)
+        self.fields['parent'] = forms.IntegerField()
+        self.fields['parent'].widget = forms.HiddenInput()
+
+        def tmp():
+            pass
+        self.fields['parent'].str = tmp
+
+
 class PostUpdateForm(PostForm):
     def __init__(self, *args, **kwargs):
         super(PostUpdateForm, self).__init__(*args, **kwargs)

@@ -66,25 +66,25 @@
   <div class="panel-heading">
     <div class = "row">
       <div class="col-md-1" style = "text-align: center">
-        {% trans "Select" %}
+        Chọn
       </div>
       {% block pm_sender_header %}
         <div class="col-md-2 msg-user">
-          <a href="{% postman_order_by sender %}">{% trans "Sender" %}</a>
+          <a href="{% postman_order_by sender %}">Người gửi</a>
         </div>
       {% endblock %}
       {% block pm_recipient_header %}
         <div class="col-md-2 msg-user">
-          <a href="{% postman_order_by recipient %}">{% trans "Recipient" %}</a>
+          <a href="{% postman_order_by recipient %}">Người nhận</a>
         </div>
       {% endblock %}
 
       <div class="col-md-8">
-        <a href="{% postman_order_by subject %}">{% trans "Subject" %}</a>  
+        <a href="{% postman_order_by subject %}">Chủ đề</a>
       </div>
 
       <div class="msg-date">
-        <a href="{% postman_order_by date %}">{% block pm_date %}{% trans "Date" %}{% endblock %}</a>
+        <a href="{% postman_order_by date %}">{% block pm_date %}Ngày gửi{% endblock %}</a>
       </div>
     </div>
   </div>
@@ -128,9 +128,10 @@
 
 </div>
 </form>
- {% block pm_by_modes %}<div id="pm_by_modes">
-  <span class="pm_by_mode">{% if by_message %}<a href="{{ by_conversation_url }}">{% endif %}{% trans "by conversation" %}{% if by_message %}</a>{% endif %}</span>
-  <span class="pm_by_mode">{% if by_conversation %}<a href="{{ by_message_url }}">{% endif %}{% trans "by message" %}{% if by_conversation %}</a>{% endif %}</span>
+  {% block pm_by_modes %}<div id="pm_by_modes">
+    Hiển thị theo:
+    <span class="pm_by_mode">{% if by_message %}<a href="{{ by_conversation_url }}">{% endif %}hội thoại{% if by_message %}</a>{% endif %}</span>
+    <span class="pm_by_mode">{% if by_conversation %}<a href="{{ by_message_url }}">{% endif %}tin nhắn{% if by_conversation %}</a>{% endif %}</span>
   </div>{% endblock pm_by_modes %}
 {% paginate %}
 {% else %}

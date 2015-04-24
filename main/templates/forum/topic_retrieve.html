@@ -25,6 +25,10 @@
     Thao tác này sẽ xóa hoàn toàn bài viết này. Bạn không thế lấy lại bài viết đã xóa.
     Bạn có muốn tiếp tục không?
   </div>
+
+  <div id="post-reply-form-div" style="display:none">
+    {% include 'main/base_form.html' with form_id='post-reply-form' %}
+  </div>
 {% endblock forum-body %}
 
 {% block extra-js %}

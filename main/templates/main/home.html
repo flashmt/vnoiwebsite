@@ -23,7 +23,7 @@
               </a>
             </h2>
             <p class = "pinned-post-author">
-              By <a href="{% url 'user:profile' pinned_topic.created_by %}">{{ pinned_topic.created_by__username }}</a>,
+              Đăng bởi <a href="{% url 'user:profile' pinned_topic.created_by %}">{{ pinned_topic.created_by__username }}</a>,
               {{ pinned_topic.created_at|naturaltime }}
             </p>
             <div class="pinned-post-content-container col-xs-12">

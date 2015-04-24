@@ -26,6 +26,7 @@ footer {
 .navbar-inverse {
 	background-color: $color-navbar;
 	font-weight: bold;
+	border: 0;
 }
 .navbar-inverse .active {
 	border-bottom: 4px solid $color-main-color;

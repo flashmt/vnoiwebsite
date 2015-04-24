@@ -10,7 +10,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 
 # Create your views here.
 
-from forum.forms import PostCreateForm, PostUpdateForm
+from forum.forms import PostCreateForm, PostUpdateForm, PostFormNoParent
 from forum.models import Topic, Forum, ForumGroup, Post, Vote
 from forum.perms import PostPermission, VotePermission, TopicPermission
 
@@ -59,19 +59,23 @@ def topic_list(request,
 
 def topic_retrieve(request, forum_id, topic_id, template="forum/topic_retrieve.html"):
     forum = get_object_or_404(Forum, pk=forum_id)
-    topic = get_object_or_404(Topic.objects.select_related('post', 'post__created_by', 'post__created_by__profile__avatar'),
-                              pk=topic_id)
+    topic = get_object_or_404(
+        Topic.objects.select_related('post', 'post__created_by', 'post__created_by__profile__avatar'),
+        pk=topic_id)
     posts = topic.posts.all().select_related('created_by', 'created_by__profile__avatar')
     if request.user.is_authenticated():
         votes = Vote.objects.filter(post__in=posts, created_by=request.user).values('post_id', 'type')
     else:
         votes = None
+
+    form = PostFormNoParent(user=request.user, forum=forum, topic=topic, parent=topic.post)
     return render(request, template, {
         'forum': forum,
         'topic': topic,
         'post': topic.post,
         'posts': posts,
-        'votes': votes
+        'votes': votes,
+        'form': form
     })
 
 

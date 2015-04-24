@@ -300,7 +300,8 @@ footer {
 
 .navbar-inverse {
   background-color: #212933;
-  font-weight: bold; }
+  font-weight: bold;
+  border: 0; }
 
 .navbar-inverse .active {
   border-bottom: 4px solid #337ab7; }
