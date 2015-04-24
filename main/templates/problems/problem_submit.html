@@ -1,0 +1,6 @@
+{% extends 'problems/problem_base.html' %}
+
+{% block problem-content %}
+  <form action="{% url 'problems:submit' problem.code %}">
+  </form>
+{% endblock problem-content %}

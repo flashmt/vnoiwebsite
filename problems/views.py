@@ -56,6 +56,22 @@ def discuss(request, code):
 @login_required
 def submit(request, code):
     problem = get_object_or_404(SpojProblem, code=code)
-    return render(request, 'problems/submit.html', {
+    return render(request, 'problems/problem_submit.html', {
+        'problem': problem
+    })
+
+
+@login_required
+def status(request, code):
+    problem = get_object_or_404(SpojProblem, code=code)
+    return render(request, 'problems/problem_status.html', {
+        'problem': problem
+    })
+
+
+@login_required
+def rank(request, code):
+    problem = get_object_or_404(SpojProblem, code=code)
+    return render(request, 'problems/problem_rank.html', {
         'problem': problem
     })
