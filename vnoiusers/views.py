@@ -17,7 +17,7 @@ from django.views.decorators.cache import never_cache
 from django.views.decorators.csrf import csrf_protect
 from django.views.decorators.debug import sensitive_post_parameters
 from post_office import mail
-from forum.models import Topic
+from forum.models import Topic, Post, Vote
 from vnoiusers.forms import *
 from vnoiusers.models import VnoiUser
 from configurations.settings import ROOT_URL, DEBUG
@@ -118,17 +118,25 @@ def user_profile(request, user_id):
         authenticated_user = request.user.profile
         is_friend = True if authenticated_user.friends.filter(id=user_id) else False
 
+    topics = Topic.objects.filter(created_by=user).values(
+        'id', 'forum', 'title', 'content',
+        'created_by', 'created_by__username', 'created_at',
+        'post__id', 'post__num_upvotes', 'post__num_downvotes',
+        'forum__forum_group__group_type'
+    )
+    if request.user.is_authenticated:
+        post_ids = Post.objects.filter(created_by=user).values('id')
+        votes = Vote.objects.filter(post_id__in=post_ids, created_by=request.user).values('post_id', 'type')
+    else:
+        votes = None
+
     context = {
         'user': user,
         # We must select forum & forum_group, so that get_absolute_url does not need additional queries
-        'topics': Topic.objects.filter(created_by=user).values(
-            'id', 'forum', 'title', 'content',
-            'created_by', 'created_by__username', 'created_at',
-            'post__id', 'post__num_upvotes', 'post__num_downvotes',
-            'forum__forum_group__group_type'
-        ),
+        'topics': topics,
         'disable_breadcrumbs': True,
         'is_friend': is_friend,
+        'votes': votes,
     }
     return render(request, 'vnoiusers/user_profile.html', context)
 

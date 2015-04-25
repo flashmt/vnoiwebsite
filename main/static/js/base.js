@@ -33,7 +33,6 @@ VOTING_URL = "/forum/vote/{post_id}/?type={vote_type}";
 
 // METHODS THAT SHOULD BE COMMON TO ALL PAGES
 function voteSuccess(post_id, type) {
-	console.log('voted: ' + post_id + ' - ' + type);
 	var otherButtonId = (type == 'd' ? 'upvote' : 'downvote') + '-' + post_id;
 	var buttonId = (type == 'u' ? 'upvote' : 'downvote') + '-' + post_id;
 	$('#' + buttonId).attr('disabled', true);

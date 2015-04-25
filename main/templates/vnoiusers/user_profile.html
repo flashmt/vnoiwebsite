@@ -6,7 +6,7 @@
 
 {% block container %}
   <div class="panel panel-primary" id="user-info-wrapper">
-    <div class="panel-heading">{{ user.username }}</div>
+    <div class="panel-heading"><span class="glyphicon glyphicon-user"></span>{{ user.username }}</div>
     <div class="panel-body container-fluid row">
       <div class="col-xs-2">
         <div class="big-circular-image" style="background: url({% user_avatar_url user 180 %}) no-repeat">
@@ -14,17 +14,47 @@
              width="180" height="180">
         </div>
         {% if request.user.id == user.id %}
-          <div class="text-center">
-            <a href="{% url 'user:upload_avatar' %}">Change profile picture</a>
+          <div id="change-avatar-link" class="text-center">
+            <a href="{% url 'user:upload_avatar' %}">Đổi ảnh đại diện</a>
           </div>
         {% endif %}
       </div>
-      <div class="col-xs-6" style="margin-left: 10px;">
+      <div class="col-xs-6" id="user-info">
         <h3>{{ user.last_name }} {{ user.first_name }}</h3>
         <p>Đóng góp: {{ user.profile.contribution }}</p>
         <p>Ngày sinh: {{ user.profile.dob|date:"d/m/Y" }}</p>
         <p>Đăng ký: {{ user.date_joined|naturaltime }}</p>
         <p>Lần đăng nhập cuối: {{ user.last_login|naturaltime }}</p>
+        <div class="btn-group">
+          {% if user.id == request.user.id %}
+            <a class="btn btn-default" href="{% url 'user:update_profile' %}" role="button">
+              <span class="glyphicon glyphicon-wrench"></span>Cập nhật
+            </a>
+            <a class="btn btn-default" href="{% url 'user:friend_list' %}" role="button">
+              <span class="glyphicon glyphicon-heart"></span>Danh sách bạn bè
+            </a>
+            <a class="btn btn-default" href="{% url 'user:password_change' %}" role="button">
+              <span class="glyphicon glyphicon-lock"></span>Thay đổi mật khẩu
+            </a>
+          {% elif request.user.is_authenticated %}
+            <a class="btn btn-default" href="{% url 'message:write' user.username %}" role="button">
+              <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+              Gửi tin nhắn
+            </a>
+            {% if is_friend %}
+              <a class="btn btn-default" href="{% url 'user:remove_friend' user.id %}" role="button">
+                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                Hủy kết bạn
+              </a>
+            {% else %}
+              <a class="btn btn-default"
+                 href="{% url 'user:add_friend' user.id %}" role="button">
+                 <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                Thêm bạn
+              </a>
+            {% endif %}
+          {% endif %}
+        </div>
       </div>
       <div class="">
         {% include 'vnoiusers/widgets/oj_accounts.html' %}
@@ -36,4 +66,5 @@
 
 {% block extra-js %}
   <script src="{% static 'js/user.js' %}"></script>
-{% endblock extra-js %}
+  {% include 'forum/disable_voted.html' with votes=votes %}
+{% endblock %}

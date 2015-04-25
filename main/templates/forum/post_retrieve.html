@@ -75,6 +75,12 @@
                     </a>
                   {% endif %}
                 {% endifhasperm %}
+                {% if user.is_authenticated and user.is_superuser %}
+                  &nbsp;|&nbsp;
+                  <a class="post-admin" href="{% url 'admin:forum_topic_change' topic.id %}" role="button">
+                    Admin
+                  </a>
+                {% endif %}
               {% endif %}
             </div>
             <div class="post-vote-wrapper text-right col-md-2">

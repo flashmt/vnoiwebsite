@@ -66,6 +66,7 @@
             {% block navbar %}
             <li id="navbar_home"><a href="{% url 'main:index' %}"><span class="glyphicon glyphicon-home" aria-hidden="true"></span>Trang chủ</a></li>
             <li id="navbar_problems"><a href="{% url 'problems:list' %}"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>Đề bài</a></li>
+            <li id="navbar_problems"><a href="{% url 'problems:list' %}"><span class="glyphicon glyphicon-time" aria-hidden="true"></span>Kỳ thi</a></li>
             <li id="navbar_forum"><a href="{% url 'forum:index' %}"><span class="glyphicon glyphicon-comment" aria-hidden="true"></span>Diễn đàn</a></li>
             <li id="navbar_library"><a href="{% url 'library:index' %}"><span class="glyphicon glyphicon-book" aria-hidden="true"></span>Thư viện</a></li>
             {% if request.user.is_authenticated %}
@@ -144,7 +145,7 @@
     {% block footer %}
       <div class="footer">
         <div class="container">
-          <p class="text-muted">&copy; VNOI Admin 2015</p>
+          <p class="text-muted">&copy; VNOI Team 2015</p>
         </div>
       </div>
     {% endblock footer %}

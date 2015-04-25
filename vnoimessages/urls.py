@@ -25,5 +25,3 @@ urlpatterns = patterns(
     url(r'^undelete/$', UndeleteView.as_view(), name='undelete'),
     (r'^$', RedirectView.as_view(url='inbox/')),
 )
-
-

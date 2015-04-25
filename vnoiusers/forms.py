@@ -252,14 +252,15 @@ class SetPasswordForm(forms.Form):
     A form that lets a user change set their password without entering the old password
     """
     error_messages = {
-        'password_mismatch': "The two password fields didn't match.",
+        'password_mismatch': "2 mật khẩu không khớp",
     }
-    new_password1 = forms.CharField(label="New password", widget=forms.PasswordInput)
-    new_password2 = forms.CharField(label="New password confirmation", widget=forms.PasswordInput)
+    new_password1 = forms.CharField(label="Mật khẩu mới", widget=forms.PasswordInput)
+    new_password2 = forms.CharField(label="Nhập lại mật khẩu mới", widget=forms.PasswordInput)
 
     def __init__(self, user, *args, **kwargs):
         self.user = user
         super(SetPasswordForm, self).__init__(*args, **kwargs)
+        # self.fields['password'].label = 'Mật khẩu cũ'
 
     def clean_new_password2(self):
         password1 = self.cleaned_data.get('new_password1')
@@ -284,10 +285,9 @@ class PasswordChangeForm(SetPasswordForm):
     A form that lets a user change their password by entering their old password.
     """
     error_messages = dict(SetPasswordForm.error_messages, **{
-        'password_incorrect': ("Your old password was entered incorrectly. "
-                                "Please enter it again."),
+        'password_incorrect': "Mật khẩu cũ không đúng",
     })
-    old_password = forms.CharField(label="Old password",
+    old_password = forms.CharField(label="Mật khẩu cũ",
                                    widget=forms.PasswordInput)
 
     def clean_old_password(self):
