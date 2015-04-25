@@ -30,7 +30,7 @@ def index(request):
     posts = []
     appear = Set()
     for post in recent_posts:
-        post_key = (post[0], post[3])
+        post_key = post[3]
         if post_key not in appear:
             appear.add(post_key)
             posts.append({

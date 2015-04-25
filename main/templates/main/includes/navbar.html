@@ -1,0 +1,73 @@
+<nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container">
+
+    <div class="navbar-header" style="margin-left: 0.5em">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+{#          <img src="{% static 'img/logo.jpg' %}" height="50px"/>#}
+      <a class="navbar-brand" href="{% url 'main:index' %}" id="logo-text">VNOI</a>
+    </div>
+
+    <div id="navbar" class="collapse navbar-collapse navbar-right">
+      <ul class="nav navbar-nav">
+        {% block navbar %}
+        <li id="navbar_home"><a href="{% url 'main:index' %}"><span class="glyphicon glyphicon-home" aria-hidden="true"></span>Trang chủ</a></li>
+        <li id="navbar_problems"><a href="{% url 'problems:list' %}"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>Đề bài</a></li>
+        <li id="navbar_problems"><a href="{% url 'problems:list' %}"><span class="glyphicon glyphicon-time" aria-hidden="true"></span>Kỳ thi</a></li>
+        <li id="navbar_forum"><a href="{% url 'forum:index' %}"><span class="glyphicon glyphicon-comment" aria-hidden="true"></span>Diễn đàn</a></li>
+        <li id="navbar_library"><a href="{% url 'library:index' %}"><span class="glyphicon glyphicon-book" aria-hidden="true"></span>Thư viện</a></li>
+        {% if request.user.is_authenticated %}
+        <li class="dropdown" id="navbar_profile">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"><span style="color:wheat" class="glyphicon glyphicon-user icon"></span>{{ request.user }}</a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="{{request.user.get_absolute_url}}"><span class="glyphicon glyphicon-user icon"></span>Trang cá nhân</a></li>
+            <li><a href="{% url 'message:index' %}"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>Tin nhắn</a></li>
+            <li><a href="{% url 'user:logout' %}"><span class="glyphicon glyphicon-log-out"></span>Đăng xuất</a></li>
+          </ul>
+        </li>
+        {% else %}
+
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="glyphicon glyphicon-log-in icon"></span><strong>Đăng nhập</strong></a>
+          <ul class="dropdown-menu" role="menu">
+            <li>
+              <form id="login-form" class="navbar-form" method="post" action="{% url 'user:login' %}">
+                {% csrf_token %}
+
+                <div class="form-group">
+                  <label for="id_username">Username:</label>
+                  <input class="form-control" id="id_username" maxlength="30" name="username" placeholder="Username" required="required" title="" type="text">
+                </div>
+
+                <div class="form-group">
+                  <label for="id_password">Password:</label>
+                  <input class="form-control" id="id_password" name="password" placeholder="Password" required="required" title="" type="password">
+                </div>
+
+                <button type="submit" id="login_submit" class="btn btn-success btn-block input-xs">Đăng nhập</button>
+              </form>
+            </li>
+            <li>
+              <span style="color: #ffffff; margin-left:1em;">Chưa có tài khoản? <a href="{% url 'user:register' %}">Đăng ký</a></span>
+            </li>
+          </ul>
+        </li>
+
+
+        <li>
+        </li>
+        {#<a href="{% url 'user:login' %}">Login</a>#}
+        {% endif %}
+
+        {% endblock navbar %}
+      </ul>
+    </div>
+    <!-- /.nav-collapse -->
+  </div>
+  <!-- /.container -->
+</nav>
+<!-- /.navbar -->
