@@ -150,14 +150,14 @@
  * User
  * --------------------------------------------------
  */
-.circular-image {
+.big-circular-image {
   width: 180px;
   height: 180px;
   border-radius: 90px;
   -webkit-border-radius: 90px;
   -moz-border-radius: 90px; }
 
-.circular-image img {
+.big-circular-image img {
   opacity: 0;
   filter: alpha(opacity=0); }
 
