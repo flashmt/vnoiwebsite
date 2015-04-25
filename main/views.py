@@ -1,3 +1,4 @@
+from sets import Set
 from django.core.cache import cache
 from django.shortcuts import render
 from django.utils import timezone
@@ -22,18 +23,22 @@ def index(request):
 
     # Since sqlite does not support select distinct, we must make it distinct by flatten QuerySet and then
     #  wrapping it in a set
-    recent_posts = set(Post.objects.values_list(
+    recent_posts = Post.objects.values_list(
         'created_by__username', 'topic__title', 'topic__id', 'topic__forum__id'
-    ).order_by('-created_at')[:20])
+    ).order_by('-created_at')[:20]
     # and then convert the set to nicely looking array of hash
     posts = []
+    appear = Set()
     for post in recent_posts:
-        posts.append({
-            'created_by__username': post[0],
-            'topic__title': post[1],
-            'topic__id': post[2],
-            'topic__forum__id': post[3]
-        })
+        post_key = (post[0], post[3])
+        if post_key not in appear:
+            appear.add(post_key)
+            posts.append({
+                'created_by__username': post[0],
+                'topic__title': post[1],
+                'topic__id': post[2],
+                'topic__forum__id': post[3]
+            })
 
     if request.user.is_authenticated():
         post_ids = Post.objects.filter(topic__is_pinned=True).values('id')
