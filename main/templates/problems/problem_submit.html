@@ -4,7 +4,7 @@
 
 {% block breadcrumbs %}
   <li><a href="{% url 'problems:list' %}">Danh sách bài tập</a></li>
-  <li><a href="{% url 'problems:submit' problem.code %}">{{ problem.code }}</a></li>
+  <li><a href="{% url 'problems:show' problem.code %}">{{ problem.code }}</a></li>
   <li>Nộp bài</li>
 {% endblock breadcrumbs %}
 {% block left-menu-highlight %}{% endblock %}
