@@ -77,9 +77,32 @@ body {
 	height: 50px;
 	letter-spacing: 7px;
 }
-.dropdown-menu>li>a {
-	font-weight: strong;
-	color: white;
+.dropdown-menu {
+	margin-top: 6px !important;
+	&>li>a {
+		color: white;
+	}
+}
+.dropdown-menu:before {
+	position: absolute;
+	top: -7px;
+	right: 20%;
+	display: inline-block;
+	border-right: 7px solid transparent;
+	border-bottom: 7px solid $color-navbar;
+	border-left: 7px solid transparent;
+	border-bottom-color: $color-navbar;
+	content: '';
+}
+.dropdown-menu:after {
+	position: absolute;
+	top: -6px;
+	right: 20%;
+	display: inline-block;
+	border-right: 6px solid transparent;
+	border-bottom: 6px solid $color-navbar;
+	border-left: 6px solid transparent;
+	content: '';
 }
 
 // Heading link
