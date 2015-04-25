@@ -150,61 +150,16 @@
  * User
  * --------------------------------------------------
  */
-.user-detail {
-  border: 1px solid #337ab7;
-  padding-left: 0.5em;
-  padding-right: -0.5em;
-  padding-top: 0.5em; }
+.circular-image {
+  width: 180px;
+  height: 180px;
+  border-radius: 90px;
+  -webkit-border-radius: 90px;
+  -moz-border-radius: 90px; }
 
-.user-avatar {
-  margin-top: 1em;
-  margin-bottom: 1em; }
-
-.user-info {
-  margin-top: 1em;
-  margin-bottom: 1em; }
-
-.user-setting-button {
-  float: right;
-  margin-right: 1em; }
-
-.user-online-judge-wrapper {
-  border: 1px solid #ddd; }
-
-.user-online-judge-title {
-  text-align: left; }
-
-.user-online-judge {
-  margin-top: 2em;
-  margin-left: 1em;
-  margin-bottom: 2em; }
-
-.user-recent-topic {
-  border: 1px solid #337ab7;
-  padding-left: 0.5em;
-  padding-right: 2em; }
-
-.user-one-post {
-  margin-top: 1em;
-  margin-left: 1em;
-  margin-bottom: 1em; }
-
-.user-one-post-middle {
-  border-bottom: 1px solid #ddd; }
-
-.user-post-heading {
-  margin-top: 1em; }
-
-.user-post-day-created {
-  text-align: right;
-  margin-top: 1em; }
-
-.user-post-content {
-  margin-top: 0em;
-  margin-bottom: 1em; }
-
-.codeforces-handle {
-  font-weight: bold; }
+.circular-image img {
+  opacity: 0;
+  filter: alpha(opacity=0); }
 
 /*
  * Message
@@ -284,16 +239,36 @@
  * Style tweaks
  * --------------------------------------------------
  */
-html,
-body {
+* {
+  margin: 0; }
+
+html, body {
   overflow-x: hidden;
-  /* Prevent scroll on narrow devices */ }
+  /* Prevent scroll on narrow devices */
+  height: 100%; }
 
 body {
   padding-top: 70px; }
 
-footer {
-  padding: 30px 0; }
+.body-wrapper {
+  min-height: 100%;
+  height: auto !important;
+  height: 100%;
+  margin: 0 auto-50px;
+  /* the bottom margin is the negative value of the footer's height */ }
+
+.footer, .push-footer {
+  height: 50px;
+  width: 100%; }
+
+.footer {
+  background-color: #f5f5f5; }
+
+.panel-heading div {
+  padding-left: 0 !important; }
+
+.container .text-muted {
+  margin: 15px 0; }
 
 .navbar-inverse {
   background-color: #212933;

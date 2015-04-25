@@ -7,7 +7,7 @@
 {% endblock %}
 
 {% block breadcrumbs %}
-  <li><a href="{% url 'forum:index' %}">Forum</a></li>
+  <li><a href="{% url 'forum:index' %}">Diễn đàn</a></li>
   <li>{{ forum.name }}</li>
 {% endblock breadcrumbs %}
 
@@ -15,11 +15,13 @@
 
 {% block forum-body %}
   <div class="btn-toolbar button-container" role="toolbar">
-    <a href="{% url 'forum:topic_create' forum.id %}" class="btn btn-default">Create new topic</a>
+    <a href="{% url 'forum:topic_create' forum.id %}" class="btn btn-default">Tạo chủ đề mới</a>
   </div>
   <div id="forum-main-container" class="panel panel-primary">
-    <div class="panel-heading">
-      Topics
+    <div class="panel-heading container-fluid panel-container">
+      <div class="col-xs-9">Chủ đề</div>
+      <div class="col-xs-1">Trả lời</div>
+      <div class="">Bài viết cuối</div>
     </div>
     {% if topics %}
       <table class="table table-striped table-bordered">

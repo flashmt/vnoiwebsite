@@ -19,7 +19,7 @@ $(document).ready(function () {
 			'altFormat': 'yy-mm-dd',
 			'changeYear': true,
 			'changeMonth': true,
-			'yearRange': 'c-40:c-10'
+			'yearRange': 'c-40:c+10'
 		});
 	}
 

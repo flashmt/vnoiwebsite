@@ -17,6 +17,7 @@ from django.views.decorators.cache import never_cache
 from django.views.decorators.csrf import csrf_protect
 from django.views.decorators.debug import sensitive_post_parameters
 from post_office import mail
+from forum.models import Topic
 from vnoiusers.forms import *
 from vnoiusers.models import VnoiUser
 from configurations.settings import ROOT_URL, DEBUG
@@ -84,8 +85,9 @@ def user_create(request, template_name='vnoiusers/user_create.html'):
                 email_subject = 'Vnoiwebsite Account confirmation'
                 email_body = "Hey %s, thanks for signing up. To activate your account, click this link %s/user/confirm/%s" % (username, ROOT_URL, activation_key)
                 mail.send(email, subject=email_subject, message=email_body, priority="now")
-
-            return HttpResponse('You have successfully register a new account. An email will be sent to your email shortly. Please click the confirmation link in the email')
+                return HttpResponse('You have successfully register a new account. An email will be sent to your email shortly. Please click the confirmation link in the email')
+            else:
+                return HttpResponse('Registered. You can now login')
         else:
             return render(request, template_name,
                           {'form': form, 'message': form.errors})
@@ -119,7 +121,12 @@ def user_profile(request, user_id):
     context = {
         'user': user,
         # We must select forum & forum_group, so that get_absolute_url does not need additional queries
-        'topics': user.created_topics.all().select_related('forum', 'forum__forum_group'),
+        'topics': Topic.objects.filter(created_by=user).values(
+            'id', 'forum', 'title', 'content',
+            'created_by', 'created_by__username', 'created_at',
+            'post__id', 'post__num_upvotes', 'post__num_downvotes',
+            'forum__forum_group__group_type'
+        ),
         'disable_breadcrumbs': True,
         'is_friend': is_friend,
     }

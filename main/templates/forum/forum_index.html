@@ -12,8 +12,10 @@
   {% block forum-body %}
     <div class="panel panel-primary">
       {% for group in forum_groups %}
-        <div class="panel-heading">
-          {{ group.name }}
+        <div class="panel-heading clearfix container-fluid panel-container">
+          <div class="col-xs-9">{{ group.name }}</div>
+          <div class="col-xs-1" style="margin-left:-2em;">Số bài viết</div>
+          <div class="">Bài viết cuối</div>
         </div>
         <div>
           <table class="table table-bordered forum-index-table">

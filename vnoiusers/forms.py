@@ -11,6 +11,7 @@ from django.contrib.auth.models import User
 from django.template import loader
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode
+from configurations.settings import DEBUG
 from externaljudges.crawler.codeforces import verify_codeforces_account
 from externaljudges.crawler.voj import verify_voj_account
 from vnoiusers.models import VnoiUser
@@ -115,11 +116,18 @@ class UserCreateForm(forms.ModelForm):
         user = super(UserCreateForm, self).save(commit=False)
         user.set_password(self.cleaned_data['password1'])
         if commit:
-            user.is_active = False  # not active until user opens activation confirmation link
-            user.save()  # Note: post_save signal automatically create a new user profile
+            # Activate account or not? Use settings DEBUG
+            if DEBUG:
+                user.is_active = True  # not active until user opens activation confirmation link
+            else:
+                user.is_active = False
+            user.save()             # Note: post_save signal automatically create a new user profile
             # Update user_profile
             user.profile.dob = self.cleaned_data['dob']
+            user.first_name = self.cleaned_data['first_name']
+            user.last_name = self.cleaned_data['last_name']
             user.profile.save()
+            user.save()
         return user
 
 

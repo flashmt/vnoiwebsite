@@ -11,11 +11,11 @@
   <div class="row" style="margin-left:0">
     <div class="col-md-2 nav nav-pills nav-stacked">
       {% block problem_menu %}
-        <li role="presentation" class="active"> <a href="{% url 'problems:show' problem.code %}"> Problems </a> </li>
-        <li role="presentation" class=""> <a href="{% url 'problems:submit' problem.code %}"> Submit </a>  </li>
-        <li role="presentation" class=""> <a href="{% url 'problems:status' problem.code %}"> Status </a>  </li>
-        <li role="presentation" class=""> <a href="{% url 'problems:rank' problem.code %}"> Ranks </a> </li>
-        <li role="presentation" class=""> <a href="{% url 'problems:discuss' problem.code %}"> Discuss </a>  </li>
+        <li role="presentation" class="{% block left-menu-show %}{% endblock %}"> <a href="{% url 'problems:show' problem.code %}"> Đề bài </a> </li>
+        <li role="presentation" class="{% block left-menu-submit %}{% endblock %}"> <a href="{% url 'problems:submit' problem.code %}"> Nộp bài </a>  </li>
+        <li role="presentation" class="{% block left-menu-status %}{% endblock %}"> <a href="{% url 'problems:status' problem.code %}"> Các bài nộp </a>  </li>
+        <li role="presentation" class="{% block left-menu-rank %}{% endblock %}"> <a href="{% url 'problems:rank' problem.code %}"> Xếp hạng </a> </li>
+        <li role="presentation" class="{% block left-menu-discuss %}{% endblock %}"> <a href="{% url 'problems:discuss' problem.code %}"> Thảo luận </a>  </li>
       {% endblock problem_menu %}
     </div>
     {% block problem-content %}

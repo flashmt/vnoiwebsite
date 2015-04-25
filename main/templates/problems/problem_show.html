@@ -1,5 +1,7 @@
 {% extends 'problems/problem_base.html' %}
 
+{% block left-menu-show %}active{% endblock %}
+
 {% block problem-content %}
   <div class="col-md-10">
     <h2 class="prob-name">{{ problem.name }} ( {{problem.code}} )</h2>

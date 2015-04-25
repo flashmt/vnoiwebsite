@@ -8,7 +8,7 @@
 {# thus we must handle breadcrumbs to show correct component #}
 {% block breadcrumbs %}
   {% if forum.forum_group.group_type == 'f' %}
-    <li><a href="{% url 'forum:index' %}">Forum</a></li>
+    <li><a href="{% url 'forum:index' %}">Diễn đàn</a></li>
   {% elif forum.forum_group.group_type == 'l' %}
     <li><a href="{% url 'library:index' %}">Thư viện</a></li>
   {% else %}

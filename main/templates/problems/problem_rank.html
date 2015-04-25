@@ -1,4 +1,12 @@
 {% extends 'problems/problem_base.html' %}
 
+{% block left-menu-rank %}active{% endblock %}
+
+{% block breadcrumbs %}
+  <li><a href="{% url 'problems:list' %}">Danh sách bài tập</a></li>
+  <li><a href="{% url 'problems:submit' problem.code %}">{{ problem.code }}</a></li>
+  <li>Xếp hạng</li>
+{% endblock breadcrumbs %}
+
 {% block problem-content %}
 {% endblock problem-content %}

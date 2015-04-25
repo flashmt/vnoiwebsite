@@ -11,15 +11,35 @@
  * --------------------------------------------------
  */
 
-html,
-body {
+$footer-height: 50px;
+* {
+	margin: 0;
+}
+html, body {
 	overflow-x: hidden; /* Prevent scroll on narrow devices */
+	height: 100%;
 }
 body {
 	padding-top: 70px;
 }
-footer {
-	padding: 30px 0;
+.body-wrapper {
+	min-height: 100%;
+	height: auto !important;
+	height: 100%;
+	margin: 0 auto -$footer-height; /* the bottom margin is the negative value of the footer's height */
+}
+.footer, .push-footer {
+	height: $footer-height;
+	width: 100%;
+}
+.footer {
+	background-color: #f5f5f5;
+}
+.panel-heading div {
+	padding-left: 0 !important;
+}
+.container .text-muted {
+	margin: 15px 0;
 }
 
 // Navigation bar

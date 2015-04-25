@@ -46,7 +46,7 @@
 </head>
 
 <body>
-  <header>
+  <div class="body-wrapper">
     <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container">
 
@@ -57,7 +57,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-{#          <img src="{% static 'img/logo.jpg' %}" height="50px"/>#}
+  {#          <img src="{% static 'img/logo.jpg' %}" height="50px"/>#}
           <a class="navbar-brand" href="{% url 'main:index' %}" id="logo-text">VNOI</a>
         </div>
 
@@ -119,32 +119,35 @@
       <!-- /.container -->
     </nav>
     <!-- /.navbar -->
-  </header>
 
-  <div class="container" id="body-container">
-    {% if not disable_breadcrumbs %}
-    <ol id="breadcrumbs" class="breadcrumb">
-      {% block breadcrumbs %}
-      <li>VNOI - Diễn đàn tin học, thuật toán</li>
-      {% endblock breadcrumbs %}
-    </ol>
-    {% endif %}
-    {% if messages %}
-    <div id="flash-messages" class="messages">
-      {% for message in messages %}
-      <p class="alert alert-{{ message.tags }}">{{ message }}</p>
-      {% endfor %}
+    <div class="container" id="body-container">
+      {% if not disable_breadcrumbs %}
+      <ol id="breadcrumbs" class="breadcrumb">
+        {% block breadcrumbs %}
+        <li>VNOI - Diễn đàn tin học, thuật toán</li>
+        {% endblock breadcrumbs %}
+      </ol>
+      {% endif %}
+      {% if messages %}
+      <div id="flash-messages" class="messages">
+        {% for message in messages %}
+        <p class="alert alert-{{ message.tags }}">{{ message }}</p>
+        {% endfor %}
+      </div>
+      {% endif %}
+      {% block container %}
+      {% endblock %}
     </div>
-    {% endif %}
-    {% block container %}
-    {% endblock %}
-    {% block footer %}
-      <footer class="footer">
-        <p>&copy; VNOI Admin 2015</p>
-      </footer>
-    {% endblock footer %}
+    <div class="push-footer"></div>
   </div>
   <!--/.container-->
+    {% block footer %}
+      <div class="footer">
+        <div class="container">
+          <p class="text-muted">&copy; VNOI Admin 2015</p>
+        </div>
+      </div>
+    {% endblock footer %}
 
 
 <!-- Bootstrap core JavaScript

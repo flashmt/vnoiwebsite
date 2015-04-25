@@ -1,8 +1,5 @@
 {% extends 'main/base.html' %}
 {% load staticfiles %}
-{% load bleach_tags %}
-{% load humanize %}
-{% load utils %}
 
 {% block container %}
   <div class="row row-offcanvas row-offcanvas-right">
@@ -10,62 +7,7 @@
       <p class="pull-right visible-xs">
         <button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas">Toggle nav</button>
       </p>
-      <div class="row" id="pinned_post">
-        {% for pinned_topic in pinned_topics %}
-          <div class="col-xs-11">
-            <h2>
-              {% if pinned_topic.forum__forum_group__group_type == 'f' %}
-                <a href="{% url 'forum:topic_retrieve' pinned_topic.forum pinned_topic.id %}">
-              {% else %}
-                <a href="{% url 'library:topic_retrieve' pinned_topic.forum pinned_topic.id %}">
-              {% endif %}
-                {{ pinned_topic.title }}
-              </a>
-            </h2>
-            <p class = "pinned-post-author">
-              Đăng bởi <a href="{% url 'user:profile' pinned_topic.created_by %}">{{ pinned_topic.created_by__username }}</a>,
-              {{ pinned_topic.created_at|naturaltime }}
-            </p>
-            <div class="pinned-post-content-container col-xs-12">
-              <p class= "pinned-post-content">
-                {{ pinned_topic.content|bleach }}
-              </p>
-            </div>
-            <div class="panel panel-default home-post-vote-panel">
-              <div class = "row home-post-buttons">
-                <div class = "col-xs-9">
-                  {% if pinned_topic.forum__forum_group__group_type == 'f' %}
-                    <a class="btn btn-default" href="{% url 'forum:topic_retrieve' pinned_topic.forum pinned_topic.id %}" role="button">
-                  {% else %}
-                    <a class="btn btn-default" href="{% url 'library:topic_retrieve' pinned_topic.forum pinned_topic.id %}" role="button">
-                  {% endif %}
-                    See more &raquo;
-                  </a>
-                </div>
-                <div class="home-post-vote-wrapper button-container">
-                  <a class="btn btn-default home-post-downvote"
-                     href="javascript:void(0)"
-                     post-id="{{ pinned_topic.post__id }}"
-                     role="button"
-                     id="downvote-{{ pinned_topic.post__id }}">
-                    <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
-                  </a>
-                  <div class="col-xs-1 home-post-count-upvote" id="total-vote-{{ pinned_topic.post__id }}" role="button">
-                    {{ pinned_topic.post__num_upvotes|subtract:pinned_topic.post__num_downvotes }}
-                  </div>
-                  <a class="btn btn-default home-post-upvote"
-                     href="javascript:void(0)"
-                     post-id="{{ pinned_topic.post__id }}"
-                     role="button"
-                     id="upvote-{{ pinned_topic.post__id }}">
-                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-        {% endfor %}
-      </div><!--/row-->
+      {% include 'forum/widgets/multiple_topics.html' with topics=pinned_topics show_author=True post_width=11 %}
     </div><!--/.col-xs-12.col-sm-9-->
     <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar">
       {% include 'main/widgets/coming_contests.html' %}
