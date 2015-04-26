@@ -247,6 +247,8 @@ ul.lib-small-topic {
 
 div.library-group {
   margin-bottom: 50px !important; }
+  div.library-group h4 a:link, div.library-group h4 a:visited, div.library-group h4 a:hover, div.library-group h4 a:active {
+    text-decoration: none; }
 
 /*
  * Problems

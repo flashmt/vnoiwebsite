@@ -42,4 +42,9 @@ ul.lib-small-topic {
 }
 div.library-group {
 	margin-bottom: 50px !important;
+	h4 {
+		a:link, a:visited, a:hover, a:active {
+			text-decoration: none;
+		}
+	}
 }

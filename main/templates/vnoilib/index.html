@@ -19,6 +19,9 @@
               <div class="panel-heading" role="tab" id="heading-{{ lib_group.id }}">
                 <h4 class="panel-title">
                   <a data-toggle="collapse" data-parent="#accordion" href="#collapse-{{ lib_group.id }}" aria-expanded="true" aria-controls="collapse-{{ lib_group.id }}">
+                    {# Note: on server, unlike initial fixtures, this string will not have the "Library - " prefix #}
+                    {# Thus, please do not substring this string. It will look correct on server #}
+                    <span class="caret"></span>&nbsp;
                     {{ lib_group.name }}
                   </a>
                 </h4>
