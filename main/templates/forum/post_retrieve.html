@@ -36,6 +36,8 @@
               Trả lời
               <a href="{% url 'user:profile' post.reply_on.id %}">{{ post.reply_on.created_by }}</a>
               <br/>
+              <a href="#post-{{ post.reply_on.id }}">Link</a>
+              &nbsp;|&nbsp;
               <a href="javascript:void(0)" onclick="$(this).next().toggle()">Hiện bài gốc</a>
               <div id="post-{{ post.reply_on }}-parent" style="display:none">{{ post.reply_on.content|bleach }}</div>
             </div>
