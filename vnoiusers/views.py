@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import hashlib
 import random
 from avatar.views import _get_avatars
@@ -82,12 +84,12 @@ def user_create(request, template_name='vnoiusers/user_create.html'):
 
             # Send email with activation key
             if not DEBUG:
-                email_subject = 'Vnoiwebsite Account confirmation'
-                email_body = "Hey %s, thanks for signing up. To activate your account, click this link %s/user/confirm/%s" % (username, ROOT_URL, activation_key)
+                email_subject = 'Đăng ký tài khoản VNOI'
+                email_body = "Hi %s, chào mừng bạn đã đến với VNOI. Để kích hoạt tài khoản, hãy click vào link: %s/user/confirm/%s" % (username, ROOT_URL, activation_key)
                 mail.send(email, subject=email_subject, message=email_body, priority="now")
-                return HttpResponse('You have successfully register a new account. An email will be sent to your email shortly. Please click the confirmation link in the email')
+                return HttpResponse('Một email đã được gửi đến tài khoản email mà bạn đăng ký. Hãy kiểm tra hòm thư của bạn và làm theo hướng dẫn để kích hoạt tài khoản.')
             else:
-                return HttpResponse('Registered. You can now login')
+                return HttpResponse('Bạn đã đăng ký thành công. Bạn có thể trở về trang chủ để đăng nhập')
         else:
             return render(request, template_name,
                           {'form': form, 'message': form.errors})
@@ -157,7 +159,7 @@ def user_upload_avatar(request, extra_context=None,
             image_file = request.FILES['avatar']
             avatar.avatar.save(image_file.name, image_file)
             avatar.save()
-            messages.success(request, "Successfully uploaded a new avatar.")
+            messages.success(request, "Đổi hình đại diện thành công.")
 
             # Save avatar into user_profile
             user_profile = request.user.profile
@@ -242,7 +244,7 @@ def add_friend(request, user_id):
 
     if user_id == request.user.id:
         # Two users are the same
-        messages.warning(request, 'You can not add friend yourself')
+        messages.warning(request, 'Bạn không thể kết bạn với chính mình')
         return redirect_obj
     else:
         vnoi_user = request.user.profile
@@ -252,7 +254,7 @@ def add_friend(request, user_id):
             return redirect_obj
 
         vnoi_user.friends.add(other_user.profile)
-        messages.success(request, 'Friend successfully added')
+        messages.success(request, 'Kết bạn thành công.')
         vnoi_user.save()
     return redirect_obj
 
@@ -268,7 +270,7 @@ def remove_friend(request, user_id):
 
     if user_id == request.user.id:
         # Two users are the same
-        messages.warning(request, 'You can not add friend yourself')
+        messages.warning(request, 'Bạn không thể kết bạn với chính mình')
         return redirect_obj
     else:
         vnoi_user = request.user.profile
@@ -278,7 +280,7 @@ def remove_friend(request, user_id):
             return redirect_obj
 
         vnoi_user.friends.remove(other_user.profile)
-        messages.success(request, 'Friend successfully removed')
+        messages.success(request, 'Ngừng kết bạn thành công')
         vnoi_user.save()
     return redirect_obj
 
@@ -405,7 +407,7 @@ def password_reset_confirm(request, uidb64=None, token=None,
 
     if user is not None and token_generator.check_token(user, token):
         validlink = True
-        title = _('Enter new password')
+        title = _('Nhập mật khẩu mới')
         if request.method == 'POST':
             form = set_password_form(user, request.POST)
             if form.is_valid():
@@ -416,7 +418,7 @@ def password_reset_confirm(request, uidb64=None, token=None,
     else:
         validlink = False
         form = None
-        title = _('Password reset unsuccessful')
+        title = _('Mật khẩu thay đổi không thành công')
     context = {
         'form': form,
         'title': title,
