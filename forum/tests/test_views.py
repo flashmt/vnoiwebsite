@@ -150,23 +150,3 @@ class VoteViewTest(TestCase):
         self.assertEquals(response.status_code, 200)
         self.assertEquals(Post.objects.get(pk=2).num_upvotes, 0)
         self.assertEquals(Post.objects.get(pk=2).num_downvotes, 1)
-
-    def test_vote_create_unsuccessfully(self):
-        # if user already vote this post
-        self.client.login(username="admin", password="admin")
-        self.client.get(reverse('forum:vote_create', kwargs={'post_id': 1}), {'type': Vote.UP_VOTE})
-
-        response = self.client.get(reverse('forum:vote_create', kwargs={'post_id': 1}), {'type': Vote.UP_VOTE})
-        self.assertEqual(
-            response.__dict__['_container'],
-            ['{"message": "You already voted", "success": 0}'])
-
-        response = self.client.get(reverse('forum:vote_create', kwargs={'post_id': 1}), {'type': Vote.DOWN_VOTE})
-        self.assertEqual(
-            response.__dict__['_container'],
-            ['{"message": "You already voted", "success": 0}'])
-
-        # If user doesn't have permission
-        pass
-
-
