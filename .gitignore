@@ -81,3 +81,6 @@ main/static/
 # Settings
 configurations/settings.py.backup
 configurations/settings_local.py
+
+# Test coverage
+cover/

@@ -124,7 +124,7 @@ def user_profile(request, user_id):
         'post__id', 'post__num_upvotes', 'post__num_downvotes',
         'forum__forum_group__group_type'
     )
-    if request.user.is_authenticated:
+    if request.user.is_authenticated():
         post_ids = Post.objects.filter(created_by=user).values('id')
         votes = Vote.objects.filter(post_id__in=post_ids, created_by=request.user).values('post_id', 'type')
     else:

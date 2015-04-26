@@ -1,0 +1,50 @@
+[
+	{
+		"fields": {
+			"activation_key": "e1210944f98b58bc8e60e20f1a776b013d198123",
+			"voj_account": "",
+			"dob": null,
+			"codeforces_account": "",
+			"topcoder_account": "",
+			"topcoder_account_url": "",
+			"user": 1,
+			"contribution": 1,
+			"friends": [2],
+			"avatar": null
+		},
+		"model": "vnoiusers.vnoiuser",
+		"pk": 1
+	},
+	{
+		"fields": {
+			"activation_key": "12310944f98b58bc8e60e20f1a776b013d198709",
+			"voj_account": "",
+			"dob": null,
+			"codeforces_account": "",
+			"topcoder_account": "",
+			"topcoder_account_url": "",
+			"user": 2,
+			"contribution": 2,
+			"friends": [],
+			"avatar": null
+		},
+		"model": "vnoiusers.vnoiuser",
+		"pk": 2
+	},
+	{
+		"fields": {
+			"activation_key": "12310944f98b58bc8e60e20f1a776b013d198709",
+			"voj_account": "",
+			"dob": null,
+			"codeforces_account": "",
+			"topcoder_account": "",
+			"topcoder_account_url": "",
+			"user": 3,
+			"contribution": 2,
+			"friends": [],
+			"avatar": null
+		},
+		"model": "vnoiusers.vnoiuser",
+		"pk": 3
+	}
+]

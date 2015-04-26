@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 """
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+import logging
 import os
 import sys
 
@@ -47,6 +48,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'utils.humanize',
+    'django_nose',
     'forum',
     'main',
     'vnoiusers',
@@ -246,3 +248,28 @@ EMAIL_HOST_PASSWORD = 'vnoipassword'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+# Special configurations to speedup unit tests
+if 'test' in sys.argv or os.environ.get('TRAVIS_TEST_ENV') == '1':
+    # We must enable DEBUG to avoid sending email!
+    DEBUG = True
+    logging.disable(logging.CRITICAL)
+    MIDDLEWARE_CLASSES = (
+        'django.contrib.sessions.middleware.SessionMiddleware',
+        'django.middleware.common.CommonMiddleware',
+        'django.contrib.auth.middleware.AuthenticationMiddleware',
+        'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
+        'django.contrib.messages.middleware.MessageMiddleware',
+        'django.middleware.clickjacking.XFrameOptionsMiddleware',
+        'utils.middleware.force_english.ForceInEnglish'
+    )
+
+# Use nose to run all tests to see test coverage
+TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
+
+# Tell nose to measure coverage on the 'foo' and 'bar' apps
+NOSE_ARGS = [
+    '--with-coverage',
+    '--cover-html',              # The coverage report can be found in cover/
+    '--cover-package=vnoiusers',
+]

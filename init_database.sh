@@ -9,6 +9,8 @@ mysql -u root -p -e 'create database vnoi CHARACTER SET utf8;'
 
 # Create new database
 python manage.py migrate
+
+# TODO: Replace this by looping through all .json files. Note that files starting with `test_` must be ignored
 python manage.py loaddata auth.json
 python manage.py loaddata forum.json
 python manage.py loaddata postman.json
