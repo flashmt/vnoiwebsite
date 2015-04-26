@@ -30,6 +30,16 @@
   float: none;
 }
 .lib-menu-item {
-	margin-left: -20px !important;
-	margin-right: -20px !important;
+	margin-left: -15px !important;
+	margin-right: -15px !important;
+	a {
+		border-radius: 0 !important;
+	}
+}
+ul.lib-small-topic {
+	margin-top: -15px;
+	margin-bottom: -15px;
+}
+div.library-group {
+	margin-bottom: 50px !important;
 }
