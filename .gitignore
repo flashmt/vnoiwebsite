@@ -75,9 +75,6 @@ Thumbs.db
 *.sock
 nohup.out
 
-# Ignore static folder
-main/static/
-
 # Settings
 configurations/settings.py.backup
 configurations/settings_local.py

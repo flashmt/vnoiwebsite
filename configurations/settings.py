@@ -14,6 +14,7 @@ import os
 import sys
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
+APPEND_SLASH = True
 
 # Load local settings file and store as SETTINGS_LOCAL
 SETTINGS_LOCAL_FILE = '/'.join([os.path.dirname(os.path.abspath(__file__)), 'settings_local.py'])
