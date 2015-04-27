@@ -38,3 +38,10 @@
 .msg-folder-table {
 	margin-bottom: 0;
 }
+.msg-menu-item {
+	margin-left: -15px !important;
+	margin-right: -15px !important;
+	a {
+		border-radius: 0 !important;
+	}
+}
