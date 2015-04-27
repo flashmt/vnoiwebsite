@@ -266,6 +266,12 @@ div.library-group {
 .prob-detail-info {
   text-align: left; }
 
+.prob-menu-item {
+  margin-left: -15px !important;
+  margin-right: -15px !important; }
+  .prob-menu-item a {
+    border-radius: 0 !important; }
+
 /*
  * Style tweaks
  * --------------------------------------------------

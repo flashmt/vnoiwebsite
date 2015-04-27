@@ -10,3 +10,10 @@
 .prob-detail-info {
 	text-align: left;
 }
+.prob-menu-item {
+	margin-left: -15px !important;
+	margin-right: -15px !important;
+	a {
+		border-radius: 0 !important;
+	}
+}
