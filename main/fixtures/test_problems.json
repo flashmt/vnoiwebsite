@@ -1,0 +1,565 @@
+[
+	{
+		"fields": {
+			"name": "acm"
+		},
+		"model": "problems.spojproblemcategory",
+		"pk": 1
+	},
+	{
+		"fields": {
+			"name": "oi"
+		},
+		"model": "problems.spojproblemcategory",
+		"pk": 2
+	},
+	{
+		"fields": {
+			"lang_id": 11,
+			"name": "C (gcc 4.9.2)"
+		},
+		"model": "problems.spojproblemlanguage",
+		"pk": 7
+	},
+	{
+		"fields": {
+			"lang_id": 27,
+			"name": "C# (gmcs 3.10)"
+		},
+		"model": "problems.spojproblemlanguage",
+		"pk": 8
+	},
+	{
+		"fields": {
+			"lang_id": 41,
+			"name": "C++ (g++ 4.3.2)"
+		},
+		"model": "problems.spojproblemlanguage",
+		"pk": 9
+	},
+	{
+		"fields": {
+			"lang_id": 1,
+			"name": "C++ (g++ 4.9.2)"
+		},
+		"model": "problems.spojproblemlanguage",
+		"pk": 10
+	},
+	{
+		"fields": {
+			"lang_id": 44,
+			"name": "C++14 (g++ 4.9.2)"
+		},
+		"model": "problems.spojproblemlanguage",
+		"pk": 11
+	},
+	{
+		"fields": {
+			"lang_id": 34,
+			"name": "C99 strict (gcc 4.9.2)"
+		},
+		"model": "problems.spojproblemlanguage",
+		"pk": 12
+	},
+	{
+		"fields": {
+			"lang_id": 14,
+			"name": "Clips (clips 6.24)"
+		},
+		"model": "problems.spojproblemlanguage",
+		"pk": 13
+	},
+	{
+		"fields": {
+			"lang_id": 111,
+			"name": "Clojure (clojure 1.7)"
+		},
+		"model": "problems.spojproblemlanguage",
+		"pk": 14
+	},
+	{
+		"fields": {
+			"lang_id": 118,
+			"name": "Cobol (opencobol 1.1)"
+		},
+		"model": "problems.spojproblemlanguage",
+		"pk": 15
+	},
+	{
+		"fields": {
+			"lang_id": 32,
+			"name": "Common Lisp (clisp 2.49)"
+		},
+		"model": "problems.spojproblemlanguage",
+		"pk": 16
+	},
+	{
+		"fields": {
+			"lang_id": 31,
+			"name": "Common Lisp (sbcl 1.0.18)"
+		},
+		"model": "problems.spojproblemlanguage",
+		"pk": 17
+	},
+	{
+		"fields": {
+			"lang_id": 20,
+			"name": "D (gdc 4.9.2)"
+		},
+		"model": "problems.spojproblemlanguage",
+		"pk": 18
+	},
+	{
+		"fields": {
+			"lang_id": 36,
+			"name": "Erlang (erl 5.6.3)"
+		},
+		"model": "problems.spojproblemlanguage",
+		"pk": 19
+	},
+	{
+		"fields": {
+			"lang_id": 124,
+			"name": "F# (fsharp 3.1)"
+		},
+		"model": "problems.spojproblemlanguage",
+		"pk": 20
+	},
+	{
+		"fields": {
+			"category": 1,
+			"time_limit": 7.0,
+			"code": "ROADS",
+			"problem_source": "Central European Olympiad in Informatics '98",
+			"name": "Roads",
+			"author": "paulmcvn",
+			"created_at": "2005-04-28",
+			"tags": [],
+			"memory_limit": 1536,
+			"accept_count": 511,
+			"source_limit": 50000,
+			"score": 0.1,
+			"statement": "\n \n \n \n \n \n \n \n \n  \n \n \n <p>\n  \n   \n    \n     \n      <a href=\"/problems/ROADS/en/\">\n       English\n      </a>\n     \n     \n      <a href=\"/problems/ROADS/vn/\">\n       Vietnamese\n      </a>\n     \n    \n   \n  \n </p>\n <p>\n  C\u00f3 N th\u00e0nh ph\u1ed1 1..N n\u1ed1i b\u1edfi c\u00e1c con \u0111\u01b0\u1eddng m\u1ed9t chi\u1ec1u. M\u1ed7i con \u0111\u01b0\u1eddng c\u00f3 hai gi\u00e1 tr\u1ecb: \u0111\u1ed9 d\u00e0i v\u00e0 chi ph\u00ed ph\u1ea3i tr\u1ea3 \u0111\u1ec3 \u0111i qua. Bob \u1edf th\u00e0nh ph\u1ed1 1. B\u1ea1n h\u00e3y gi\u00fap Bob t\u00ecm \u0111\u01b0\u1eddng \u0111i ng\u1eafn nh\u1ea5t \u0111\u1ebfn th\u00e0nh ph\u1ed1 N, bi\u1ebft r\u1eb1ng Bob ch\u1ec9 c\u00f3 s\u1ed1 ti\u1ec1n c\u00f3 h\u1ea1n l\u00e0 K m\u00e0 th\u00f4i.\n </p>\n <h3>\n  D\u1eef li\u1ec7u\n </h3>\n <p>\n  D\u00f2ng \u0111\u1ea7u ti\u00ean ghi t l\u00e0 s\u1ed1 test. V\u1edbi m\u1ed7i test, d\u00f2ng \u0111\u1ea7u ghi K (0 \u2264 K \u2264 10000). D\u00f2ng 2 ghi N, 2 \u2264 N \u2264 100. D\u00f2ng 3 ghi R, 1 \u2264 R \u2264 10000 l\u00e0 s\u1ed1 \u0111\u01b0\u1eddng n\u1ed1i. M\u1ed7i d\u00f2ng trong N d\u00f2ng sau ghi 4 s\u1ed1 nguy\u00ean S, D, L, T m\u00f4 t\u1ea3 m\u1ed9t con \u0111\u01b0\u1eddng n\u1ed1i gi\u1eefa S v\u00e0 D v\u1edbi \u0111\u1ed9 d\u00e0i L ( 1 \u2264 L \u2264 100) v\u00e0 chi ph\u00ed T (0 \u2264 T \u2264 100). L\u01b0u \u00fd c\u00f3 th\u1ec3 c\u00f3 nhi\u1ec1u con \u0111\u01b0\u1eddng n\u1ed1i gi\u1eefa hai th\u00e0nh ph\u1ed1.\n </p>\n <h3>\n  K\u1ebft qu\u1ea3\n </h3>\n <p>\n  V\u1edbi m\u1ed7i test, in ra \u0111\u1ed9 d\u00e0i \u0111\u01b0\u1eddng \u0111i ng\u1eafn nh\u1ea5t t\u1eeb 1 \u0111\u1ebfn N m\u00e0 t\u1ed5ng chi ph\u00ed kh\u00f4ng qu\u00e1 K. N\u1ebfu kh\u00f4ng t\u1ed3n t\u1ea1i, in ra -1.\n </p>\n <h3>\n  V\u00ed d\u1ee5\n </h3>\n <pre>D\u1eef li\u1ec7u\n2\n5\n6\n7\n1 2 2 3\n2 4 3 3\n3 4 2 4\n1 3 4 1\n4 6 2 1\n3 5 2 0\n5 4 3 2\n0\n4\n4\n1 4 5 2\n1 2 1 0\n2 3 1 1\n3 4 1 0\n\nK\u1ebft qu\u1ea3\n11\n-1\n</pre>\n \n \n \n \n\n",
+			"accept_rate": 21.98,
+			"cluster": null,
+			"allowed_languages": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 31, 32, 33, 35, 36, 37, 38, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 56],
+			"problem_id": 338
+		},
+		"model": "problems.spojproblem",
+		"pk": 2
+	},
+	{
+		"fields": {
+			"category": 1,
+			"time_limit": 18.0,
+			"code": "NK05EOPR",
+			"problem_source": "T\u1eeb acm.uva.es",
+			"name": "\u00d0\u1ed5i ch\u1ed7",
+			"author": "paulmcvn",
+			"created_at": "2005-05-02",
+			"tags": [],
+			"memory_limit": 1536,
+			"accept_count": 7,
+			"source_limit": 50000,
+			"score": 1.7,
+			"statement": "\n \n \n \n \n \n \n \n \n  \n \n \n <p>\n </p>\n <p>\n  Cho m\u1ed9t d\u00e3y s\u1ed1 l\u00e0 m\u1ed9t ho\u00e1n v\u1ecb c\u1ee7a 12 s\u1ed1 t\u1ef1 nhi\u00ean \u0111\u1ea7u ti\u00ean (t\u1eeb 0 \u0111\u1ebfn 11). Gi\u1ea3 s\u1eed s\u1ed1 0 \u1edf v\u1ecb tr\u00ed th\u1ee9 i trong d\u00e3y s\u1ed1 (v\u1ecb tr\u00ed \u0111\u01b0\u1ee3c \u0111\u00e1nh s\u1ed1 t\u1eeb 0 \u0111\u1ebfn 11, t\u1eeb tr\u00e1i sang ph\u1ea3i) th\u00ec b\u1ea1n c\u00f3 th\u1ec3 \u0111\u1ed5i ch\u1ed7 s\u1ed1 0 v\u1edbi s\u1ed1 \u1edf v\u1ecb tr\u00ed th\u1ee9 j n\u1ebfu th\u1ecfa m\u00e3n c\u1ea3 hai \u0111i\u1ec1u ki\u1ec7n sau:\n </p>\n <ul>\n  <li>\n   | i \u2013 j | = d\n   <sub>\n    k\n   </sub>\n   , v\u1edbi k=1..3 v\u00e0 (d\n   <sub>\n    1\n   </sub>\n   ,d\n   <sub>\n    2\n   </sub>\n   ,d\n   <sub>\n    3\n   </sub>\n   ,d\n   <sub>\n    4\n   </sub>\n   )=(1;3;6;12)\n   <p>\n   </p>\n  </li>\n  <li>\n   [i/d\n   <sub>\n    k+1\n   </sub>\n   ]=[j/d\n   <sub>\n    k+1\n   </sub>\n   ], v\u1edbi [] l\u00e0 h\u00e0m ph\u1ea7n nguy\u00ean\n  </li>\n </ul>\n <p>\n  B\u1ea1n h\u00e3y t\u00ecm s\u1ed1 ph\u00e9p \u0111\u1ed5i ch\u1ed7 \u00edt nh\u1ea5t \u0111\u1ec3 c\u00f3 th\u1ec3 s\u1eafp x\u1ebfp d\u00e3y s\u1ed1 theo th\u1ee9 t\u1ef1 t\u00e3ng d\u1ea7n\n </p>\n <h3>\n  D\u1eef li\u1ec7u v\u00e0o\n </h3>\n <p>\n  D\u00f2ng \u0111\u1ea7u ti\u00ean l\u00e0 m\u1ed9t s\u1ed1 nguy\u00ean t cho bi\u1ebft s\u1ed1 l\u01b0\u1ee3ng test (t&lt;=20)\n </p>\n <p>\n  M\u1ed7i b\u1ed9 test bao g\u1ed3m m\u1ed9t d\u00f2ng l\u00e0 d\u00e3y bao g\u1ed3m c\u00e1c s\u1ed1 t\u1eeb 0 \u0111\u1ebfn 11, m\u1ed7i s\u1ed1 ng\u00e3n c\u00e1ch b\u1edfi m\u1ed9t kho\u1ea3ng tr\u1eafng.\n </p>\n <p>\n  Bi\u1ebft r\u1eb1ng m\u1ed7i d\u00e3y s\u1ed1 cho tr\u01b0\u1edbc lu\u00f4n lu\u00f4n c\u00f3 th\u1ec3 s\u1eafp x\u1ebfp t\u00e3ng d\u1ea7n b\u1eb1ng ph\u00e9p \u0111\u1ed5i ch\u1ed7 \u0111\u00e3 quy \u0111\u1ecbnh\n </p>\n <h3>\n  K\u1ebft q\u1ee7a\n </h3>\n <p>\n  V\u1edbi m\u1ed7i b\u1ed9 test, in ra s\u1ed1 ph\u00e9p \u0111\u1ed5i ch\u1ed7 \u00edt nh\u1ea5t \u0111\u1ec3 s\u1eafp x\u1ebfp d\u00e3y s\u1ed1 \u0111\u00e3 cho theo th\u1ee9 t\u1ef1 t\u00e3ng d\u1ea7n\n </p>\n <h3>\n  V\u00ed d\u1ee5\n </h3>\n <pre>D\u1eef li\u1ec7u m\u1eabu\n2\n1 10 2 3 0 5 7 4 8 6 9 11\n6 4 1 0 3 5 9 7 2 10 11 8\n\nK\u1ebft q\u1ee7a\n8\n9\n</pre>\n \n \n \n \n\n",
+			"accept_rate": 5.66,
+			"cluster": null,
+			"allowed_languages": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 31, 32, 33, 35, 36, 37, 38, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 56],
+			"problem_id": 340
+		},
+		"model": "problems.spojproblem",
+		"pk": 3
+	},
+	{
+		"fields": {
+			"category": 1,
+			"time_limit": 0.374,
+			"code": "NK05ORDR",
+			"problem_source": "NEERC 2002",
+			"name": "Tr\u1eadt t\u1ef1",
+			"author": "paulmcvn",
+			"created_at": "2005-05-02",
+			"tags": [],
+			"memory_limit": 1536,
+			"accept_count": 92,
+			"source_limit": 50000,
+			"score": 0.6,
+			"statement": "\n \n \n \n \n \n \n \n \n  \n \n \n <p>\n </p>\n <p>\n  X\u00e9t c\u00e1c s\u1ed1 nguy\u00ean t\u1eeb 1 \u0111\u1ebf N. C\u00e1c s\u1ed1 n\u00e0y \u0111\u01b0\u1ee3c s\u1eafp x\u1ebfp theo th\u1ee9 t\u1ef1 t\u1eeb \u0111i\u1ec3n. V\u00ed d\u1ee5 v\u1edbi N=11, ta c\u00f3 d\u00e3y s\u1ed1 sau khi s\u1eafp x\u1ebfp l\u00e0 1, 10, 11, 2, 3, 4, 5, 6, 7, 8, 9.\n </p>\n <p>\n  K\u00fd hi\u1ec7u Q\n  <sub>\n   N,K\n  </sub>\n  l\u00e0 v\u1ecb tr\u00ed c\u1ee7a s\u1ed1 K trong d\u00e3y \u0111\u01b0\u1ee3c s\u1eafp x\u1ebfp theo c\u00e1ch n\u00f3i tr\u00ean. V\u00ed d\u1ee5 Q\n  <sub>\n   11,2\n  </sub>\n  =4\nCho c\u00e1c s\u1ed1 nguy\u00ean K v\u00e0 M. H\u00e3y t\u00ecm s\u1ed1 nguy\u00ean N nh\u1ecf nh\u1ea5t th\u1ecfa m\u00e3n Q\n  <sub>\n   N,K\n  </sub>\n  =M\n </p>\n <h3>\n  D\u1eef li\u1ec7u v\u00e0o\n </h3>\n <p>\n  D\u00f2ng \u0111\u1ea7u ti\u00ean ch\u1ee9a s\u1ed1 nguy\u00ean t cho bi\u1ebft s\u1ed1 b\u1ed9 test.\n </p>\n <p>\n  M\u1ed7i b\u1ed9 test bao g\u1ed3m 1 d\u00f2ng duy nh\u1ea5t ch\u1ee9a 2 s\u1ed1 nguy\u00ean K v\u00e0 M (1&lt;=K,M&lt;=10\n  <sup>\n   9\n  </sup>\n  )\n </p>\n <h3>\n  K\u1ebft q\u1ee7a\n </h3>\n <p>\n  V\u1edbi m\u1ed7i b\u1ed9 test xu\u1ea5t ra s\u1ed1 N, ho\u1eb7c 0 n\u1ebfu kh\u00f4ng t\u1ed3n t\u1ea1i N\n </p>\n <h3>\n  V\u00ed d\u1ee5\n </h3>\n <pre>D\u1eef li\u1ec7u m\u1eabu\n1\n2 4\nK\u1ebft q\u1ee7a\n11\n</pre>\n \n \n \n \n\n",
+			"accept_rate": 22.8,
+			"cluster": null,
+			"allowed_languages": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 31, 32, 33, 35, 36, 37, 38, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 56],
+			"problem_id": 341
+		},
+		"model": "problems.spojproblem",
+		"pk": 4
+	},
+	{
+		"fields": {
+			"category": 1,
+			"time_limit": 0.46,
+			"code": "NK05MNIM",
+			"problem_source": "Kh\u00f4ng r\u00f5",
+			"name": "B\u1ed1c s\u1ecfi",
+			"author": "paulmcvn",
+			"created_at": "2005-05-02",
+			"tags": [],
+			"memory_limit": 1536,
+			"accept_count": 285,
+			"source_limit": 50000,
+			"score": 0.2,
+			"statement": "\n \n \n \n \n \n \n \n \n  \n \n \n <p>\n </p>\n <p>\n  Hai b\u1ea1n Nam v\u00e0 Mai c\u00f9ng ch\u01a1i m\u1ed9t tr\u00f2 ch\u01a1i v\u1edbi n \u0111\u1ed1ng s\u1ecfi. Lu\u1eadt ch\u01a1i nh\u01b0 sau:\n </p>\n <ul>\n  <li>\n   Hai b\u1ea1n s\u1ebd l\u1ea7n l\u01b0\u1ee3t \u0111i. B\u1ea1n Mai l\u00e0 ng\u01b0\u1eddi \u0111i tr\u01b0\u1edbc\n  </li>\n  <li>\n   Trong m\u1ed7i l\u01b0\u1ee3t \u0111i, b\u1ea1n \u0111i s\u1ebd \u0111\u01b0\u1ee3c quy\u1ec1n b\u1ed1c m\u1ed9t s\u1ed1 s\u1ecfi b\u1ea5t k\u1ef3 t\u1eeb m\u1ed9t \u0111\u1ed1ng nh\u1ea5t \u0111\u1ecbnh v\u00e0 ph\u1ea3i b\u1ed1c t\u1ed1i thi\u1ec3u l\u00e0 1 vi\u00ean s\u1ecfi.\n  </li>\n  <li>\n   B\u1ea1n n\u00e0o b\u1ed1c ph\u1ea3i vi\u00ean s\u1ecfi cu\u1ed1i c\u00f9ng l\u00e0 \nng\u01b0\u1eddi thua cu\u1ed9c\n  </li>\n </ul>\n <p>\n  B\u1ea1n h\u00e3y gi\u00fap Mai x\u00e1c \u0111\u1ecbnh xem b\u1ea1n \u1ea5y c\u00f3 th\u1ec3 th\u1eafng \u0111\u01b0\u1ee3c trong tr\u00f2 ch\u01a1i hay kh\u00f4ng\n </p>\n <h3>\n  D\u1eef li\u1ec7u v\u00e0o\n </h3>\n <p>\n  D\u00f2ng \u0111\u1ea7u ti\u00ean ch\u1ee9a m\u1ed9t nguy\u00ean t l\u00e0 s\u1ed1 b\u1ed9 test. C\u00e1c d\u00f2ng sau l\u00e0 t b\u1ed9 test.\n </p>\n <p>\n  M\u1ed7i b\u1ed9 test bao g\u1ed3m:\n </p>\n <ul>\n  <li>\n   D\u00f2ng \u0111\u1ea7u ti\u00ean ch\u1ee9a m\u1ed9t s\u1ed1 nguy\u00ean n (n&lt;=100) l\u00e0 s\u1ed1 \u0111\u1ed1ng s\u1ecfi\n  </li>\n  <li>\n   D\u00f2ng th\u1ee9 hai g\u1ed3m n s\u1ed1 nguy\u00ean a\n   <sub>\n    1\n   </sub>\n   , a\n   <sub>\n    2\n   </sub>\n   , a\n   <sub>\n    3\n   </sub>\n   ,... , a\n   <sub>\n    n\n   </sub>\n   , ng\u00e3n c\u00e1ch nhau b\u1edfi m\u1ed9t kho\u1ea3ng tr\u1eafng. S\u1ed1 nguy\u00ean ai cho bi\u1ebft s\u1ed1 l\u01b0\u1ee3ng vi\u00ean s\u1ecfi c\u00f3 trong \u0111\u1ed1ng th\u1ee9 i (1&lt;=a\n   <sub>\n    i\n   </sub>\n   &lt;=100)\n  </li>\n </ul>\n <h3>\n  K\u1ebft q\u1ee7a\n </h3>\n <p>\n  V\u1edbi m\u1ed7i b\u1ed9 test, in ra 1 n\u1ebfu b\u1ea1n Mai th\u1eafng, -1 n\u1ebfu b\u1ea1n Mai thua\n </p>\n <h3>\n  V\u00ed d\u1ee5\n </h3>\n <pre>D\u1eef li\u1ec7u m\u1eabu\n2\n4\n30 4 19 75\n3\n1 4 5\n\n\nK\u1ebft q\u1ee7a\n1\n-1\n</pre>\n \n \n \n \n\n",
+			"accept_rate": 32.68,
+			"cluster": null,
+			"allowed_languages": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 31, 32, 33, 35, 36, 37, 38, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 56],
+			"problem_id": 342
+		},
+		"model": "problems.spojproblem",
+		"pk": 5
+	},
+	{
+		"fields": {
+			"category": 1,
+			"time_limit": 0.469,
+			"code": "NK05DSRT",
+			"problem_source": "L\u00ea Th\u00e0nh Trung - 3rd VNOPSC",
+			"name": "Sa m\u1ea1c",
+			"author": "paulmcvn",
+			"created_at": "2005-05-02",
+			"tags": [],
+			"memory_limit": 1536,
+			"accept_count": 224,
+			"source_limit": 50000,
+			"score": 0.3,
+			"statement": "\n \n \n \n \n \n \n \n \n  \n \n \n <p>\n </p>\n <p>\n  B\u1eddm v\u00f4 t\u00ecnh b\u1ecb l\u1ea1c v\u00e0o trong 1 \u1ed1c \u0111\u1ea3o c\u00f3 1 b\u1ed9 t\u1ed9c th\u1ed5 d\u00e2n sinh s\u1ed1ng trong 1 l\u1ea7n \u0111i qua sa m\u1ea1c. B\u1eddm mu\u1ed1n tho\u00e1t kh\u1ecfi sa m\u1ea1c \u0111\u1ec3 v\u1ec1 nh\u00e0. Ng\u01b0\u1eddi th\u1ed5 d\u00e2n \u0111\u00e3 cho anh m\u1ed9t b\u1ea3n \u0111\u1ed3 v\u00f9ng sa m\u1ea1c n\u00e0y.\n </p>\n <p>\n  Sa m\u1ea1c g\u1ed3m N \u1ed1c \u0111\u1ea3o, M \u0111\u01b0\u1eddng \u0111i an to\u00e0n n\u1ed1i v\u1edbi nhau v\u00e0 t\u1ea1i m\u1ed7i \u1ed1c \u0111\u1ea3o l\u1ea1i c\u00f3 1 h\u1ed3 ch\u1ee9a n\u01b0\u1edbc r\u1ea5t l\u1edbn v\u00e0 n\u01b0\u1edbc ch\u1ee9a trong c\u00e1c h\u1ed3 n\u00e0y kh\u00f4ng bao gi\u1edd c\u1ea1n. Tuy nhi\u00ean hi\u1ec7n t\u1ea1i, kh\u00f4ng c\u00f3 n\u01b0\u1edbc trong c\u00e1c h\u1ed3.\n </p>\n <p>\n  Gi\u1ea3 s\u1eed: B\u1eddm \u0111ang \u1edf \u1ed1c \u0111\u1ea3o 1, v\u1ec1 \u0111\u1ec3 v\u1ec1 \u0111\u1ebfn nh\u00e0 th\u00ec B\u1eddm ph\u1ea3i \u0111i \u0111\u1ebfn \u1ed1c \u0111\u1ea3o N. Ng\u01b0\u1eddi th\u1ed5 d\u00e2n cho bi\u1ebft r\u1eb1ng t\u1ea1i v\u00f9ng sa m\u1ea1c n\u00e0y, n\u1ebfu B\u1eddm \u0111i \u0111o\u1ea1n \u0111\u01b0\u1eddng c\u00f3 \u0111\u1ed9 d\u00e0i l\u00e0 L, th\u00ec B\u1eddm ph\u1ea3i mang u\u1ed1ng \u0111\u1ee7 l\u01b0\u1ee3ng n\u01b0\u1edbc l\u00e0 L, b\u1eb1ng kh\u00f4ng B\u1eddm s\u1ebd ch\u1ebft. T\u1eeb \u0111\u00f3, ng\u01b0\u1eddi th\u1ed5 d\u00e2n \u0111\u00e3 ch\u1ec9 cho B\u1eddm c\u00e1ch c\u00f3 th\u1ec3 v\u1ec1 nh\u00e0: B\u1eddm ph\u1ea3i v\u1eadn chuy\u1ec3n n\u01b0\u1edbc t\u1eeb \u1ed1c \u0111\u1ea3o 1 \u0111\u1ec3n t\u00edch tr\u1eef trong c\u00e1c h\u1ed3 t\u1ea1i nh\u1eefng \u1ed1c \u0111\u1ea3o kh\u00e1c b\u1eb1ng c\u00e1c con \u0111\u01b0\u1eddng an to\u00e0n \u0111\u00e3 c\u00f3, t\u1eeb \u0111\u00f3 anh c\u00f3 th\u1ec3 v\u1ec1 nh\u00e0. Tuy nhi\u00ean, l\u1ea1i c\u00f3 1 kh\u00f3 kh\u00e3n kh\u00e1c l\u00e0: trong b\u1ea5t c\u1ee9 th\u1eddi gian n\u00e0o, B\u1eddm kh\u00f4ng th\u1ec3 mang l\u01b0\u1ee3ng n\u01b0\u1edbc qu\u00e1 C (do th\u1ec3 l\u1ef1c c\u00f3 h\u1ea1n ^_^).\n </p>\n <p>\n  \n   Y\u00eau c\u1ea7u:\n  \n  H\u00e3y t\u00ecm c\u00e1ch gi\u00fap B\u1eddm v\u1ec1 nh\u00e0 nh\u01b0ng \u0111\u1ed3ng th\u1eddi s\u1eed d\u1ee5ng \u00edt n\u01b0\u1edbc nh\u1ea5t (do trong sa m\u1ea1c, n\u01b0\u1edbc r\u1ea5t qu\u00ed !!!!)\n </p>\n <h3>\n  D\u1eef li\u1ec7u v\u00e0o\n </h3>\n <p>\n  D\u00f2ng \u0111\u1ea7u ti\u00ean g\u1ed3m m\u1ed9t s\u1ed1 nguy\u00ean t cho bi\u1ebft s\u1ed1 l\u01b0\u1ee3ng test, m\u1ed7i test c\u00f3 d\u1ea1ng nh\u01b0 sau:\n </p>\n <ul>\n  <li>\n   D\u00f2ng \u0111\u1ea7u ti\u00ean l\u00e0 3 s\u1ed1 nguy\u00ean N M C  ng\u00e3n c\u00e1ch nhau b\u1edfi kho\u1ea3ng tr\u1eafng\n  </li>\n  <li>\n   M d\u00f2ng ti\u1ebfp theo m\u1ed7i d\u00f2ng g\u1ed3m 3 s\u1ed1 nguy\u00ean I J L v\u1edbi y ngh\u0129a c\u00f3 \u0111\u01b0\u1eddng \u0111i t\u1eeb \u1ed1c \u0111\u1ea3o I \u0111\u1ebfn \u1ed1c \u0111\u1ea3o J v\u00e0 ng\u01b0\u1ee3c l\u1ea1i l\u00e0 an to\u00e0n v\u00e0 c\u00f3 \u0111\u1ed9 d\u00e0i L.\n  </li>\n </ul>\n <h3>\n  K\u1ebft q\u1ee7a\n </h3>\n <p>\n  V\u1edbi m\u1ed7i b\u1ed9 test xu\u1ea5t ra \u0111\u00fang 1 s\u1ed1 nguy\u00ean ch\u1ec9 l\u01b0\u1ee3ng n\u01b0\u1edbc \u00edt nh\u1ea5t c\u1ea7n d\u00f9ng.\n </p>\n <h3>\n  Gi\u1edbi h\u1ea1n\n </h3>\n <ul>\n  <li>\n   1 &lt;= N, M, C &lt;= 100\n  </li>\n  <li>\n   1 &lt;= L &lt;= 30,000\n  </li>\n </ul>\n <h3>\n  V\u00ed d\u1ee5\n </h3>\n <pre>D\u1eef li\u1ec7u m\u1eabu\n1\n9 10 25 \n1 2 3 \n2 3 12 \n3 4 4 \n3 5 9 \n4 9 13 \n5 9 5 \n2 6 10 \n6 7 10 \n7 8 10 \n8 9 10 \n\nK\u1ebft q\u1ee7a\n65 \n</pre>\n <h3>\n  Gi\u1ea3i th\u00edch\n </h3>\n <p>\n  Mang 25 n\u01b0\u1edbc t\u1eeb 1 \u0111\u1ebfn 2 sau \u0111\u00f3 l\u1ea1i quay v\u1ec1 1. Do \u0111\u00f3, t\u1ea1i 2 c\u00f3 19 n\u01b0\u1edbc. (B\u1eddm \u0111\u00e3 u\u1ed1ng h\u1ebft (3 + 3) n\u01b0\u1edbc trong l\u1ea7n \u0111i v\u00e0 v\u1ec1, (19 = 25 \u2013 3 \u2013 3)).\n </p>\n <p>\n  L\u1eb7p l\u1ea1i nh\u01b0 th\u1ebf 1 l\u1ea7n n\u1eefa, B\u1eddm \u0111\u00e3 mang \u0111\u1ebfn 2 th\u00eam 19 n\u01b0\u1edbc. Sau \u0111\u00f3 l\u1ea1i t\u1eeb 1, B\u1eddm mang theo 15 n\u01b0\u1edbc \u0111\u1ebfn 2. V\u1eady khi \u0111\u1ebfn 2, B\u1eddm c\u00f3 t\u1ea1i \u0111\u00e2y (19+19+12 = 50) n\u01b0\u1edbc.\n </p>\n <p>\n  Ti\u1ebfp theo, B\u1eddm l\u1ea1i mang 25 n\u01b0\u1edbc \u0111i t\u1eeb 2 \u0111\u1ebfn 3, r\u1ed3i quay v\u1ec1 2, nh\u01b0 v\u1eady, t\u1ea1i 3 c\u00f3 (25 \u2013 12 \u2013 12 = 1) n\u01b0\u1edbc. T\u1eeb 2, B\u1eddm mang 25 n\u01b0\u1edbc c\u00f2n l\u1ea1i \u0111i \u0111\u1ebfn 3. T\u1ea1i 3, B\u1eddm c\u00f3 \u0111\u01b0\u1ee3c (1+(25-12) = 14) n\u01b0\u1edbc.\n </p>\n <p>\n  Cu\u1ed1i c\u00f9ng, B\u1eddm mang 14 n\u01b0\u1edbc \u0111i \u0111\u1ebfn 5 r\u1ed3i \u0111\u1ebfn 9. V\u1eady l\u00e0 B\u1eddm \u0111\u00e3 tho\u00e1t kh\u1ecfi sa m\u1ea1c.\n </p>\n \n \n \n \n\n",
+			"accept_rate": 25.42,
+			"cluster": null,
+			"allowed_languages": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 31, 32, 33, 35, 36, 37, 38, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 56],
+			"problem_id": 343
+		},
+		"model": "problems.spojproblem",
+		"pk": 6
+	},
+	{
+		"fields": {
+			"category": 1,
+			"time_limit": 9.0,
+			"code": "LAZYCOWS",
+			"problem_source": "US Open International 2005 Gold Division",
+			"name": "Lazy Cows",
+			"author": "paulmcvn",
+			"created_at": "2005-05-03",
+			"tags": [],
+			"memory_limit": 1536,
+			"accept_count": 93,
+			"source_limit": 50000,
+			"score": 0.6,
+			"statement": "\n \n \n \n \n \n \n \n \n  \n \n \n <p>\n  \n   \n    \n     \n      <a href=\"/problems/LAZYCOWS/en/\">\n       English\n      </a>\n     \n     \n      <a href=\"/problems/LAZYCOWS/vn/\">\n       Vietnamese\n      </a>\n     \n    \n   \n  \n </p>\n <p>\n  Cho m\u00f4 h\u00ecnh b\u00e3i c\u1ecf c\u00f3 d\u1ea1ng b\u1ea3ng ch\u1eef nh\u1eadt 2xB\n(1 &lt;= B &lt;=\n15,000,000), trong \u0111\u00f3 m\u1ed9t s\u1ed1 \u00f4 c\u00f3 con b\u00f2 \u0111ang \u00e3n c\u1ecf.\nC\u00f3 t\u1ea5t c\u1ea3 N con b\u00f2 (1 &lt;= N &lt;= 1000) tr\u00ean b\u00e3i c\u1ecf. V\u00ed d\u1ee5:\n </p>\n <pre>-------------------------------------------------------\n|     | cow |     |     |     | cow | cow | cow | cow |\n-------------------------------------------------------\n|     | cow | cow | cow |     |     |     |     |     |\n-------------------------------------------------------\n</pre>\n <p>\n  B\u00e1c John mu\u1ed1n d\u00f9ng K (1 &lt;= K &lt;= N) c\u00e1i chu\u1ed3ng h\u00ecnh ch\u1eef nh\u1eadt \u0111\u1ec3 che ph\u1ee7 \u0111\u00e0n b\u00f2, sao cho t\u1ed5ng di\u1ec7n t\u00edch \u0111\u01b0\u1ee3c ph\u1ee7 l\u00e0 nh\u1ecf nh\u1ea5t. Kh\u00f4ng c\u00f3 hai chu\u1ed3ng n\u00e0o \u0111\u01b0\u1ee3c n\u1eb1m \u0111\u00e8 l\u00ean nhau. Hi\u1ec3n nhi\u00ean, c\u00e1c chu\u1ed3ng ph\u1ea3i che ph\u1ee7 h\u1ebft c\u00e1c \u00f4 c\u00f3 b\u00f2.\n </p>\n <p>\n  V\u00ed d\u1ee5, trong h\u00ecnh tr\u00ean n\u1ebfu K=2, l\u1eddi gi\u1ea3i t\u1ed1i \u01b0u bao g\u1ed3m m\u1ed9t chu\u1ed3ng k\u00edch th\u01b0\u1edbc 2x3 v\u00e0 m\u1ed9t chu\u1ed3ng k\u00edch th\u01b0\u1edbc 1x4. T\u1ed5ng di\u1ec7n t\u00edch \u0111\u01b0\u1ee3c ph\u1ee7 l\u00e0 10.\n </p>\n <h3>\n  D\u1eef li\u1ec7u\n </h3>\n <p>\n  D\u00f2ng \u0111\u1ea7u ti\u00ean ch\u1ee9a m\u1ed9t s\u1ed1 nguy\u00ean t l\u00e0 s\u1ed1 b\u1ed9 test. M\u1ed7i b\u1ed9 test c\u00f3 d\u1ea1ng:\n </p>\n <ul>\n  <li>\n   D\u00f2ng 1: N, K, B\n  </li>\n  <li>\n   D\u00f2ng 2..N+1: ch\u1ee9c t\u1ecda \u0111\u1ed9 c\u1ee7a c\u00e1c con b\u00f2, trong ph\u1ea1m vi (1,1) \u0111\u1ebfn (2,B). Kh\u00f4ng c\u00f3 \u00f4 n\u00e0o ch\u1ee9a h\u01a1n 1 con b\u00f2.\n  </li>\n </ul>\n <h3>\n  K\u1ebft qu\u1ea3\n </h3>\n <p>\n  V\u1edbi m\u1ed7i test, in ra t\u1ed5ng di\u1ec7n t\u00edch nh\u1ecf nh\u1ea5t c\u1ea7n ph\u1ee7.\n </p>\n <h3>\n  V\u00ed d\u1ee5\n </h3>\n <pre>D\u1eef li\u1ec7u\n1\n8 2 9\n1 2\n1 6\n1 7\n1 8\n1 9\n2 2\n2 3\n2 4\n\nK\u1ebft qu\u1ea3\n10\n</pre>\n \n \n \n \n\n",
+			"accept_rate": 40.89,
+			"cluster": null,
+			"allowed_languages": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 31, 32, 33, 35, 36, 37, 38, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 56],
+			"problem_id": 347
+		},
+		"model": "problems.spojproblem",
+		"pk": 7
+	},
+	{
+		"fields": {
+			"category": 1,
+			"time_limit": 7.273,
+			"code": "BOXES",
+			"problem_source": "III Polish Olympiad in Informatics, stage 3",
+			"name": "Boxes",
+			"author": "paulmcvn",
+			"created_at": "2005-05-31",
+			"tags": [],
+			"memory_limit": 1536,
+			"accept_count": 50,
+			"source_limit": 50000,
+			"score": 0.9,
+			"statement": "\n \n \n \n \n \n \n \n \n  \n \n \n <p>\n  \n   \n    \n     \n      <a href=\"/problems/BOXES/en/\">\n       English\n      </a>\n     \n     \n      <a href=\"/problems/BOXES/vn/\">\n       Vietnamese\n      </a>\n     \n    \n   \n  \n </p>\n <p>\n  C\u00f3 n c\u00e1i h\u1ed9p x\u1ebfp theo v\u00f2ng tr\u00f2n \u0111\u00e1nh s\u1ed1 1..n (1 \u2264 n \u2264 1000) theo chi\u1ec1u kim \u0111\u1ed3ng h\u1ed3. M\u1ed7i h\u1ed9p ch\u1ee9a m\u1ed9t s\u1ed1 qu\u1ea3 b\u00f3ng, t\u1ed5ng s\u1ed1 qu\u1ea3 b\u00f3ng kh\u00f4ng qu\u00e1 n.\n </p>\n <p>\n  C\u1ea7n d\u1ecbch chuy\u1ec3n c\u00e1c qu\u1ea3 b\u00f3ng sao cho m\u1ed7i h\u1ed9p kh\u00f4ng ch\u1ee9a qu\u00e1 1 qu\u1ea3. M\u1ed7i b\u01b0\u1edbc, ta c\u00f3 th\u1ec3 di chuy\u1ec3n m\u1ed9t qu\u1ea3 b\u00f3ng t\u1eeb m\u1ed9t h\u1ed9p sang m\u1ed9t trong hai h\u1ed9p b\u00ean c\u1ea1nh.\n </p>\n <p>\n  T\u00ednh s\u1ed1 b\u01b0\u1edbc di chuy\u1ec3n \u00edt nh\u1ea5t.\n </p>\n <h3>\n  D\u1eef li\u1ec7u\n </h3>\n <p>\n  D\u00f2ng \u0111\u1ea7u ti\u00ean ch\u1ee9a t l\u00e0 s\u1ed1 b\u1ed9 test (t \u2264 20). M\u1ed7i b\u1ed9 test c\u00f3 d\u1ea1ng:\n </p>\n <ul>\n  <li>\n   D\u00f2ng \u0111\u1ea7u ti\u00ean: n - s\u1ed1 h\u1ed9p.\n   <p>\n   </p>\n  </li>\n  <li>\n   D\u00f2ng th\u1ee9 hai: n s\u1ed1 nguy\u00ean kh\u00f4ng \u00e2m l\u00e0 s\u1ed1 qu\u1ea3 b\u00f3ng trong c\u00e1c h\u1ed9p\n  </li>\n </ul>\n <h3>\n  K\u1ebft qu\u1ea3\n </h3>\n <p>\n  V\u1edbi m\u1ed7i b\u1ed9 test in ra s\u1ed1 b\u01b0\u1edbc \u00edt nh\u1ea5t c\u1ea7n thi\u1ebft.\n </p>\n <h3>\n  V\u00ed d\u1ee5\n </h3>\n <pre>D\u1eef li\u1ec7u\n1\n12\n0 0 2 4 3 1 0 0 0 0 0 1\n\nK\u1ebft qu\u1ea3\n19\n</pre>\n \n \n \n \n\n",
+			"accept_rate": 43.04,
+			"cluster": null,
+			"allowed_languages": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 31, 32, 33, 35, 36, 37, 38, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 56],
+			"problem_id": 371
+		},
+		"model": "problems.spojproblem",
+		"pk": 8
+	},
+	{
+		"fields": {
+			"category": 1,
+			"time_limit": 2.538,
+			"code": "MATRIX",
+			"problem_source": "",
+			"name": "Count maximum matrices",
+			"author": "beo_chay_so",
+			"created_at": "2005-06-08",
+			"tags": [],
+			"memory_limit": 1536,
+			"accept_count": 61,
+			"source_limit": 50000,
+			"score": 0.8,
+			"statement": "\n \n \n \n \n \n \n \n \n  \n \n \n <p>\n </p>\n <p>\n  You are given a matrix A of M rows and N columns, consisting of numbers 0 and 1. For a rectangle in A (sides &gt;= 1), X1 is the number of ones on its sides, X0 is the number of zeros on its sides, and its\n  <i>\n   value\n  </i>\n  is defined as X1 \u2013 X0. Let us consider W, the maximum value taken over submatrices of A, and S, the number of submatrices with value W. Your task is to find W and S.\n </p>\n <h3>\n  Input\n </h3>\n <p>\n  The first line of input contains the number of testcases t (t &lt;= 15).\nThe first line of each testcase contains the numbers M, N (1 &lt;= M, N &lt;= 200) Then M lines follow. In each line, there are N numbers 0 or 1.\n </p>\n <h3>\n  Output\n </h3>\n <p>\n  For each testcase, you should output a single line with numbers W and S.\n </p>\n <h3>\n  Example\n </h3>\n <pre>Input:\n1\n5 6\n1 1 1 1 1 1\n1 0 0 0 0 1\n1 0 0 0 0 1\n1 0 0 0 0 1\n1 1 1 1 1 1\n\nOutput:\n18 1\n</pre>\n \n \n \n \n\n",
+			"accept_rate": 38.33,
+			"cluster": null,
+			"allowed_languages": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 35, 36, 37, 38, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 56],
+			"problem_id": 374
+		},
+		"model": "problems.spojproblem",
+		"pk": 9
+	},
+	{
+		"fields": {
+			"category": 1,
+			"time_limit": 0.469,
+			"code": "ASSIGN4",
+			"problem_source": "Tran Quang Khai",
+			"name": "Another Assignment Problem",
+			"author": "dtmp",
+			"created_at": "2006-01-02",
+			"tags": [],
+			"memory_limit": 1536,
+			"accept_count": 29,
+			"source_limit": 50000,
+			"score": 1.2,
+			"statement": "\n \n \n \n \n \n \n \n \n  \n \n \n <p>\n </p>\n <p>\n  Assume that you are a manager and there are m types of worker (numbered from 1 to m) and n types of task (numbered from 1 to n). There are a(i) workers of type #i and b(j) postitions for task #j. C(i, j) is the cost of hiring a worker of type #i to do the task of type #j. Your job is to minimize the cost of hiring workers to fill all the positions given that the total number of workers is equal to the total number of positions.\n </p>\n <h3>\n  Input\n </h3>\n <p>\n  The first line of input contains the number of test cases nTest (1&lt;= nTest &lt;= 10). \n Each test case contains:\n </p>\n <ul>\n  <li>\n   The first line contains the number of worker types - m and number of task types - n.\n  </li>\n  <li>\n   The second line contains m positive integers: a(1), a(2), ..., a(m).\n  </li>\n  <li>\n   The third line contains n positive integers: b(1), b(2), ..., b(n).\n  </li>\n  <li>\n   Each of the next m lines contains n integers describing matrix C(i, j).\n  </li>\n </ul>\n <p>\n  Notes:\n </p>\n <p>\n  1 &lt;= m, n &lt;= 200;\n </p>\n <p>\n  1 &lt;= a(i), b(i) &lt;= 30000;\n </p>\n <p>\n  1 &lt;= C(i, j) &lt;= 10000.\n </p>\n <p>\n  Sum of a(i) equals to sum of b(j).\n </p>\n <h3>\n  Output\n </h3>\n <p>\n  For each test case write the minimum cost in a separate line (it will fit in a signed 32-bit integer).\n </p>\n <h3>\n  Example\n </h3>\n <pre>Input:\n2\n3 4\n3 6 7\n2 5 1 8\n1 2 3 4\n8 7 6 5\n9 12 10 11\n4 4\n1 3 5 7\n2 4 2 8\n1 4 7 3\n4 7 5 3\n5 7 8 3\n5 3 6 8\n\nOutput:\n110\n54\n</pre>\n \n \n \n \n\n",
+			"accept_rate": 22.51,
+			"cluster": null,
+			"allowed_languages": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 35, 36, 37, 38, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 56],
+			"problem_id": 684
+		},
+		"model": "problems.spojproblem",
+		"pk": 10
+	},
+	{
+		"fields": {
+			"category": 1,
+			"time_limit": 0.759,
+			"code": "MULONE",
+			"problem_source": "",
+			"name": "Nh\u00e2n 1",
+			"author": "dtmp",
+			"created_at": "2006-01-18",
+			"tags": [],
+			"memory_limit": 1536,
+			"accept_count": 1160,
+			"source_limit": 50000,
+			"score": 0.1,
+			"statement": "\n \n \n \n \n \n \n \n \n  \n \n \n <p>\n </p>\n <p>\n  Cho s\u1ed1 S = 111...11 (n ch\u1eef s\u1ed1 1, h\u1ec7 th\u1eadp ph\u00e2n), t\u00ednh S\n  <sup>\n   2\n  </sup>\n  .\n </p>\n <h3>\n  Input\n </h3>\n <p>\n  - D\u00f2ng \u0111\u1ea7u ti\u00ean: s\u1ed1 l\u01b0\u1ee3ng test k.\n </p>\n <p>\n  - k d\u00f2ng ti\u1ebfp, m\u1ed7i d\u00f2ng ghi s\u1ed1 n - s\u1ed1 l\u01b0\u1ee3ng ch\u1eef s\u1ed1 1 c\u1ee7a S. (1 &lt;= n &lt;= 1000000)\n </p>\n <h3>\n  Output\n </h3>\n <p>\n  - V\u1edbi m\u1ed7i test ghi k\u1ebft qu\u1ea3 tr\u00ean 1 d\u00f2ng.\n </p>\n <h3>\n  Example\n </h3>\n <pre>Input:\n2\n1\n2\n\nOutput:\n1\n121\n</pre>\n \n \n \n \n\n",
+			"accept_rate": 22.86,
+			"cluster": null,
+			"allowed_languages": [7, 8, 10, 12, 28, 35, 36, 37, 38, 54],
+			"problem_id": 706
+		},
+		"model": "problems.spojproblem",
+		"pk": 11
+	},
+	{
+		"fields": {
+			"category": 1,
+			"time_limit": 0.164,
+			"code": "MTWALK",
+			"problem_source": "USACO 2003 US Open",
+			"name": "Mountain Walking",
+			"author": "paulmcvn",
+			"created_at": "2006-02-07",
+			"tags": [],
+			"memory_limit": 1536,
+			"accept_count": 552,
+			"source_limit": 50000,
+			"score": 0.1,
+			"statement": "\n \n \n \n \n \n \n \n \n  \n \n \n <p>\n  \n   \n    \n     \n      <a href=\"/problems/MTWALK/en/\">\n       English\n      </a>\n     \n     \n      <a href=\"/problems/MTWALK/vn/\">\n       Vietnamese\n      </a>\n     \n    \n   \n  \n </p>\n <p>\n  Cho m\u1ed9t b\u1ea3n \u0111\u1ed3 k\u00edch th\u01b0\u1edbc NxN (2 &lt;= N &lt;= 100), m\u1ed7i \u00f4 mang gi\u00e1 tr\u1ecb l\u00e0 \u0111\u1ed9 cao c\u1ee7a \u00f4 \u0111\u00f3 (0 &lt;= \u0111\u1ed9 cao &lt;= 110). B\u00e1c John v\u00e0 b\u00f2 Bessie \u0111ang \u1edf \u00f4 tr\u00ean tr\u00e1i (d\u00f2ng 1, c\u1ed9t 1) v\u00e0 mu\u1ed1n \u0111i \u0111\u1ebfn cabin (d\u00f2ng N, c\u1ed9t N). H\u1ecd c\u00f3 th\u1ec3 \u0111i sang ph\u1ea3i, tr\u00e1i, l\u00ean tr\u00ean v\u00e0 xu\u1ed1ng d\u01b0\u1edbi nh\u01b0ng kh\u00f4ng th\u1ec3 \u0111i theo \u0111\u01b0\u1eddng ch\u00e9o. H\u00e3y gi\u00fap b\u00e1c John v\u00e0 b\u00f2 Bessie t\u00ecm \u0111\u01b0\u1eddng \u0111i sao cho ch\u00eanh l\u1ec7ch gi\u1eefa \u0111i\u1ec3m cao nh\u1ea5t v\u00e0 th\u1ea5p nh\u1ea5t tr\u00ean \u0111\u01b0\u1eddng \u0111i l\u00e0 nh\u1ecf nh\u1ea5t.\n </p>\n <h3>\n  D\u1eef li\u1ec7u\n </h3>\n <ul>\n  <li>\n   D\u00f2ng 1: N\n  </li>\n  <li>\n   D\u00f2ng 2..N+1: M\u1ed7i d\u00f2ng ch\u1ee9a N s\u1ed1 nguy\u00ean, m\u1ed7i s\u1ed1 cho bi\u1ebft cao \u0111\u1ed9 c\u1ee7a m\u1ed9t \u00f4.\n  </li>\n </ul>\n <h3>\n  K\u1ebft qu\u1ea3\n </h3>\n <p>\n  M\u1ed9t s\u1ed1 nguy\u00ean l\u00e0 ch\u00eanh l\u1ec7ch cao \u0111\u1ed9 nh\u1ecf nh\u1ea5t.\n </p>\n <h3>\n  V\u00ed d\u1ee5\n </h3>\n <pre>D\u1eef li\u1ec7u\n5\n1 1 3 6 8\n1 2 2 5 5\n4 4 0 3 3\n8 0 2 3 4\n4 3 0 2 1\n\nK\u1ebft qu\u1ea3\n2\n</pre>\n \n \n \n \n\n",
+			"accept_rate": 27.18,
+			"cluster": null,
+			"allowed_languages": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 31, 32, 33, 35, 36, 37, 38, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 56],
+			"problem_id": 733
+		},
+		"model": "problems.spojproblem",
+		"pk": 12
+	},
+	{
+		"fields": {
+			"category": 1,
+			"time_limit": 0.819,
+			"code": "PYRAMID2",
+			"problem_source": "Hi\u1ebfu add \u00f0\u1ea5y nh\u00e9 , k\u00f4 ch\u00fa T\u01b0 l\u1ea1i k\u00eau ca ( c\u00e1i account t\u1edb b\u1ecb l\u1ed7i hay s",
+			"name": "Duy\u1ec7t binh",
+			"author": "hard7771988",
+			"created_at": "2006-08-18",
+			"tags": [],
+			"memory_limit": 1536,
+			"accept_count": 538,
+			"source_limit": 50000,
+			"score": 0.1,
+			"statement": "\n \n \n \n \n \n \n \n \n  \n \n \n <p>\n </p>\n <p>\n  V\u00e0o n\u00e3m 1945, Li\u00ean X\u00f4 \u0111ang \u0111\u00e1nh nhau v\u1edbi ph\u00e1t x\u00edt \u00d0\u1ee9c h\u1ebft s\u1ee9c \u00e1c li\u1ec7t. H\u00e0ng tri\u1ec7u thanh ni\u00ean Li\u00ean X\u00f4 ph\u1ea3i l\u00ean \u0111\u01b0\u1eddng nh\u1eadp ng\u0169. M\u1ed9t cu\u1ed9c duy\u1ec7t binh di\u1ec5n ra, c\u00e1c t\u00e2n binh kh\u00f4ng bi\u1ebft \u0111\u1ee9ng quay m\u1eb7t v\u1ec1 b\u00ean n\u00e0o li\u1ec1n x\u1ebfp t\u00f9y \u00fd, v\u1ecb t\u1ed5ng ch\u1ec9 huy th\u1ea5y th\u1ec3 li\u1ec1n ra l\u1ec7nh: \u201cN\u1ebfu hai t\u00e2n binh li\u00ean ti\u1ebfp v\u00e0 \u0111\u1ed1i m\u1eb7t v\u1edbi nhau th\u00ec ngay l\u1eadp ph\u1ea3i quay ng\u01b0\u1ee3c l\u1ea1i(180 \u0111\u1ed9), \u0111\u1ed9ng t\u00e1c n\u00e0y di\u1ec5n ra trong v\u00f2ng 1s!\u201d. Ng\u01b0\u1eddi t\u1ed5ng ch\u1ec9 huy mu\u1ed1n bi\u1ebft sau bao l\u00e2u th\u00ec th\u00ec \u0111\u1ed9i h\u00ecnh s\u1ebd ng\u1eebng quay?\n </p>\n <h3>\n  Input\n </h3>\n <p>\n  D\u00f2ng \u0111\u1ea7u ghi s\u1ed1 nguy\u00ean N l\u00e0 s\u1ed1 t\u00e2n binh.\n  <br>\n  D\u00f2ng th\u1ee9 hai g\u1ed3m \u0111\u00fang N k\u00ed t\u1ef1 \u2018&lt;\u2019, \u2018&gt;\u2019 th\u1ec3 hi\u1ec7n c\u00e1ch \u0111\u1ee9ng c\u1ee7a c\u00e1c t\u00e2n binh. N\u1ebfu hai t\u00e2n binh li\u00ean ti\u1ebfp quay m\u1eb7t v\u00e0o nhau th\u00ec s\u1ebd \u0111\u01b0\u1ee3c bi\u1ec3u di\u1ec5n b\u1edfi \u2018&gt;&lt;\u2019. ( 1 \u2264 n \u2264 1000000 ).\n </p>\n <h3>\n  Output\n </h3>\n <p>\n  G\u1ed3m m\u1ed9t s\u1ed1 duy nh\u1ea5t ghi th\u1eddi gian \u0111\u1ec3 \u0111\u1ed9i h\u00ecnh ng\u1eebng quay.\n </p>\n <h3>\n  Example\n </h3>\n <pre>Input:\n4\n&lt;&gt;&lt;&gt;\n\nOutput:\n1\n</pre>\n Ch\u00fa th\u00edch :\n <br>\n T\u1ea1i th\u1eddi \u0111i\u1ec3m 0: &lt;&gt;&lt;&gt;\n <br>\n T\u1ea1i th\u1eddi \u0111i\u1ec3m 1: &lt;&lt;&gt;&gt;\n \n \n \n \n\n",
+			"accept_rate": 27.63,
+			"cluster": null,
+			"allowed_languages": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 31, 32, 33, 35, 36, 37, 38, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 56],
+			"problem_id": 911
+		},
+		"model": "problems.spojproblem",
+		"pk": 13
+	},
+	{
+		"fields": {
+			"category": 1,
+			"time_limit": 0.086,
+			"code": "MESSAGE",
+			"problem_source": "",
+			"name": "Truy\u00ea\u0300n tin",
+			"author": "dtmp",
+			"created_at": "2006-09-09",
+			"tags": [],
+			"memory_limit": 1536,
+			"accept_count": 973,
+			"source_limit": 50000,
+			"score": 0.1,
+			"statement": "\n \n \n \n \n \n \n \n \n  \n \n \n <p>\n </p>\n <p>\n  M\u1ed9t l\u1edbp g\u1ed3m N h\u1ecdc sinh, m\u1ed7i h\u1ecdc sinh cho bi\u1ebft nh\u1eefng b\u1ea1n m\u00e0 h\u1ecdc sinh \u0111\u00f3 c\u00f3 th\u1ec3 li\u00ean l\u1ea1c \u0111\u01b0\u1ee3c (ch\u00fa \u00fd li\u00ean l\u1ea1c n\u00e0y l\u00e0 li\u00ean l\u1ea1c m\u1ed9t chi\u1ec1u : u c\u00f3 th\u1ec3 g\u1eedi tin t\u1edbi v nh\u01b0ng v th\u00ec ch\u01b0a ch\u1eafc \u0111\u00e3 c\u00f3 th\u1ec3 g\u1eedi tin t\u1edbi u).\n </p>\n <p>\n  Th\u1ea7y ch\u1ee7 nhi\u1ec7m \u0111ang c\u00f3 m\u1ed9t th\u00f4ng tin r\u1ea5t quan tr\u1ecdng c\u1ea7n th\u00f4ng b\u00e1o t\u1edbi t\u1ea5t c\u1ea3 c\u00e1c h\u1ecdc sinh. \u00d0\u1ec3 ti\u1ebft ki\u1ec7m th\u1eddi gian, th\u1ea7y ch\u1ec9 nh\u1eafn tin t\u1edbi 1 s\u1ed1 h\u1ecdc sinh r\u1ed3i sau \u0111\u00f3 nh\u1edd c\u00e1c h\u1ecdc sinh n\u00e0y nh\u1eafn l\u1ea1i cho t\u1ea5t c\u1ea3 c\u00e1c b\u1ea1n m\u00e0 c\u00e1c h\u1ecdc sinh \u0111\u00f3 c\u00f3 th\u1ec3 li\u00ean l\u1ea1c \u0111\u01b0\u1ee3c, v\u00e0 c\u1ee9 l\u1ea7n l\u01b0\u1ee3t nh\u01b0 th\u1ebf l\u00e0m sao cho t\u1ea5t c\u1ea3 c\u00e1c h\u1ecdc sinh trong l\u1edbp \u0111\u1ec1u nh\u1eadn \u0111\u01b0\u1ee3c tin .\n </p>\n <p>\n  H\u00e3y t\u00ecm m\u1ed9t s\u1ed1 \u00edt nh\u1ea5t c\u00e1c h\u1ecdc sinh m\u00e0 th\u1ea7y ch\u1ee7 nhi\u1ec7m c\u1ea7n nh\u1eafn.\n </p>\n <h3>\n  Input\n </h3>\n <p>\n  - D\u00f2ng \u0111\u1ea7u l\u00e0 N, M (N &lt;= 800, M l\u00e0 s\u1ed1 l\u01b0\u1ee3ng li\u00ean l\u1ea1c 1 chi\u1ec1u)\n </p>\n <p>\n  - M\u1ed9t s\u1ed1 d\u00f2ng ti\u1ebfp theo m\u1ed7i d\u00f2ng g\u1ed3m 2 s\u1ed1 u , v cho bi\u1ebft h\u1ecdc sinh u c\u00f3 th\u1ec3 g\u1eedi tin t\u1edbi h\u1ecdc sinh v\n </p>\n <h3>\n  Output\n </h3>\n <p>\n  - G\u1ed3m 1 d\u00f2ng ghi s\u1ed1 h\u1ecdc sinh c\u1ea7n th\u1ea7y nh\u1eafn tin.\n </p>\n <h3>\n  Example\n </h3>\n <pre>Input:\n12 15\n1 3\n3 6\n6 1\n6 8\n8 12\n12 9\n9 6\n2 4\n4 5\n5 2\n4 6\n7 10\n10 11\n11 7\n10 9\n\nOutput:\n2\n</pre>\n <i>\n  Ch\u1ecdn c\u00e1c h\u1ecdc sinh 7 v\u00e0 2.\n </i>\n \n \n \n \n\n",
+			"accept_rate": 27.04,
+			"cluster": null,
+			"allowed_languages": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 31, 32, 33, 35, 36, 37, 38, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 56],
+			"problem_id": 934
+		},
+		"model": "problems.spojproblem",
+		"pk": 14
+	},
+	{
+		"fields": {
+			"category": 1,
+			"time_limit": 0.167,
+			"code": "CATALAN",
+			"problem_source": "",
+			"name": "D\u00e3y s\u1ed1 Catalan",
+			"author": "dtmp",
+			"created_at": "2006-09-09",
+			"tags": [],
+			"memory_limit": 1536,
+			"accept_count": 517,
+			"source_limit": 50000,
+			"score": 0.1,
+			"statement": "\n \n \n \n \n \n \n \n \n  \n \n \n <p>\n </p>\n <p>\n  Cho s\u1ed1 nguy\u00ean d\u01b0\u01a1ng N, d\u00e3y Catalan c\u1ea5p n l\u00e0 d\u00e3y C(1), C(2) \u2026 C(2n+1) g\u1ed3m c\u00e1c s\u1ed1 nguy\u00ean kh\u00f4ng \u00e2m tho\u1ea3 m\u00e3n : C(1) = C(2n+1) = 0 v\u1edbi i b\u1ea5t k\u00ec 1 \u2264 i \u2264 2n th\u00ec C(i), C(i+1) h\u01a1n k\u00e9m nhau 1 \u0111\u01a1n v\u1ecb.\n </p>\n <p>\n  V\u1edbi m\u1ed7i n ta s\u1eafp x\u1ebfp c\u00e1c d\u00e3y Catalan theo th\u1ee9 t\u1ef1 t\u1eeb \u0111i\u1ec3n, \u0111\u00e1nh s\u1ed1 t\u1eeb 1 tr\u1edf \u0111i . Y\u00eau c\u1ea7u :\n </p>\n <p>\n  1.Cho m\u1ed9t d\u00e3y Catalan, h\u00e3y t\u00ecm th\u1ee9 t\u1ef1 c\u1ee7a d\u00e3y.\n </p>\n <p>\n  2.Cho s\u1ed1 nguy\u00ean d\u01b0\u01a1ng k h\u00e3y t\u00ecm d\u00e3y c\u00f3 th\u1ee9 t\u1ef1 k\n </p>\n <h3>\n  Input\n </h3>\n <p>\n  - D\u00f2ng \u0111\u1ea7u ghi n. (n &lt;= 15)\n </p>\n <p>\n  - D\u00f2ng hai ghi m\u1ed9t d\u00e3y Catalan c\u1ea5p n\n </p>\n <p>\n  - D\u00f2ng 3 ghi m\u1ed9t s\u1ed1 nguy\u00ean d\u01b0\u01a1ng k (k c\u00f3 th\u1ec3 r\u1ea5t l\u1edbn nh\u01b0ng \u0111\u1ea3m b\u1ea3o lu\u00f4n c\u00f3 nghi\u1ec7m)\n </p>\n <p>\n </p>\n <h3>\n  Output\n </h3>\n <p>\n  - D\u00f2ng 1 ghi s\u1ed1 th\u1ee9 t\u1ef1 d\u00e3y \u1edf d\u00f2ng 2 INPUT\n </p>\n <p>\n  - D\u00f2ng 2 ghi d\u00e3y \u1ee9ng v\u1edbi s\u1ed1 th\u1ee9 t\u1ef1\n </p>\n <p>\n </p>\n <h3>\n  Example\n </h3>\n <pre>Input:\n4\n0 1 2 3 2 1 2 1 0\n12<p>\nOutput:\n12\n0 1 2 3 2 1 2 1 0\n</p></pre>\n \n \n \n \n\n",
+			"accept_rate": 51.46,
+			"cluster": null,
+			"allowed_languages": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 31, 32, 33, 35, 36, 37, 38, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 56],
+			"problem_id": 935
+		},
+		"model": "problems.spojproblem",
+		"pk": 15
+	},
+	{
+		"fields": {
+			"category": 1,
+			"time_limit": 0.098,
+			"code": "TCDFZ",
+			"problem_source": "",
+			"name": "Ch\u1eef s\u1ed1 t\u1eadn c\u00f9ng kh\u00e1c 0",
+			"author": "dtmp",
+			"created_at": "2006-09-10",
+			"tags": [],
+			"memory_limit": 1536,
+			"accept_count": 412,
+			"source_limit": 50000,
+			"score": 0.2,
+			"statement": "\n \n \n \n \n \n \n \n \n  \n \n \n <p>\n </p>\n <p>\n  Cho s\u1ed1 t\u1ef1 nhi\u00ean n (n &lt;= 10^9). H\u00e3y t\u00ecm ch\u1eef s\u1ed1 t\u1eadn c\u00f9ng kh\u00e1c 0 c\u1ee7a n!\n </p>\n <h3>\n  Input\n </h3>\n <p>\n  - D\u00f2ng duy nh\u1ea5t ghi s\u1ed1 N.\n </p>\n <h3>\n  Output\n </h3>\n <p>\n  - G\u1ed3m 1 d\u00f2ng duy nh\u1ea5t ghi k\u1ebft qu\u1ea3 t\u00ecm \u0111\u01b0\u1ee3c.\n </p>\n <h3>\n  Example\n </h3>\n <pre><strong>Input:</strong>\n5\n\n<strong>Output:</strong>\n2\n</pre>\n \n \n \n \n\n",
+			"accept_rate": 14.66,
+			"cluster": null,
+			"allowed_languages": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 31, 32, 33, 34, 35, 36, 37, 38, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56],
+			"problem_id": 937
+		},
+		"model": "problems.spojproblem",
+		"pk": 16
+	},
+	{
+		"fields": {
+			"category": 1,
+			"time_limit": 1.013,
+			"code": "ELEVATOR",
+			"problem_source": "USACO 3/2005",
+			"name": "Thang m\u00e1y v\u0169 tr\u1ee5",
+			"author": "dtmp",
+			"created_at": "2006-09-10",
+			"tags": [],
+			"memory_limit": 1536,
+			"accept_count": 511,
+			"source_limit": 50000,
+			"score": 0.1,
+			"statement": "\n \n \n \n \n \n \n \n \n  \n \n \n <p>\n </p>\n <p>\n  Nh\u1eefng con b\u00f2 mu\u1ed1n \u0111i v\u00e0o v\u0169 tr\u1ee5! Ch\u00fang mu\u1ed1n \u0111\u1ebfn \u0111\u01b0\u1ee3c qu\u1ef9 \u0111\u1ea1o b\u1eb1ng c\u00e1ch x\u00e2y m\u1ed9t ki\u1ec3u thang m\u00e1y: m\u1ed9t c\u00e1i th\u00e1p kh\u1ed5ng l\u1ed3 l\u00e0m b\u1eb1ng c\u00e1c kh\u1ed1i ch\u1ed3ng l\u00ean nhau. Ch\u00fang c\u00f3 K (1 \u2264 K \u2264 400) lo\u1ea1i kh\u1ed1i c\u00f3 th\u1ec3 x\u00e2y th\u00e1p. M\u1ed7i kh\u1ed1i lo\u1ea1i i c\u00f3 chi\u1ec1u cao h_i (1 \u2264 h_i \u2264 100) v\u00e0 c\u00f3 s\u1ed1 l\u01b0\u1ee3ng c_i (1 \u2264 c_i \u2264 10). Do kh\u1ea3 n\u00e3ng b\u1ecb ph\u00e1 h\u1ee7y b\u1edfi c\u00e1c tia v\u0169 tr\u1ee5, kh\u00f4ng c\u00f3 ph\u1ea7n n\u00e0o c\u1ee7a kh\u1ed1i lo\u1ea1i i c\u00f3 th\u1ec3 v\u01b0\u1ee3t qua \u0111\u1ed9 cao a_i (1 \u2264 a_i \u2264 40000).\n </p>\n <p>\n  Gi\u00fap nh\u1eefng con b\u00f2 x\u00e2y thang m\u00e1y cao nh\u1ea5t c\u00f3 th\u1ec3 b\u1eb1ng c\u00e1ch ch\u1ed3ng c\u00e1c kh\u1ed1i l\u00ean nhau theo lu\u1eadt tr\u00ean.\n </p>\n <h3>\n  Input\n </h3>\n <p>\n  * D\u00f2ng 1: M\u1ed9t s\u1ed1 nguy\u00ean: K\n </p>\n <p>\n  * D\u00f2ng 2..K+1: M\u1ed7i d\u00f2ng ch\u1ee9a 3 s\u1ed1 nguy\u00ean \u0111\u01b0\u1ee3c ph\u00e2n c\u00e1ch b\u1edfi kho\u1ea3ng tr\u1eafng: h_i, a_i, v\u00e0 c_i. D\u00f2ng i+1 mi\u00eau t\u1ea3 loa\u1ecb kh\u1ed1i i.\n </p>\n <h3>\n  Output\n </h3>\n <p>\n  * D\u00f2ng 1: M\u1ed9t s\u1ed1 nguy\u00ean H, ch\u1ec9 \u0111\u1ed9 cao l\u1edbn nh\u1ea5t c\u1ee7a th\u00e1p c\u00f3 th\u1ec3 x\u00e2y \u0111\u01b0\u1ee3c.\n </p>\n <h3>\n  Example\n </h3>\n <pre>Input:\n3\n7 40 3\n5 23 8\n2 52 6\n\n\nOutput:\n48\n</pre>\n <i>\n  GI\u1ea2I TH\u00cdCH:\n </i>\n <p>\n  T\u1eeb d\u01b0\u1edbi l\u00ean: 3 kh\u1ed1i lo\u1ea1i 2, 3 kh\u1ed1i lo\u1ea1i 1, 6 kh\u1ed1i lo\u1ea1i 3. Ch\u1ed3ng 4 kh\u1ed1i lo\u1ea1i 2 &amp; 3 lo\u1ea1i 1 kh\u00f4ng h\u1ee3p l\u1ec7 v\u00ec \u0111\u1ec9nh c\u1ee7a kh\u1ed1i lo\u1ea1i 1 v\u01b0\u1ee3t qu\u00e1 \u0111\u1ed9 cao 40.\n </p>\n \n \n \n \n\n",
+			"accept_rate": 33.35,
+			"cluster": null,
+			"allowed_languages": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 31, 32, 33, 35, 36, 37, 38, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 56],
+			"problem_id": 938
+		},
+		"model": "problems.spojproblem",
+		"pk": 17
+	},
+	{
+		"fields": {
+			"category": 1,
+			"time_limit": 0.206,
+			"code": "BRACKET",
+			"problem_source": "",
+			"name": "D\u00e3y ngo\u1eb7c",
+			"author": "dtmp",
+			"created_at": "2006-09-10",
+			"tags": [],
+			"memory_limit": 1536,
+			"accept_count": 184,
+			"source_limit": 50000,
+			"score": 0.4,
+			"statement": "\n \n \n \n \n \n \n \n \n  \n \n \n <p>\n </p>\n <p>\n  Ng\u01b0\u1eddi ta \u0111\u1ecbnh ngh\u0129a \u0111\u1ec7 qui d\u00e3y ngo\u1eb7c v\u00e0 c\u1ea5p c\u1ee7a d\u00e3y nh\u01b0 sau:\n </p>\n <p>\n  +) X\u00e2u r\u1ed7ng \u0111\u01b0\u1ee3c g\u1ecdi l\u00e0 d\u00e3y ngo\u1eb7c c\u1ea5p 0.\n </p>\n <p>\n  +) N\u1ebfu S l\u00e0 x\u00e2u ngo\u1eb7c c\u1ea5p k th\u00ec (S) l\u00e0 x\u00e2u ngo\u1eb7c c\u1ea5p k+1.\n </p>\n <p>\n  +) N\u1ebfu A, B l\u00e0 c\u00e1c d\u00e3y ngo\u1eb7c th\u00ec S = AB l\u00e0 m\u1ed9t d\u00e3y ngo\u1eb7c v\u1edbi c\u1ea5p b\u1eb1ng s\u1ed1 l\u1edbn h\u01a1n trong c\u1ea5p c\u1ee7a A v\u00e0 B.\n </p>\n <p>\n  \u00d0\u1ecbnh ngh\u0129a n\u00e0y ch\u1ec9 \u00e1p d\u1ee5ng cho nh\u1eefng x\u00e2u sinh ra theo qui t\u1eafc \u0111\u1ec7 qui tr\u00ean.\n </p>\n <p>\n  Cho 2 s\u1ed1 nguy\u00ean d\u01b0\u01a1ng N v\u00e0 k, g\u1ecdi S l\u00e0 t\u1eadp c\u00e1c d\u00e3y ngo\u1eb7c c\u1ea5p k \u0111\u1ed9 d\u00e0i N.\n </p>\n <p>\n  1. Cho bi\u1ebft S c\u00f3 bao nhi\u00eau ph\u1ea7n t\u1eed.\n </p>\n <p>\n  2. Cho m\u1ed9t d\u00e3y ngo\u1eb7c thu\u1ed9c, h\u00e3y cho bi\u1ebft th\u1ee9 t\u1ef1 t\u1eeb \u0111i\u1ec3n c\u1ee7a d\u00e3y n\u00e0y trong t\u1eadp S.\n </p>\n <h3>\n  Input\n </h3>\n <p>\n  - D\u00f2ng \u0111\u1ea7u ghi 2 s\u1ed1 N, k (N ch\u1eb5n, N &lt;= 60, k &lt;= n/2 ).\n </p>\n <p>\n  - D\u00f2ng hai ghi 1 x\u00e2u ngo\u1eb7c c\u1ea5p k \u0111\u1ed9 d\u00e0i N.\n </p>\n <h3>\n  Output\n </h3>\n <p>\n  G\u1ed3m hai d\u00f2ng, m\u1ed7i d\u00f2ng tr\u1ea3 l\u1eddi 1 y\u00eau c\u1ea7u theo th\u1ee9 t\u1ef1 tr\u00ean.\n </p>\n <h3>\n  Example\n </h3>\n <pre>Input:\n6 2\n(())()\n\nOutput:\n3\n2\n</pre>\n \n \n \n \n\n",
+			"accept_rate": 34.26,
+			"cluster": null,
+			"allowed_languages": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 31, 32, 33, 35, 36, 37, 38, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 56],
+			"problem_id": 939
+		},
+		"model": "problems.spojproblem",
+		"pk": 18
+	},
+	{
+		"fields": {
+			"category": 1,
+			"time_limit": 0.134,
+			"code": "COND",
+			"problem_source": "",
+			"name": "Quan h\u1ec7",
+			"author": "dtmp",
+			"created_at": "2006-09-13",
+			"tags": [],
+			"memory_limit": 1536,
+			"accept_count": 493,
+			"source_limit": 50000,
+			"score": 0.2,
+			"statement": "\n \n \n \n \n \n \n \n \n  \n \n \n <p>\n </p>\n <p>\n  X\u00e9t m\u1ed9t t\u1eadp N \u0111\u1ed1i t\u01b0\u1ee3ng c\u00f3 th\u1ec3 so s\u00e1nh \u0111\u01b0\u1ee3c (2&lt;=n&lt;=10). Gi\u1eefa 2 \u0111\u1ed1i t\u01b0\u1ee3ng a v\u00e0 b c\u00f3 th\u1ec3 t\u1ed3n t\u1ea1i 1 trong 3 quan h\u1ec7 ph\u00e2n lo\u1ea1i:\n </p>\n <p>\n  a = b;            a &lt; b;           a &gt; b;\n </p>\n <p>\n  Nh\u01b0 v\u1eady, v\u1edbi 3 \u0111\u1ed1i t\u01b0\u1ee3ng (a, b, c) c\u00f3 th\u1ec3 t\u1ed3n t\u1ea1i 13 quan h\u1ec7 ph\u00e2n lo\u1ea1i nh\u01b0 sau:\n </p>\n <p>\n  a = b = c;   a = b &lt; c;   c &lt; a = b;   a &lt; b = c\n  <br>\n  b = c &lt; a;   a = c &lt; b;   b &lt; a = c;   a &lt; b &lt; c\n  <br>\n  a &lt; c &lt; b;   b &lt; a &lt; c;   b &lt; c &lt; a;   c &lt; a &lt; b\n  <br>\n  c &lt; b &lt; a;\n </p>\n <p>\n  Cho s\u1ed1 n, h\u00e3y x\u00e1c \u0111\u1ecbnh s\u1ed1 l\u01b0\u1ee3ng quan h\u1ec7 ph\u00e2n lo\u1ea1i kh\u00e1c nhau.\n </p>\n <h3>\n  Input\n </h3>\n <p>\n  G\u1ed3m nhi\u1ec1u s\u1ed1 n. M\u1ed7i s\u1ed1 tr\u00ean 1 d\u00f2ng. K\u1ebft th\u00fac file l\u00e0 -1.\n </p>\n <h3>\n  Output\n </h3>\n <p>\n  V\u1edbi m\u1ed7i n, \u0111\u01b0a ra s\u1ed1 l\u01b0\u1ee3ng quan h\u1ec7 ph\u00e2n lo\u1ea1i t\u00ecm \u0111\u01b0\u1ee3c, m\u1ed7i s\u1ed1 tr\u00ean 1 d\u00f2ng (kh\u00f4ng c\u00f3 d\u00f2ng tr\u1ed1ng).\n </p>\n <h3>\n  Example\n </h3>\n <pre>Input:\n2\n3\n-1\nOutput:\n3\n13\n</pre>\n \n \n \n \n\n",
+			"accept_rate": 38.59,
+			"cluster": null,
+			"allowed_languages": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 31, 32, 33, 35, 36, 37, 38, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 56],
+			"problem_id": 940
+		},
+		"model": "problems.spojproblem",
+		"pk": 19
+	},
+	{
+		"fields": {
+			"category": 1,
+			"time_limit": 0.188,
+			"code": "HIWAY",
+			"problem_source": "",
+			"name": "Hai \u0111\u01b0\u1eddng \u0111i",
+			"author": "dtmp",
+			"created_at": "2006-09-14",
+			"tags": [],
+			"memory_limit": 1536,
+			"accept_count": 368,
+			"source_limit": 50000,
+			"score": 0.2,
+			"statement": "\n \n \n \n \n \n \n \n \n  \n \n \n <p>\n </p>\n <p>\n  M\u1ed9t m\u1ea1ng giao th\u00f4ng g\u1ed3m N n\u00fat giao th\u00f4ng, v\u00e0 c\u00f3 M \u0111\u01b0\u1eddng hai chi\u1ec1u n\u1ed1i m\u1ed9t s\u1ed1 c\u1eb7p n\u00fat, th\u00f4ng tin v\u1ec1 m\u1ed9t \u0111\u01b0\u1eddng g\u1ed3m ba s\u1ed1 nguy\u00ean d\u01b0\u01a1ng u, v l\u00e0 t\u00ean hai n\u00fat \u0111\u1ea7u m\u00fat c\u1ee7a \u0111\u01b0\u1eddng, v\u00e0 l l\u00e0 \u0111\u1ed9 d\u00e0i \u0111o\u1ea1n \u0111\u01b0\u1eddng \u0111\u00f3. Bi\u1ebft r\u1eb1ng hai n\u00fat giao th\u00f4ng b\u1ea5t k\u00ec c\u00f3 kh\u00f4ng qu\u00e1 1 \u0111\u01b0\u1eddng hai chi\u1ec1u nh\u1eadn ch\u00fang l\u00e0m hai \u0111\u1ea7u m\u00fat.\n  <br>\n  Cho hai n\u00fat giao th\u00f4ng s v\u00e0 f, h\u00e3y t\u00ecm hai \u0111\u01b0\u1eddng \u0111i n\u1ed1i gi\u1eefa s v\u1edbi f sao cho hai tr\u00ean hai \u0111\u01b0\u1eddng kh\u00f4ng c\u00f3 c\u1ea1nh n\u00e0o \u0111\u01b0\u1ee3c \u0111i qua hai l\u1ea7n v\u00e0 t\u1ed5ng \u0111\u1ed9 d\u00e0i 2 \u0111\u01b0\u1eddng \u0111i l\u00e0 nh\u1ecf nh\u1ea5t.\n </p>\n <h3>\n  Input\n </h3>\n <p>\n  - D\u00f2ng \u0111\u1ea7u ghi N, M (N \u2264 100)\n  <br>\n  - D\u00f2ng th\u1ee9 2 ghi hai s\u1ed1 s, f.\n  <br>\n  - M d\u00f2ng ti\u1ebfp theo, m\u1ed7i d\u00f2ng m\u00f4 t\u1ea3 m\u1ed9t \u0111\u01b0\u1eddng g\u1ed3m ba s\u1ed1 nguy\u00ean d\u01b0\u01a1ng u, v, l.\n </p>\n <h3>\n  Output\n </h3>\n <p>\n  - D\u00f2ng \u0111\u1ea7u ghi T l\u00e0 t\u1ed5ng \u0111\u1ed9 d\u00e0i nh\u1ecf nh\u1ea5t t\u00ecm \u0111\u01b0\u1ee3c ho\u1eb7c -1 n\u1ebfu kh\u00f4ng t\u00ecm \u0111\u01b0\u1ee3c.\n  <br>\n  - N\u1ebfu t\u00ecm \u0111\u01b0\u1ee3c, hai d\u00f2ng sau, m\u1ed7i d\u00f2ng m\u00f4 t\u1ea3 m\u1ed9t \u0111\u01b0\u1eddng \u0111i g\u1ed3m: s\u1ed1 \u0111\u1ea7u l\u00e0 s\u1ed1 n\u00fat tr\u00ean \u0111\u01b0\u1eddng \u0111i n\u00e0y, ti\u1ebfp theo l\u00e0 d\u00e3y c\u00e1c n\u00fat tr\u00ean \u0111\u01b0\u1eddng \u0111i b\u1eaft \u0111\u1ea7u t\u1eeb s, k\u1ebft th\u00fac t\u1ea1i f.\n </p>\n <p>\n  \n   Ch\u00fa \u00fd:\n  \n  <i>\n   Ph\u1ea1m vi t\u00ednh to\u00e1n trong v\u00f2ng Longint.\n  </i>\n </p>\n <h3>\n  Example\n </h3>\n <pre>Input:\n5 8\n1 5\n1 2 1\n1 4 8\n2 3 5\n2 4 1\n3 5 1\n4 3 8\n4 5 1\n1 3 1\n\nOutput:\n5\n3 1 3 5 \n4 1 2 4 5\n</pre>\n \n \n \n \n\n",
+			"accept_rate": 23.57,
+			"cluster": null,
+			"allowed_languages": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 31, 32, 33, 35, 36, 37, 38, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 56],
+			"problem_id": 941
+		},
+		"model": "problems.spojproblem",
+		"pk": 20
+	}
+]

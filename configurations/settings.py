@@ -271,5 +271,5 @@ TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
 NOSE_ARGS = [
     '--with-coverage',
     '--cover-html',              # The coverage report can be found in cover/
-    '--cover-package=vnoiusers',
+    '--cover-package=vnoiusers,forum,problems',
 ]

@@ -61,7 +61,6 @@ def submit(request, code):
     })
 
 
-@login_required
 def status(request, code):
     problem = get_object_or_404(SpojProblem, code=code)
     return render(request, 'problems/problem_status.html', {
@@ -69,7 +68,6 @@ def status(request, code):
     })
 
 
-@login_required
 def rank(request, code):
     problem = get_object_or_404(SpojProblem, code=code)
     return render(request, 'problems/problem_rank.html', {
