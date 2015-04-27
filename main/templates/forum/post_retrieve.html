@@ -8,10 +8,17 @@
   <div class="post-outer-wrapper row" style="margin-bottom:20px">
     {# This span is used to make anchor offset for fixed navbar #}
     <span id="post-{{ post.id }}" class="anchor"></span>
-    <div class="post-avatar-wrapper col-xs-1">
-      <div class="circular-image" style="background: url({% user_avatar_url post.created_by %}) no-repeat">
-        <a href="{% url 'user:profile' post.created_by.id %}">
-          <img src="{% user_avatar_url post.created_by 80 %}" alt="" height="80px" width="80px"/>
+    <div class="col-xs-1">
+      <div class="post-avatar-wrapper ">
+        <div class="circular-image" style="background: url({% user_avatar_url post.created_by %}) no-repeat">
+          <a href="{% url 'user:profile' post.created_by.id %}">
+            <img src="{% user_avatar_url post.created_by 80 %}" alt="" height="80px" width="80px"/>
+          </a>
+        </div>
+      </div>
+      <div class="post-username-under-avata">
+        <a href="{{ post.created_by.get_absolute_url }}">
+          {{ post.created_by.username }}
         </a>
       </div>
     </div>
