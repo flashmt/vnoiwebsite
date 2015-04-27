@@ -212,6 +212,12 @@
 .msg-folder-table {
   margin-bottom: 0; }
 
+.msg-menu-item {
+  margin-left: -15px !important;
+  margin-right: -15px !important; }
+  .msg-menu-item a {
+    border-radius: 0 !important; }
+
 /*
  * VnoiLib
  * --------------------------------------------------
