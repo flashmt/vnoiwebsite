@@ -49,7 +49,6 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'utils.humanize',
-    'django_nose',
     'forum',
     'main',
     'vnoiusers',
@@ -264,13 +263,3 @@ if 'test' in sys.argv or os.environ.get('TRAVIS_TEST_ENV') == '1':
         'django.middleware.clickjacking.XFrameOptionsMiddleware',
         'utils.middleware.force_english.ForceInEnglish'
     )
-
-# Use nose to run all tests to see test coverage
-TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
-
-# Tell nose to measure coverage on the 'foo' and 'bar' apps
-NOSE_ARGS = [
-    '--with-coverage',
-    # '--cover-html',              # The coverage report can be found in cover/
-    '--cover-package=vnoiusers,forum,problems',
-]

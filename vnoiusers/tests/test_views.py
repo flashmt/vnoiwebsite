@@ -120,6 +120,23 @@ class UserViewTest(TestCase):
         response = self.client.get(reverse('user:login'), follow=True)
         # Since we already logged in before, views should redirect
         self.assertRedirects(response, reverse('main:index'))
+        self.client.logout()
+
+        # Now try to submit form
+
+        # Login with wrong password
+        response = self.client.post('/user/login?next=/message/inbox/', {
+            'username': self.user_vnoi.username,
+            'password': 'obviously_wrong_password'
+        })
+        self.assertEqual(response.status_code, 200)
+
+        # Login success
+        response = self.client.post('/user/login?next=/message/inbox/', {
+            'username': self.user_vnoi.username,
+            'password': self.passwords[self.user_vnoi.username]
+        })
+        self.assertRedirects(response, '/message/inbox/')
 
     def test_logout(self):
         # Try logout before logging in
@@ -289,6 +306,58 @@ class UserViewTest(TestCase):
         response = self.client.get(reverse('user:profile', kwargs={'user_id': self.user_vnoi2.id}))
         self.assertEqual(response.status_code, 200)
         self.assertTrue(response.context['is_friend'])
+
+    def test_add_friend_self(self):
+        self.login(self.user_vnoi)
+
+        response = self.client.get(reverse('user:add_friend', kwargs={'user_id': self.user_vnoi.id}))
+        self.assertRedirects(response, reverse('user:profile', kwargs={'user_id': self.user_vnoi.id}))
+
+        # Verify not friend
+        response = self.client.get(reverse('user:profile', kwargs={'user_id': self.user_vnoi.id}))
+        self.assertEqual(response.status_code, 200)
+        self.assertFalse(response.context['is_friend'])
+
+        # Also test for remove friend
+        response = self.client.get(reverse('user:remove_friend', kwargs={'user_id': self.user_vnoi.id}))
+        self.assertRedirects(response, reverse('user:profile', kwargs={'user_id': self.user_vnoi.id}))
+
+        # Verify not friend
+        response = self.client.get(reverse('user:profile', kwargs={'user_id': self.user_vnoi.id}))
+        self.assertEqual(response.status_code, 200)
+        self.assertFalse(response.context['is_friend'])
+
+    def test_list_users(self):
+        # User who is not logged in should be able to search for user
+        response = self.client.get(reverse('user:index'))
+        self.assertRedirects(response, '/user/login?next=/user/index')
+
+        # Login and try again
+        self.login(self.user_admin)
+
+        # Test get (load user search form)
+        response = self.client.get(reverse('user:index'))
+        self.assertEqual(response.status_code, 200)
+
+        # Search for prefix vnoi
+        response = self.client.post(reverse('user:index'), {'user_prefix': 'vnoi'})
+        self.assertEqual(response.status_code, 200)
+        self.assertQuerysetEqual(response.context['users'], [
+            repr(self.user_vnoi),
+            repr(self.user_vnoi2)
+        ], ordered=False)
+
+        # Search for prefix 'a'
+        response = self.client.post(reverse('user:index'), {'user_prefix': 'a'})
+        self.assertEqual(response.status_code, 200)
+        self.assertQuerysetEqual(response.context['users'], [
+            repr(self.user_admin)
+        ], ordered=False)
+
+        # Search for prefix 'abcxyz123' (should return no result)
+        response = self.client.post(reverse('user:index'), {'user_prefix': 'abcxyz123'})
+        self.assertEqual(response.status_code, 200)
+        self.assertQuerysetEqual(response.context['users'], [], ordered=False)
 
     def login(self, account):
         self.assertTrue(self.client.login(username=account.username, password=self.passwords[account.username]))

@@ -13,5 +13,4 @@ python-memcached==1.54
 django-post_office
 python-dateutil
 requests_toolbelt
-django-nose==1.4
 coverage==3.7.1
