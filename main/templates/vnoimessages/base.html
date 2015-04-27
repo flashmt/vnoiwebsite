@@ -21,11 +21,11 @@
     <div class="panel-body">
       <ul class="nav nav-pills nav-stacked">{% postman_unread as unread_count %}
       {% block postman_menu %}
-        <li role = "presentation" class = "msg-menu-item" style="margin-top: -15px"><a href="{% url 'message:inbox' %}">{% trans "Hộp thư đến" %}{% if unread_count %} <strong>({{ unread_count }})</strong>{% endif %}</a></li>
-        <li role = "presentation" class = "msg-menu-item"><a href="{% url 'message:sent' %}">{% trans "Thư đã gửi" %}</a></li>
-        <li role = "presentation" class = "msg-menu-item"><a href="{% url 'message:write' %}">{% trans "Viết thư mới" %}</a></li>
-        <li role = "presentation" class = "msg-menu-item"><a href="{% url 'message:archives' %}">{% trans "Thư đã lưu" %}</a></li>
-        <li role = "presentation" class = "msg-menu-item" style="margin-bottom: -15px"><a href="{% url 'message:trash' %}">{% trans "Thùng rác" %}</a></li>	
+        <li role = "presentation" class = "{% block left-menu-inbox %}{% endblock %} msg-menu-item" style="margin-top: -15px"><a href="{% url 'message:inbox' %}">{% trans "Hộp thư đến" %}{% if unread_count %} <strong>({{ unread_count }})</strong>{% endif %}</a></li>
+        <li role = "presentation" class = "{% block left-menu-sent %}{% endblock %} msg-menu-item"><a href="{% url 'message:sent' %}">{% trans "Thư đã gửi" %}</a></li>
+        <li role = "presentation" class = "{% block left-menu-write %}{% endblock %} msg-menu-item"><a href="{% url 'message:write' %}">{% trans "Viết thư mới" %}</a></li>
+        <li role = "presentation" class = "{% block left-menu-archives %}{% endblock %} msg-menu-item"><a href="{% url 'message:archives' %}">{% trans "Thư đã lưu" %}</a></li>
+        <li role = "presentation" class = "{% block left-menu-trash %}{% endblock %} msg-menu-item" style="margin-bottom: -15px"><a href="{% url 'message:trash' %}">{% trans "Thùng rác" %}</a></li>	
       {% endblock %}
       </ul>
     </div>    
