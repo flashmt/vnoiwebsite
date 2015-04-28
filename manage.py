@@ -10,7 +10,6 @@ if __name__ == "__main__":
     is_testing = 'test' in sys.argv
     if is_testing:
         import coverage
-        print 'Starting test from manage.py'
         cov = coverage.coverage(source=['problems', 'forum', 'vnoiusers'], omit=['*/tests/*'])
         cov.erase()
         cov.start()

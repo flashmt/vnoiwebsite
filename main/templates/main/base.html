@@ -53,8 +53,10 @@
       <ol id="breadcrumbs" class="breadcrumb">
         {% block breadcrumbs %}
           {# Hack to hide breadcrumbs when it is empty #}
-          {# Better solution would be to move <ol id="breadcrumbs"> inside of block breadcrumbs of every #}
-          {# blocks that need to actually show breadcrumbs. But then it would cost too much code change #}
+          {# - Better solution would be to move <ol id="breadcrumbs"> inside of block breadcrumbs of every #}
+          {#   blocks that need to actually show breadcrumbs. But then it would cost too much code change #}
+          {# - One possible issue (though should rarely actually occurs) with this solution is that user may #}
+          {#   still see breadcrumbs for some miliseconds before the browser apply this CSS style #}
           <style type="text/css">
             #breadcrumbs {
               display:none;
