@@ -4,6 +4,7 @@ from django.core.urlresolvers import resolve, reverse
 
 from django.test import TestCase
 from django.test import Client
+import mock
 from vnoiusers import views as user_views
 
 
@@ -223,6 +224,27 @@ class UserViewTest(TestCase):
         tmp = User.objects.get(username='vnoiuser')
         self.assertEqual(tmp.profile.codeforces_account, '')
 
+    @mock.patch('vnoiusers.forms.CodeforcesLinkForm.is_valid')
+    def test_link_codeforces_submit(self, mock_is_valid):
+        # First, login to use link CF function
+        self.login(self.user_vnoi)
+
+        # Mock the form check to return True --> link account success
+        mock_is_valid.return_value = True
+        response = self.client.post(reverse('user:link_codeforces'), {'username': 'RR', 'password': '12345'})
+        self.assertRedirects(response, reverse('user:profile', kwargs={'user_id': self.user_vnoi.id}))
+
+        # Logout & use different account
+        self.client.logout()
+        self.login(self.user_vnoi2)
+        # Mock the form validation check to return False --> link account fail
+        mock_is_valid.return_value = False
+        response = self.client.post(reverse('user:link_codeforces'), {'username': 'RR2', 'password': '12345'})
+        # Here we should see the form again
+        self.assertEqual(response.status_code, 200)
+        self.assertIn('form', response.context)
+        self.assertIn('message', response.context)
+
     def test_link_voj(self):
         self.login(self.user_vnoi)
 
@@ -249,6 +271,27 @@ class UserViewTest(TestCase):
         # Verify again that the VOJ account is gone
         tmp = User.objects.get(username='vnoiuser')
         self.assertEqual(tmp.profile.voj_account, '')
+
+    @mock.patch('vnoiusers.forms.VojLinkForm.is_valid')
+    def test_link_voj_submit(self, mock_is_valid):
+        # First, login to use link VOJ function
+        self.login(self.user_vnoi)
+
+        # Mock form valid check to True
+        mock_is_valid.return_value = True
+        response = self.client.post(reverse('user:link_voj'), {'username': 'RR', 'password': '12345'})
+        self.assertRedirects(response, reverse('user:profile', kwargs={'user_id': self.user_vnoi.id}))
+
+        # Logout & use different account
+        self.client.logout()
+        self.login(self.user_vnoi2)
+
+        # Mock the form valid check to False
+        mock_is_valid.return_value = False
+        response = self.client.post(reverse('user:link_voj'), {'username': 'RR2', 'password': '12345'})
+        self.assertEqual(response.status_code, 200)
+        self.assertIn('form', response.context)
+        self.assertIn('message', response.context)
 
     def test_list_friend(self):
         self.login(self.user_admin)
