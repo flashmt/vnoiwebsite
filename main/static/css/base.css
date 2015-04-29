@@ -130,30 +130,6 @@
   border-color: rgba(51, 122, 183, 0);
   border-right-color: #ccc; }
 
-.home-post-upvote {
-  font-size: 10px;
-  color: green;
-  display: inline-block;
-  float: right; }
-
-.home-post-downvote {
-  font-weight: bold;
-  font-size: 10px;
-  color: red;
-  display: inline-block;
-  float: right; }
-
-.home-post-vote-wrapper {
-  float: right;
-  margin-right: 2.1em;
-  margin-top: -0.1em; }
-
-.home-post-count-upvote {
-  display: inline-block;
-  margin-left: 0.5em;
-  margin-right: 1em;
-  float: right; }
-
 .up {
   color: #00a47a; }
 
