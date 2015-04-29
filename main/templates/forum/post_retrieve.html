@@ -95,38 +95,15 @@
                 {% endif %}
               {% endif %}
             </div>
-            {# <div class="post-vote-wrapper text-right col-md-2"> #}
             <div class="post-vote-wrapper text-right col-md-2">
-              <!--<a class="post-upvote col-md-4"
-                 href="javascript:void(0)"
-                 post-id="{{ post.id }}"
-                 role="button"
-                 style="text-decoration: none;" 
-                 id="upvote-{{ post.id }}">
-                <div class="up">&#9650;</div>
-                {# <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> #}
-              </a>
-              <div class="post-count-upvote col-md-4" id="total-vote-{{ post.id }}">
-                {{ post.total_votes }}
-              </div>
-              <a class="post-downvote col-md-4"
-                 href="javascript:void(0)"
-                 post-id="{{ post.id }}"
-                 role="button"
-                 style="text-decoration: none;"
-                 id="downvote-{{ post.id }}">
-                <div class="down">&#9660;</div>
-                {# <span class="glyphicon glyphicon-minus" aria-hidden="true"></span> #}
-              </a>-->
               <table style="width:100%">
                 <colgroup>
-                  <col style="width:33%"></col>
-                  <col style="width:33%"></col>
-                  <col style="width:33%"></col>
+                  <col style="width:33%; text-align: center;"></col>
+                  <col style="width:33%; text-align: center;"></col>
+                  <col style="width:33%; text-align: center;"></col>
                 </colgroup>
                 <tr>
                   <td>
-                    <div> </div>
                     <a class="post-upvote col-md-4"
                        href="javascript:void(0)"
                        post-id="{{ post.id }}"
@@ -142,7 +119,6 @@
                     </div>
                   </td>
                   <td>
-                    <div> </div>
                     <a class="post-downvote col-md-4"
                        href="javascript:void(0)"
                        post-id="{{ post.id }}"
