@@ -95,13 +95,16 @@
                 {% endif %}
               {% endif %}
             </div>
+            {# <div class="post-vote-wrapper text-right col-md-2"> #}
             <div class="post-vote-wrapper text-right col-md-2">
               <a class="post-upvote col-md-4"
                  href="javascript:void(0)"
                  post-id="{{ post.id }}"
                  role="button"
+                 style="text-decoration: none;" 
                  id="upvote-{{ post.id }}">
-                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                <div class="up">&#9650;</div>
+                {# <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> #}
               </a>
               <div class="post-count-upvote col-md-4" id="total-vote-{{ post.id }}">
                 {{ post.total_votes }}
@@ -110,8 +113,10 @@
                  href="javascript:void(0)"
                  post-id="{{ post.id }}"
                  role="button"
+                 style="text-decoration: none;"
                  id="downvote-{{ post.id }}">
-                <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+                <div class="down">&#9660;</div>
+                {# <span class="glyphicon glyphicon-minus" aria-hidden="true"></span> #}
               </a>
             </div>
           </div>
