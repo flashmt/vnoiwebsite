@@ -112,3 +112,30 @@
 	margin-right: 1em;
 	float: right;
 }
+
+//Voting in forum
+.up {
+  	color:#00a47a;
+}
+
+.up:hover {
+  	//color:#00fdbc;
+  	font-size:1em;
+  	text-shadow: 0px 2px 2px black;
+  
+}
+
+
+.down {
+	color:#e75a48;
+  
+}
+
+.down:hover {
+  	font-size:1em;
+  	text-shadow: 0px 2px 2px black;
+}
+
+.post-count-upvote {
+	text-align: center;
+}
