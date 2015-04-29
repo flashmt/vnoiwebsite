@@ -40,25 +40,44 @@
               See more &raquo;
             </a>
           </div>
-          <div class="home-post-vote-wrapper button-container">
-            <a class="home-post-downvote"
-               href="javascript:void(0)"
-               post-id="{{ topic.post__id }}"
-               role="button"
-               id="downvote-{{ topic.post__id }}">
-              <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
-            </a>
-            <div class="col-xs-1 home-post-count-upvote" id="total-vote-{{ topic.post__id }}" role="button">
-              {{ topic.post__num_upvotes|subtract:topic.post__num_downvotes }}
+          <div class="home-post-vote-wrapper button-container col-md-2">
+              <div class="row">
+                <table style="width:100%">
+                  <colgroup>
+                    <col style="width:33%"></col>
+                    <col style="width:33%"></col>
+                    <col style="width:33%"></col>
+                  </colgroup>
+                  <tr>
+                    <td>
+                      <a class="home-post-downvote col-md-4"
+                         href="javascript:void(0)"
+                         post-id="{{ topic.post__id }}"
+                         role="button"
+                         style="text-decoration: none;margin-top:-0.5em;" 
+                         id="downvote-{{ topic.post__id }}">
+                        <div class="up">&#9650;</div>
+                      </a>
+                    </td>
+                    <td>
+                      <div class="home-post-count-upvote col-md-4" id="total-vote-{{ topic.post__id }}" role="button" style="margin-top:-0em;">
+                        {{ topic.post__num_upvotes|subtract:topic.post__num_downvotes }}
+                      </div>
+                    </td>
+                    <td>
+                      <a class="home-post-upvote col-md-4"
+                         href="javascript:void(0)"
+                         post-id="{{ topic.post__id }}"
+                         role="button"
+                         style="text-decoration: none;margin-top:-0.5em;" 
+                         id="upvote-{{ topic.post__id }}">
+                        <div class="down">&#9660;</div>
+                      </a>
+                    </td>
+                  </tr>
+                </table>
+              </div>
             </div>
-            <a class="home-post-upvote"
-               href="javascript:void(0)"
-               post-id="{{ topic.post__id }}"
-               role="button"
-               id="upvote-{{ topic.post__id }}">
-              <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-            </a>
-          </div>
         </div>
       </div>
     </div>

@@ -49,6 +49,13 @@
   <div class="body-wrapper">
     {% include 'main/includes/navbar.html' %}
     <div class="container" id="body-container">
+      {% if messages %}
+      <div id="flash-messages" class="messages">
+        {% for message in messages %}
+        <p class="alert alert-{{ message.tags }}">{{ message }}</p>
+        {% endfor %}
+      </div>
+      {% endif %}
       {% if not disable_breadcrumbs %}
       <ol id="breadcrumbs" class="breadcrumb">
         {% block breadcrumbs %}
@@ -64,13 +71,6 @@
           </style>
         {% endblock breadcrumbs %}
       </ol>
-      {% endif %}
-      {% if messages %}
-      <div id="flash-messages" class="messages">
-        {% for message in messages %}
-        <p class="alert alert-{{ message.tags }}">{{ message }}</p>
-        {% endfor %}
-      </div>
       {% endif %}
       {% block container %}
       {% endblock %}

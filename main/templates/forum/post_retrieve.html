@@ -96,23 +96,40 @@
               {% endif %}
             </div>
             <div class="post-vote-wrapper text-right col-md-2">
-              <a class="post-upvote col-md-4"
-                 href="javascript:void(0)"
-                 post-id="{{ post.id }}"
-                 role="button"
-                 id="upvote-{{ post.id }}">
-                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-              </a>
-              <div class="post-count-upvote col-md-4" id="total-vote-{{ post.id }}">
-                {{ post.total_votes }}
-              </div>
-              <a class="post-downvote col-md-4"
-                 href="javascript:void(0)"
-                 post-id="{{ post.id }}"
-                 role="button"
-                 id="downvote-{{ post.id }}">
-                <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
-              </a>
+              <table style="width:100%">
+                <colgroup>
+                  <col style="width:33%; text-align: center;"></col>
+                  <col style="width:33%; text-align: center;"></col>
+                  <col style="width:33%; text-align: center;"></col>
+                </colgroup>
+                <tr>
+                  <td>
+                    <a class="post-upvote col-md-4"
+                       href="javascript:void(0)"
+                       post-id="{{ post.id }}"
+                       role="button"
+                       style="text-decoration: none;" 
+                       id="upvote-{{ post.id }}">
+                      <div class="up">&#9650;</div>
+                    </a>
+                  </td>
+                  <td>
+                    <div class="post-count-upvote col-md-4" id="total-vote-{{ post.id }}">
+                      {{ post.total_votes }}
+                    </div>
+                  </td>
+                  <td>
+                    <a class="post-downvote col-md-4"
+                       href="javascript:void(0)"
+                       post-id="{{ post.id }}"
+                       role="button"
+                       style="text-decoration: none;"
+                       id="downvote-{{ post.id }}">
+                      <div class="down">&#9660;</div>
+                    </a>
+                  </td>
+                </tr>
+              </table>
             </div>
           </div>
         </div>
