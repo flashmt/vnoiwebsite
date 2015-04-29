@@ -1,35 +1,20 @@
+from django.db.models.signals import post_delete
 from django.db import models
 from django_bleach.models import BleachField
 from forum.models import Forum
 from vnoiusers.models import VnoiUser
 
 
-class SpojContest(models.Model):
+class SpojContestStandingTable(models.Model):
     code = models.CharField(max_length=20, null=False, blank=False)
     name = models.CharField(max_length=250, null=False, blank=False)
+    # Title of the standings (1d array, json)
+    title = models.TextField(null=True, blank=True)
+    # Content of the table (2d array, json)
+    content = models.TextField(null=True, blank=True)
 
     def __unicode__(self):
-        return self.name
-
-    def get_standings(self):
-        return self.participants.all().order_by('-get_total_score')
-
-
-class SpojContestParticipant(models.Model):
-    contest = models.ForeignKey(SpojContest, related_name='participants', null=False, blank=False)
-    # cache name
-    name = models.CharField(max_length=250, null=False, blank=False)
-
-    # calculate total score of last submissions (each problem)
-    def get_total_score(self):
-        calculated = []
-        total_score = 0
-        for submission in self.submissions.all().order_by('-submit_time'):
-            if submission.problem.code in calculated:
-                continue
-            calculated.append(submission.problem.code)
-            total_score = total_score + submission.get_actual_score(is_contest=True)
-        return total_score
+        return code + ' - ' + self.name
 
 
 class SpojProblemCategory(models.Model):
@@ -64,9 +49,7 @@ class SpojProblemLanguage(models.Model):
 
 class SpojProblem(models.Model):
     # contest that contain this problem
-    contest = models.ForeignKey(SpojContest, related_name='problems', null=True, blank=True, on_delete=models.SET_NULL)
-    # coefficient of this problem in the above contest
-    coefficient = models.FloatField(null=False, blank=False, default=1.0)
+    contest = models.ForeignKey(SpojContestStandingTable, related_name='problems', null=True, blank=True, on_delete=models.SET_NULL)
 
     category = models.ForeignKey(SpojProblemCategory, related_name='problems', null=True, blank=True, on_delete=models.SET_NULL)
     problem_id = models.IntegerField(null=False, blank=False)
@@ -104,7 +87,6 @@ class SpojProblem(models.Model):
 
 
 class SpojProblemSubmission(models.Model):
-    participant = models.ForeignKey(SpojContestParticipant, related_name='submissions', null=True, blank=True)
     problem = models.ForeignKey(SpojProblem, related_name='submissions', null=False, blank=False)
 
     voj_account = models.CharField(max_length=100, null=True, blank=True)
@@ -115,28 +97,19 @@ class SpojProblemSubmission(models.Model):
     verdict = models.CharField(max_length=200, null=True, blank=True)
     raw_score = models.FloatField(null=False, blank=False, default=0.0)
 
-    def get_actual_score(self, is_contest=False):
-        if is_contest:
-            if self.problem.category.name is 'acm':
-                # check error < 10^-4
-                if abs(self.raw_score - 1.0) < 1e-4:
-                    return self.problem.coefficient
-                else:
-                    return 0
-            else:
-                return self.raw_score * self.problem.coefficient
-        else:
-            if self.problem.category.name is 'acm':
-                # check error < 10^-4
-                if abs(self.raw_score - 1.0) < 1e-4:
-                    return self.raw_score * self.problem.score
-                else:
-                    return 0
-            else:
-                return self.raw_score * self.problem.score
-
 
 class SpojProblemForum(Forum):
     # Assumption: forum name must be equal to problem code.
     # This is used in get_absolute_url in forum.models.Forum
     problem = models.ForeignKey(SpojProblem, related_name='forum', null=True, blank=True, on_delete=models.SET_NULL)
+
+
+def delete_reverse(sender, **kwargs):
+    try:
+        if kwargs['instance'].a:
+            kwargs['instance'].a.delete()
+    except:
+        pass
+
+
+post_delete.connect(delete_reverse, sender=SpojContestStandingTable)
