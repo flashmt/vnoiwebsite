@@ -22,3 +22,7 @@ python manage.py createcachetable
 #./crawl_external_judge_data.sh
 
 python manage.py collectstatic
+
+echo "python manage.py test" > .git/hooks/pre-commit
+echo "exit \$?" >> .git/hooks/pre-commit
+chmod 755 .git/hooks/pre-commit
