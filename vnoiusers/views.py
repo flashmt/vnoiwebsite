@@ -119,7 +119,7 @@ def user_profile(request, user_id=None, username=None):
         user_id = user.pk
     else:
         user = get_object_or_404(User.objects.select_related("profile", "profile__avatar"), id=user_id)
-        username = user.username
+        return HttpResponseRedirect(reverse('user:profile', kwargs={'username': user.username}))
 
     is_friend = False
     if request.user.is_authenticated():
@@ -171,7 +171,7 @@ def user_upload_avatar(request, extra_context=None,
             user_profile = request.user.profile
             user_profile.avatar = avatar
             user_profile.save()
-            return HttpResponseRedirect(reverse('user:profile', args=(request.user.id, )))
+            return HttpResponseRedirect(reverse('user:profile', kwargs={'username': request.user.username}))
     context = {
         'avatar': avatar,
         'avatars': avatars,
@@ -190,7 +190,7 @@ def link_codeforces_account(request):
             vnoiuser = request.user.profile
             vnoiuser.codeforces_account = request.POST['username']
             vnoiuser.save()
-            return HttpResponseRedirect(reverse('user:profile', kwargs={'user_id': request.user.id}))
+            return HttpResponseRedirect(reverse('user:profile', kwargs={'username': request.user.username}))
         else:
             return render(request, template_name, {
                 'form': form,
@@ -207,7 +207,7 @@ def unlink_codeforces_account(request):
     vnoiuser = request.user.profile
     vnoiuser.codeforces_account = ''
     vnoiuser.save()
-    return HttpResponseRedirect(reverse('user:profile', kwargs={'user_id': request.user.id}))
+    return HttpResponseRedirect(reverse('user:profile', kwargs={'username': request.user.username}))
 
 
 @login_required
@@ -219,7 +219,7 @@ def link_voj_account(request):
             vnoiuser = request.user.profile
             vnoiuser.voj_account = request.POST['username']
             vnoiuser.save()
-            return HttpResponseRedirect(reverse('user:profile', kwargs={'user_id': request.user.id}))
+            return HttpResponseRedirect(reverse('user:profile', kwargs={'username': request.user.username}))
         else:
             return render(request, template_name, {
                 'form': form,
@@ -236,7 +236,7 @@ def unlink_voj_account(request):
     vnoiuser = request.user.profile
     vnoiuser.voj_account = ''
     vnoiuser.save()
-    return HttpResponseRedirect(reverse('user:profile', kwargs={'user_id': request.user.id}))
+    return HttpResponseRedirect(reverse('user:profile', kwargs={'username': request.user.username}))
 
 
 @login_required
@@ -326,7 +326,7 @@ def update_profile(request):
         form = UserProfileForm(request.POST, instance=request.user)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect(reverse('user:profile', kwargs={'user_id': request.user.id}))
+            return HttpResponseRedirect(reverse('user:profile', kwargs={'username': request.user.username}))
         else:
             return render(request, 'vnoiusers/update_profile.html', {
                 'form': form,
@@ -342,6 +342,7 @@ def update_profile(request):
 # - password_reset_confirm checks the link the user clicked and
 #   prompts for a new password
 # - password_reset_complete shows a success message for the above
+
 
 @csrf_protect
 def password_reset(request,

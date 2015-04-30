@@ -15,4 +15,3 @@ django-post_office
 python-dateutil
 requests_toolbelt
 coverage==3.7.1
-mock

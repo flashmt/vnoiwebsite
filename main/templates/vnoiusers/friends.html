@@ -14,7 +14,7 @@
         {% for friend in friends %}
           <tr>
             <td class="panel-body">{{ forloop.counter }}</td>
-            <td class=""><a href="{% url 'user:profile' friend.user.id %}">{{ friend.user.username }}</a></td>
+            <td class=""><a href="{% url 'user:profile' friend.user.username %}">{{ friend.user.username }}</a></td>
           </tr>
         {% endfor %}
       {% else %}
