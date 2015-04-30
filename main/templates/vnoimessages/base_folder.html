@@ -63,33 +63,33 @@
 {#</table>#}
 
 <div class = "panel panel-primary" id = "pm_message">
-  <div class="panel-heading">
-    <div class = "row">
-      <div class="col-md-1" style = "text-align: center">
-        Chọn
-      </div>
-      {% block pm_sender_header %}
-        <div class="col-md-2 msg-user">
-          <a href="{% postman_order_by sender %}">Người gửi</a>
-        </div>
-      {% endblock %}
-      {% block pm_recipient_header %}
-        <div class="col-md-2 msg-user">
-          <a href="{% postman_order_by recipient %}">Người nhận</a>
-        </div>
-      {% endblock %}
+  <table class="table table-bordered table-striped msg-folder-table panel panel-primary">
+    <thead class="panel-heading">
+      <tr>
+        <th class="col-md-1" style = "text-align: center">
+          Chọn
+        </th>
+        {% block pm_sender_header %}
+          <th class="col-md-2 msg-user">
+            <a href="{% postman_order_by sender %}">Người gửi</a>
+          </th>
+        {% endblock %}
+        {% block pm_recipient_header %}
+          <th class="col-md-2 msg-user">
+            <a href="{% postman_order_by recipient %}">Người nhận</a>
+          </th>
+        {% endblock %}
 
-      <div class="col-md-6">
-        <a href="{% postman_order_by subject %}">Chủ đề</a>
-      </div>
+        <th class="col-md-6">
+          <a href="{% postman_order_by subject %}">Chủ đề</a>
+        </th>
 
-      <div class="msg-date">
-        <a href="{% postman_order_by date %}">{% block pm_date %}Ngày gửi{% endblock %}</a>
-      </div>
-    </div>
-  </div>
-  <div>
-    <table class="table table-bordered table-striped msg-folder-table"><tbody>
+        <th class="msg-date">
+          <a href="{% postman_order_by date %}">{% block pm_date %}Ngày gửi{% endblock %}</a>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
       {% for message in pm_messages %}
         <tr class="msg-a-message">
           <td class="col-md-1">
@@ -123,9 +123,8 @@
           </td>
         </tr>
       {% endfor %}
-    </tbody></table>
-  </div>
-
+    </tbody>
+  </table>  
 </div>
 </form>
   {% block pm_by_modes %}<div id="pm_by_modes">
