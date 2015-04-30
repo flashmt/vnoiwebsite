@@ -71,7 +71,7 @@ class UserViewTest(TestCase):
 
     def test_load_profile(self):
         # Invalid profiles
-        response = self.client.get(reverse('user:profile', kwargs={'user_id': 999}))
+        response = self.client.get(reverse('user:profile', kwargs={'username': 999}))
         self.assertEqual(response.status_code, 404)
 
         # Note: since reverse will fail when user ID is not an integer, we must hard code the URL here
@@ -79,13 +79,13 @@ class UserViewTest(TestCase):
 
         # Not logged in - load profiles
         # Admin profile
-        response = self.client.get(reverse('user:profile', kwargs={'user_id': self.user_admin.id}))
+        response = self.client.get(reverse('user:profile', kwargs={'username': self.user_admin.id}))
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.context['user'].id, self.user_admin.id)
         self.assertFalse(response.context['is_friend'])
 
         # Load vnoiuser profile
-        response = self.client.get(reverse('user:profile', kwargs={'user_id': self.user_vnoi.id}))
+        response = self.client.get(reverse('user:profile', kwargs={'username': self.user_vnoi.id}))
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.context['user'].id, self.user_vnoi.id)
         self.assertFalse(response.context['is_friend'])
@@ -94,20 +94,20 @@ class UserViewTest(TestCase):
         self.login(self.user_admin)
 
         # Admin profile
-        response = self.client.get(reverse('user:profile', kwargs={'user_id': self.user_admin.id}))
+        response = self.client.get(reverse('user:profile', kwargs={'username': self.user_admin.id}))
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.context['user'].id, self.user_admin.id)
         # Cannot be friend with himself
         self.assertFalse(response.context['is_friend'])
 
         # Load vnoiuser profile
-        response = self.client.get(reverse('user:profile', kwargs={'user_id': self.user_vnoi.id}))
+        response = self.client.get(reverse('user:profile', kwargs={'username': self.user_vnoi.id}))
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.context['user'].id, self.user_vnoi.id)
         self.assertTrue(response.context['is_friend'])
 
         # Load a friend profile
-        response = self.client.get(reverse('user:profile', kwargs={'user_id': self.user_vnoi2.id}))
+        response = self.client.get(reverse('user:profile', kwargs={'username': self.user_vnoi2.id}))
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.context['user'].id, self.user_vnoi2.id)
         self.assertFalse(response.context['is_friend'])
@@ -206,7 +206,7 @@ class UserViewTest(TestCase):
 
         # User should not be able to go to unlink CF (since he has not linked his account)
         response = self.client.get(reverse('user:unlink_codeforces'))
-        self.assertRedirects(response, reverse('user:profile', kwargs={'user_id': self.user_vnoi.id}))
+        self.assertRedirects(response, reverse('user:profile', kwargs={'username': self.user_vnoi.id}))
 
         # Link CF account and try again
         self.user_vnoi.profile.codeforces_account = 'abc'
@@ -218,7 +218,7 @@ class UserViewTest(TestCase):
 
         # Unlink CF account!
         response = self.client.get(reverse('user:unlink_codeforces'))
-        self.assertRedirects(response, reverse('user:profile', kwargs={'user_id': self.user_vnoi.id}))
+        self.assertRedirects(response, reverse('user:profile', kwargs={'username': self.user_vnoi.id}))
 
         # Verify again that the CF account is gone
         tmp = User.objects.get(username='vnoiuser')
@@ -232,7 +232,7 @@ class UserViewTest(TestCase):
         # Mock the form check to return True --> link account success
         mock_is_valid.return_value = True
         response = self.client.post(reverse('user:link_codeforces'), {'username': 'RR', 'password': '12345'})
-        self.assertRedirects(response, reverse('user:profile', kwargs={'user_id': self.user_vnoi.id}))
+        self.assertRedirects(response, reverse('user:profile', kwargs={'username': self.user_vnoi.id}))
 
         # Logout & use different account
         self.client.logout()
@@ -254,7 +254,7 @@ class UserViewTest(TestCase):
 
         # User cannot go to unlink VOJ because he has not linked VOJ account
         response = self.client.get(reverse('user:unlink_voj'))
-        self.assertRedirects(response, reverse('user:profile', kwargs={'user_id': self.user_vnoi.id}))
+        self.assertRedirects(response, reverse('user:profile', kwargs={'username': self.user_vnoi.id}))
 
         # Link VOJ account and try again
         self.user_vnoi.profile.voj_account = 'abc'
@@ -266,7 +266,7 @@ class UserViewTest(TestCase):
 
         # Unlink VOJ account!
         response = self.client.get(reverse('user:unlink_voj'))
-        self.assertRedirects(response, reverse('user:profile', kwargs={'user_id': self.user_vnoi.id}))
+        self.assertRedirects(response, reverse('user:profile', kwargs={'username': self.user_vnoi.id}))
 
         # Verify again that the VOJ account is gone
         tmp = User.objects.get(username='vnoiuser')
@@ -280,7 +280,7 @@ class UserViewTest(TestCase):
         # Mock form valid check to True
         mock_is_valid.return_value = True
         response = self.client.post(reverse('user:link_voj'), {'username': 'RR', 'password': '12345'})
-        self.assertRedirects(response, reverse('user:profile', kwargs={'user_id': self.user_vnoi.id}))
+        self.assertRedirects(response, reverse('user:profile', kwargs={'username': self.user_vnoi.id}))
 
         # Logout & use different account
         self.client.logout()
@@ -302,25 +302,25 @@ class UserViewTest(TestCase):
         self.login(self.user_admin)
 
         # Load vnoiuser account to verify that we are currently friend
-        response = self.client.get(reverse('user:profile', kwargs={'user_id': self.user_vnoi.id}))
+        response = self.client.get(reverse('user:profile', kwargs={'username': self.user_vnoi.id}))
         self.assertEqual(response.status_code, 200)
         self.assertTrue(response.context['is_friend'])
 
         # Unfriend!
-        response = self.client.get(reverse('user:remove_friend', kwargs={'user_id': self.user_vnoi.id}))
-        self.assertRedirects(response, reverse('user:profile', kwargs={'user_id': self.user_vnoi.id}))
+        response = self.client.get(reverse('user:remove_friend', kwargs={'username': self.user_vnoi.username}))
+        self.assertRedirects(response, reverse('user:profile', kwargs={'username': self.user_vnoi.username}))
 
         # Verify that we are no longer friends
-        response = self.client.get(reverse('user:profile', kwargs={'user_id': self.user_vnoi.id}))
+        response = self.client.get(reverse('user:profile', kwargs={'username': self.user_vnoi.username}))
         self.assertEqual(response.status_code, 200)
         self.assertFalse(response.context['is_friend'])
 
         # Unfriend again (this should not have any effect)
-        response = self.client.get(reverse('user:remove_friend', kwargs={'user_id': self.user_vnoi.id}))
-        self.assertRedirects(response, reverse('user:profile', kwargs={'user_id': self.user_vnoi.id}))
+        response = self.client.get(reverse('user:remove_friend', kwargs={'username': self.user_vnoi.username}))
+        self.assertRedirects(response, reverse('user:profile', kwargs={'username': self.user_vnoi.username}))
 
         # Verify that we are still not friends
-        response = self.client.get(reverse('user:profile', kwargs={'user_id': self.user_vnoi.id}))
+        response = self.client.get(reverse('user:profile', kwargs={'username': self.user_vnoi.username}))
         self.assertEqual(response.status_code, 200)
         self.assertFalse(response.context['is_friend'])
 
@@ -328,45 +328,45 @@ class UserViewTest(TestCase):
         self.login(self.user_admin)
 
         # Load vnoiuser2 account to verify that we are currently friend
-        response = self.client.get(reverse('user:profile', kwargs={'user_id': self.user_vnoi2.id}))
+        response = self.client.get(reverse('user:profile', kwargs={'username': self.user_vnoi2.username}))
         self.assertEqual(response.status_code, 200)
         self.assertFalse(response.context['is_friend'])
 
         # Add friend!
-        response = self.client.get(reverse('user:add_friend', kwargs={'user_id': self.user_vnoi2.id}))
-        self.assertRedirects(response, reverse('user:profile', kwargs={'user_id': self.user_vnoi2.id}))
+        response = self.client.get(reverse('user:add_friend', kwargs={'username': self.user_vnoi2.username}))
+        self.assertRedirects(response, reverse('user:profile', kwargs={'username': self.user_vnoi2.username}))
 
         # Verify that we are no longer friends
-        response = self.client.get(reverse('user:profile', kwargs={'user_id': self.user_vnoi2.id}))
+        response = self.client.get(reverse('user:profile', kwargs={'username': self.user_vnoi2.username}))
         self.assertEqual(response.status_code, 200)
         self.assertTrue(response.context['is_friend'])
 
         # Add friend again (this should not have any effect)
-        response = self.client.get(reverse('user:add_friend', kwargs={'user_id': self.user_vnoi2.id}))
-        self.assertRedirects(response, reverse('user:profile', kwargs={'user_id': self.user_vnoi2.id}))
+        response = self.client.get(reverse('user:add_friend', kwargs={'username': self.user_vnoi2.username}))
+        self.assertRedirects(response, reverse('user:profile', kwargs={'username': self.user_vnoi2.username}))
 
         # Verify that we are still not friends
-        response = self.client.get(reverse('user:profile', kwargs={'user_id': self.user_vnoi2.id}))
+        response = self.client.get(reverse('user:profile', kwargs={'username': self.user_vnoi2.username}))
         self.assertEqual(response.status_code, 200)
         self.assertTrue(response.context['is_friend'])
 
     def test_add_friend_self(self):
         self.login(self.user_vnoi)
 
-        response = self.client.get(reverse('user:add_friend', kwargs={'user_id': self.user_vnoi.id}))
-        self.assertRedirects(response, reverse('user:profile', kwargs={'user_id': self.user_vnoi.id}))
+        response = self.client.get(reverse('user:add_friend', kwargs={'username': self.user_vnoi.username}))
+        self.assertRedirects(response, reverse('user:profile', kwargs={'username': self.user_vnoi.username}))
 
         # Verify not friend
-        response = self.client.get(reverse('user:profile', kwargs={'user_id': self.user_vnoi.id}))
+        response = self.client.get(reverse('user:profile', kwargs={'username': self.user_vnoi.username}))
         self.assertEqual(response.status_code, 200)
         self.assertFalse(response.context['is_friend'])
 
         # Also test for remove friend
-        response = self.client.get(reverse('user:remove_friend', kwargs={'user_id': self.user_vnoi.id}))
-        self.assertRedirects(response, reverse('user:profile', kwargs={'user_id': self.user_vnoi.id}))
+        response = self.client.get(reverse('user:remove_friend', kwargs={'username': self.user_vnoi.username}))
+        self.assertRedirects(response, reverse('user:profile', kwargs={'username': self.user_vnoi.username}))
 
         # Verify not friend
-        response = self.client.get(reverse('user:profile', kwargs={'user_id': self.user_vnoi.id}))
+        response = self.client.get(reverse('user:profile', kwargs={'username': self.user_vnoi.username}))
         self.assertEqual(response.status_code, 200)
         self.assertFalse(response.context['is_friend'])
 

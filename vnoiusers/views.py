@@ -113,8 +113,14 @@ def register_confirm(request, activation_key):
     return HttpResponseRedirect(reverse('user:login'))
 
 
-def user_profile(request, user_id):
-    user = get_object_or_404(User.objects.select_related("profile", "profile__avatar"), pk=user_id)
+def user_profile(request, user_id=None, username=None):
+    if username is not None:
+        user = get_object_or_404(User.objects.select_related("profile", "profile__avatar"), username=username)
+        user_id = user.pk
+    else:
+        user = get_object_or_404(User.objects.select_related("profile", "profile__avatar"), id=user_id)
+        username = user.username
+
     is_friend = False
     if request.user.is_authenticated():
         authenticated_user = request.user.profile
@@ -234,13 +240,16 @@ def unlink_voj_account(request):
 
 
 @login_required
-def add_friend(request, user_id):
-    user_id = int(user_id)
-
+def add_friend(request, user_id=None, username=None):
     # If the other user does not exist
-    other_user = get_object_or_404(User, pk=user_id)
+    if username is not None:
+        other_user = get_object_or_404(User, username=username)
+        user_id = other_user.pk
+    else:
+        other_user = get_object_or_404(User, id=user_id)
+        username = other_user.username
 
-    redirect_obj = HttpResponseRedirect(reverse('user:profile', kwargs={'user_id': user_id}))
+    redirect_obj = HttpResponseRedirect(reverse('user:profile', kwargs={'username': username}))
 
     if user_id == request.user.id:
         # Two users are the same
@@ -254,19 +263,23 @@ def add_friend(request, user_id):
             return redirect_obj
 
         vnoi_user.friends.add(other_user.profile)
+        print other_user.profile.id
         messages.success(request, 'Kết bạn thành công.')
         vnoi_user.save()
     return redirect_obj
 
 
 @login_required
-def remove_friend(request, user_id):
-    user_id = int(user_id)
-
+def remove_friend(request, user_id=None, username=None):
     # If the other user does not exist
-    other_user = get_object_or_404(User, pk=user_id)
+    if username is not None:
+        other_user = get_object_or_404(User, username=username)
+        user_id = other_user.pk
+    else:
+        other_user = get_object_or_404(User, id=user_id)
+        username = other_user.username
 
-    redirect_obj = HttpResponseRedirect(reverse('user:profile', kwargs={'user_id': user_id}))
+    redirect_obj = HttpResponseRedirect(reverse('user:profile', kwargs={'username': username}))
 
     if user_id == request.user.id:
         # Two users are the same

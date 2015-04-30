@@ -42,13 +42,13 @@
               Gửi tin nhắn
             </a>
             {% if is_friend %}
-              <a class="btn btn-default" href="{% url 'user:remove_friend' user.id %}" role="button">
+              <a class="btn btn-default" href="{% url 'user:remove_friend' user.username %}" role="button">
                 <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
                 Hủy kết bạn
               </a>
             {% else %}
               <a class="btn btn-default"
-                 href="{% url 'user:add_friend' user.id %}" role="button">
+                 href="{% url 'user:add_friend' user.username %}" role="button">
                  <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
                 Thêm bạn
               </a>
