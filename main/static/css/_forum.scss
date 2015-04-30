@@ -120,6 +120,17 @@
   	text-shadow: 0px 2px 2px black;
 }
 
+//Already voted color
+.voted {
+	.up {
+		color:#17E937;
+	}
+
+	.down {
+		color:red;
+	}
+}
+
 .post-count-upvote {
 	text-align: center;
 }
