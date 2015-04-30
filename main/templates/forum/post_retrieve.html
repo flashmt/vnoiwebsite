@@ -54,11 +54,13 @@
         <div class="panel-footer">
           <div class="row">
             <div class="col-md-10 text-left">
-              <a class="post-reply" href="javascript:void(0)"
-                 role="button" post-id="{{ post.id }}"
-                 post-reply-url="{% url 'forum:post_create' forum.id topic.id post.id %}">
-                Trả lời
-              </a>
+              {% ifhasperm "post_permission.can_create_post" request.user %}
+                <a class="post-reply" href="javascript:void(0)"
+                   role="button" post-id="{{ post.id }}"
+                   post-reply-url="{% url 'forum:post_create' forum.id topic.id post.id %}">
+                  Trả lời
+                </a>
+              {% endifhasperm %}
               {% ifhasperm "post_permission.can_update_post" request.user post %}
                 &nbsp;|&nbsp;
                 <a class="post-edit" href="{% url 'forum:post_update' forum.id topic.id post.id %}"
@@ -108,7 +110,7 @@
                        href="javascript:void(0)"
                        post-id="{{ post.id }}"
                        role="button"
-                       style="text-decoration: none;" 
+                       style="text-decoration: none;"
                        id="upvote-{{ post.id }}">
                       <div class="up">&#9650;</div>
                     </a>

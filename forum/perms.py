@@ -26,7 +26,7 @@ class PostPermission(permissions.BasePermission):
 
     def can_create_post(self):
         # Authenticated User can create post
-        return True
+        return self.user.is_authenticated()
 
     def can_create_library_post(self):
         return is_admin(self.user)

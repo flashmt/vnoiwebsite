@@ -65,6 +65,40 @@ def verify_content(texts)
   end
 end
 
+# Check if the page does not contain any string in texts.
+# texts can be either:
+# - single string
+# - array of string
+# - hash (in this case, the values will be check)
+def verify_no_content(texts)
+  if texts.is_a? Array
+    texts.each { |text|
+      puts "Find string: '#{text}'"
+      expect(page).to_not have_content(text)
+    }
+  elsif texts.is_a? Hash
+    texts.each { |_, text|
+      puts "Find string: '#{text}'"
+      expect(page).to_not have_content(text)
+    }
+  elsif texts.is_a? String
+    puts "Find string: '#{texts}'"
+    expect(page).to_not have_content(texts)
+  else
+    puts "Method verify_content not support type #{texts.class}"
+    exit 1
+  end
+end
+
+
+def fill_in_ckeditor(locator, opts)
+  content = opts.fetch(:with).to_json
+  page.execute_script <<-SCRIPT
+    CKEDITOR.instances['#{locator}'].setData(#{content});
+    $('textarea##{locator}').text(#{content});
+  SCRIPT
+end
+
 # Fill in a form
 # Form must be a hash, with:
 # - Keys: the keys to identify the DOM elements
@@ -75,7 +109,11 @@ end
 def fill_form(form, values)
   form.each do |key, value|
     expect(page).to have_content(value)
-    fill_in key, with: values[key]
+    if key === :id_content
+      fill_in_ckeditor 'id_content', with: values[key]
+    else
+      fill_in key, with: values[key]
+    end
   end
 end
 
@@ -124,14 +162,6 @@ def register(username, email, password, password2: nil,
     fill_in 'id_password2', with: password2
     click_on 'OK'
   end
-end
-
-def fill_in_ckeditor(locator, opts)
-  content = opts.fetch(:with).to_json
-  page.execute_script <<-SCRIPT
-    CKEDITOR.instances['#{locator}'].setData(#{content});
-    $('textarea##{locator}').text(#{content});
-  SCRIPT
 end
 
 def verify_flash_messages(texts)

@@ -1,3 +1,5 @@
+# -*- encoding: utf-8 -*-
+
 from datetime import datetime
 from django import forms
 from forum.models import Post, Topic
@@ -30,6 +32,8 @@ class PostCreateForm(PostForm):
 
     def __init__(self, *args, **kwargs):
         super(PostCreateForm, self).__init__(*args, **kwargs)
+        self.fields['title'].label = u'Chủ đề'
+        self.fields['content'].label = u'Nội dung'
         if self.topic:
             # If this post is not a topic post, title is not required
             self.fields['title'].required = False
