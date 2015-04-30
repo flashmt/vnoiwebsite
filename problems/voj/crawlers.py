@@ -5,10 +5,13 @@ import requests
 import html5lib
 import dateutil.parser
 import copy
+import json
 
 from bs4 import BeautifulSoup
 from problems.models import SpojProblem
 from problems.models import SpojProblemLanguage
+
+from problems.models import SpojContestStandingTable
 
 
 PROBLEM_RE = re.compile(
@@ -61,12 +64,20 @@ def get_problem_submit_url(problem_code):
     return '%ssubmit/%s' % (VOJ_BASE_URL, problem_code)
 
 
+def get_contest_rank_url(contest_id):
+    return '%s%s/ranks' % (VOJ_BASE_URL, contest_id)
+
+
 def get_problem_html(problem_code):
     return get_html(get_problem_url(problem_code))
 
 
 def get_problem_rank_html(problem_code):
     return get_html(get_problem_rank_url(problem_code))
+
+
+def get_contest_rank_html(contest_id):
+    return get_html(get_contest_rank_url(contest_id))
 
 
 # Return: problem statement in HTML
@@ -174,6 +185,40 @@ def get_problem_languages(problem_code):
     return languages
 
 
+def get_problem(problem_code, problem_id, problem_name, category):
+    # Check if problem is exists in database
+    problem = SpojProblem.objects.filter(code=problem_code)
+    if len(problem) == 0:
+        problem = SpojProblem.objects.create(
+            code=problem_code,
+            problem_id=problem_id,
+            name=problem_name,
+            category=category
+        )
+        need_update_statement = True
+    else:
+        need_update_statement = False
+        problem = problem[0]
+
+    # Crawling problem statement
+    if need_update_statement:
+        prob_html = get_problem_html(problem_code)
+        problem.author = get_problem_author(prob_html)
+        problem.created_at = get_problem_created_date(prob_html)
+        problem.time_limit = get_problem_time_limit(prob_html)
+        problem.source_limit = get_problem_source_limit(prob_html)
+        problem.memory_limit = get_problem_memory_limit(prob_html)
+        problem.problem_source = get_problem_source(prob_html)
+        problem.statement = get_problem_statement(prob_html)
+
+        languages = get_problem_languages(problem_code)
+        for language in languages:
+            lang = SpojProblemLanguage.objects.filter(lang_id=int(language["id"]))
+            if len(lang) is not 0:
+                problem.allowed_languages.add(lang[0])
+    return problem
+
+
 def get_problem_codes_from_category(category):
     result = []
 
@@ -194,47 +239,15 @@ def get_problem_codes_from_category(category):
 
             if matcher:
                 data = matcher.groupdict()
-                problem_code = data['code']
-                print 'Crawling %s' % problem_code
+                print 'Crawling %s' % data['code']
 
-                # Check if problem is exists in database
-                problem = SpojProblem.objects.filter(code=problem_code)
-                if len(problem) == 0:
-                    problem = SpojProblem.objects.create(
-                        code=problem_code,
-                        problem_id=data['id'],
-                        name=data['name'],
-                        category=category
-                    )
-                    need_update_statement = True
-                else:
-                    need_update_statement = False
-                    problem = problem[0]
-
-                # Crawling problem statement
-                # need_update_statement = True
-                if need_update_statement:
-                    prob_html = get_problem_html(problem_code)
-                    problem.author = get_problem_author(prob_html)
-                    problem.created_at = get_problem_created_date(prob_html)
-                    problem.time_limit = get_problem_time_limit(prob_html)
-                    problem.source_limit = get_problem_source_limit(prob_html)
-                    problem.memory_limit = get_problem_memory_limit(prob_html)
-                    problem.problem_source = get_problem_source(prob_html)
-                    problem.statement = get_problem_statement(prob_html)
-
-                    languages = get_problem_languages(problem_code)
-                    for language in languages:
-                        lang = SpojProblemLanguage.objects.filter(lang_id=int(language["id"]))
-                        if len(lang) is not 0:
-                            problem.allowed_languages.add(lang[0])
+                problem = get_problem(problem_code=data['code'], problem_id=data['id'], problem_name=data['name'], category=category)
 
                 if category.name == 'acm':
                     problem.accept_count = data['ac_count']
                     problem.accept_rate = data['ac_rate']
                     problem.score = round(80.0 / (40 + int(data['ac_count'])), 1)
 
-                problem.save()
                 time.sleep(1)
 
                 result.append(problem)
@@ -242,6 +255,54 @@ def get_problem_codes_from_category(category):
         page_id += 1
 
     return result
+
+
+# download a contest standings and save to Database (overwrite the old one)
+def crawl_old_voj_contest(contest_id):
+    soup = get_contest_rank_html(contest_id)
+    soup = BeautifulSoup(soup.find("td", {"class": "content"}).prettify())
+    titles = soup.find_all("h4")[1:]
+    tables = soup.find_all("table", {"class": "problems"})[1:]
+
+    size = len(titles)
+
+    for i in range(0, size):
+        # Ignore empty tables
+        if len(titles[i].text.strip()) == 0:
+            continue
+
+        print '%s' % (titles[i].text.strip())
+
+        spoj_table = SpojContestStandingTable.objects.filter(code=contest_id, name=titles[i].text.strip())
+        if len(spoj_table) > 0:
+            spoj_table.delete()
+        spoj_table = SpojContestStandingTable.objects.create(code=contest_id, name=titles[i].text.strip())
+
+        table_soup = BeautifulSoup(tables[i].prettify())
+
+        title_arr = []
+        titles_soup = BeautifulSoup(table_soup.find("tr", {"class": "headerrow"}).prettify())
+        titles_soup = titles_soup.find_all("th")
+        for title in titles_soup:
+            temp = title.text.split()
+            title_arr.append(temp[0])
+        spoj_table.title = json.dumps(title_arr)
+
+        content_arr = []
+        rows = table_soup.find_all("tr", {"class": "problemrow"})
+        for row in rows:
+            row_arr = []
+
+            row_soup = BeautifulSoup(row.prettify())
+            cells = row.find_all("td", {"class": "mini"})
+
+            for cell in cells:
+                row_arr.append(cell.text.strip())
+
+            content_arr.append(row_arr)
+        spoj_table.content = json.dumps(content_arr)
+
+        spoj_table.save()
 
 
 # save all languages and save to database
