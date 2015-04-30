@@ -7,7 +7,11 @@
     {% if form_action %} action="{{ form_action }}" {% endif %}>
   {% bootstrap_form form layout="horizontal" %}
   {% csrf_token %}
-  {% buttons submit="OK" reset="Reset" layout="horizontal"%}{% endbuttons %}
+  {% if reset_button %}
+    {% buttons submit="OK" reset="Reset" layout="horizontal"%}{% endbuttons %}
+  {% else %}
+    {% buttons submit="OK" layout="horizontal"%}{% endbuttons %}
+  {% endif %}
 </form>
 
 {% endblock formbody %}
