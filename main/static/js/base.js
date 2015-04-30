@@ -36,6 +36,7 @@ function voteSuccess(post_id, type) {
 	var otherButtonId = (type == 'd' ? 'upvote' : 'downvote') + '-' + post_id;
 	var buttonId = (type == 'u' ? 'upvote' : 'downvote') + '-' + post_id;
 	$('#' + buttonId).attr('disabled', true);
+	$('#' + buttonId).addClass('voted');
 	$('#' + otherButtonId).hide();
 }
 
