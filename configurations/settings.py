@@ -57,6 +57,7 @@ INSTALLED_APPS = (
     'vnoimessages',
     'authority',
     'problems',
+    'contests',
     'debug_toolbar',
     'avatar',
     'django_bleach',

@@ -257,54 +257,6 @@ def get_problem_codes_from_category(category):
     return result
 
 
-# download a contest standings and save to Database (overwrite the old one)
-def crawl_old_voj_contest(contest_id):
-    soup = get_contest_rank_html(contest_id)
-    soup = BeautifulSoup(soup.find("td", {"class": "content"}).prettify())
-    titles = soup.find_all("h4")[1:]
-    tables = soup.find_all("table", {"class": "problems"})[1:]
-
-    size = len(titles)
-
-    for i in range(0, size):
-        # Ignore empty tables
-        if len(titles[i].text.strip()) == 0:
-            continue
-
-        print '%s' % (titles[i].text.strip())
-
-        spoj_table = SpojContestStandingTable.objects.filter(code=contest_id, name=titles[i].text.strip())
-        if len(spoj_table) > 0:
-            spoj_table.delete()
-        spoj_table = SpojContestStandingTable.objects.create(code=contest_id, name=titles[i].text.strip())
-
-        table_soup = BeautifulSoup(tables[i].prettify())
-
-        title_arr = []
-        titles_soup = BeautifulSoup(table_soup.find("tr", {"class": "headerrow"}).prettify())
-        titles_soup = titles_soup.find_all("th")
-        for title in titles_soup:
-            temp = title.text.split()
-            title_arr.append(temp[0])
-        spoj_table.title = json.dumps(title_arr)
-
-        content_arr = []
-        rows = table_soup.find_all("tr", {"class": "problemrow"})
-        for row in rows:
-            row_arr = []
-
-            row_soup = BeautifulSoup(row.prettify())
-            cells = row.find_all("td", {"class": "mini"})
-
-            for cell in cells:
-                row_arr.append(cell.text.strip())
-
-            content_arr.append(row_arr)
-        spoj_table.content = json.dumps(content_arr)
-
-        spoj_table.save()
-
-
 # save all languages and save to database
 def save_all_languages():
     url = VOJ_TEST_URL

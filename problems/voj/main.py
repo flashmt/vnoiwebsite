@@ -8,13 +8,10 @@ if __name__ == "__main__":
 
 from problems.voj.crawlers import get_problem_codes_from_category
 from problems.voj.crawlers import save_all_languages
-from problems.voj.crawlers import crawl_old_voj_contest
 from problems.models import SpojProblemCategory
 
 if __name__ == "__main__":
     application = get_wsgi_application()
-    crawl_old_voj_contest('VO12')
-    quit()
 
     problem_category_acm = SpojProblemCategory.objects.filter(name='acm')
     if len(problem_category_acm) == 0:
