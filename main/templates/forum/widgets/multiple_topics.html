@@ -50,12 +50,12 @@
                   </colgroup>
                   <tr>
                     <td>
-                      <a class="home-post-downvote col-md-4"
+                      <a class="home-post-upvote col-md-4"
                          href="javascript:void(0)"
                          post-id="{{ topic.post__id }}"
                          role="button"
                          style="text-decoration: none;margin-top:-0.5em;" 
-                         id="downvote-{{ topic.post__id }}">
+                         id="upvote-{{ topic.post__id }}">
                         <div class="up">&#9650;</div>
                       </a>
                     </td>
@@ -65,12 +65,12 @@
                       </div>
                     </td>
                     <td>
-                      <a class="home-post-upvote col-md-4"
+                      <a class="home-post-downvote col-md-4"
                          href="javascript:void(0)"
                          post-id="{{ topic.post__id }}"
                          role="button"
                          style="text-decoration: none;margin-top:-0.5em;" 
-                         id="upvote-{{ topic.post__id }}">
+                         id="downvote-{{ topic.post__id }}">
                         <div class="down">&#9660;</div>
                       </a>
                     </td>
