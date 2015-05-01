@@ -1,0 +1,32 @@
+{% extends 'main/base.html' %}
+
+{% block navbar-highlight %}navbar_problems{% endblock navbar-highlight %}
+
+{% block breadcrumbs %}
+  <li><a href="{% url 'problems:list' %}">Danh sách bài tập</a></li>
+  <li>{{ problem.code }}</li>
+{% endblock breadcrumbs %}
+
+{% block container %}
+  <div class="row" style="margin-left:0">
+    <div class="col-md-2">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <div class="nav nav-pills nav-stacked">
+            {% block problem_menu %}
+              <li role="presentation" class="{% block left-menu-show %}{% endblock %} prob-menu-item" style="margin-top: -15px"> <a href="{% url 'problems:show' problem.code %}"> Đề bài </a> </li>
+              <li role="presentation" class="{% block left-menu-submit %}{% endblock %} prob-menu-item"> <a href="{% url 'problems:submit' problem.code %}"> Nộp bài </a>  </li>
+              <li role="presentation" class="{% block left-menu-status %}{% endblock %} prob-menu-item"> <a href="{% url 'problems:status' problem.code %}"> Các bài nộp </a>  </li>
+              <li role="presentation" class="{% block left-menu-rank %}{% endblock %} prob-menu-item"> <a href="{% url 'problems:rank' problem.code %}"> Xếp hạng </a> </li>
+              <li role="presentation" class="{% block left-menu-discuss %}{% endblock %} prob-menu-item" style="margin-bottom: -15px"> <a href="{% url 'problems:discuss' problem.code %}"> Thảo luận </a>  </li>
+            {% endblock problem_menu %}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-10">
+      {% block problem-content %}
+      {% endblock problem-content %}
+    </div>
+  </div>
+{% endblock container %}

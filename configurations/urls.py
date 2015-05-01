@@ -23,6 +23,7 @@ urlpatterns = patterns(
     # url(r'^postman/', include('postman.urls')),
     url(r'^authority/', include('authority.urls')),
     url(r'^problems/', include('problems.urls', namespace='problems')),
+    url(r'^contests/', include('contests.urls', namespace='contests')),
     url(r'^library/', include('vnoilib.urls', namespace='library')),
     # url(r'^avatar/', include('avatar.urls')),
 )

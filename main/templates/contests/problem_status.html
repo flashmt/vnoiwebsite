@@ -1,0 +1,80 @@
+{% extends 'problems/problem_base.html' %}
+
+{% block left-menu-status %}active{% endblock %}
+
+{% block breadcrumbs %}
+  <li><a href="{% url 'problems:list' %}">Danh sách bài tập</a></li>
+  <li><a href="{% url 'problems:show' problem.code %}">{{ problem.code }}</a></li>
+  <li>Danh sách bài nộp</li>
+{% endblock breadcrumbs %}
+
+{% block problem-content %}
+<div class="panel panel-primary">
+  <table class="table table-striped table-bordered panel panel-primary">
+    <thead class="panel-heading">
+      <tr>
+      	<th>STT</th>
+        <th>Username</th>
+        <th>Score</th>
+        <th>Time</th>
+        <th>Memory</th>
+      </tr>
+    </thead>
+    <tbody>
+      {#{% for submission in submissions %}#}
+        <tr>
+          <td class="col-md-1">
+            1
+          </td>
+          <td class="col-md-5">
+            iamquang95 {# submission.getUsername #}
+          </td>
+          <td class="col-md-2 prob-accept-sub">
+          	100 {# submission.getScore #}
+          </td>
+          <td class="col-md-2">
+          	0.00s {# submission.getTime #}
+          </td>
+          <td class="col-md-2">
+          	15MB {# submission.getMem #}
+          </td>
+        </tr>
+        <tr>
+          <td class="col-md-1">
+            2
+          </td>
+          <td class="col-md-5">
+            iamquang95 {# submission.getUsername #}
+          </td>
+          <td class="col-md-2 prob-wa-sub">
+            0 {# submission.getScore #}
+          </td>
+          <td class="col-md-2">
+            0.00s {# submission.getTime #}
+          </td>
+          <td class="col-md-2">
+            15MB {# submission.getMem #}
+          </td>
+        </tr>
+        <tr>
+          <td class="col-md-1">
+            3
+          </td>
+          <td class="col-md-5">
+            iamquang95 {# submission.getUsername #}
+          </td>
+          <td class="col-md-2 prob-50-accpet-sub">
+            15 {# submission.getScore #}
+          </td>
+          <td class="col-md-2">
+            0.00s {# submission.getTime #}
+          </td>
+          <td class="col-md-2">
+            15MB {# submission.getMem #}
+          </td>
+        </tr>
+      {# {% endfor %} #}
+    </tbody>
+  </table>
+</div>
+{% endblock problem-content %}

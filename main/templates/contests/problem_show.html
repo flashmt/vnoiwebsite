@@ -1,0 +1,42 @@
+{% extends 'problems/problem_base.html' %}
+
+{% block left-menu-show %}active{% endblock %}
+
+{% block problem-content %}
+  <div class="col-md-10">
+    <h2 class="prob-name">{{ problem.name }} ( {{problem.code}} )</h2>
+    <strong>Giới hạn</strong>
+    <ul>
+      <li class="prob-info">
+        <strong>Thời gian:</strong>
+        <span class="prob-detail-info">{{ problem.time_limit }}s</span>
+      </li>
+      <li class="prob-info">
+        <strong>Bộ nhớ:</strong>
+        <span class="prob-detail-info">{{ problem.memory_limit }}MB</span>
+      </li>
+      <li class="prob-info">
+        <strong>Mã nguồn:</strong>
+        <span class="prob-detail-info">{{ problem.source_limit }} bytes</span>
+      </li>
+    </ul>
+    <p>{{ problem.statement|safe }}</p>
+    <hr/>
+    <ul>
+      <li class="prob-info">
+        <strong>Người up:</strong>
+        <span class="prob-detail-info">{{ problem.author }}</span>
+      </li>
+      <li class="prob-info">
+        <strong>Ngôn ngữ cho phép:</strong>
+        <span class="prob-detail-info">{# problem.allowed_languages #}</span>
+      </li>
+      {% if problem.problem_source %}
+        <li class="prob-info">
+          <strong>Nguồn bài:</strong>
+          <span class="prob-detail-info">{{ problem.problem_source }}</span>
+        </li>
+      {% endif %}
+    </ul>
+  </div>
+{% endblock problem-content %}

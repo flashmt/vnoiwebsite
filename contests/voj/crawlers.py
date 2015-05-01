@@ -9,7 +9,7 @@ import json
 
 from bs4 import BeautifulSoup
 
-from contests.models import NonStandardContestStandingTable
+from contests.models import ContestStandingTable
 
 
 VOJ_BASE_URL = 'http://vn.spoj.com/'
@@ -60,10 +60,9 @@ def crawl_old_voj_contest(contest_id):
 
         print '%s' % (titles[i].text.strip())
 
-        spoj_table = NonStandardContestStandingTable.objects.filter(code=contest_id, name=titles[i].text.strip())
-        if len(spoj_table) > 0:
-            spoj_table.delete()
-        spoj_table = NonStandardContestStandingTable.objects.create(code=contest_id, name=titles[i].text.strip())
+        spoj_table = ContestStandingTable.objects.filter(code=contest_id, name=titles[i].text.strip())
+        if len(spoj_table) == 0:
+            spoj_table = ContestStandingTable.objects.create(code=contest_id, name=titles[i].text.strip())
 
         table_soup = BeautifulSoup(tables[i].prettify())
 
@@ -71,8 +70,11 @@ def crawl_old_voj_contest(contest_id):
         titles_soup = BeautifulSoup(table_soup.find("tr", {"class": "headerrow"}).prettify())
         titles_soup = titles_soup.find_all("th")
         for title in titles_soup:
-            temp = title.text.split()
-            title_arr.append(temp[0])
+            string = title.text.split()
+            col_name = ""
+            for token in string:
+                col_name = col_name + token + " "
+            title_arr.append(col_name)
         spoj_table.title = json.dumps(title_arr)
 
         content_arr = []

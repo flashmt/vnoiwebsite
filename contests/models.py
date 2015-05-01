@@ -4,7 +4,7 @@ from forum.models import Forum
 # Create your models here.
 
 
-class NonStandardContestStandingTable(models.Model):
+class ContestStandingTable(models.Model):
     code = models.CharField(max_length=20, null=False, blank=False)
     name = models.CharField(max_length=250, null=False, blank=False)
     # Title of the standings (1d array, json)
@@ -12,9 +12,6 @@ class NonStandardContestStandingTable(models.Model):
     # Content of the table (2d array, json)
     content = models.TextField(null=True, blank=True)
 
-    def __unicode__(self):
-        return code + ' - ' + self.name
 
-
-class NonStandardContestForum(Forum):
-    contest = models.ForeignKey(NonStandardContestStandingTable, related_name='forum', null=True, blank=True, on_delete=models.SET_NULL)
+class ContestForum(Forum):
+    contest = models.ForeignKey(ContestStandingTable, related_name='forum', null=True, blank=True, on_delete=models.SET_NULL)
