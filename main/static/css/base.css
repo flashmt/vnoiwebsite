@@ -93,7 +93,8 @@
 
 .post-username-under-avata {
   margin-top: 1em;
-  margin-left: 1.5em; }
+  width: 80px;
+  text-align: center; }
 
 .arrow_box {
   position: relative;
