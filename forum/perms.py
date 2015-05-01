@@ -1,5 +1,5 @@
-from authority import permissions
 import authority
+from authority import permissions
 from forum.models import Forum, Vote, Post, Topic
 
 # Assume all user must be authenticated before check this permission
@@ -68,4 +68,3 @@ authority.register(Forum, ForumPermission)
 authority.register(Vote, VotePermission)
 authority.register(Post, PostPermission)
 authority.register(Topic, TopicPermission)
-

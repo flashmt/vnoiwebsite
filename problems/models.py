@@ -5,18 +5,6 @@ from forum.models import Forum
 from vnoiusers.models import VnoiUser
 
 
-class SpojContestStandingTable(models.Model):
-    code = models.CharField(max_length=20, null=False, blank=False)
-    name = models.CharField(max_length=250, null=False, blank=False)
-    # Title of the standings (1d array, json)
-    title = models.TextField(null=True, blank=True)
-    # Content of the table (2d array, json)
-    content = models.TextField(null=True, blank=True)
-
-    def __unicode__(self):
-        return code + ' - ' + self.name
-
-
 class SpojProblemCategory(models.Model):
     name = models.CharField(max_length=50, null=False, blank=False)
 
@@ -48,9 +36,6 @@ class SpojProblemLanguage(models.Model):
 
 
 class SpojProblem(models.Model):
-    # contest that contain this problem
-    contest = models.ForeignKey(SpojContestStandingTable, related_name='problems', null=True, blank=True, on_delete=models.SET_NULL)
-
     category = models.ForeignKey(SpojProblemCategory, related_name='problems', null=True, blank=True, on_delete=models.SET_NULL)
     problem_id = models.IntegerField(null=False, blank=False)
     name = models.CharField(max_length=250, null=False, blank=False)
@@ -102,14 +87,3 @@ class SpojProblemForum(Forum):
     # Assumption: forum name must be equal to problem code.
     # This is used in get_absolute_url in forum.models.Forum
     problem = models.ForeignKey(SpojProblem, related_name='forum', null=True, blank=True, on_delete=models.SET_NULL)
-
-
-def delete_reverse(sender, **kwargs):
-    try:
-        if kwargs['instance'].a:
-            kwargs['instance'].a.delete()
-    except:
-        pass
-
-
-post_delete.connect(delete_reverse, sender=SpojContestStandingTable)

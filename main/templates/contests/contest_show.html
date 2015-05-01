@@ -1,0 +1,33 @@
+{% extends 'main/base.html' %}
+
+{% block navbar-highlight %}navbar_contests{% endblock navbar-highlight %}
+{% block breadcrumbs %}
+  <li>Danh sách kỳ thi</li>
+{% endblock breadcrumbs %}
+
+{% block container %}
+  <div id="contest-show" style="">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <span class="glyphicon glyphicon-list"></span>
+        {{ contest }}
+      </div>
+      <table class="table table-striped" id="contest-show-table">
+        <tbody>
+        <tr>
+          {% for col_name in contest_title %}
+            <th>{{ col_name }}</th>
+          {% endfor %}
+        </tr>
+        {% for row in contest_table %}
+          <tr>
+          {% for cell in row %}
+            <td>{{ cell }}</td>
+          {% endfor %}
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+{% endblock container %}

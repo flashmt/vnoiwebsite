@@ -8,14 +8,14 @@ urlpatterns = patterns(
     url(r'^register$', views.user_create, name='register'),
     url(r'^confirm/(?P<activation_key>\w+)/', views.register_confirm, name='register_confirm'),
     url(r'^update_profile$', views.update_profile, name='update_profile'),
-    url(r'^(?P<user_id>\d+)/$', views.user_profile, name='profile'),
+    # url(r'^(?P<user_id>\d+)/$', views.user_profile, name='profile'),
     url(r'^upload_avatar$', views.user_upload_avatar, name='upload_avatar'),
     url(r'^link_codeforces$', views.link_codeforces_account, name='link_codeforces'),
     url(r'^unlink_codeforces$', views.unlink_codeforces_account, name='unlink_codeforces'),
     url(r'^link_voj$', views.link_voj_account, name='link_voj'),
     url(r'^unlink_voj$', views.unlink_voj_account, name='unlink_voj'),
-    url(r'^add_friend/(?P<user_id>\d+)$', views.add_friend, name='add_friend'),
-    url(r'^remove_friend/(?P<user_id>\d+)$', views.remove_friend, name='remove_friend'),
+    # url(r'^add_friend/(?P<user_id>\d+)$', views.add_friend, name='add_friend'),
+    # url(r'^remove_friend/(?P<user_id>\d+)$', views.remove_friend, name='remove_friend'),
     url(r'^friend_list$', views.friend_list, name='friend_list'),
     url(r'^index$', views.index, name='index'),
     url(r'^password_change/$', views.password_change, name='password_change'),
@@ -25,4 +25,9 @@ urlpatterns = patterns(
     url(r'^reset/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$', views.password_reset_confirm, name='password_reset_confirm'),
     url(r'^reset/complete/$', views.password_reset_complete, name='password_reset_complete'),
     url(r'^get_user_from_voj_account/(?P<voj_accounts>.+)$', views.get_user_from_voj_account, name='get_user_from_voj_account'),
+
+    # Users named by above keywords should be failed
+    url(r'^(?P<username>\w+([\.-]?\w+)*)/$', views.user_profile, name='profile'),
+    url(r'^add_friend/(?P<username>\w+([\.-]?\w+)*)$', views.add_friend, name='add_friend'),
+    url(r'^remove_friend/(?P<username>\w+([\.-]?\w+)*)$', views.remove_friend, name='remove_friend'),
 )
