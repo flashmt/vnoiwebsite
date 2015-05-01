@@ -9,13 +9,13 @@ class ContestStandingTable(models.Model):
     name = models.CharField(max_length=250, null=False, blank=False)
 
     # Title of the standings (1d array, json)
-    # e.g.   Rank | Handle | Name    | Problem A | Problem B | ...
+    # e.g.   { "Rank ", " Handle ", " Name    ", " Problem A ", " Problem B ", ...}
     title = models.TextField(null=True, blank=True)
 
     # Content of the table (2d array, json)
-    # e.g. { 1    | nobita | Nobita  | 100       | 100       | ...,
-    #        2    | chaien | Takeshi | 90        | 90        | ...,
-    #        3    | xuka   | Shizuka | 90        | 50        | ... }
+    # e.g.  {{ "1    ", " nobita ", " Nobita  ", " 100       ", " 100       ", ...},
+    #        { "2    ", " chaien ", " Takeshi ", " 90        ", " 90        ", ...},
+    #        { "3    ", " xuka   ", " Shizuka ", " 90        ", " 50        ", ...}}
     content = models.TextField(null=True, blank=True)
 
 
