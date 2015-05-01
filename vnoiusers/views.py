@@ -113,13 +113,9 @@ def register_confirm(request, activation_key):
     return HttpResponseRedirect(reverse('user:login'))
 
 
-def user_profile(request, user_id=None, username=None):
-    if username is not None:
-        user = get_object_or_404(User.objects.select_related("profile", "profile__avatar"), username=username)
-        user_id = user.pk
-    else:
-        user = get_object_or_404(User.objects.select_related("profile", "profile__avatar"), id=user_id)
-        return HttpResponseRedirect(reverse('user:profile', kwargs={'username': user.username}))
+def user_profile(request, username=None):
+    user = get_object_or_404(User.objects.select_related("profile", "profile__avatar"), username=username)
+    user_id = user.pk
 
     is_friend = False
     if request.user.is_authenticated():
@@ -240,14 +236,10 @@ def unlink_voj_account(request):
 
 
 @login_required
-def add_friend(request, user_id=None, username=None):
+def add_friend(request, username=None):
     # If the other user does not exist
-    if username is not None:
-        other_user = get_object_or_404(User, username=username)
-        user_id = other_user.pk
-    else:
-        other_user = get_object_or_404(User, id=user_id)
-        username = other_user.username
+    other_user = get_object_or_404(User, username=username)
+    user_id = other_user.pk
 
     redirect_obj = HttpResponseRedirect(reverse('user:profile', kwargs={'username': username}))
 
@@ -270,14 +262,10 @@ def add_friend(request, user_id=None, username=None):
 
 
 @login_required
-def remove_friend(request, user_id=None, username=None):
+def remove_friend(request, username=None):
     # If the other user does not exist
-    if username is not None:
-        other_user = get_object_or_404(User, username=username)
-        user_id = other_user.pk
-    else:
-        other_user = get_object_or_404(User, id=user_id)
-        username = other_user.username
+    other_user = get_object_or_404(User, username=username)
+    user_id = other_user.pk
 
     redirect_obj = HttpResponseRedirect(reverse('user:profile', kwargs={'username': username}))
 
