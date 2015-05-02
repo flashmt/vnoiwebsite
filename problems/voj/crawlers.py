@@ -6,12 +6,13 @@ import html5lib
 import dateutil.parser
 import copy
 import json
+import sys
+import os
+import codecs
 
 from bs4 import BeautifulSoup
 from problems.models import SpojProblem
 from problems.models import SpojProblemLanguage
-
-from problems.models import SpojContestStandingTable
 
 
 PROBLEM_RE = re.compile(
@@ -35,7 +36,7 @@ def get_html(url):
         return None
     # Since the problem statement of SPOJ sometimes contains '&', '<' and '>', which are not valid in correct HTML,
     # we must use a lenient parser
-    return BeautifulSoup(response.text.replace(u'ð', u'đ'), 'html5lib')
+    return BeautifulSoup(response.content.decode('utf-8', 'ignore').replace(u'ð', u'đ'), 'html5lib')
 
 
 def get_elements_from_html(html, selector):
@@ -201,6 +202,7 @@ def get_problem(problem_code, problem_id, problem_name, category):
         problem = problem[0]
 
     # Crawling problem statement
+    need_update_statement = True
     if need_update_statement:
         prob_html = get_problem_html(problem_code)
         problem.author = get_problem_author(prob_html)
@@ -217,13 +219,17 @@ def get_problem(problem_code, problem_id, problem_name, category):
             if len(lang) is not 0:
                 problem.allowed_languages.add(lang[0])
 
-    probblem.save()
+    problem.save()
 
     return problem
 
 
 def get_problem_codes_from_category(category):
     result = []
+
+    print sys.getdefaultencoding()
+    print sys.stdin.encoding
+    print sys.stdout.encoding
 
     page_id = 0
     while True:
@@ -242,7 +248,7 @@ def get_problem_codes_from_category(category):
 
             if matcher:
                 data = matcher.groupdict()
-                print 'Crawling %s' % data['code']
+                print u'Crawling %s - %s' % (data['code'], data['name'])
 
                 problem = get_problem(problem_code=data['code'], problem_id=data['id'], problem_name=data['name'], category=category)
 
