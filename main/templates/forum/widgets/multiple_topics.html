@@ -16,7 +16,7 @@
       </h2>
       {% if show_author %}
         <p class = "pinned-post-author">
-          Đăng bởi <a href="{% url 'user:profile' topic.created_by %}">{{ topic.created_by__username }}</a>,
+          Đăng bởi <a href="{% url 'user:profile' topic.created_by__username %}">{{ topic.created_by__username }}</a>,
           {{ topic.created_at|naturaltime }}
         </p>
       {% else %}
