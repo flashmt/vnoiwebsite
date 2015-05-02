@@ -216,6 +216,9 @@ def get_problem(problem_code, problem_id, problem_name, category):
             lang = SpojProblemLanguage.objects.filter(lang_id=int(language["id"]))
             if len(lang) is not 0:
                 problem.allowed_languages.add(lang[0])
+
+    probblem.save()
+
     return problem
 
 

@@ -63,6 +63,8 @@ def crawl_old_voj_contest(contest_id):
         spoj_table = ContestStandingTable.objects.filter(code=contest_id, name=titles[i].text.strip())
         if len(spoj_table) == 0:
             spoj_table = ContestStandingTable.objects.create(code=contest_id, name=titles[i].text.strip())
+        else:
+            spoj_table = spoj_table[0]
 
         table_soup = BeautifulSoup(tables[i].prettify())
 
