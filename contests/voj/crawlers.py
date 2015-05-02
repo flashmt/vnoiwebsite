@@ -51,7 +51,7 @@ def crawl_old_voj_contest(contest_id):
     titles = soup.find_all("h4")[1:]
     tables = soup.find_all("table", {"class": "problems"})[1:]
 
-    size = len(titles)
+    size = min(len(titles), len(tables))
 
     for i in range(0, size):
         # Ignore empty tables

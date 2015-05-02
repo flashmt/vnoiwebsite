@@ -1,4 +1,6 @@
 import os
+import sys
+import codecs
 
 # Before importing some Django lib, we must have this
 from django.core.wsgi import get_wsgi_application
@@ -18,3 +20,9 @@ from contests.voj.crawlers import crawl_old_voj_contest
 if __name__ == "__main__":
     application = get_wsgi_application()
     crawl_old_voj_contest('VO12')
+    crawl_old_voj_contest('VM12')
+    crawl_old_voj_contest('VO13')
+    crawl_old_voj_contest('VM13')
+    crawl_old_voj_contest('VO14')
+    crawl_old_voj_contest('VM14')
+    crawl_old_voj_contest('VO15')
