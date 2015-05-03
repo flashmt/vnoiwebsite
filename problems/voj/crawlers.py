@@ -202,7 +202,7 @@ def get_problem(problem_code, problem_id, problem_name, category):
         problem = problem[0]
 
     # Crawling problem statement
-    need_update_statement = True
+    # need_update_statement = True
     if need_update_statement:
         prob_html = get_problem_html(problem_code)
         problem.author = get_problem_author(prob_html)
@@ -256,6 +256,7 @@ def get_problem_codes_from_category(category):
                     problem.accept_count = data['ac_count']
                     problem.accept_rate = data['ac_rate']
                     problem.score = round(80.0 / (40 + int(data['ac_count'])), 1)
+                    problem.save()
 
                 time.sleep(1)
 
