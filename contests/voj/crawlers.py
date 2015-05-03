@@ -23,7 +23,7 @@ def get_html(url):
         return None
     # Since the problem statement of SPOJ sometimes contains '&', '<' and '>', which are not valid in correct HTML,
     # we must use a lenient parser
-    return BeautifulSoup(response.text.replace(u'ð', u'đ'), 'html5lib')
+    return BeautifulSoup(response.content.decode('utf-8', 'ignore').replace(u'ð', u'đ'), 'html5lib')
 
 
 def get_elements_from_html(html, selector):
@@ -51,7 +51,7 @@ def crawl_old_voj_contest(contest_id):
     titles = soup.find_all("h4")[1:]
     tables = soup.find_all("table", {"class": "problems"})[1:]
 
-    size = len(titles)
+    size = min(len(titles), len(tables))
 
     for i in range(0, size):
         # Ignore empty tables
@@ -63,6 +63,8 @@ def crawl_old_voj_contest(contest_id):
         spoj_table = ContestStandingTable.objects.filter(code=contest_id, name=titles[i].text.strip())
         if len(spoj_table) == 0:
             spoj_table = ContestStandingTable.objects.create(code=contest_id, name=titles[i].text.strip())
+        else:
+            spoj_table = spoj_table[0]
 
         table_soup = BeautifulSoup(tables[i].prettify())
 
