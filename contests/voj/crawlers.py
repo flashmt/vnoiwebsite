@@ -1,15 +1,11 @@
 # -*- coding: utf-8 -*-
-import time
 import re
 import requests
-import html5lib
-import dateutil.parser
-import copy
 import json
 
 from bs4 import BeautifulSoup
 
-from contests.models import ContestStandingTable
+from contests.models import Contest, ContestStanding, ContestGroup
 
 
 VOJ_BASE_URL = 'http://vn.spoj.com/'
@@ -45,7 +41,21 @@ def get_contest_rank_html(contest_id):
 
 
 # download a contest standings and save to Database (overwrite the old one)
-def crawl_old_voj_contest(contest_id):
+def crawl_old_voj_contest(contest_id, contest_name='', force_crawl=False):
+    # Create contest group VNOI if not yet exist
+    contest_group, created = ContestGroup.objects.get_or_create(name='VNOI')
+
+    # Check if we already crawled this contest
+    contest, created = Contest.objects.get_or_create(code=contest_id, defaults={
+        'name': contest_name,
+        'group': contest_group
+    })
+    if not created and not force_crawl:
+        # Contest found --> only crawl when forced
+        return
+
+    print "Crawling: {}".format(contest_id)
+
     soup = get_contest_rank_html(contest_id)
     soup = BeautifulSoup(soup.find("td", {"class": "content"}).prettify())
     titles = soup.find_all("h4")[1:]
@@ -58,13 +68,18 @@ def crawl_old_voj_contest(contest_id):
         if len(titles[i].text.strip()) == 0:
             continue
 
-        print '%s' % (titles[i].text.strip())
+        # Ignore SPOJ error tables
+        if re.match(r'^0 - AC', titles[i].text.strip()):
+            continue
 
-        spoj_table = ContestStandingTable.objects.filter(code=contest_id, name=titles[i].text.strip())
-        if len(spoj_table) == 0:
-            spoj_table = ContestStandingTable.objects.create(code=contest_id, name=titles[i].text.strip())
-        else:
-            spoj_table = spoj_table[0]
+        title = titles[i].text.strip()
+        if title == 'Final Standings' or title == 'Fullscore':
+            title = u'Bảng Xếp Hạng Chung Cuộc'
+        elif title == 'Final Round':
+            title = u'Vòng cuối'
+        print '%s' % title
+
+        contest_standing = ContestStanding.objects.create(contest=contest, name=title)
 
         table_soup = BeautifulSoup(tables[i].prettify())
 
@@ -77,7 +92,7 @@ def crawl_old_voj_contest(contest_id):
             for token in string:
                 col_name = col_name + token + " "
             title_arr.append(col_name)
-        spoj_table.title = json.dumps(title_arr)
+        contest_standing.title = json.dumps(title_arr)
 
         content_arr = []
         rows = table_soup.find_all("tr", {"class": "problemrow"})
@@ -91,6 +106,6 @@ def crawl_old_voj_contest(contest_id):
                 row_arr.append(cell.text.strip())
 
             content_arr.append(row_arr)
-        spoj_table.content = json.dumps(content_arr)
+        contest_standing.content = json.dumps(content_arr)
 
-        spoj_table.save()
+        contest_standing.save()

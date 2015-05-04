@@ -14,8 +14,8 @@ class ContestViewTest(TestCase):
         self.client = Client()
 
     def test_contest_view(self):
-        response = self.client.get(reverse('contests:show_table', kwargs={'contest_id': 1}))
+        response = self.client.get(reverse('contests:standings', kwargs={'contest_id': 1}))
         self.assertEquals(response.status_code, 200)
 
-        response = self.client.get(reverse('contests:show_table', kwargs={'contest_id': 999}))
+        response = self.client.get(reverse('contests:standings', kwargs={'contest_id': 999}))
         self.assertEquals(response.status_code, 404)
