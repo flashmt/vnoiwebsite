@@ -47,7 +47,7 @@ $(document).ready(function () {
 		var postForm = $('#post-reply-form');
 		postForm.attr('action', element.attr('post-reply-url'));
 		console.log('new path = ' + postForm.attr('action'));
-		$('#post-' + element.attr('post-id')).after(postForm.parent());
+		$('#post-' + element.attr('post-id')).parent().after(postForm.parent());
 
 		// Show form & add CKEditor
 		postReplyFormDiv.show();
