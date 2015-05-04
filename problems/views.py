@@ -4,18 +4,33 @@ from django.shortcuts import render, get_object_or_404
 from problems.models import SpojProblem, SpojProblemForum
 from forum.models import ForumGroup
 from forum.views import topic_list
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
 def index(request):
-    problems = SpojProblem.objects.all().values(
+    problem_list = SpojProblem.objects.all().order_by('created_at').values(
         'code',
         'name',
         'category__name',
         'accept_count',
         'score',
     )
+    paginator = Paginator(problem_list, 50)
+
+    page = request.GET.get('page')
+    try:
+        problems = paginator.page(page)
+    except PageNotAnInteger:
+        problems = paginator.page(1)
+    except EmptyPage:
+        problems = paginator.page(paginator.num_pages)
+
+    start = max(problems.number - 5, 1)
+    stop = min(paginator.count, start + 10) + 1
+
     return render(request, 'problems/problem_list.html', {
         'problems': problems,
+        'page_range': range(start, stop),
         'disable_breadcrumbs': True
     })
 

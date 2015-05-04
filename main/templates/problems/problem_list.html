@@ -46,4 +46,22 @@
       </table>
     </div>
   </div>
+
+  <div class="pagination" align="center" style="width:100%">
+    <span class="step-links">
+      {% if problems.has_previous %}
+        <a href="?page={{ problems.previous_page_number }}"><<</a>
+      {% endif %}
+      {% for x in page_range %}
+        {% if x == problems.number %}
+          <u><a href="?page={{ x }}" style="font-weight:bold">{{ x }}</a></u>
+        {% else %}
+          <a href="?page={{ x }}">{{ x }}</a>  
+        {% endif %}
+      {% endfor %}
+      {% if problems.has_next %}
+        <a href="?page={{ problems.next_page_number }}">>></a>
+      {% endif %}
+    </span>
+  </div>
 {% endblock container %}
