@@ -1,17 +1,3 @@
-// Return the `k`th index of `char` in `myStr`
-// k counts from 1
-function kthIndexOf(myStr, char, k) {
-	var cnt = 0;
-	for(var i = 0; i < myStr.length; i += 1) {
-		if (myStr[i] == char) {
-			cnt += 1;
-			if (cnt === k) {
-				return i;
-			}
-		}
-	}
-	return -1;
-}
 $(document).ready(function () {
 	$('.post-delete').click(function () {
 		var clickedElement = $(this);
@@ -47,7 +33,7 @@ $(document).ready(function () {
 		var postForm = $('#post-reply-form');
 		postForm.attr('action', element.attr('post-reply-url'));
 		console.log('new path = ' + postForm.attr('action'));
-		$('#post-' + element.attr('post-id')).after(postForm.parent());
+		$('#post-' + element.attr('post-id')).parent().after(postForm.parent());
 
 		// Show form & add CKEditor
 		postReplyFormDiv.show();
