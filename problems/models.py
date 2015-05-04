@@ -67,6 +67,9 @@ class SpojProblem(models.Model):
     # Cluster (doesn't need anymore)
     cluster = models.ForeignKey(SpojCluster, related_name='+', null=True, blank=True, on_delete=models.SET_NULL)
 
+    # Set default ordering
+    ordering = ['-created_at']
+
     def __unicode__(self):
         return self.name
 
