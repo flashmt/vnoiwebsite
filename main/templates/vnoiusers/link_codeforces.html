@@ -2,10 +2,6 @@
 
 {% block container %}
 
-  {% block form-title %}
-    <h2>Kết nối tài khoản Codeforces</h2>
-  {% endblock %}
-
-  {% include 'main/base_form.html' %}
+  {% include 'main/base_form.html' with form_title='Kết nối tài khoản Codeforces' form_jumbotron=True %}
 
 {% endblock container %}

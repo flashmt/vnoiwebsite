@@ -7,10 +7,6 @@
 
 {% block container %}
 
-  {% block form-title %}
-    <h2>Đăng ký tài khoản</h2>
-  {% endblock %}
-
-  {% include 'main/base_form.html' with form_id='register_form' %}
+  {% include 'main/base_form.html' with form_id='register_form' form_title='Đăng ký tài khoản' form_jumbotron=True %}
 
 {% endblock container %}

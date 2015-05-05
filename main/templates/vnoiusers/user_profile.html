@@ -28,28 +28,28 @@
         <div class="btn-group">
           {% if user.id == request.user.id %}
             <a class="btn btn-default" href="{% url 'user:update_profile' %}" role="button">
-              <span class="glyphicon glyphicon-wrench"></span>Cập nhật
+              <span class="fa-fw glyphicon glyphicon-wrench"></span>Cập nhật
             </a>
             <a class="btn btn-default" href="{% url 'user:friend_list' %}" role="button">
-              <span class="glyphicon glyphicon-heart"></span>Danh sách bạn bè
+              <span class="fa-fw glyphicon glyphicon-heart"></span>Danh sách bạn bè
             </a>
             <a class="btn btn-default" href="{% url 'user:password_change' %}" role="button">
-              <span class="glyphicon glyphicon-lock"></span>Thay đổi mật khẩu
+              <span class="fa-fw glyphicon glyphicon-lock"></span>Thay đổi mật khẩu
             </a>
           {% elif request.user.is_authenticated %}
             <a class="btn btn-default" href="{% url 'message:write' user.username %}" role="button">
-              <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+              <span class="fa-fw glyphicon glyphicon-envelope" aria-hidden="true"></span>
               Gửi tin nhắn
             </a>
             {% if is_friend %}
               <a class="btn btn-default" href="{% url 'user:remove_friend' user.username %}" role="button">
-                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                <span class="fa-fw glyphicon glyphicon-remove" aria-hidden="true"></span>
                 Hủy kết bạn
               </a>
             {% else %}
               <a class="btn btn-default"
                  href="{% url 'user:add_friend' user.username %}" role="button">
-                 <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                 <span class="fa-fw glyphicon glyphicon-plus" aria-hidden="true"></span>
                 Thêm bạn
               </a>
             {% endif %}

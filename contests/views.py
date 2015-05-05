@@ -25,5 +25,4 @@ def show_standings(request, contest_id):
         'contest': standing,
         'contest_title': json.loads(standing.title),
         'contest_table': json.loads(standing.content),
-        'disable_breadcrumbs': True
     })
