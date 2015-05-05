@@ -11,39 +11,7 @@
     {% endblock buttons-wrapper %}
   </div>
   <div class="row lib-row-same-height">
-    <div class="col-md-3">
-      {% block library_menu %}
-        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-          {% for lib_group in lib_groups %}
-            <div class="panel panel-default library-group">
-              <div class="panel-heading" role="tab" id="heading-{{ lib_group.id }}">
-                <h4 class="panel-title">
-                  <a data-toggle="collapse" data-parent="#accordion" href="#collapse-{{ lib_group.id }}" aria-expanded="true" aria-controls="collapse-{{ lib_group.id }}">
-                    {# Note: on server, unlike initial fixtures, this string will not have the "Library - " prefix #}
-                    {# Thus, please do not substring this string. It will look correct on server #}
-                    <span class="caret"></span>&nbsp;
-                    {{ lib_group.name }}
-                  </a>
-                </h4>
-              </div>
-              <div id="collapse-{{ lib_group.id }}" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading-{{ lib_group.id }}">
-                <div class="panel-body">
-                  {# Note: the following line, even though correct, adds 2 extra queries per page #}
-{#                  <ul class="nav nav-pills nav-stacked collapse lib-small-topic {% if forum in lib_group.forums.all %} in {% endif %}" id = "lib_group_{{ lib_group.id }}">#}
-                  <ul class="nav nav-pills nav-stacked collapse lib-small-topic in" id = "lib_group_{{ lib_group.id }}">
-                    {% for lib_topic in lib_group.forums.all %}
-                      <li role="presentation" class="lib-menu-item{% if lib_topic == forum %} active {% endif %}">
-                        <a href="{% url 'library:topic_list' lib_topic.id %}"> {{ lib_topic }} </a>
-                      </li>
-                    {% endfor %}
-                  </ul>
-                </div>
-              </div>
-            </div>
-          {% endfor %}
-        </div>
-      {% endblock library_menu %}
-    </div>
+    {% include 'vnoilib/includes/left_menu.html' %}
 
     <div class="col-md-9">
       <div class=" lib-list-container">

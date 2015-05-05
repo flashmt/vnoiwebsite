@@ -6,12 +6,13 @@ import html5lib
 import dateutil.parser
 import copy
 import json
+import sys
+import os
+import codecs
 
 from bs4 import BeautifulSoup
 from problems.models import SpojProblem
 from problems.models import SpojProblemLanguage
-
-from problems.models import SpojContestStandingTable
 
 
 PROBLEM_RE = re.compile(
@@ -35,7 +36,7 @@ def get_html(url):
         return None
     # Since the problem statement of SPOJ sometimes contains '&', '<' and '>', which are not valid in correct HTML,
     # we must use a lenient parser
-    return BeautifulSoup(response.text.replace(u'ð', u'đ'), 'html5lib')
+    return BeautifulSoup(response.content.decode('utf-8', 'ignore').replace(u'ð', u'đ'), 'html5lib')
 
 
 def get_elements_from_html(html, selector):
@@ -201,6 +202,7 @@ def get_problem(problem_code, problem_id, problem_name, category):
         problem = problem[0]
 
     # Crawling problem statement
+    # need_update_statement = True
     if need_update_statement:
         prob_html = get_problem_html(problem_code)
         problem.author = get_problem_author(prob_html)
@@ -216,11 +218,18 @@ def get_problem(problem_code, problem_id, problem_name, category):
             lang = SpojProblemLanguage.objects.filter(lang_id=int(language["id"]))
             if len(lang) is not 0:
                 problem.allowed_languages.add(lang[0])
+
+    problem.save()
+
     return problem
 
 
 def get_problem_codes_from_category(category):
     result = []
+
+    print sys.getdefaultencoding()
+    print sys.stdin.encoding
+    print sys.stdout.encoding
 
     page_id = 0
     while True:
@@ -239,7 +248,7 @@ def get_problem_codes_from_category(category):
 
             if matcher:
                 data = matcher.groupdict()
-                print 'Crawling %s' % data['code']
+                print u'Crawling %s - %s' % (data['code'], data['name'])
 
                 problem = get_problem(problem_code=data['code'], problem_id=data['id'], problem_name=data['name'], category=category)
 
@@ -247,6 +256,7 @@ def get_problem_codes_from_category(category):
                     problem.accept_count = data['ac_count']
                     problem.accept_rate = data['ac_rate']
                     problem.score = round(80.0 / (40 + int(data['ac_count'])), 1)
+                    problem.save()
 
                 time.sleep(1)
 
@@ -255,54 +265,6 @@ def get_problem_codes_from_category(category):
         page_id += 1
 
     return result
-
-
-# download a contest standings and save to Database (overwrite the old one)
-def crawl_old_voj_contest(contest_id):
-    soup = get_contest_rank_html(contest_id)
-    soup = BeautifulSoup(soup.find("td", {"class": "content"}).prettify())
-    titles = soup.find_all("h4")[1:]
-    tables = soup.find_all("table", {"class": "problems"})[1:]
-
-    size = len(titles)
-
-    for i in range(0, size):
-        # Ignore empty tables
-        if len(titles[i].text.strip()) == 0:
-            continue
-
-        print '%s' % (titles[i].text.strip())
-
-        spoj_table = SpojContestStandingTable.objects.filter(code=contest_id, name=titles[i].text.strip())
-        if len(spoj_table) > 0:
-            spoj_table.delete()
-        spoj_table = SpojContestStandingTable.objects.create(code=contest_id, name=titles[i].text.strip())
-
-        table_soup = BeautifulSoup(tables[i].prettify())
-
-        title_arr = []
-        titles_soup = BeautifulSoup(table_soup.find("tr", {"class": "headerrow"}).prettify())
-        titles_soup = titles_soup.find_all("th")
-        for title in titles_soup:
-            temp = title.text.split()
-            title_arr.append(temp[0])
-        spoj_table.title = json.dumps(title_arr)
-
-        content_arr = []
-        rows = table_soup.find_all("tr", {"class": "problemrow"})
-        for row in rows:
-            row_arr = []
-
-            row_soup = BeautifulSoup(row.prettify())
-            cells = row.find_all("td", {"class": "mini"})
-
-            for cell in cells:
-                row_arr.append(cell.text.strip())
-
-            content_arr.append(row_arr)
-        spoj_table.content = json.dumps(content_arr)
-
-        spoj_table.save()
 
 
 # save all languages and save to database

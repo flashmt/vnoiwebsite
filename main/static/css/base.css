@@ -93,7 +93,8 @@
 
 .post-username-under-avata {
   margin-top: 1em;
-  margin-left: 1.5em; }
+  width: 80px;
+  text-align: center; }
 
 .arrow_box {
   position: relative;
@@ -331,21 +332,45 @@ body {
   display: block; }
 
 .navbar-inverse {
-  background-color: #212933;
+  background-color: #39424e;
   font-weight: bold;
   border: 0; }
+  .navbar-inverse .active {
+    border-bottom: 4px solid #419cea;
+    background-color: #232931 !important; }
 
-.navbar-inverse .active {
-  border-bottom: 4px solid #337ab7; }
-
-.navbar a, .navbar a:hover {
-  color: #9d9d9d; }
-
-.navbar-inverse .active a {
-  padding-bottom: 11px; }
+ul.navbar-nav li a {
+  color: white !important; }
+ul.navbar-nav li a:hover {
+  color: #47aaff !important; }
+ul.navbar-nav li:not(.dropdown).active a {
+  padding-bottom: 11px;
+  color: #47aaff !important; }
 
 .navbar-text .icon {
   color: wheat; }
+
+.fa-fw {
+  width: 1.28571429em;
+  text-align: center; }
+
+/* input field icon */
+.inner-addon {
+  position: relative; }
+  .inner-addon .glyphicon {
+    position: absolute;
+    padding: 10px;
+    pointer-events: none; }
+
+.left-addon .glyphicon {
+  left: 0; }
+.left-addon input {
+  padding-left: 30px; }
+
+.right-addon .glyphicon {
+  right: 0; }
+.right-addon input {
+  padding-right: 30px; }
 
 #logo-text {
   font-family: Calibri, sans-serif;
@@ -357,8 +382,8 @@ body {
 
 .dropdown-menu {
   margin-top: 6px !important; }
-  .dropdown-menu > li > a {
-    color: white; }
+  .dropdown-menu a:hover {
+    background-color: #39424e !important; }
 
 .dropdown-menu:before {
   position: absolute;
@@ -366,9 +391,9 @@ body {
   right: 20%;
   display: inline-block;
   border-right: 7px solid transparent;
-  border-bottom: 7px solid #212933;
+  border-bottom: 7px solid #39424e;
   border-left: 7px solid transparent;
-  border-bottom-color: #212933;
+  border-bottom-color: #39424e;
   content: ''; }
 
 .dropdown-menu:after {
@@ -377,7 +402,7 @@ body {
   right: 20%;
   display: inline-block;
   border-right: 6px solid transparent;
-  border-bottom: 6px solid #212933;
+  border-bottom: 6px solid #39424e;
   border-left: 6px solid transparent;
   content: ''; }
 

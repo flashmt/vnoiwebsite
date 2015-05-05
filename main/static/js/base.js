@@ -26,7 +26,7 @@ function showNotification(message) {
 
 
 // CONSTANT DECLARATIONS
-VOTING_URL = "/forum/vote/{post_id}/?type={vote_type}";
+var VOTING_URL = "/forum/vote/{post_id}/?type={vote_type}";
 // END OF CONSTANT DECLARATIONS
 
 

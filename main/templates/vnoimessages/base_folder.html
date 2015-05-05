@@ -28,8 +28,8 @@
   <div class="col-md-4 btn-group">
     <form action="{% block pm_form_action %}{% endblock %}" method="post">{% csrf_token %}
     {% block pm_form_buttons %}<span class = "msg-button" id="pm_buttons">
-    {% block pm_delete_button %}<button class="btn btn-default msg-button" type="submit" onclick="this.form.action='{% url 'message:delete' %}'"><span class="glyphicon glyphicon-trash"></span>{% trans "Xóa" %}</button>{% endblock %}
-    {% block pm_archive_button %}<button class="btn btn-default msg-button" type="submit" onclick="this.form.action='{% url 'message:archive' %}'"><span class="glyphicon glyphicon-floppy-saved"></span>{% trans "Lưu trữ" %}</button>{% endblock %}
+    {% block pm_delete_button %}<button class="btn btn-default msg-button" type="submit" onclick="this.form.action='{% url 'message:delete' %}'"><span class="fa-fw glyphicon glyphicon-trash"></span>{% trans "Xóa" %}</button>{% endblock %}
+    {% block pm_archive_button %}<button class="btn btn-default msg-button" type="submit" onclick="this.form.action='{% url 'message:archive' %}'"><span class="fa-fw glyphicon glyphicon-floppy-saved"></span>{% trans "Lưu trữ" %}</button>{% endblock %}
     {% block pm_undelete_button %}<button class="btn btn-default msg-button" type="submit" onclick="this.form.action='{% url 'message:undelete' %}'">{% trans "Khôi phục" %}</button>{% endblock %}
     </span>{% endblock %}
   </div>

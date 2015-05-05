@@ -83,6 +83,7 @@ class PostFormNoParent(PostCreateForm):
 
 
 class PostUpdateForm(PostForm):
+
     def __init__(self, *args, **kwargs):
         super(PostUpdateForm, self).__init__(*args, **kwargs)
         self.initial['title'] = self.instance.topic.title

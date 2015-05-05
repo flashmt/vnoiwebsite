@@ -113,8 +113,10 @@ def register_confirm(request, activation_key):
     return HttpResponseRedirect(reverse('user:login'))
 
 
-def user_profile(request, user_id):
-    user = get_object_or_404(User.objects.select_related("profile", "profile__avatar"), pk=user_id)
+def user_profile(request, username=None):
+    user = get_object_or_404(User.objects.select_related("profile", "profile__avatar"), username=username)
+    user_id = user.pk
+
     is_friend = False
     if request.user.is_authenticated():
         authenticated_user = request.user.profile
@@ -165,7 +167,7 @@ def user_upload_avatar(request, extra_context=None,
             user_profile = request.user.profile
             user_profile.avatar = avatar
             user_profile.save()
-            return HttpResponseRedirect(reverse('user:profile', args=(request.user.id, )))
+            return HttpResponseRedirect(reverse('user:profile', kwargs={'username': request.user.username}))
     context = {
         'avatar': avatar,
         'avatars': avatars,
@@ -184,7 +186,7 @@ def link_codeforces_account(request):
             vnoiuser = request.user.profile
             vnoiuser.codeforces_account = request.POST['username']
             vnoiuser.save()
-            return HttpResponseRedirect(reverse('user:profile', kwargs={'user_id': request.user.id}))
+            return HttpResponseRedirect(reverse('user:profile', kwargs={'username': request.user.username}))
         else:
             return render(request, template_name, {
                 'form': form,
@@ -201,7 +203,7 @@ def unlink_codeforces_account(request):
     vnoiuser = request.user.profile
     vnoiuser.codeforces_account = ''
     vnoiuser.save()
-    return HttpResponseRedirect(reverse('user:profile', kwargs={'user_id': request.user.id}))
+    return HttpResponseRedirect(reverse('user:profile', kwargs={'username': request.user.username}))
 
 
 @login_required
@@ -213,7 +215,7 @@ def link_voj_account(request):
             vnoiuser = request.user.profile
             vnoiuser.voj_account = request.POST['username']
             vnoiuser.save()
-            return HttpResponseRedirect(reverse('user:profile', kwargs={'user_id': request.user.id}))
+            return HttpResponseRedirect(reverse('user:profile', kwargs={'username': request.user.username}))
         else:
             return render(request, template_name, {
                 'form': form,
@@ -230,17 +232,16 @@ def unlink_voj_account(request):
     vnoiuser = request.user.profile
     vnoiuser.voj_account = ''
     vnoiuser.save()
-    return HttpResponseRedirect(reverse('user:profile', kwargs={'user_id': request.user.id}))
+    return HttpResponseRedirect(reverse('user:profile', kwargs={'username': request.user.username}))
 
 
 @login_required
-def add_friend(request, user_id):
-    user_id = int(user_id)
-
+def add_friend(request, username=None):
     # If the other user does not exist
-    other_user = get_object_or_404(User, pk=user_id)
+    other_user = get_object_or_404(User, username=username)
+    user_id = other_user.pk
 
-    redirect_obj = HttpResponseRedirect(reverse('user:profile', kwargs={'user_id': user_id}))
+    redirect_obj = HttpResponseRedirect(reverse('user:profile', kwargs={'username': username}))
 
     if user_id == request.user.id:
         # Two users are the same
@@ -254,19 +255,19 @@ def add_friend(request, user_id):
             return redirect_obj
 
         vnoi_user.friends.add(other_user.profile)
+        print other_user.profile.id
         messages.success(request, 'Kết bạn thành công.')
         vnoi_user.save()
     return redirect_obj
 
 
 @login_required
-def remove_friend(request, user_id):
-    user_id = int(user_id)
-
+def remove_friend(request, username=None):
     # If the other user does not exist
-    other_user = get_object_or_404(User, pk=user_id)
+    other_user = get_object_or_404(User, username=username)
+    user_id = other_user.pk
 
-    redirect_obj = HttpResponseRedirect(reverse('user:profile', kwargs={'user_id': user_id}))
+    redirect_obj = HttpResponseRedirect(reverse('user:profile', kwargs={'username': username}))
 
     if user_id == request.user.id:
         # Two users are the same
@@ -313,7 +314,7 @@ def update_profile(request):
         form = UserProfileForm(request.POST, instance=request.user)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect(reverse('user:profile', kwargs={'user_id': request.user.id}))
+            return HttpResponseRedirect(reverse('user:profile', kwargs={'username': request.user.username}))
         else:
             return render(request, 'vnoiusers/update_profile.html', {
                 'form': form,
@@ -329,6 +330,7 @@ def update_profile(request):
 # - password_reset_confirm checks the link the user clicked and
 #   prompts for a new password
 # - password_reset_complete shows a success message for the above
+
 
 @csrf_protect
 def password_reset(request,

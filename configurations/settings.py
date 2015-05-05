@@ -57,6 +57,7 @@ INSTALLED_APPS = (
     'vnoimessages',
     'authority',
     'problems',
+    'contests',
     'debug_toolbar',
     'avatar',
     'django_bleach',
@@ -115,7 +116,9 @@ else:
             'USER': 'root',
             'PASSWORD': SETTINGS_LOCAL.get('DATABASES_PASSWORD', ''),
             'HOST': '127.0.0.1',  # Using direct IP instead of localhost, to ensure MySQLdb doesn't fail
-            'OPTIONS': {'init_command': 'SET storage_engine=INNODB'}
+            'OPTIONS': {'init_command': 'SET storage_engine=INNODB'},
+            'CHARSET': 'utf8',
+            'USE_UNICODE': 'True',
         },
     }
 

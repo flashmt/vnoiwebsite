@@ -11,6 +11,9 @@
       <div class="panel-heading">
         <span class="glyphicon glyphicon-list"></span>
         Danh sách bài tập
+        &nbsp;|&nbsp;
+        <span class="glyphicon glyphicon-king"></span>
+        Xếp hạng
       </div>
       <div class="panel-body">
         <input id="acm-toggle" type="checkbox" checked="checked" value="checked" onchange="$('.acm').toggle()">
@@ -24,7 +27,7 @@
           <th>Loại bài&nbsp;<span class="glyphicon glyphicon-sort-by-alphabet"></span></th>
           <th>Mã bài&nbsp;<span class="glyphicon glyphicon-sort-by-alphabet"></span></th>
           <th>Tên bài</th>
-          <th>Số người giải được&nbsp;<span class="glyphicon glyphicon-sort-by-attributes"></span></th>
+          <th>Giải được&nbsp;<span class="glyphicon glyphicon-sort-by-attributes"></span></th>
           <th>Điểm&nbsp;<span class="glyphicon glyphicon-sort-by-attributes"></span></th>
           <th></th>
         </tr>
@@ -42,5 +45,23 @@
         </tbody>
       </table>
     </div>
+  </div>
+
+  <div class="pagination" align="center" style="width:100%">
+    <span class="step-links">
+      {% if problems.has_previous %}
+        <a href="?page={{ problems.previous_page_number }}"><<</a>
+      {% endif %}
+      {% for x in page_range %}
+        {% if x == problems.number %}
+          <u><a href="?page={{ x }}" style="font-weight:bold">{{ x }}</a></u>
+        {% else %}
+          <a href="?page={{ x }}">{{ x }}</a>
+        {% endif %}
+      {% endfor %}
+      {% if problems.has_next %}
+        <a href="?page={{ problems.next_page_number }}">>></a>
+      {% endif %}
+    </span>
   </div>
 {% endblock container %}

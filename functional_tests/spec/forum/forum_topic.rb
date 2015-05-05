@@ -1,7 +1,10 @@
 # bundle exec rspec spec/forum/forum_topic.rb
 
 require './helper.rb'
-Dir['./pages/forum/*.rb'].each { |f| require f }
+require './pages/forum/forum_list.rb'
+require './pages/forum/forum_show.rb'
+require './pages/forum/topic_create.rb'
+require './pages/forum/topic_show.rb'
 require './pages/components/header.rb'
 
 include TopicCreateModule
