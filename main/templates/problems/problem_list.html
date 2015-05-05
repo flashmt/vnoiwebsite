@@ -46,7 +46,7 @@
             <td>{{ problem.name }}</td>
             <td><a href="{% url 'problems:rank' problem.code %}">{{ problem.accept_count }}</a></td>
             <!-- require rank of prob -->
-            <td style="text-align: center;">{{ problem.score }}</td>
+            <td style="text-align: center;">{{ problem.score | floatformat }}</td>
             <td><a href="{% url 'problems:discuss' problem.code %}">Thảo luận</a></td>
           </tr>
         {% endfor %}
