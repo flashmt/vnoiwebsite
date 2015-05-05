@@ -4,32 +4,13 @@ import requests
 import json
 
 from bs4 import BeautifulSoup
-
 from contests.models import Contest, ContestStanding, ContestGroup
+from utils.functional import *
 
 
 VOJ_BASE_URL = 'http://vn.spoj.com/'
 # this url is used to get all languages
 VOJ_TEST_URL = 'http://vn.spoj.com/submit/TEST/'
-
-
-def get_html(url):
-    response = requests.get(url)
-    if response.status_code != 200:
-        return None
-    # Since the problem statement of SPOJ sometimes contains '&', '<' and '>', which are not valid in correct HTML,
-    # we must use a lenient parser
-    return BeautifulSoup(response.content.decode('utf-8', 'ignore').replace(u'ð', u'đ'), 'html5lib')
-
-
-def get_elements_from_html(html, selector):
-    if html is None:
-        return None
-    return html.select(selector)
-
-
-def get_elements_from_url(url, selector):
-    return get_elements_from_html(get_html(url), selector)
 
 
 def get_contest_rank_url(contest_id):

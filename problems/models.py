@@ -30,6 +30,7 @@ class SpojProblemTag(models.Model):
 class SpojProblemLanguage(models.Model):
     name = models.CharField(max_length=50, null=False, blank=False)
     lang_id = models.IntegerField(null=False, blank=False)
+    fullname = models.CharField(max_length=50, null=True, blank=True)
 
     def __unicode__(self):
         return self.name
@@ -80,10 +81,19 @@ class SpojProblemSubmission(models.Model):
     voj_account = models.CharField(max_length=100, null=True, blank=True)
     vnoi_account = models.ForeignKey(VnoiUser, related_name='submissions', null=True, blank=True)
 
-    submission_id = models.IntegerField(null=False, blank=False)
-    submit_time = models.DateField(null=False, blank=False)
-    verdict = models.CharField(max_length=200, null=True, blank=True)
-    raw_score = models.FloatField(null=False, blank=False, default=0.0)
+    submission_rank = models.IntegerField(null=True, blank=True)
+    submission_id = models.IntegerField(null=True, blank=True)
+    submission_date = models.DateField(null=True, blank=True)
+    submission_status = models.IntegerField(null=True, blank=True, default=15)
+    submission_verdict = models.CharField(max_length=200, null=True, blank=True)
+    submission_time = models.FloatField(null=True, blank=True)
+    submission_memory = models.CharField(max_length=50, null=True, blank=True)
+    submission_language = models.ForeignKey(SpojProblemLanguage, related_name='+', null=True, blank=True)
+
+    ordering = ['-submission_date']
+
+    def __unicode__(self):
+        return submission_id
 
 
 class SpojProblemForum(Forum):
