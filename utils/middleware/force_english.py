@@ -1,5 +1,5 @@
-from django.conf import settings    
-from django.utils.translation import activate     
+from django.conf import settings
+from django.utils.translation import activate
 import re
 
 

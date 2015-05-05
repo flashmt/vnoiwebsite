@@ -25,12 +25,11 @@ def index(request):
     except EmptyPage:
         problems = paginator.page(paginator.num_pages)
 
-    start = max(problems.number - 5, 1)
-    stop = min(paginator.count, start + 10) + 1
+    start = max(min(paginator.num_pages - 10, problems.number - 5), 1)
 
     return render(request, 'problems/problem_list.html', {
         'problems': problems,
-        'page_range': range(start, stop),
+        'page_range': range(start, start + 11),
         'disable_breadcrumbs': True
     })
 

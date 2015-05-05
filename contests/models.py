@@ -23,7 +23,7 @@ class Contest(models.Model):
 
 class ContestResource(models.Model):
     class Meta:
-        ordering =['name']
+        ordering = ['name']
 
     contest = models.ForeignKey(Contest, related_name='resources', on_delete=models.CASCADE)
     name = models.CharField(max_length=250, null=False, blank=False)
@@ -45,7 +45,7 @@ class ContestStanding(ContestResource):
     content = models.TextField(null=True, blank=True)
 
     def __str__(self):
-        return self.contest.code + ' - ' + self.name.encode('ascii', 'ignore')
+        return self.contest.code + ' - ' + self.name
 
 
 class ContestExtraLink(ContestResource):

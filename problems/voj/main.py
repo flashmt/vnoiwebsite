@@ -17,7 +17,9 @@ if __name__ == "__main__":
 
 from problems.voj.crawlers import get_problem_codes_from_category
 from problems.voj.crawlers import save_all_languages
+from problems.voj.crawlers import get_all_accepted_submissions
 from problems.models import SpojProblemCategory
+from problems.models import SpojProblem
 
 if __name__ == "__main__":
 
@@ -38,7 +40,10 @@ if __name__ == "__main__":
         problem_category_oi = problem_category_oi[0]
 
     save_all_languages()
-    problems_acm = get_problem_codes_from_category(problem_category_acm)
-    problems_oi = get_problem_codes_from_category(problem_category_oi)
+    for problem in SpojProblem.objects.all():
+        get_all_accepted_submissions(problem_code=problem.code, force_crawl=True)
 
-    print [problem_category_acm, problem_category_oi]
+    # problems_acm = get_problem_codes_from_category(problem_category_acm)
+    # problems_oi = get_problem_codes_from_category(problem_category_oi)
+
+    # print [problem_category_acm, problem_category_oi]
