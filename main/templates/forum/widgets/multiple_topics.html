@@ -31,7 +31,7 @@
       </div>
       <div class="panel panel-default home-post-vote-panel">
         <div class = "row home-post-buttons">
-          <div class = "col-xs-9">
+          <div class = "{% block profile-mt-margin-button %} col-md-9 {% endblock profile-mt-margin-button %}">
             {% if topic.forum__forum_group__group_type == 'f' %}
               <a class="btn btn-default" href="{% url 'forum:topic_retrieve' topic.forum topic.id %}" role="button">
             {% else %}
@@ -40,7 +40,7 @@
               Đọc tiếp &raquo;
             </a>
           </div>
-          <div class="home-post-vote-wrapper button-container col-md-2">
+          <div class="home-post-vote-wrapper button-container {% block profile-mt-margin-vote %} col-md-2 {% endblock profile-mt-margin-vote %}">
               <div class="row">
                 <table style="width:100%">
                   <colgroup>
