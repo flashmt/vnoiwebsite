@@ -54,22 +54,21 @@
       </table>
     </div>
   </div>
-
-  <div class="pagination" align="center" style="width:100%">
-    <span class="step-links">
+  <nav class = "prob-pagination">
+    <ul class="pagination">
       {% if problems.has_previous %}
-        <a href="?page={{ problems.previous_page_number }}"><<</a>
+        <li><a href="?page={{ problems.previous_page_number }}" aria-label="Previous"><span aria-hidden="true"><<</span></a></li>
       {% endif %}
       {% for x in page_range %}
         {% if x == problems.number %}
-          <u><a href="?page={{ x }}" style="font-weight:bold">{{ x }}</a></u>
+          <li class="active"><a href="?page={{ x }}">{{ x }}</a></li>
         {% else %}
-          <a href="?page={{ x }}">{{ x }}</a>
+          <li><a href="?page={{ x }}">{{ x }}</a></li>
         {% endif %}
       {% endfor %}
       {% if problems.has_next %}
-        <a href="?page={{ problems.next_page_number }}">>></a>
+        <li><a href="?page={{ problems.next_page_number }}" aria-label="Next"><span aria-hidden="true">>></span></a></li>
       {% endif %}
-    </span>
-  </div>
+    </ul>
+  </nav>
 {% endblock container %}
