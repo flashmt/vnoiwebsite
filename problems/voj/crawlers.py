@@ -261,12 +261,12 @@ def save_all_languages():
         spojlang = SpojProblemLanguage.objects.filter(lang_id=int(options[index]['value']))
         if len(spojlang) == 0:
             spojlang = SpojProblemLanguage.objects.create(lang_id=int(options[index]['value']),
-                                                          name=TRIM_RE.sub(' ', options_name[index].text),
+                                                          name=TRIM_RE.sub('', options_name[index].text),
                                                           fullname=options[index].text.strip())
         else:
             spojlang = spojlang[0]
 
-        spojlang.name = TRIM_RE.sub(' ', options_name[index].text)
+        spojlang.name = TRIM_RE.sub('', options_name[index].text)
         spojlang.fullname = options[index].text.strip()
         spojlang.save()
 
@@ -309,9 +309,9 @@ def get_all_accepted_submissions(problem_code, force_crawl=False):
 
     def get_submission_language(row_soup):
         cell = row_soup.find_all('td')[6]
-        lang = SpojProblemLanguage.objects.filter(name=TRIM_RE.sub(' ', cell.text))
+        lang = SpojProblemLanguage.objects.filter(name=TRIM_RE.sub('', cell.text))
         if len(lang) == 0:
-            print 'Missing language %s' % TRIM_RE.sub(' ', cell.text)
+            print 'Missing language %s' % TRIM_RE.sub('', cell.text)
             return None
         else:
             return lang[0]
@@ -342,7 +342,7 @@ def get_all_accepted_submissions(problem_code, force_crawl=False):
         rows = soup.find_all('tr', {'class': 'kol1'})
 
         for row in rows:
-            row = BeautifulSoup(row.prettify())
+            # row = BeautifulSoup(row.prettify())
 
             submission_rank = get_submission_rank(row)
 

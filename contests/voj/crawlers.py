@@ -62,10 +62,10 @@ def crawl_old_voj_contest(contest_id, contest_name='', force_crawl=False):
 
         contest_standing = ContestStanding.objects.create(contest=contest, name=title)
 
-        table_soup = BeautifulSoup(tables[i].prettify())
+        table_soup = tables[i]
 
         title_arr = []
-        titles_soup = BeautifulSoup(table_soup.find("tr", {"class": "headerrow"}).prettify())
+        titles_soup = table_soup.find("tr", {"class": "headerrow"})
         titles_soup = titles_soup.find_all("th")
         for title in titles_soup:
             string = title.text.split()
@@ -80,7 +80,7 @@ def crawl_old_voj_contest(contest_id, contest_name='', force_crawl=False):
         for row in rows:
             row_arr = []
 
-            row_soup = BeautifulSoup(row.prettify())
+            row_soup = row
             cells = row.find_all("td", {"class": "mini"})
 
             for cell in cells:
