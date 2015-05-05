@@ -2,11 +2,7 @@
 
 {% block container %}
 
-{% block form-title %}
-<h2>Đăng nhập</h2>
-{% endblock form-title %}
-
-{% include 'main/base_form.html' %}
+{% include 'main/base_form.html' with form_title='Đăng nhập' form_jumbotron=True %}
 
 Quên mật khẩu? <a href="{% url 'user:password_reset' %}">Bấm vào đây</a>
 {% endblock container %}

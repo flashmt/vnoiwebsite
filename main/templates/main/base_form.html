@@ -2,18 +2,22 @@
 {% load staticfiles %}
 
 {% block formbody %}
-<form role="form" class="form-horizontal" method="post"
-    {% if form_id %} id="{{ form_id }}" {% endif %}
-    {% if form_action %} action="{{ form_action }}" {% endif %}>
-  {% bootstrap_form form layout="horizontal" %}
-  {% csrf_token %}
-  {% if reset_button %}
-    {% buttons submit="OK" reset="Reset" layout="horizontal"%}{% endbuttons %}
-  {% else %}
-    {% buttons submit="OK" layout="horizontal"%}{% endbuttons %}
-  {% endif %}
-</form>
-
+{% if form_title %}
+  <h2 class="">{{ form_title }}</h2>
+{% endif %}
+<div {% if form_jumbotron %}class="well" style="padding-top:50px;"{% endif %}>
+  <form role="form" class="form-horizontal" method="post"
+      {% if form_id %} id="{{ form_id }}" {% endif %}
+      {% if form_action %} action="{{ form_action }}" {% endif %}>
+    {% bootstrap_form form layout="horizontal" %}
+    {% csrf_token %}
+    {% if reset_button %}
+      {% buttons submit="OK" reset="Reset" layout="horizontal"%}{% endbuttons %}
+    {% else %}
+      {% buttons submit="<span class='fa-fw glyphicon glyphicon-ok'></span>OK" layout="horizontal"%}{% endbuttons %}
+    {% endif %}
+  </form>
+</div>
 {% endblock formbody %}
 
 {% block extra-js %}

@@ -2,7 +2,9 @@
 
 {% block navbar-highlight %}navbar_contests{% endblock navbar-highlight %}
 {% block breadcrumbs %}
-  <li>Danh sách kỳ thi</li>
+  <li><a href="{% url 'contests:list' %}">Danh sách kỳ thi</a></li>
+  <li><a href="{% url 'contests:list' contest.contest.id %}">{{ contest.contest.name }}</a></li>
+  <li>{{ contest.name }}</li>
 {% endblock breadcrumbs %}
 
 {% block container %}
