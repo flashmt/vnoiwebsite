@@ -5,7 +5,7 @@
 {% if form_title %}
   <h2 class="">{{ form_title }}</h2>
 {% endif %}
-<div {% if form_jumbotron %}class="well" style="padding-top:50px;"{% endif %}>
+<div {% if form_jumbotron %}class="well well-small" style="padding-top:30px;"{% endif %}>
   <form role="form" class="form-horizontal" method="post"
       {% if form_id %} id="{{ form_id }}" {% endif %}
       {% if form_action %} action="{{ form_action }}" {% endif %}>

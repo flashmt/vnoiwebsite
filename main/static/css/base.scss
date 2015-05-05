@@ -56,15 +56,27 @@ body {
 	background-color: $color-navbar;
 	font-weight: bold;
 	border: 0;
+
+	.active {
+		border-bottom: 4px solid #419cea;
+		background-color: #232931 !important;
+	}
 }
-.navbar-inverse .active {
-	border-bottom: 4px solid $color-main-color;
-}
-.navbar a, .navbar a:hover {
-	color: #9d9d9d;
-}
-.navbar-inverse .active a {
-	padding-bottom: 11px;
+ul.navbar-nav {
+	li {
+		a {
+			color: white !important;
+		}
+		a:hover {
+			color: $color-navbar-highlight !important;
+		}
+	}
+	li:not(.dropdown).active {
+		a {
+			padding-bottom: 11px;
+			color: $color-navbar-highlight !important;
+		}
+	}
 }
 .navbar-text .icon {
 	color: wheat;
@@ -76,23 +88,28 @@ body {
 /* input field icon */
 .inner-addon {
 	position: relative;
+
+	.glyphicon {
+		position: absolute;
+		padding: 10px;
+		pointer-events: none;
+	}
 }
-.inner-addon .glyphicon {
-	position: absolute;
-	padding: 10px;
-	pointer-events: none;
+.left-addon {
+	.glyphicon {
+		left: 0;
+	}
+	input {
+		padding-left: 30px;
+	}
 }
-.left-addon .glyphicon {
-	left: 0px;
-}
-.right-addon .glyphicon {
-	right: 0px;
-}
-.left-addon input {
-	padding-left:  30px;
-}
-.right-addon input {
-	padding-right: 30px;
+.right-addon {
+	.glyphicon {
+		right: 0;
+	}
+	input {
+		padding-right: 30px;
+	}
 }
 
 #logo-text {
@@ -105,8 +122,8 @@ body {
 }
 .dropdown-menu {
 	margin-top: 6px !important;
-	&>li>a {
-		color: white;
+	a:hover {
+		background-color: $color-navbar !important;
 	}
 }
 .dropdown-menu:before {
@@ -215,7 +232,6 @@ h2 a:hover, h1 a:hover {
 	line-height: 1.5;
 	border-radius: $border-radius;
 }
-
 #login-form {
 	.form-group {
 		label {
@@ -235,16 +251,13 @@ h2 a:hover, h1 a:hover {
 	margin-left: 0px;
 	margin-right: 0px;
 }
-
 .dropdown-menu {
 	background-color: #212933;
 	width: 250px;
 }
-
 .alert {
 	padding: 7px;
 }
-
 a.disabled {
 	pointer-events: none;
 	cursor: default;

@@ -22,11 +22,11 @@
         <li id="navbar_library"><a href="{% url 'library:index' %}"><span class="fa-fw glyphicon glyphicon-book" aria-hidden="true"></span>Thư viện</a></li>
         {% if request.user.is_authenticated %}
         <li class="dropdown" id="navbar_profile">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"><span style="color:wheat" class="glyphicon glyphicon-user icon"></span>{{ request.user }}&nbsp;<span class="caret"></span></a>
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"><span style="color:wheat" class="fa-fw glyphicon glyphicon-user icon"></span>{{ request.user }}&nbsp;<span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
-            <li><a href="{% url 'user:profile' request.user.username %}"><span class="glyphicon glyphicon-user icon"></span>Trang cá nhân</a></li>
-            <li><a href="{% url 'message:index' %}"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>Tin nhắn</a></li>
-            <li><a href="{% url 'user:logout' %}"><span class="glyphicon glyphicon-log-out"></span>Đăng xuất</a></li>
+            <li><a href="{% url 'user:profile' request.user.username %}"><span class="fa-fw glyphicon glyphicon-user icon"></span>Trang cá nhân</a></li>
+            <li><a href="{% url 'message:index' %}"><span class="fa-fw glyphicon glyphicon-envelope" aria-hidden="true"></span>Tin nhắn</a></li>
+            <li><a href="{% url 'user:logout' %}"><span class="fa-fw glyphicon glyphicon-log-out"></span>Đăng xuất</a></li>
           </ul>
         </li>
         {% else %}
