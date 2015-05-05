@@ -23,12 +23,20 @@
       </div>
       <table class="table table-striped" id="problem-list-table">
         <tbody>
+        <colgroup> 
+          <col style="width:10%;"></col>
+          <col style="width:15%;"></col>
+          <col style="width:45%;"></col>
+          <col style="width:10%;"></col>
+          <col style="width:10%;"></col>
+          <col style="width:10%;"></col>
+        </colgroup>
         <tr>
           <th>Loại bài&nbsp;<span class="glyphicon glyphicon-sort-by-alphabet"></span></th>
           <th>Mã bài&nbsp;<span class="glyphicon glyphicon-sort-by-alphabet"></span></th>
           <th>Tên bài</th>
           <th>Giải được&nbsp;<span class="glyphicon glyphicon-sort-by-attributes"></span></th>
-          <th>Điểm&nbsp;<span class="glyphicon glyphicon-sort-by-attributes"></span></th>
+          <th style="text-align: center;">Điểm&nbsp;<span class="glyphicon glyphicon-sort-by-attributes"></span></th>
           <th></th>
         </tr>
         {% for problem in problems %}
@@ -38,7 +46,7 @@
             <td>{{ problem.name }}</td>
             <td><a href="{% url 'problems:rank' problem.code %}">{{ problem.accept_count }}</a></td>
             <!-- require rank of prob -->
-            <td>{{ problem.score }}</td>
+            <td style="text-align: center;">{{ problem.score }}</td>
             <td><a href="{% url 'problems:discuss' problem.code %}">Thảo luận</a></td>
           </tr>
         {% endfor %}
