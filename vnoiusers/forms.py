@@ -79,6 +79,11 @@ class UserCreateForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(UserCreateForm, self).__init__(*args, **kwargs)
         self.fields['username'].help_text = None
+        self.fields['username'].widget.attrs['placeholder'] = u'VD: code_sieu_nhanh, I_am_cool...'
+        self.fields['email'].widget.attrs['placeholder'] = u'Link kích hoạt tài khoản sẽ được gửi đến email này'
+        self.fields['last_name'].widget.attrs['placeholder'] = u'VD: Nguyễn, Trần...'
+        self.fields['first_name'].widget.attrs['placeholder'] = u'VD: Bình An, Hùng Cường...'
+        self.fields['password1'].widget.attrs['placeholder'] = u'Một mật khẩu tốt thường có cả chữ cái in hoa, in thường và chữ số'
 
     class Meta:
         model = User
@@ -132,8 +137,16 @@ class UserCreateForm(forms.ModelForm):
 
 
 class CodeforcesLinkForm(forms.Form):
-    username = forms.CharField(max_length=30, label='Tài khoản Codeforces')
-    password = forms.CharField(widget=forms.PasswordInput, label='Mật khẩu', max_length=30)
+    username = forms.CharField(
+        max_length=30,
+        label='Tài khoản Codeforces',
+        widget=forms.TextInput(attrs={'placeholder': u'Tài khoản codeforces.com', 'autocomplete': 'off'})
+    )
+    password = forms.CharField(
+        widget=forms.PasswordInput(attrs={'placeholder': u'Mật khẩu codeforces.com', 'autocomplete': 'off'}),
+        label='Mật khẩu',
+        max_length=30
+    )
 
     def clean(self):
         username = self.cleaned_data['username']
@@ -151,8 +164,16 @@ class CodeforcesLinkForm(forms.Form):
 
 
 class VojLinkForm(forms.Form):
-    username = forms.CharField(max_length=30, label='Tài khoản VOJ')
-    password = forms.CharField(widget=forms.PasswordInput, label='Mật khẩu', max_length=30)
+    username = forms.CharField(
+        max_length=30,
+        label='Tài khoản VOJ',
+        widget=forms.TextInput(attrs={'placeholder': u'Tài khoản vn.spoj.com', 'autocomplete': 'off'})
+    )
+    password = forms.CharField(
+        widget=forms.PasswordInput(attrs={'placeholder': u'Mật khẩu vn.spoj.com', 'autocomplete': 'off'}),
+        label='Mật khẩu',
+        max_length=30
+    )
 
     def clean(self):
         username = self.cleaned_data['username']

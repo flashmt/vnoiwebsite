@@ -503,7 +503,8 @@ h2 a:hover, h1 a:hover {
   width: 250px; }
 
 .alert {
-  padding: 7px; }
+  padding-top: 7px;
+  padding-bottom: 7px; }
 
 a.disabled {
   pointer-events: none;
