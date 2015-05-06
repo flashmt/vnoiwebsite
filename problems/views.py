@@ -1,10 +1,14 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.core.urlresolvers import reverse
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
-from problems.models import SpojProblem, SpojProblemForum
+from problems.forms import VojSubmitForm
+from problems.models import SpojProblem, SpojProblemForum, SpojProblemSubmission
 from forum.models import ForumGroup
 from forum.views import topic_list
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from voj_interface.submit import voj_submit
 
 
 def index(request):
@@ -70,9 +74,43 @@ def discuss(request, code):
 @login_required
 def submit(request, code):
     problem = get_object_or_404(SpojProblem, code=code)
-    return render(request, 'problems/problem_submit.html', {
-        'problem': problem
-    })
+
+    # TODO: If user haven't linked VOJ account --> redirect to link VOJ account page
+
+    template_name = 'problems/problem_submit.html'
+    if request.POST:
+        form = VojSubmitForm(request.POST)
+        if form.is_valid():
+            # TODO
+            # At this point, the submitted request is valid (code is not empty, language is valid
+            # and also the judge queue is not too long and user haven't submitted too many)
+
+            # Store to DB. Note that at this point, we do not yet have the submission ID.
+            # Later, the status crawler will discover this submission and then, will update
+            # this submission ID, and hopefully, will also update the status
+            SpojProblemSubmission.objects.create(
+                problem=problem,
+                # voj_account=request.user.profile.voj_account
+                # submission_language=form.cleaned_data['language'] <-- or something like that
+                # submission_time=now
+                # submission_id and submission_verdict will be crawled later
+            )
+
+            # Submit the code to VOJ
+            voj_submit(request.user, form.cleaned_data['code'], form.cleaned_data['language'])
+
+            # Then, just redirect user to status page of problem
+            return HttpResponseRedirect(reverse('problems:status', kwargs={'code': problem.code}))
+        else:
+            return render(request, template_name, {
+                'form': form,
+                'message': form.errors
+            })
+    else:
+        return render(request, template_name, {
+            'problem': problem,
+            'form': VojSubmitForm
+        })
 
 
 def status(request, code):
