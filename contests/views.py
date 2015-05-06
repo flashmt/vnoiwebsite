@@ -11,10 +11,14 @@ def index(request, contest_id=None):
         contest_id = contest_groups.first().contests.first().id
     else:
         contest_id = int(contest_id)
+
+    contest = Contest.objects.get(pk=contest_id)
     return render(request, 'contests/contest_list.html', {
         'contest_groups': contest_groups,
         'contest_id': contest_id,
-        'resources': Contest.objects.get(pk=contest_id).resources,
+        'contest': contest,
+        'resources': contest.resources,
+        'standings': contest.standings,
         'disable_breadcrumbs': True
     })
 

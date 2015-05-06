@@ -1,9 +1,4 @@
 # -*- coding: utf-8 -*-
-import re
-import requests
-import json
-
-from bs4 import BeautifulSoup
 from contests.models import Contest, ContestStanding, ContestGroup
 from utils.functional import *
 

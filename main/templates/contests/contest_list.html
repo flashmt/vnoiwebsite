@@ -46,20 +46,29 @@
 
     <div class="col-md-9">
       <div class=" lib-list-container">
-        <div class="panel panel-primary">
-          <table class="table table-striped table-bordered panel panel-primary">
-            <tbody>
-              {% for resource in resources.all %}
-                <tr>
-                  <td class="col-md-10">
-                    <a class="" href="{% url 'contests:standings' resource.id %}">
-                      <strong class="forum-name lib-topic-title">{{ resource.name }}</strong>
-                    </a>
-                  </td>
-                  </tr>
-              {% endfor %}
-            </tbody>
-          </table>
+        <div class="well">
+          {% if contest.description %}
+            <h4>Giới thiệu</h4>
+            <p>{{ contest.description }}</p>
+          {% endif %}
+          <h4>Links</h4>
+          <ul>
+            {% for resource in resources.all %}
+              <li>
+                <a class="" href="{{ resource.url }}">{{ resource.name }}</a>
+              </li>
+            {% endfor %}
+          </ul>
+          <h4>Xếp hạng</h4>
+          <ul>
+            {% for standing in standings.all %}
+              <li>
+                <a class="" href="{% url 'contests:standings' standing.id %}">
+                  {{ standing.name }}
+                </a>
+              </li>
+            {% endfor %}
+          </ul>
         </div>
       </div>
     </div>
