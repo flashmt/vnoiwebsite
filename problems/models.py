@@ -75,10 +75,17 @@ class SpojProblem(models.Model):
         return self.name
 
 
+class SpojUser(models.Model):
+    username = models.CharField(max_length=200, null=True, blank=True)
+
+    def __unicode__(self):
+        return self.username
+
+
 class SpojProblemSubmission(models.Model):
     problem = models.ForeignKey(SpojProblem, related_name='submissions', null=False, blank=False)
 
-    voj_account = models.CharField(max_length=100, null=True, blank=True)
+    voj_account = models.ForeignKey(SpojUser, related_name='submissions', null=True, blank=True)
     vnoi_account = models.ForeignKey(VnoiUser, related_name='submissions', null=True, blank=True)
 
     submission_rank = models.IntegerField(null=True, blank=True)

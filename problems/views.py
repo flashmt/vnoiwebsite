@@ -8,7 +8,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
 def index(request):
-    problem_list = SpojProblem.objects.all().order_by('created_at').values(
+    problem_list = SpojProblem.objects.all().values(
         'code',
         'name',
         'category__name',
