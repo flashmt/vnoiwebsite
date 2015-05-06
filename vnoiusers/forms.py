@@ -191,14 +191,17 @@ class VojLinkForm(forms.Form):
 
 
 class UserProfileForm(forms.ModelForm):
-    dob = forms.DateField(label=u"Ngày sinh",
-                          input_formats=['%Y-%m-%d'],
-                          widget=forms.TextInput(attrs={'placeholder': 'yyyy-mm-dd'}))
+    dob = forms.DateField(
+        label=u"Ngày sinh",
+        input_formats=['%Y-%m-%d'],
+        widget=forms.TextInput(attrs={'placeholder': 'yyyy-mm-dd'})
+    )
 
     def __init__(self, *args, **kwargs):
         super(UserProfileForm, self).__init__(*args, **kwargs)
         self.fields['last_name'].label = u'Họ'
         self.fields['first_name'].label = u'Tên'
+        self.fields['dob'].widget.attrs['value'] = kwargs['instance'].profile.dob
 
     class Meta:
         model = User
