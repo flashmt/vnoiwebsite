@@ -93,7 +93,7 @@ class SpojProblemSubmission(models.Model):
     ordering = ['-submission_date']
 
     def __unicode__(self):
-        return submission_id
+        return self.problem.code + ' - ' + str(self.submission_id)
 
 
 class SpojProblemForum(Forum):

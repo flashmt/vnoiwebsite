@@ -336,10 +336,15 @@ def get_all_accepted_submissions(problem_code, force_crawl=False):
         # Since when page_id does not exist, SPOJ does not redirect or provide any status code, we need another way to verity it
         stop = False
 
-        print '    Page %d' % page_id
+        print '%s    -    Page %d' % (problem_code, page_id)
+
+        time.sleep(1)
 
         soup = get_problem_rank_html(problem_code=problem_code, page_id=page_id)
         rows = soup.find_all('tr', {'class': 'kol1'})
+
+        if len(rows) == 0:
+            stop = True
 
         for row in rows:
             # row = BeautifulSoup(row.prettify())
