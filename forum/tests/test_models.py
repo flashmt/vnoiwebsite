@@ -4,6 +4,7 @@ from django.test import TestCase
 from forum.models import Forum, Topic, Post
 from django.contrib.auth.models import User
 
+
 class ForumModelTest(TestCase):
     fixtures = ['forum.json', 'auth.json']
 
@@ -31,6 +32,7 @@ class TopicModelTests(TestCase):
     #     self.assertEquals(forum.last_post.id, post.id)
     #     topic.delete()
     #     self.assertEquals(forum.last_post.id, old_id)
+
 
 class PostModelTests(TestCase):
     fixtures = ['forum.json', 'auth.json']

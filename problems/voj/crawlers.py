@@ -387,17 +387,21 @@ def get_all_accepted_submissions(problem_code, force_crawl=False, f_log=sys.stdo
             else:
                 user = user[0]
 
-            submission = SpojProblemSubmission.objects.filter(problem=problem, submission_rank=submission_rank,
-                                                                               submission_id=submission_id,
-                                                                               submission_verdict=submission_verdict,
-                                                                               submission_status=submission_status,
-                                                                               voj_account=user)
+            submission = SpojProblemSubmission.objects.filter(
+                problem=problem, submission_rank=submission_rank,
+                submission_id=submission_id,
+                submission_verdict=submission_verdict,
+                submission_status=submission_status,
+                voj_account=user
+            )
             if len(submission) == 0:
-                submission = SpojProblemSubmission.objects.create(problem=problem, submission_rank=submission_rank,
-                                                                                   submission_id=submission_id,
-                                                                                   submission_verdict=submission_verdict,
-                                                                                   submission_status=submission_status,
-                                                                                   voj_account=user)
+                submission = SpojProblemSubmission.objects.create(
+                    problem=problem, submission_rank=submission_rank,
+                    submission_id=submission_id,
+                    submission_verdict=submission_verdict,
+                    submission_status=submission_status,
+                    voj_account=user
+                )
                 need_update_submission = True
             else:
                 submission = submission[0]

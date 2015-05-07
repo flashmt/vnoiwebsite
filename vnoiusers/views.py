@@ -75,7 +75,7 @@ def user_create(request, template_name='vnoiusers/user_create.html'):
             username = form.cleaned_data['username']
             email = form.cleaned_data['email']
             salt = hashlib.sha1(str(random.random())).hexdigest()[:8]
-            activation_key = hashlib.sha1(salt+email).hexdigest()
+            activation_key = hashlib.sha1(salt + email).hexdigest()
 
             # Get user by username
             user = User.objects.get(username=username)

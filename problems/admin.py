@@ -8,4 +8,3 @@ admin.site.register(SpojProblemForum)
 admin.site.register(SpojProblemLanguage)
 admin.site.register(SpojProblemSubmission)
 admin.site.register(SpojUser)
-
