@@ -10,6 +10,5 @@
 {% block left-menu-highlight %}{% endblock %}
 
 {% block problem-content %}
-  <form action="{% url 'problems:submit' problem.code %}">
-  </form>
+  {% include 'main/base_form.html' %}
 {% endblock problem-content %}
