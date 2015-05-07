@@ -2,6 +2,10 @@
 {% load staticfiles %}
 {% load humanize %}
 
+{% block page_title %}
+  {{ forum.name }} - VNOI
+{% endblock page_title %}
+
 {% block extra-css %}
   <link href="{% static 'css/forum.css' %}" rel="stylesheet">
 {% endblock %}

@@ -6,15 +6,21 @@
     <thead>
     </thead>
     <tbody>
-      {% for contest in coming_contests %}
+      {% if coming_contests %}
+        {% for contest in coming_contests %}
+          <tr>
+            <td>
+              <a href="{{ contest.url }}">{{ contest.contest_name }}</a>
+              <p class="text-left">{{ contest.start_time|naturaltime }}</p>
+              <p class="">Thời gian: {{ contest.duration }} phút</p>
+            </td>
+          </tr>
+        {% endfor %}
+      {% else %}
         <tr>
-          <td>
-            <a href="{{ contest.url }}">{{ contest.contest_name }}</a>
-            <p class="text-left">{{ contest.start_time|naturaltime }}</p>
-            <p class="">Thời gian: {{ contest.duration }} phút</p>
-          </td>
+          <td><p>Không có kỳ thi nào sắp diễn ra.</p></td>
         </tr>
-      {% endfor %}
+      {% endif %}
     </tbody>
   </table>
 </div>
