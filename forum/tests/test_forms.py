@@ -51,7 +51,6 @@ class PostCreateFormTest(TestCase):
         self.assertFalse(form.fields['title'].required)
         self.assertEquals(form.fields['title'].widget.__class__, forms.HiddenInput().__class__)
 
-
     def test_save(self):
         # Test if commit=False, no actual database updating
         pass
