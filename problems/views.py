@@ -12,7 +12,7 @@ from voj_interface.submit import voj_submit
 
 
 def index(request):
-    problem_list = SpojProblem.objects.all().order_by('created_at').values(
+    problem_list = SpojProblem.objects.all().values(
         'code',
         'name',
         'category__name',
