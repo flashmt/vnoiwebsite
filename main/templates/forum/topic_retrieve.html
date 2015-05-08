@@ -2,6 +2,10 @@
 
 {% load staticfiles %}
 
+{% block page_title %}
+  {{ topic.title }} - VNOI
+{% endblock page_title %}
+
 {% block navbar-highlight %}navbar_{{ forum.get_navbar_highlight }}{% endblock navbar-highlight %}
 
 {# 3 components: Forum, Problem discuss, Library reuse this template #}

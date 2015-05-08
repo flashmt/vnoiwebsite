@@ -36,5 +36,3 @@ def user_avatar_url(user, size=settings.AVATAR_DEFAULT_SIZE):
         return urljoin(settings.AVATAR_GRAVATAR_BASE_URL, path)
 
     return get_default_avatar_url()
-
-

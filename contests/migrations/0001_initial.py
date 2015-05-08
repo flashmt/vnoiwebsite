@@ -17,6 +17,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('code', models.CharField(max_length=20)),
                 ('name', models.CharField(max_length=250)),
+                ('description', models.TextField(null=True, blank=True)),
             ],
             options={
                 'ordering': ['name'],
@@ -48,7 +49,9 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('name', models.CharField(max_length=250)),
+                ('url', models.CharField(max_length=1000)),
                 ('display_order', models.IntegerField(default=0)),
+                ('contest', models.ForeignKey(related_name='resources', to='contests.Contest')),
             ],
             options={
                 'ordering': ['name'],
@@ -56,31 +59,19 @@ class Migration(migrations.Migration):
             bases=(models.Model,),
         ),
         migrations.CreateModel(
-            name='ContestExtraLink',
-            fields=[
-                ('contestresource_ptr', models.OneToOneField(parent_link=True, auto_created=True, primary_key=True, serialize=False, to='contests.ContestResource')),
-                ('url', models.CharField(max_length=1000)),
-            ],
-            options={
-            },
-            bases=('contests.contestresource',),
-        ),
-        migrations.CreateModel(
             name='ContestStanding',
             fields=[
-                ('contestresource_ptr', models.OneToOneField(parent_link=True, auto_created=True, primary_key=True, serialize=False, to='contests.ContestResource')),
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('name', models.CharField(max_length=250)),
                 ('title', models.TextField(null=True, blank=True)),
                 ('content', models.TextField(null=True, blank=True)),
+                ('display_order', models.IntegerField(default=0)),
+                ('contest', models.ForeignKey(related_name='standings', to='contests.Contest')),
             ],
             options={
+                'ordering': ['name'],
             },
-            bases=('contests.contestresource',),
-        ),
-        migrations.AddField(
-            model_name='contestresource',
-            name='contest',
-            field=models.ForeignKey(related_name='resources', to='contests.Contest'),
-            preserve_default=True,
+            bases=(models.Model,),
         ),
         migrations.AddField(
             model_name='contest',

@@ -40,8 +40,11 @@ if __name__ == "__main__":
         problem_category_oi = problem_category_oi[0]
 
     save_all_languages()
+
+    f_log = open('crawler_log.txt', 'w')
     for problem in SpojProblem.objects.all():
-        get_all_accepted_submissions(problem_code=problem.code, force_crawl=True)
+        get_all_accepted_submissions(problem_code=problem.code, force_crawl=True, f_log=f_log)
+    f_log.close()
 
     # problems_acm = get_problem_codes_from_category(problem_category_acm)
     # problems_oi = get_problem_codes_from_category(problem_category_oi)

@@ -24,6 +24,15 @@ python manage.py createcachetable
 
 python manage.py collectstatic
 
-echo "python manage.py test" > .git/hooks/pre-commit
-echo "exit \$?" >> .git/hooks/pre-commit
+commit_script="#!/bin/bash
+set -e
+python manage.py test   # Any subsequent(*) commands which fail will cause the shell script to exit immediately
+FILES=$(git diff --cached --name-only | grep -e '\.py$')
+
+echo '---------------------------------'
+echo 'LINTER RESULTS:'
+echo '---------------------------------'
+pep8 --ignore=E501 \$FILES
+"
+echo "$commit_script" > .git/hooks/pre-commit
 chmod 755 .git/hooks/pre-commit

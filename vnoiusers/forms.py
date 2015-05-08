@@ -201,7 +201,8 @@ class UserProfileForm(forms.ModelForm):
         super(UserProfileForm, self).__init__(*args, **kwargs)
         self.fields['last_name'].label = u'Họ'
         self.fields['first_name'].label = u'Tên'
-        self.fields['dob'].widget.attrs['value'] = kwargs['instance'].profile.dob
+        if kwargs['instance'].profile.dob:
+            self.fields['dob'].widget.attrs['value'] = kwargs['instance'].profile.dob
 
     class Meta:
         model = User

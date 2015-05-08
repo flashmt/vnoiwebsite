@@ -16,3 +16,4 @@ python-dateutil
 requests_toolbelt
 coverage==3.7.1
 pycrypto==2.6.1
+pep8==1.5.7

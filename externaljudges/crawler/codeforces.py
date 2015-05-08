@@ -27,7 +27,7 @@ def cf_contest_list_crawl():
                         judge='cf',
                         contest_name=contest_name,
                         start_time=timezone.now() + timedelta(seconds=-contest['relativeTimeSeconds']),
-                        duration=contest['durationSeconds']/60,
+                        duration=contest['durationSeconds'] / 60,
                         url='http://codeforces.com/contests'
                     )
                     contest.save()

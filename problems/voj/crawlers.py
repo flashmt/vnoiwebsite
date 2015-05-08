@@ -13,6 +13,7 @@ from bs4 import BeautifulSoup
 from problems.models import SpojProblem
 from problems.models import SpojProblemLanguage
 from problems.models import SpojProblemSubmission
+from problems.models import SpojUser
 from utils.functional import *
 
 
@@ -272,7 +273,7 @@ def save_all_languages():
 
 
 # save all accepted submissions to database and calculate score
-def get_all_accepted_submissions(problem_code, force_crawl=False):
+def get_all_accepted_submissions(problem_code, force_crawl=False, f_log=sys.stdout):
 
     def get_submission_rank(row_soup):
         cell = row_soup.find_all('td')[0]
@@ -336,9 +337,9 @@ def get_all_accepted_submissions(problem_code, force_crawl=False):
         # Since when page_id does not exist, SPOJ does not redirect or provide any status code, we need another way to verity it
         stop = False
 
-        print '%s    -    Page %d' % (problem_code, page_id)
-
-        time.sleep(1)
+        print >> f_log, '%s    -    Page %d' % (problem_code, page_id)
+        f_log.flush()
+        time.sleep(2)
 
         soup = get_problem_rank_html(problem_code=problem_code, page_id=page_id)
         rows = soup.find_all('tr', {'class': 'kol1'})
@@ -358,6 +359,7 @@ def get_all_accepted_submissions(problem_code, force_crawl=False):
             submission_id = get_submission_id(row)
             submission_status = get_submission_status(row)
             submission_verdict = get_submission_verdict(row)
+            submission_account = get_submission_handle(row)
 
             if problem.category.name == 'acm':  # acm problem
                 # this is not accepted submission
@@ -372,22 +374,40 @@ def get_all_accepted_submissions(problem_code, force_crawl=False):
                     break
                 pass
 
-            submission = SpojProblemSubmission.objects.filter(problem=problem, submission_rank=submission_rank,
-                                                                               submission_id=submission_id,
-                                                                               submission_verdict=submission_verdict,
-                                                                               submission_status=submission_status)
+            # check if the user has already solved this problem
+            if submission_account not in accepted_users:
+                accepted_users.add(submission_account)
+                problem.accept_count = problem.accept_count + 1
+
+            # check if the user exists
+            user = SpojUser.objects.filter(username=submission_account)
+            if len(user) == 0:
+                user = SpojUser.objects.create(username=submission_account)
+                user.save()
+            else:
+                user = user[0]
+
+            submission = SpojProblemSubmission.objects.filter(
+                problem=problem, submission_rank=submission_rank,
+                submission_id=submission_id,
+                submission_verdict=submission_verdict,
+                submission_status=submission_status,
+                voj_account=user
+            )
             if len(submission) == 0:
-                submission = SpojProblemSubmission.objects.create(problem=problem, submission_rank=submission_rank,
-                                                                                   submission_id=submission_id,
-                                                                                   submission_verdict=submission_verdict,
-                                                                                   submission_status=submission_status)
+                submission = SpojProblemSubmission.objects.create(
+                    problem=problem, submission_rank=submission_rank,
+                    submission_id=submission_id,
+                    submission_verdict=submission_verdict,
+                    submission_status=submission_status,
+                    voj_account=user
+                )
                 need_update_submission = True
             else:
                 submission = submission[0]
                 need_update_submission = False
 
             if need_update_submission or force_crawl:
-                submission.voj_account = get_submission_handle(row)
 
                 # check if the user has already solved this problem
                 if submission.voj_account not in accepted_users:
