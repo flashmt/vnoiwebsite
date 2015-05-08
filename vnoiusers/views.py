@@ -22,6 +22,7 @@ from post_office import mail
 from forum.models import Topic, Post, Vote
 from vnoiusers.forms import *
 from vnoiusers.models import VnoiUser
+from vnoiusers.user_util import *
 from configurations.settings import ROOT_URL, DEBUG
 
 
@@ -214,6 +215,7 @@ def link_voj_account(request):
         if form.is_valid():
             vnoiuser = request.user.profile
             vnoiuser.voj_account = request.POST['username']
+            vnoiuser.voj_password = encrypt(vnoiuser.voj_account, request.POST['password'])
             vnoiuser.save()
             return HttpResponseRedirect(reverse('user:profile', kwargs={'username': request.user.username}))
         else:
